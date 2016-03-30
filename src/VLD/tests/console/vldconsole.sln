@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vldconsole", "vldconsole.vcproj", "{23F66B23-5893-429F-BA3E-5F61EB3ED2A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		C Debug|Win32 = C Debug|Win32
+		C Debug|x64 = C Debug|x64
+		CPP Debug|Win32 = CPP Debug|Win32
+		CPP Debug|x64 = CPP Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23F66B23-5893-429F-BA3E-5F61EB3ED2A2}.C Debug|Win32.ActiveCfg = C Debug|Win32
+		{23F66B23-5893-429F-BA3E-5F61EB3ED2A2}.C Debug|Win32.Build.0 = C Debug|Win32
+		{23F66B23-5893-429F-BA3E-5F61EB3ED2A2}.C Debug|x64.ActiveCfg = C Debug|x64
+		{23F66B23-5893-429F-BA3E-5F61EB3ED2A2}.C Debug|x64.Build.0 = C Debug|x64
+		{23F66B23-5893-429F-BA3E-5F61EB3ED2A2}.CPP Debug|Win32.ActiveCfg = CPP Debug|Win32
+		{23F66B23-5893-429F-BA3E-5F61EB3ED2A2}.CPP Debug|Win32.Build.0 = CPP Debug|Win32
+		{23F66B23-5893-429F-BA3E-5F61EB3ED2A2}.CPP Debug|x64.ActiveCfg = CPP Debug|x64
+		{23F66B23-5893-429F-BA3E-5F61EB3ED2A2}.CPP Debug|x64.Build.0 = CPP Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

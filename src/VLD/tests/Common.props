@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <!--debug suffix-->
+    <DebugSuffix Condition="'$(Configuration)' == 'Debug'">d</DebugSuffix>
+    <DebugSuffix Condition="'$(Configuration)' != 'Debug'"></DebugSuffix>
+    <!--platform-->
+    <NumericPlatform Condition="'$(Platform)'=='Win32'">x86</NumericPlatform>
+    <NumericPlatform Condition="'$(Platform)'=='x64'">x64</NumericPlatform>
+    <!--vld configuration-->
+    <VldConfiguration Condition="'$(Configuration)' == 'Debug'">Debug</VldConfiguration>
+    <VldConfiguration Condition="'$(Configuration)' == 'Debug_StaticCrt'">Debug</VldConfiguration>
+    <VldConfiguration Condition="'$(Configuration)' == 'Debug(Release)'">Release</VldConfiguration>
+    <VldConfiguration Condition="'$(Configuration)' == 'Debug(Release)_StaticCrt'">Release</VldConfiguration>
+    <VldConfiguration Condition="'$(Configuration)' == 'Release'">Release</VldConfiguration>
+    <VldConfiguration Condition="'$(Configuration)' == 'Release_StaticCrt'">Release</VldConfiguration>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+</Project>

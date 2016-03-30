@@ -1,0 +1,13 @@
+------------------------------------------------
+KindDragon              http://www.codeplex.com/site/users/view/KindDragon
+chrisJohnson            http://www.codeplex.com/site/users/view/chrisJohnson
+
+Contributors: (listed alphabetically)
+------------------------------------------------
+benpmorgan, geordi, jerker_back, Laurent Lessieux (llessieux), snakefoot, VictorKharkov, xpol
+
+Many thanks to everyone who supported development without having
+svn write access.
+
+Based on the original version (C) 2005-2009 by Dan Moulding (e-mail dmoulding@gmail.com)
+http://sites.google.com/site/dmoulding/vld

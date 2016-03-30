@@ -1,0 +1,23 @@
+# EditorConfig is awesome: http://visualstudiogallery.msdn.microsoft.com/c8bccfe2-650c-4b42-bc5c-845e21f96328
+
+# top-most EditorConfig file
+root = true
+
+# Windows-style newlines
+[*]
+end_of_line = crlf
+
+# 4 space indentation
+[*.py]
+indent_style = space
+indent_size = 4
+
+# 4 space indentation
+[*.{c,cpp,h}]
+indent_style = space
+indent_size = 4
+
+# 2 space indentation
+[*.iss]
+indent_style = space
+indent_size = 2

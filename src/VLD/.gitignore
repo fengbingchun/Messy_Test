@@ -1,0 +1,13 @@
+obj/
+Debug/
+Debug (Unicode)/
+Release/
+Release (Unicode)/
+Win32/
+x64/
+*.vcxproj.user
+*.*sdf
+*.suo
+ipch/
+setup/vld-*-setup.exe
+setup/Output/
