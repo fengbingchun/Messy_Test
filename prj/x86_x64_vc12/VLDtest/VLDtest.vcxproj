@@ -91,7 +91,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -99,13 +99,14 @@
       <AssemblerListingLocation>.\../../../obj/dbg/x86_vc10/VLDtest\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x86_vc10/VLDtest\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x86_vc10/VLDtest\</ProgramDataBaseFileName>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\VLD;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>../../../lib/dbg/x86_vc10/VLDtest[dbg_x86_vc10].exe</OutputFile>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\GitCode\Messy_Test\src\VLD\bin\Win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vld_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <OutputFile>.\../../../obj/dbg/x86_vc10/VLDtest\VLDtest.bsc</OutputFile>
@@ -122,8 +123,7 @@
       <ObjectFileName>.\../../../obj/dbg/x86_vc12/VLDtest\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x86_vc12/VLDtest\</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\VLD;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +139,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -156,6 +156,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>../../../lib/rel/x86_vc10/VLDtest[rel_x86_vc10].exe</OutputFile>
+      <AdditionalLibraryDirectories>E:\GitCode\Messy_Test\src\VLD\bin\Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vld_x86.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <OutputFile>.\../../../obj/rel/x86_vc10/VLDtest\VLDtest.bsc</OutputFile>
