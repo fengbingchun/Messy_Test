@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VLDtest", "..\VLDtest\VLDte
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemoryLeaksTest", "..\MemoryLeaksTest\MemoryLeaksTest.vcxproj", "{EABE5E80-A35F-4D1B-A707-F09BF2727B24}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppBaseTest", "..\CppBaseTest\CppBaseTest.vcxproj", "{2C8891F8-B071-4230-BA86-BCF64E1DA1B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -18,7 +20,9 @@ Global
 		{A848C72E-3109-47F7-951F-95E11C2A2D15}.Release|x64.ActiveCfg = Release|x64
 		{A848C72E-3109-47F7-951F-95E11C2A2D15}.Release|x64.Build.0 = Release|x64
 		{EABE5E80-A35F-4D1B-A707-F09BF2727B24}.Debug|x64.ActiveCfg = Debug|x64
-		{EABE5E80-A35F-4D1B-A707-F09BF2727B24}.Release|x64.ActiveCfg = Release|Win32
+		{EABE5E80-A35F-4D1B-A707-F09BF2727B24}.Release|x64.ActiveCfg = Release|x64
+		{2C8891F8-B071-4230-BA86-BCF64E1DA1B7}.Debug|x64.ActiveCfg = Debug|x64
+		{2C8891F8-B071-4230-BA86-BCF64E1DA1B7}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
