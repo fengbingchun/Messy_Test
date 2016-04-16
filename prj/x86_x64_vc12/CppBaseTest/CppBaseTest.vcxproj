@@ -107,6 +107,7 @@
       <AssemblerListingLocation>.\../../../obj/dbg/x86_vc12/CppBaseTest\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x86_vc12/CppBaseTest\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x86_vc12/CppBaseTest\</ProgramDataBaseFileName>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\demo\CppBaseTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +149,7 @@
       <AssemblerListingLocation>.\../../../obj/rel/x86_vc12/CppBaseTest\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/rel/x86_vc12/CppBaseTest\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x86_vc12/CppBaseTest\</ProgramDataBaseFileName>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\demo\CppBaseTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -162,6 +164,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
