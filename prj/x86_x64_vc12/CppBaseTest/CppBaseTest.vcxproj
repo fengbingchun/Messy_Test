@@ -165,9 +165,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\this_pointer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\this_pointer.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
