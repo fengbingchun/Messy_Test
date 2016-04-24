@@ -2,10 +2,12 @@
 #include "explicit.hpp"
 #include "this_pointer.hpp"
 #include "static_assert.hpp"
+#include "static_inline.hpp"
 
 int main()
 {
-	test_static_assert2();
+	test_static_inline2();
+
 
 	std::cout << "ok" << std::endl;
 	return 0;
