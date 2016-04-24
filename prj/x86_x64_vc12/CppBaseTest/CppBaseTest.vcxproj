@@ -166,12 +166,14 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_assert.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\static_cast.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_inline.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\this_pointer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_assert.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\static_cast.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_inline.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\this_pointer.hpp" />
   </ItemGroup>
