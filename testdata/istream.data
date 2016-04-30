@@ -1,0 +1,16 @@
+#filename:
+istream.data
+#content:
+istream class test
+======================================================
+#add operation:
+1 2
+#char array:
+A B C
+D E F
+#int array:
+-2 4 6
+9 1 5
+#mean value:
+-6.8
+====================================================
