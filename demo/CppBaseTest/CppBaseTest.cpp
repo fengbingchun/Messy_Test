@@ -5,10 +5,11 @@
 #include "static_inline.hpp"
 #include "static_cast.hpp"
 #include "istream.hpp"
+#include "operator.hpp"
 
 int main()
 {
-	test_istream();
+	test_operator();
 
 	std::cout << "ok" << std::endl;
 	return 0;
