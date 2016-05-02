@@ -10,6 +10,7 @@ public:
 	// various constructors
 	Point() : x(0), y(0) {}
 	Point(int x_, int y_) : x(x_), y(y_) {}
+	Point(const Point& pt_) : x(pt_.x), y(pt_.y) {}
 
 	// assignment operator: =
 	Point& operator = (const Point& pt_);

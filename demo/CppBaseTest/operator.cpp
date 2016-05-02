@@ -117,6 +117,7 @@ int test_operator()
 {
 	Point pt1;
 	Point pt2(1, 2);
+	Point pt0(pt2);
 
 	Point pt3;
 	pt3 = pt2; // =, same as pt3.operator=(pt2);
