@@ -6,10 +6,11 @@
 #include "static_cast.hpp"
 #include "istream.hpp"
 #include "operator.hpp"
+#include "template.hpp"
 
 int main()
 {
-	test_operator();
+	test_template1();
 
 	std::cout << "ok" << std::endl;
 	return 0;
