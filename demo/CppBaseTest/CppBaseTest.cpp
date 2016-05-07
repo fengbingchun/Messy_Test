@@ -10,7 +10,7 @@
 
 int main()
 {
-	test_template1();
+	test_template5();
 
 	std::cout << "ok" << std::endl;
 	return 0;
