@@ -7,10 +7,11 @@
 #include "istream.hpp"
 #include "operator.hpp"
 #include "template.hpp"
+#include "data_type_convert.hpp"
 
 int main()
 {
-	test_template5();
+	test_data_type_convert();
 
 	std::cout << "ok" << std::endl;
 	return 0;

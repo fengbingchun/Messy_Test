@@ -68,5 +68,8 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\template.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
