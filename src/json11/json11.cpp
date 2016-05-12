@@ -26,6 +26,10 @@
 #include <cstdio>
 #include <limits>
 
+#if _MSC_VER
+#define snprintf _snprintf
+#endif
+
 namespace json11 {
 
 static const int max_depth = 200;
@@ -241,8 +245,8 @@ static const Json & static_null() {
  * Constructors
  */
 
-Json::Json() noexcept                  : m_ptr(statics().null) {}
-Json::Json(std::nullptr_t) noexcept    : m_ptr(statics().null) {}
+Json::Json() /*noexcept*/                  : m_ptr(statics().null) {}
+Json::Json(std::nullptr_t) /*noexcept*/    : m_ptr(statics().null) {}
 Json::Json(double value)               : m_ptr(make_shared<JsonDouble>(value)) {}
 Json::Json(int value)                  : m_ptr(make_shared<JsonInt>(value)) {}
 Json::Json(bool value)                 : m_ptr(value ? statics().t : statics().f) {}
