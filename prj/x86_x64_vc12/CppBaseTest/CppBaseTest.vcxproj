@@ -172,6 +172,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_inline.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\this_pointer.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_inline.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\template.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\this_pointer.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\vector.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
