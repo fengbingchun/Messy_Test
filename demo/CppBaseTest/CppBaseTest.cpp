@@ -8,11 +8,12 @@
 #include "operator.hpp"
 #include "template.hpp"
 #include "data_type_convert.hpp"
+#include "vector.hpp"
 
 int main()
 {
-	test_data_type_convert();
+	test_vector_access();
 
-	std::cout << "ok" << std::endl;
+	std::cout << "\nok" << std::endl;
 	return 0;
 }
