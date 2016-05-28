@@ -1,0 +1,268 @@
+/* **********************************************************
+ * Copyright (c) 2014-2016 Google, Inc.   All rights reserved.
+ * **********************************************************/
+
+/*
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * * Neither the name of Google, Inc. nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL GOOGLE, INC. OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
+ */
+
+/**
+***************************************************************************
+***************************************************************************
+\page page_drfuzz Dr. Fuzz: Dynamic Fuzz Testing Extension
+
+The Dr. Fuzz DynamoRIO Extension provides fuzz testing features.
+Dr. Fuzz is part of the Dr. Memory Framework.
+Dr. Fuzz is used to implement the
+\if TOOL_DR_MEMORY Dr. Memory \ref page_fuzzer \else fuzz testing mode \endif.
+
+
+ - \ref sec_drfuzz_setup
+ - \ref sec_drfuzz_API
+ - \ref sec_drfuzz_mutators Mutators
+
+\section sec_drfuzz_setup Setup
+
+To use \p Dr. Fuzz with your client, first locate the Dr. Memory
+Framework.  Then use the standard method of using an Extension with the
+name \p drfuzz.  The two steps will look like this in your client's
+\p CMakeLists.txt file:
+
+\code
+find_package(DrMemoryFramework)
+use_DynamoRIO_extension(clientname drfuzz)
+\endcode
+
+To point CMake at the framework, set the DrMemoryFramework_DIR variable to
+point at the \p drmf subdirectory of the Dr. Memory package that you are
+using.  For example:
+
+\code
+cmake -G"Ninja" -DDynamoRIO_DIR=c:/path/to/DynamoRIO-Windows-4.1.0-8/cmake -DDrMemoryFramework_DIR=c:/path/to/DrMemory-Windows-1.6.0-2/drmf ../mysrcs/
+\endcode
+
+That will automatically set up the include path and library dependence.
+
+Your client must call \p drfuzz_init() prior to accessing any API
+routines in \p drfuzz, and should call \p drfuzz_exit() at process exit
+time.
+
+
+\section sec_drfuzz_API Dr. Fuzz API
+
+\p Dr. Fuzz provides the following key features:
+ -# Repeat execution of the test target function with fuzzed arguments.
+ -# Mutate argument values using bit flipping, random number algorithms,
+    or custom user-provided mutators.
+ -# Schedule fuzz iterations for a target function and set of arguments.
+ -# Report state information on a crash caused by fuzz inputs.
+
+The client can use the provided Dr. Fuzz APIs to fuzz test the target application. The
+most flexible approach is to use Dr. Fuzz directly to control the
+fuzzing cycle using registered callbacks. This approach also requires the most effort, so
+users who wish to get going quickly may prefer to use Dr. Memory's fuzzing
+features, which leverage Dr. Fuzz.
+
+
+\section sec_drfuzz_mutators Dr. Fuzz Mutators
+
+To support custom mutators, mutation is performed by a libary separate from
+the main \p Dr. Fuzz control library.  \p Dr. Fuzz provides a default
+mutator library which contains several different mutator implementations.
+
+\subsection sec_drfuzz_mut_ops Default Mutator Options
+
+The default mutator built-in to \p Dr. Fuzz supports several mutation
+variations, controlled by the following options (which are passed to
+drfuzz_mutator_start()):
+
+ - -alg &lt;algorithm_name&gt;<br>
+   Specifies the algorithm for generating a new value.  The choices are:
+   - "random": Randomly search the domain of possible permutations.
+     This is the default for -unit token.
+   - "ordered": Exhaustively search all possible permutations in an ordered
+     manner.  This is the default for -unit bits and -unit num.
+
+ - -unit &lt;unit_name&gt;<br>
+   Specifies the unit of transformation for applying the mutation algorithm.
+   The choices are:
+   - "bits": Bitwise application of the mutation algorithm.  This is the default.
+   - "num": Numeric application of the mutation algorithm.
+   - "token": Insertion of tokens from a dictionary.  The dictionary must
+     be specified via -dictionary.
+
+ - -flags &lt;int&gt;<br>
+   Flags for the mutator. Some flags are specific to a particular algorithm and/or
+   mutation unit.  The choices are:
+   - 0x1: Reset the buffer contents to the input_seed after every bit-flip
+     mutation. Not valid for -unit num. On by default.
+   - 0x2: Seed the mutator's random number generator with the current clock time.
+
+ - -sparsity &lt;int&gt;<br>
+   The degree of sparseness in the random coverage of the "random" algorithm
+   with unit "bits" (invalid for other configurations). Sparsity of n will yield on
+   average 1/n total values relative to the "ordered" algorithm in the same configuration.
+   If the sparsity is set to 0, the default value of 1 will be used instead.
+
+ - -max_value &lt;uint64&gt;<br>
+   For buffers of size 8 bytes or smaller, specifies the maximum mutation value. Use
+   value 0 to disable the maximum value (i.e., limit only by the buffer capacity).
+
+ - -random_seed &lt;uint64&gt;<br>
+   Set the randomization seed for algorithm "random".
+   The default random seed is 0x5a8390e9a31dc65fULL, which was selected to
+   have an equal number of 0 and 1 bits.
+
+ - -dictionary &lt;path&gt;<br>
+   Specifies a dictionary file containing tokens for -unit token.
+   The file format is compatible with AFL (http://lcamtuf.coredump.cx/afl/).
+   It is a text file with one token, in double quotes, per line, with an
+   optional preceding name followed by an equals sign.
+   Non-printable characters must use \\x hex escapes, and double quotes and
+   backslashes must be escaped by a preceding backslash.
+   Comment lines starting with '#' can be included.
+   An example:
+     \code
+     "token42"
+     "different_token"
+     unprint="\xCD\xEF"
+     mytokA="internal\"quotes\""
+     \endcode
+
+The default options are for ordered, seed-centric bit-flipping.
+
+The algorithms are further described below.
+
+\subsection sec_mutator_alg_and_unit Mutator Algorithms and Units
+
+The default mutator provides two algorithms for mutating the fuzzed argument, ordered
+and random, and each algorithm can operate in terms of bit-flips or integers.
+The latter option is referred to as the "unit" of mutation. The behavior of
+these two mutator options can be easily seen in the following example, where
+the app's original argument value is all zero (at left), and each successive
+value reflects one mutation:
+
+    Ordered bit-flip: 0x00000000 => 0x00000001 => 0x00000100 => 0x00010000 => 0x01000000
+    Random bit-flip:  0x00000000 => 0x00200000 => 0x00008000 => 0x00000004 => 0x00002000
+    Ordered numeric:  0x00000000 => 0x00000001 => 0x00000002 => 0x00000003 => 0x00000004
+    Random numeric:   0x00000000 => 0x7abcbb5e => 0xc6f15f41 => 0xaebd59a2 => 0xc375f0ae
+
+Notice that the bit-flip unit does not flip bits in a lexical sequence, even
+when the ordered algorithm is selected. Instead, it distributes the flips across
+the bytes first, and secondarily across the bits of each byte. The goal is to
+improve mutator coverage for very large input buffers, especially when the sparsity
+option is used (see below). The following sequence illustrates how ordered bit-flip
+distributes all permutations of a single flip across a 2-byte buffer:
+
+    0x0000 => 0x0001 => 0x0100 => 0x0002 => 0x0200 => 0x0004 => 0x0400 => 0x0008 => 0x0800
+           => 0x0010 => 0x1000 => 0x0020 => 0x0200 => 0x0040 => 0x4000 => 0x0080 => 0x8000
+
+After completing all flips of a single bit, the mutator will proceed to flip two bits:
+
+    0x0000 => 0x0101 => 0x0003 => 0x0201 => 0x0005 => 0x0401 => 0x0009 => 0x0801 => 0x0011
+           => 0x1001 => 0x0021 => 0x2001 => 0x0041 => 0x4001 => 0x0081 => 0x8001 => 0x0006
+
+\subsection sec_mutator_rand_gen Mutator Random Number Generator
+
+The mutator uses a stateless xorshift algorithm for all of its randomized
+decisions (see xorshift64star on https://en.wikipedia.org/wiki/Xorshift).
+For randomized bit-flip, the mutator selects which bits to flip using the
+Fisher-Yates shuffle (https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle).
+
+To repeat a fuzz test using the exact same sequence of values for the fuzz
+target function, specify the same random seed as the original fuzz test
+using the mutator descriptor's optional last field; for example:
+
+    -fuzz_mutator "r|b|r|1|0x17a3cd8648a6ab1f"
+
+To avoid repeating the exact same fuzz test when using the random algorithm,
+and pass flag \p 't' in the mutator descriptor (field 3 in option
+\p -fuzz_mutator) to seed the random algorithm with the system clock time. The
+seed will be reported in the log and in the console output (when enabled) for
+future reference, e.g., to repeat that fuzz test.
+
+\subsection sec_mutator_proximity Mutator "Proximity" via Reset Option
+
+Although the fuzzer executes the target function as rapidly as possible on
+the given hardware (by redirecting execution directly from the function
+return back into the function entry point), the number of possible values
+for the fuzzed argument usually makes it impossible to try all permutations.
+In many scenarios, the most interesting app functionality can be reached
+using argument values that are very similar to a "correct" or "typical"
+input value. For this reason, the fuzzer takes the original argument value
+passed by the application as a starting point for mutation. To explore input
+values that are most similar to the app's original input value, use flag
+\p 'r' in the mutator descriptor (field 3 in option \p -fuzz_mutator) to
+reset the argument to the app's original value before each mutation. Omitting
+this flag will cause the successive mutations to accumulate. For example, a
+bit-flipping mutator using the reset option might generate the following
+sequence on a 4-byte buffer, where the first value is the app's original
+argument value, and each successive value reflects one mutation (marked
+with overstrike):
+
+                          __          __          __          __
+    0x01020304 => 0x01020305 => 0x01020204 => 0x01030304 => 0x00020304
+
+But the same mutator without the reset option would generate this sequence:
+
+                          __          ____        ______      ________
+    0x01020304 => 0x01020305 => 0x01020205 => 0x01030205 => 0x00030205
+
+As you can see, the mutated value remains very similar to the original input
+when using the reset option, but quickly diverges without it.
+
+\subsection sec_mutator_sparsity Mutator Sparsity
+
+For many target functions, the reset option generates inputs that are too
+similar, causing the majority of inputs to be redundant--yet completely
+random input may also be ineffective. To generate a moderately diverse
+range of input values, the sparsity can be specified in the mutator
+descriptor (field 4 in option \p -fuzz_mutator). The term "sparsity" refers
+to the coverage of the space of possible input values, where a sparsity of
+1 indicates to first cover all values reachable by a single bit-flip of the
+app's original argument value, then cover all values reachable by 2 bit-flips,
+and so on. By increasing the sparsity, the mutator will reduce the number
+of permutations it generates at each degree of bit flipping. The following
+table provides an example of sparsity one, given a 4-byte input buffer:
+
+    Bit-Flip Degree   Total Mutator Values
+                  1                     32
+                  2                    992
+                  3                  29760
+
+By increasing the sparsity to just 4, the number of mutator values at each
+degree of bit flipping is greatly reduced:
+
+    Bit-Flip Degree   Total Mutator Values
+                  1                      8
+                  2                    248
+                  3                   7440
+
+This second approach balances the diversity of input values with the
+proximity of each generated input to the app's original argument value.
+
+*/

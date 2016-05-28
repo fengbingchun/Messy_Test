@@ -1,0 +1,1060 @@
+# **********************************************************
+# Copyright (c) 2011-2016 Google, Inc.  All rights reserved.
+# Copyright (c) 2009-2010 VMware, Inc.  All rights reserved.
+# **********************************************************
+#
+# Dr. Memory: the memory debugger
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation;
+# version 2.1 of the License, and no later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+###########################################################################
+# Dr. Memory default suppression file
+
+##################################################
+# i#65: uninitialized value deliberately used to generate a random number
+
+UNINITIALIZED READ
+name=default i#65 (generate random number)
+system call NtDeviceIoControlFile InputBuffer
+ADVAPI32.dll!*
+...
+ADVAPI32.dll!SystemFunction036
+
+##################################################
+# i#257: real leak in VS2008 STL std::numpunct<>::_Init
+
+LEAK
+name=default i#257 (real leak in VS2008 STL std::numpunct<>::_Init)
+# this frame can be inlined: *!std::_Maklocstr<>
+...
+*!std::numpunct<*>::_Init
+
+##################################################
+# Activation context leaked for certain threads
+#
+# i#286: when I use _beginthreadex() I see this leak even when explicitly calling
+# _endthread().  Not sure whether csrss frees it when it frees the stack
+# but suppressing under the assumption it's a false positive.
+# I don't see this when using CreateThread.
+#
+# i#506: InitCommonControlsEx leaks some activation contexts too, with a bunch of
+# different frames at the top of the stack
+
+LEAK
+name=default i#286 (activation context leak)
+ntdll.dll!Rtl*ActivationContext*
+
+LEAK
+name=default i#286 (activation context leak)
+ntdll.dll!*
+ntdll.dll!RtlAllocateActivationContextStack
+
+# i#286: the first two frames for _beginthreadex are:
+#   ntdll.dll!RtlAllocateActivationContextStack
+#   KERNEL*.dll!CreateRemoteThread*
+
+# i#369
+#   ntdll.dll!<VARIOUS>
+#   ntdll.dll!RtlAllocateActivationContextStack
+
+# i#445: for remote threads (e.g., nudges) the stacks start with:
+#   ntdll.dll!RtlAllocateActivationContextStack
+#   ntdll.dll!LdrpInitializeThread
+#   ntdll.dll!_LdrpInitialize
+#   ntdll.dll!LdrInitializeThunk
+
+# i#506: for InitCommonControlsEx the stacks start with:
+#   ntdll.dll!RtlActivateActivationContextEx/RtlpAllocateActivationContextStackFrame
+#   ntdll.dll!RtlActivateActivationContextEx
+#   ntdll.dll!RtlActivateActivationContext
+
+##################################################
+# i#306: these are stored on ntdll!RtlCriticalSectionList
+# using an 8-byte-in pointer
+
+POSSIBLE LEAK
+name=default i#306 (critical section 8-byte-in pointer)
+...
+ntdll.dll!RtlInitializeCriticalSection
+
+POSSIBLE LEAK
+name=default i#306 (critical section 8-byte-in pointer)
+...
+ntdll.dll!RtlInitializeCriticalSectionAndSpinCount
+
+##################################################
+# i#337: real bug in RtlpLowFragHeapAllocFromContext.
+# w/o symbols RtlpLowFragHeapAllocFromContext shows up
+# as LdrUnlockLoaderLock so we match all.
+
+UNINITIALIZED READ
+name=default i#337 (real bug in RtlpLowFragHeapAllocFromContext)
+ntdll.dll!*
+ntdll.dll!RtlAllocateHeap
+
+##################################################
+# i#455: real bug in kernel32!BaseDllReadWriteIniFileViaMapping
+
+UNADDRESSABLE ACCESS
+name=default i#455 (real bug in kernel32!BaseDllReadWriteIniFileViaMapping)
+system call NtQueryValueKey UNICODE_STRING capacity
+kernel32.dll!BaseDllReadWriteIniFileViaMapping
+
+# w/o symbols shows up as various nearby exports.
+# so far we've only seen it called from GetPrivateProfileStringA so we match that.
+UNADDRESSABLE ACCESS
+name=default i#455 (real bug in kernel32!BaseDllReadWriteIniFileViaMapping)
+system call NtQueryValueKey UNICODE_STRING capacity
+kernel32.dll!*
+kernel32.dll!*
+kernel32.dll!GetPrivateProfileStringA
+
+##################################################
+# i#462, i#504, i#1224: Deliberate write to beyond TOS
+
+# with symbols
+UNADDRESSABLE ACCESS
+name=default i#462 (write beyond TOS)
+instruction=mov    %e?? -> 0xfffffffc(%esp)
+CRYPTBASE.dll!AesEncrypt
+
+# w/o symbols
+UNADDRESSABLE ACCESS
+name=default i#462 (write beyond TOS)
+instruction=mov    %e?? -> 0xfffffffc(%esp)
+CRYPTBASE.dll!SystemFunction036
+
+# Typically the function is AesEncrypt, but we don't rely on syms.  Also this
+# happens frequently enough that we can take advantage of the i#838 optimization
+# for whole module suppressions and avoid taking a call stack.
+UNADDRESSABLE ACCESS
+name=default i#504 (write beyond TOS)
+instruction=mov    %e?? -> 0xfffffffc(%esp)
+RSAENH.dll!*
+
+UNADDRESSABLE ACCESS
+name=default i#462 (write beyond TOS)
+instruction=mov    %e?? -> 0xfffffffc(%esp)
+ADVAPI32.dll!*
+
+UNADDRESSABLE ACCESS
+name=default i#1224 (write beyond TOS)
+instruction=mov    %e?? -> 0xfffffff?(%esp)
+bcryptPrimitives.dll!*
+
+##################################################
+# i#492: false positive that needs per-bit granularity (i#113)
+# There is a chance of false negative on user-passed input to this
+# routine, but it's hard to make this suppression any more specific
+# w/o doing mod+offs. The risk is considered short-term until have
+# per-bit granularity.
+
+UNINITIALIZED READ
+name=default i#492 (bit manip)
+instruction=test   * $0x??
+usp10.dll!DoubleWideCharMappedString::DoubleWideCharMappedString
+
+# w/o symbols
+UNINITIALIZED READ
+name=default i#492 (bit manip)
+instruction=test   * $0x??
+usp10.dll!UspFreeMem
+
+##################################################
+# i#493: Not fully analyzed but look similar to i#492.
+# Likely will go away w/ per-bit granularity (i#113).
+# Again, single routine since doesn't depend on caller,
+# and some risk of false negative, but considered short-term
+# until have per-bit granularity.
+
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=test   * $0x??
+usp10.dll!CStackAllocator::Free
+# w/o symbols
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=test   * $0x??
+usp10.dll!UspFreeMem
+
+# the next 4 all have the same no-syms stack:
+# w/o symbols
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=test   * $0x??
+usp10.dll!ScriptPositionSingleGlyph
+
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=test   * $0x??
+usp10.dll!GenericEngineGetBreakingProperties
+
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=test   * $0x??
+usp10.dll!GenericEngineGetGlyphs
+
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=test   * $0x??
+usp10.dll!ShapingGetGlyphPositions
+
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=test   * $0x??
+usp10.dll!CUspShapingDrawingSurface::GenericGlyphOut
+
+# callstacks on vista
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=test   * $0x??
+USP10.dll!*
+USP10.dll!Script*
+
+# cmp instead of test, seen recently on win7 calc
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=cmp    0x1c(%ebp)*
+usp10.dll!CUspShapingDrawingSurface::GenericGlyphOut
+# w/o syms
+UNINITIALIZED READ
+name=default i#493 (bit manip)
+instruction=cmp    0x1c(%ebp)*
+usp10.dll!ScriptPositionSingleGlyph
+
+##################################################
+# i#494: Custom data not all initialized
+
+UNINITIALIZED READ
+name=default i#494 (custom data not all initialized)
+system call NtConnectPort parameter #6
+UxTheme.dll!...
+USER32.dll!*
+
+##################################################
+# i#497: Likely will go away w/ per-bit granularity (i#113).
+# Again, single routine since doesn't depend on caller,
+# and some risk of false negative, but considered short-term
+# until have per-bit granularity.
+
+UNINITIALIZED READ
+name=default i#497 (gdiplus bit manip)
+instruction=test   0x??(%e??) $0x??
+gdiplus.dll!DpRegion::FreeData
+
+# w/o symbols
+UNINITIALIZED READ
+name=default i#497 (gdiplus bit manip)
+instruction=test   0x??(%e??) $0x??
+gdiplus.dll!GdipCreateSolidFill
+
+##################################################
+# i#511: bit manip uninit
+# Either will be handled by per-bit granularity,
+# is too complex (like i#529), or perhaps is a real
+# uninit but deliberate for random number gen:
+# regardless we want to suppress.
+
+UNINITIALIZED READ
+name=default i#511 (rc4_key bit manip)
+instruction=mov    (%ebx,%esi,1) -> %al
+RPCRT4.dll!rc4_key
+
+# w/o symbols.
+# this func takes a single OUT pointer so low likelihood
+# of false neg since undef pointer will likely be unaddr
+# though could be a nearby internal func that maps to this
+# w/o syms: we'll live w/ the false negative risk.
+UNINITIALIZED READ
+name=default i#511 (rc4_key bit manip)
+instruction=mov    (%ebx,%esi,1) -> %al
+RPCRT4.dll!UuidCreate
+
+##################################################
+# i#529: multi-instr partial xor-with-self
+# No good symbols so we match these instructions:
+#  test   0x70(%esi) $0x00000400
+#  test   0x70(%esi) $0x00000200
+#  test   0x70(%ebx) $0x00000100
+#  test   0x70(%edi) %esi
+# On Vista, this bitfield seems to be a short, so we get "data16 test" for the
+# instruction.  These are in Ndr* routines, but without symbols we sometimes get
+# NDRContextUnmarshall as the nearest export, so we use N*.
+
+UNINITIALIZED READ
+name=default i#529 (multi-instr partial xor-with-self)
+instruction=*test   0x70(%e??) *
+RPCRT4.dll!N*
+RPCRT4.dll!*
+
+UNINITIALIZED READ
+name=default i#529 (alternate bit-level fp)
+instruction=test   %esi %eax
+RPCRT4.dll!N*
+RPCRT4.dll!*
+
+##################################################
+# i#709: bit manip uninit
+# Highly probable bit-level definedness issue, as it is masking all but the low
+# bit in the test instruction.  This is often hit during shutdown.  Different
+# Windows versions reach it through different stacks, but it's always reached
+# through ntdll.  Unfortunately the ntdll frames are more than 12 frames deep so
+# we just match five clbcatq.dll frames and hope user data doesn't get this deep
+# into the module.
+UNINITIALIZED READ
+name=default i#709
+instruction=test   0x??(%esi) $0x??
+CLBCatQ.DLL!*
+CLBCatQ.DLL!*
+CLBCatQ.DLL!*
+CLBCatQ.DLL!*
+CLBCatQ.DLL!*
+
+##################################################
+# i#733: false pos leak from plfCreateLOCALFONT
+# This function looks like it's creating a linked list whose nodes are all
+# allocated from within a single array.  The first array element is the last
+# node in the list, and the last array element is the head of the list which is
+# returned.  Unless we change our leak scanner to follow pointers reachable via
+# mid-chunk pointers, we won't be able to handle this kind of leak.
+POSSIBLE LEAK
+name=default i#733
+GDI32.dll!plfCreateLOCALFONT
+
+# w/o symbols
+POSSIBLE LEAK
+name=default i#733 (nosyms)
+GDI32.dll!...
+GDI32.dll!CreateFontIndirectExW
+GDI32.dll!CreateFontIndirectW
+
+##################################################
+# i#18: false pos leak from ole32.dll!EventEntry::CreatePoolEntry
+# CreatePoolEntry allocates a 24 byte EventPoolEntry object that has an
+# SLIST_ENTRY field in it.  The link pointer is at offset 0xC in the struct, and
+# so we get a mid-chunk pointer and a possible leak.
+POSSIBLE LEAK
+name=default i#18 CreatePoolEntry mid-chunk linked list leak (win7)
+# "*" below is LockEntry on Win7 and EventPoolEntry on Vista.
+ole32.dll!*::operator new
+ole32.dll!EventPoolEntry::CreatePoolEntry
+ole32.dll!EventPoolEntry::ThreadInit
+ole32.dll!CRWLock::ThreadInit
+ole32.dll!COleTls::TLSAllocData
+# CoInitializeEx does a tail call, so we don't see it here.
+
+# w/o symbols: callstack is all private syms so we use modoffs despite being
+# OS-specific and brittle.
+# FIXME i#741: Find a less-brittle way to write this.
+POSSIBLE LEAK
+name=default i#18 CreatePoolEntry mid-chunk linked list leak (nosyms win7)
+<ole32.dll+0x3f0ce>
+<ole32.dll+0x3f10d>
+<ole32.dll+0x40e77>
+<ole32.dll+0x408f4>
+<ole32.dll+0x4080b>
+# CoInitializeEx does a tail call, so we don't see it here.
+
+# w/o symbols on Vista
+# FIXME i#741: Find a less-brittle way to write this.
+POSSIBLE LEAK
+name=default i#18 CreatePoolEntry mid-chunk linked list leak (nosyms win vista)
+<ole32.dll+0x597ca>
+<ole32.dll+0x3204f>
+<ole32.dll+0x34acb>
+<ole32.dll+0x57cf2>
+<ole32.dll+0x57ea2>
+
+##################################################
+# i#18: one-time true leak in LockEntry::ThreadInit
+# ole32.dll!LockEntry::ThreadInit is called once from CoInitialize, but neither
+# CRWLock::ThreadCleanup or LockEntry::ThreadCleanup are ever called.  This
+# looks like an intentional, one time leak of a pool of lock entries designed
+# to have the same lifetime as the process.
+LEAK
+name=default i#18 LockEntry::ThreadInit pool leak
+ole32.dll!LockEntry::ThreadInit
+ole32.dll!CRWLock::ThreadInit
+ole32.dll!COleTls::TLSAllocData
+# CoInitializeEx does a tail call, so we don't see it here.
+
+# w/o symbols: callstack is all private syms so we use modoffs despite being
+# OS-specific and brittle.
+# FIXME i#741: Find a less-brittle way to write this.
+LEAK
+name=default i#18 LockEntry::ThreadInit pool leak (nosyms win7)
+<ole32.dll+0x40739>
+<ole32.dll+0x408e5>
+<ole32.dll+0x4080b>
+# CoInitializeEx does a tail call, so we don't see it here.
+
+# w/o symbols: callstack is all private syms so we use modoffs despite being
+# OS-specific and brittle.
+# FIXME i#741: Find a less-brittle way to write this.
+LEAK
+name=default i#18 LockEntry::ThreadInit pool leak (nosyms vista)
+<ole32.dll+0x57d2c>
+<ole32.dll+0x57ce3>
+<ole32.dll+0x57ea2>
+
+##################################################
+# i#743: bit manip uninit
+# Highly probable bit-level definedness issue, similar to i#709.
+UNINITIALIZED READ
+name=default i#743
+instruction=test   0x*(%???) $0x??
+CLBCatQ.DLL!...
+ole32.dll!*
+# Reached through ole32.dll!CoCreateInstanceEx, but that frame is more than 11
+# frames deep so we drop it.
+
+##################################################
+# i#745: bit manip uninit
+# Bit-level definedness issue.
+UNINITIALIZED READ
+name=default i#745 bit-level in ShouldShowExtension
+instruction=test   * $0x??
+SHELL32.dll!CFileExtension::_ShouldShowExtension
+SHELL32.dll!CFileSysItemString::ShouldShowExtension
+
+# We don't have any exports to hang our hat on, so our instruction is very
+# specific, and possibly brittle.
+UNINITIALIZED READ
+name=default i#745 bit-level in ShouldShowExtension (nosyms win7)
+instruction=test   0xffffffdc(%ebp) $0x02
+shell32.dll!*
+shell32.dll!*
+shell32.dll!*
+shell32.dll!*
+shell32.dll!*
+
+##################################################
+# i#745: Bit-level uninit false pos in shell32.dll!_GetExtensionFlags.
+# Can see where one bit is selected in shell32.dll!ShowSuperHidden, which
+# _GetExtensionFlags calls.
+UNINITIALIZED READ
+name=default i#745 true uninit in _GetExtensionFlags
+instruction=test   %eax %eax
+SHELL32.dll!CFileSysItemString::_GetExtensionFlags
+
+UNINITIALIZED READ
+name=default i#745 true uninit in _GetExtensionFlags (nosyms win7)
+instruction=test   %eax %eax
+SHELL32.dll!*
+SHELL32.dll!*
+SHELL32.dll!*
+SHELL32.dll!*
+SHELL32.dll!*
+
+##################################################
+# i#751: possible THREAD object leak
+# Hasn't been fully investigated to determine where the mid-chunk pointer is
+# rooted and to see if we could implement a heuristic to detect this as true
+# reachability.
+POSSIBLE LEAK
+name=default i#751: possible THREAD object leak
+rpcrt4.dll!AllocWrapper
+rpcrt4.dll!operator new
+rpcrt4.dll!ThreadSelfHelper
+
+# These are fairly fragile nosyms suppressions, since we have no exports.
+POSSIBLE LEAK
+name=default i#751: possible THREAD object leak (nosyms a)
+rpcrt4.dll!...
+rpcrt4.dll!RpcBindingFromStringBindingW
+
+POSSIBLE LEAK
+name=default i#751: possible THREAD object leak (nosyms b)
+rpcrt4.dll!...
+ntdll.dll!*
+# Nearest export is TpCallbackIndependent
+ntdll.dll!*
+kernel*.dll!BaseThreadInitThunk
+
+##################################################
+# i#753: System leak from a shell32 thread that loads setupapi.dll.
+# Something is wrong with the way this thread terminates that prevents these two
+# objects from being cleaned up.  It might be desirable to hook the thread
+# termination and save the TEB contents for the reachability scan at shutdown to
+# silence system leaks like these.
+LEAK
+name=default i#753: RtlpUpdateTEBLanguage leak
+ntdll.dll!RtlpUpdateTEBLanguage
+...
+ntdll.dll!RtlLoadString
+...
+setupapi.dll!_CRT_INIT
+
+# i#753: System leak from a shell32 thread that loads setupapi.dll.
+LEAK
+name=default i#753: LdrpSearchResourceSection_U leak
+ntdll.dll!LdrpSearchResourceSection_U
+...
+ntdll.dll!RtlLoadString
+...
+setupapi.dll!_CRT_INIT
+
+# i#753: System leak from a shell32 thread that loads setupapi.dll.
+LEAK
+name=default i#753: leaks in thread not cleaned up by shell32 (nosyms)
+ntdll.dll!...
+ntdll.dll!RtlLoadString
+...
+setupapi.dll!*
+
+##################################################
+# i#737: weird unaddr in msxml3.dll
+# msxml3!MpHeapFree reads from the start of the page
+# containing the Rtl heap allocation being freed,
+# which often ends up as an unaddressable access.
+# MpHeapFree is called from msxml3!MemFree which is called
+# from msxml3 routines, so we look for 3 in a row.
+# We hope that app data passed in will not go through 3
+# layers before any bug there is found.
+# Also happens in msxml6.dll.
+
+UNADDRESSABLE ACCESS
+name=default i#737: msxml heap probe
+msxml?.dll!*
+msxml?.dll!*
+msxml?.dll!*
+
+##################################################
+# i#752: GDI usage errors seen in system libraries on Chrome shutdown
+
+GDI USAGE ERROR
+name=default i#752: riched shutdown A
+system call NtGdiDeleteObjectApp
+# w/ syms top frame is RICHED20.dll!CCcs::DestroyFont
+RICHED20.dll!...
+ntdll.dll!...
+ntdll.dll!LdrShutdownProcess
+
+GDI USAGE ERROR
+name=default i#752: riched shutdown B
+system call NtGdiDeleteObjectApp
+GDI32.dll!DeleteDC
+# w/ syms top frame is RICHED20.dll!CW32System::~CW32System
+RICHED20.dll!...
+ntdll.dll!...
+ntdll.dll!LdrShutdownProcess
+
+##################################################
+# i#757: RPC binding leaks in sspicli.dll
+# We use "SspiCli.dll!Cre*" as the last frame to match either
+# CreateRpcConnection or CredUnmarshalTarget which is the nearest export.
+LEAK
+name=default i#757: RPC binding leaks in sspicli.dll
+RPCRT4.dll!...
+SspiCli.dll!*
+SspiCli.dll!Cre*
+
+##################################################
+# i#781: argv[] leak in mingw CRT
+
+# The bottom frame is __mingw_CRTStartup but we don't always have symbols.
+
+POSSIBLE LEAK
+name=default i#781: argv[] possible leak in mingw CRT
+msvcrt.dll!...
+msvcrt.dll!__getmainargs
+*!*
+
+##################################################
+# i#790: possible leak in msvcrt/mingw CRT
+# XXX: need to analyze
+# XXX: 3rd-party apps won't have syms for __mingw_CRTStartup!
+
+POSSIBLE LEAK
+name=default i#790: strcpy_s possible leak in CRT
+msvcrt.dll!strcpy_s
+msvcrt.dll!...
+*!__mingw_CRTStartup
+
+##################################################
+# i#817: possible leaks in msvcrt CRT
+# XXX: need to analyze
+# Using * b/c happens with static CRT
+
+POSSIBLE LEAK
+name=default i#817a: _setenvp possible leak in CRT
+*!_setenvp
+*!_CRT_INIT
+
+POSSIBLE LEAK
+name=default i#817b: _setargv possible leak in CRT
+...
+*!_setargv
+*!_CRT_INIT
+
+POSSIBLE LEAK
+name=default i#817c: __onexitinit possible leak in CRT
+*!__onexitinit
+...
+*!_CRT_INIT
+
+##################################################
+# i#607 part A: w/o symbols in msvcr*d.dll we don't intercept
+# an internal alloc routine and thus when wrapping we report
+# its touches of heap headers.
+
+UNADDRESSABLE ACCESS
+name=default i#607 msvcr*d.dll w/o syms
+MSVCR*D.dll!...
+MSVCR*D.dll!initptd
+
+##################################################
+# i#988 suppressing handle leaks from system dll
+
+# i#988 c#1 c#3 from nudge_handle test
+HANDLE LEAK
+name=default i#988 c#1 NtOpenKey
+system call NtOpenKey
+...
+*!__crtLCMapStringA
+*!setSBUpLow
+
+# i#988-c#2 for windows creation and destroy
+HANDLE LEAK
+name=default i#988 c#2 NtConnectPort
+system call NtConnectPort
+...
+USER32.dll!CreateWindowEx?
+
+HANDLE LEAK
+name=default i#988 c#2 NtGdiCreateSolidBrush
+system call NtGdiCreateSolidBrush
+...
+USER32.dll!CreateWindowEx?
+
+HANDLE LEAK
+name=default i#988 c#2 NtGdiCreatePatternBrushInternal
+system call NtGdiCreatePatternBrushInternal
+...
+USER32.dll!CreateWindowEx?
+
+HANDLE LEAK
+name=default i#988 c#6 NtCreateIoCompletion
+system call NtCreateIoCompletion
+...
+ntdll.dll!TpAllocWork
+
+HANDLE LEAK
+name=default i#988 c#6 NtDuplicateObject
+system call NtDuplicateObject
+...
+ntdll.dll!TpAllocWork
+
+HANDLE LEAK
+name=default i#988 c#6 NtCreateKeyedEvent
+system call NtCreateKeyedEvent
+...
+ntdll.dll!TpAllocWork
+
+HANDLE LEAK
+name=default i#988 c#6 NtCreateWorkerFactory
+system call NtCreateWorkerFactory
+...
+ntdll.dll!TpAllocWork
+
+##################################################
+# i#1039: real bug where MSVCR80D!DebuggerProbe fails to initialize 3 of the 6
+# exception arg slots it allocates.  The top MSVCR80D.dll frame is
+# DebuggerProbe but that's not exported.
+
+UNINITIALIZED READ
+system call NtRaiseException EXCEPTION_RECORD.ExceptionInformation
+ntdll.dll!RtlRaiseException
+KERNEL32.dll!RaiseException
+MSVCR80D.dll!*
+MSVCR80D.dll!*
+MSVCR80D.dll!*
+
+##################################################
+# i#1043: exception handling leak in mingw CRT
+# This was fixed between mingw g++ 4.5.2 and 4.7.2 so we may be able
+# to remove the suppression once we no longer support those versions.
+
+LEAK
+name=default i#1043: EH leak in mingw CRT
+*!__cxa_get_globals
+
+# i#1509: I removed the 2nd frame b/c mingw g++ 4.7.3 ends up
+# skipping this frame:
+#*!__cxa_allocate_exception
+
+##################################################
+# i#1134: TlsGetValue after TlsFree in mingw CRT
+# This was fixed between mingw g++ 4.5.2 and 4.7.2 so we may be able
+# to remove the suppression once we no longer support those versions.
+# XXX i#1134c#3: but I see it in 4.7.3 too!
+
+UNADDRESSABLE ACCESS
+name=default i#1134: mingw CRT TlsGetValue after TlsFree
+KERNEL*.dll!TlsGetValue
+*!__mingwthr_run_key_dtors*
+
+##################################################
+# i#1140: MessageBox leaks we need to analyze
+# This one is expanded to handle missing symbols.
+
+LEAK
+name=default i#1140 MessageBox
+IMM32.dll!Imm*
+IMM32.dll!...
+USER32.dll!*
+
+##################################################
+# i#1155: real bug in VS2012/VS2013 istream
+
+UNINITIALIZED READ
+name=default i#1155 VS2012/VS2013 istream
+*!std::_Find_elem<>
+*!std::num_get<>::_Get?fld
+
+UNINITIALIZED READ
+name=default i#1155-nosyms VS2012/VS2013 istream
+*!std::_Throw_future_error
+*!std::num_get<>::_Get?fld
+
+##################################################
+# i#960: real mismatches of Windows API layer vs C layer in CRT when we
+# don't have syms and thus can't see
+# internal alloc routines.  We don't need to suppress in static CRT b/c w/o
+# syms we won't see the libc layer at all.
+# For -replace_malloc, the app calling libc won't have MSVCR*.dll at the
+# top as we'll replace that frame.
+
+INVALID HEAP ARGUMENT
+name=default i#960 CRT mismatch
+MSVCR*.dll!*
+
+# Variant seen in i#1431
+INVALID HEAP ARGUMENT
+name=default i#960 CRT mismatch B
+MSVCP*.dll!*
+...
+MSVCR*.dll!exit
+
+# Variant seen in i#1831
+INVALID HEAP ARGUMENT
+name=default i#960 CRT mismatch C
+MSVCP*.dll!*
+...
+MSVCR*.dll!initterm_e
+
+##################################################
+# i#1240: real mismatches in VS2010 CRT
+# i#1275: real mismatches in VS2012 CRT
+# We can rely on symbols here as without them we wouldn't see the operator stubs.
+# For /MD*, the i#960 suppression already covers it.
+
+# Rather than trying to match all of these:
+# A) Precise:
+#   *!Concurrency::details::Hash<*>::*
+# B) Hash destructor is inlined into another class:
+#   *!Concurrency::details::ContextBase::~ContextBase
+# C) Seen on x64 (did not analyze: Hash inlined again?)
+#   *!Concurrency::details::SchedulerBase::Finalize
+#   *!Concurrency::details::ExternalContextBase::`scalar deleting destructor'
+# D) i#1275
+#   *!Concurrency::details::ContextBase::CancellationBeaconStack::~CancellationBeaconStack
+# We go with simple, folding i#1275 into here as well:
+
+INVALID HEAP ARGUMENT
+name=default i#1240 CRT mismatch
+*!Concurrency::details::*
+
+##################################################
+# i#1241: Python suppressions
+# Can be in libpython* or python executable so we use "*python*"
+
+UNADDRESSABLE ACCESS
+name=default i#1241 python malloc
+*python*!PyObject_Free
+
+UNADDRESSABLE ACCESS
+name=default i#1241 python malloc
+*python*!PyObject_Realloc
+
+##################################################
+# i#1279: leak in LdrpGetNewTlsVector
+# Without syms though the top frames are unreliable.
+# But we should reach LdrInitializeThunk solely inside ntdll,
+# which makes this clearly not an app leak.
+
+LEAK
+name=default i#1279 LdrpGetNewTlsVector
+ntdll.dll!...
+ntdll.dll!LdrInitializeThunk
+
+##################################################
+# i#1298: real bug in MSVCRT stat()
+# The actual bug is in _stat64i32() called from stat(), but for /MD we
+# might not have symbols.  We limit to the comparison to ':' (0x3a)
+# and avoid missing an uninit in the rest of the string via instruction=.
+# VS2013 has this as an unaddr w/ two frames above stat and cmp to 0x003a.
+
+UNINITIALIZED READ
+name=default i#1298 real MSVCRT stat bug
+instruction=*cmp * $0x*3a
+...
+*!stat
+
+UNADDRESSABLE ACCESS
+name=default i#1298 real MSVCRT stat bug VS2013
+instruction=*cmp * $0x*3a
+...
+*!stat
+
+##################################################
+# i#1300: real bug in Perflib
+# We match any registry query from pdh to avoid issues with missing symbols.
+
+UNINITIALIZED READ
+name=default i#1300 real Perflib bug
+system call NtQueryValueKey UNICODE_STRING.*
+ADVAPI32.dll!...
+KERNEL32.dll!...
+pdh.dll!*
+
+##################################################
+# i#1302: SockSocket final 9 EA bytes are left uninit
+
+UNINITIALIZED READ
+name=default i#1302 SockSocket EA
+system call NtCreateFile parameter #9
+MSWSOCK.dll!*
+
+##################################################
+# i#1303: real bug in ATL
+# Static link has an ATL:: prefix, but dynamic link with ATL.dll
+# does not.  Dynamic w/o symbols has an unreliable second frame,
+# so we do not include static's "*!ATL::CAxHostWindow::OnSize".
+
+UNINITIALIZED READ
+name=default i#1303 real ATL bug
+KERNEL32.dll!MulDiv
+*!*AtlPixelToHiMetric
+
+##################################################
+# i#1316: real bug in UxTheme.dll on WinXP
+# These are in internal non-exported routines, and the nearest
+# exported routine varies by version, so if the user has no symbols
+# then we can't reliably use a func name here.
+# The exported GetThemeBackgroundContentRect should be enough.
+# There are three instructions accessing the region, so we use
+# callstack only.
+#
+# For reference, the callstack with debug symbol:
+# UxTheme.dll!CImageFile::GetDrawnImageSize
+# UxTheme.dll!CImageFile::GetScaledContentMargins
+# UxTheme.dll!CImageFile::GetBackgroundContentRect
+# UxTheme.dll!GetThemeBackgroundContentRect
+
+UNINITIALIZED READ
+name=default i#1316 real UxTheme.dll bug
+UxTheme.dll!*
+UxTheme.dll!*
+UxTheme.dll!*
+UxTheme.dll!GetThemeBackgroundContentRect
+
+##################################################
+# i#1324: deliberate uninit in mingw runtime
+# XXX: 3rd-party apps won't have syms for __mingw_CRTStartup!
+
+UNINITIALIZED READ
+name=default i#1324 mingw runtime
+*!__mingw_glob
+
+##################################################
+# i#599: known reachable allocs in MSCRT
+
+REACHABLE LEAK
+name=default i#599 MSCRT un-freed alloc A
+...
+*!_mtinit*
+
+REACHABLE LEAK
+name=default i#599 MSCRT un-freed alloc B
+...
+*!_ioinit
+
+REACHABLE LEAK
+name=default i#599 MSCRT un-freed alloc C
+...
+*!_?alloc_crt
+
+REACHABLE LEAK
+name=default i#599 MSCRT un-freed alloc D
+...
+*!pre_cpp_init
+
+REACHABLE LEAK
+name=default i#599 MSCRT un-freed alloc E
+...
+MSVCR*.dll!_flsbuf
+
+REACHABLE LEAK
+name=default i#599 MSCRT un-freed alloc F
+...
+*!_Mtxinit
+
+# Regular leaks show up here too, so we suppress all
+# XXX: 3rd-party apps won't have syms for __mingw_CRTStartup!
+LEAK
+name=default i#599 mingw un-freed alloc A
+...
+*!__mingw_CRTStartup
+
+REACHABLE LEAK
+name=default i#599 mingw un-freed alloc B
+*!*mingwthr_add_key_dtor
+
+##################################################
+# i#1329: NtUserMessageCall COPYDATASTRUCT.lpData
+# Padding in the data used for WM_COPYDATA.
+
+UNINITIALIZED READ
+name=default i#1329 WM_COPYDATA padding
+system call NtUserMessageCall COPYDATASTRUCT.lpData
+USER32.dll!SendMessageW
+SHELL32.dll!SHAppBarMessage
+
+##################################################
+# i#1381: NtGdiDrawStream buffer on win8.1
+# Suppress what we believe is a real bug in
+# UxTheme.dll!CImageFile::DrawBackgroundDS where it does not initialize the
+# final 4 bytes of the buffer passed to NtGdiDrawStream on Windows 8.1.
+
+UNINITIALIZED READ
+name=default i#1381 NtGdiDrawStream buffer on win8.1
+system call NtGdiDrawStream parameter #2
+GDI32.dll!...
+UxTheme.dll!*
+UxTheme.dll!*
+
+##################################################
+# i#1437: Handle Leaks to be investigated
+
+HANDLE LEAK
+name=default i#1437-c#1 handle leaks from SHELL32.dll!SHFileOperationW
+system call NtDuplicateObject
+...
+SHELL32.dll!*
+SHELL32.dll!SHFileOperationW
+
+##################################################
+# Handle leaks to be suppressed
+
+HANDLE LEAK
+name=default i#1437-c#3 handle leaks from callbacks of TppWorkerThread
+...
+ntdll.dll!*Callback
+ntdll.dll!TppWorkerThread
+KERNEL32.dll!BaseThreadInitThunk
+
+##################################################
+# i#1474: real bug in VS2013 istringstream
+
+UNINITIALIZED READ
+name=default i#1474 VS2013 istringstream
+# we saw both _FXp_getw and FXp_getw (in c#7)
+*!*FXp_getw
+*!*FDtento
+*!*Stofx
+
+##################################################
+# i#1535: Possible false positive for AddSidToBoundaryDescriptor.
+
+LEAK
+name=default i#1535 AddSidToBoundaryDescriptor false positive
+...
+ntdll.dll!RtlAddSIDToBoundaryDescriptor
+*!AddSIDToBoundaryDescriptor
+
+##################################################
+# i#1588: GDI usage error from SHELL32.dll!CDragDropHelper::InitializeFromBitmap
+
+GDI USAGE ERROR
+name=default i#1588: InitializeFromBitmap with symbol
+system call NtGdiDeleteObjectApp
+GDI32.dll!InternalDeleteDC
+GDI32.dll!DeleteDC
+SHELL32.dll!CDragDropHelper::*
+
+GDI USAGE ERROR
+name=default i#1588: InitializeFromBitmap without symbol
+system call NtGdiDeleteObjectApp
+GDI32.dll!DeleteDC
+GDI32.dll!DeleteDC
+SHELL32.dll!Ordinal*
+
+##################################################
+# i#1669: win10-specific process creation error
+# XXX: the 2nd param here is not PUNICODE_STRING: we
+# should update the database.
+
+UNADDRESSABLE ACCESS
+name=default i#1669 win10 create process
+system call NtApphelpCacheControl UNICODE_STRING content
+...
+KERNELBASE.dll!CreateProcessInternalW
+
+##################################################
+# i#1769: Norton injected code errors
+
+UNINITIALIZED READ
+name=default i#1769 Norton UMEngx86
+...
+UMEngx86.dll!*
+
+UNADDRESSABLE ACCESS
+name=default i#1769 Norton beyond-TOS A
+instruction=*0xfffff???(%esp)*
+<not in a module>
+kernel*.dll!*
+
+UNADDRESSABLE ACCESS
+name=default i#1769 Norton beyond-TOS B
+instruction=*0xfffff???(%esp)*
+<not in a module>
+ntdll.dll!*
+
+UNINITIALIZED READ
+name=default i#1769 Norton thread A
+<not in a module>
+kernel32.dll!BaseThreadInitThunk
+
+UNINITIALIZED READ
+name=default i#1769 Norton thread B
+system call NtQueryInformationThread parameter value #2
+kernel32.dll!BaseThreadInitThunk
+
+##################################################
+# i#1783: F-Secure injected code errors
+
+UNINITIALIZED READ
+name=default i#1783 F-Secure
+...
+fshook32.dll!*
+
+##################################################
+# i#1825: GdiAddFontResourceW bug
+
+UNINITIALIZED READ
+name=default i#1824 GdiAddFontResourceW
+system call NtGdiAddFontResourceW parameter value #4
+GDI32.dll!GdiAddFontResourceW

@@ -1,0 +1,184 @@
+# **********************************************************
+# Copyright (c) 2010-2016 Google, Inc.  All rights reserved.
+# Copyright (c) 2009-2010 VMware, Inc.  All rights reserved.
+# **********************************************************
+#
+# Dr. Memory: the memory debugger
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation;
+# version 2.1 of the License, and no later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+###########################################################################
+# Dr. Memory default suppression file
+
+##################################################
+# known bitfield suppressions (PR 488813)
+
+UNINITIALIZED READ
+name=default (libc bitfield)
+libc.so.*!maybe_split_for_insert
+
+##################################################
+# i#1241: Python suppressions
+# Can be in libpython* or python executable so we use "*python*"
+
+UNADDRESSABLE ACCESS
+name=default i#1241 python malloc
+*python*!PyObject_Free
+
+UNADDRESSABLE ACCESS
+name=default i#1241 python malloc
+*python*!PyObject_Realloc
+
+##################################################
+# loader suppressions (PR 525272, i#79, i#1236)
+
+# There are a few different variants here, but w/o symbols for ld-linux
+# we have to resort to suppressing for any 3 frames with the top N being
+# ld-linux.so and the bottom 3-N being libc.
+
+# A notable variant is PR 530857: this is a real bug in the loader!
+# If have debuginfo shows up as elf_dynamic_do_rel{,a}
+# Else shows up as _dl_relocate_object
+# Or on FC12 I see ".L259" and ".L202"!
+# ld-linux*!...
+# ld-linux*!dl_open_worker
+# ld-linux*!_dl_catch_error
+
+UNINITIALIZED READ
+name=default (ld-linux_3_libc_0)
+ld-linux*!*
+ld-linux*!*
+ld-linux*!*
+
+UNINITIALIZED READ
+name=default (ld-linux_2_libc_1)
+ld-linux*!*
+ld-linux*!*
+libc.so.*!*
+
+UNINITIALIZED READ
+name=default (ld-linux_1_libc_2)
+ld-linux*!*
+libc.so.*!*
+libc.so.*!*
+
+##########
+# loader has own copy of strlen and not exported so we aren't able to
+# replace it (PR 486382 should address that once have online symbols).
+# we use a wildcard instead of "strlen" since addr2line
+# crashes on strlen addresses on Fedora 12 (PR 530836).
+
+UNADDRESSABLE ACCESS
+name=default (ld-linux strlen)
+ld-linux*!*
+ld-linux*!*
+ld-linux*!*
+
+# uninits in strlen and strchr are covered by the general callstacks above
+
+##########
+# i#79: with more recent versions of the loader we see both uninit and
+# unaddr with stacks like these.  XXX: track down and verify whether real
+# bugs.
+
+UNADDRESSABLE ACCESS
+name=default i#79 (ld-linux)
+...
+ld-linux*!_dl_rtld_di_serinfo
+ld-linux*!*
+
+UNADDRESSABLE ACCESS
+name=default i#79 (ld-linux)
+ld-linux*!*
+
+##################################################
+# glibc out-of-bounds memory access (PR 532762):
+# this is a real bug in glibc
+
+UNADDRESSABLE ACCESS
+name=default (libc real bug)
+libc.so.*!_Unwind_IteratePhdrCallback
+
+##################################################
+# loader deliberately stores index+1 (PR 535646):
+
+# This is in ld-linux*!allocate_dtv, but w/o symbols
+# we have several variants and we end up suppressing
+# any ld-linux allocation.
+# i#1711: listing as LEAK instead of just POSSIBLE LEAK.
+
+LEAK
+name=default (ld-linux stores index+1)
+ld-linux*!*
+
+##################################################
+# i#717: eglibc loader seems to have a one time leak
+# FIXME i#720: If we believe this is a one time leak we should limit it to only
+# suppress one report.
+LEAK
+name=default (one-time eglibc ld-linux leak)
+ld-linux*!_dl_map_object_deps
+ld-linux*!dl_open_worker
+...
+libdl.so.2!*dlopen*
+
+##################################################
+# PR 564660: libz optimized code
+# Xref http://www.zlib.net/zlib_faq.html#faq36
+
+UNINITIALIZED READ
+name=default (libz optimized code)
+libz.so.1!*
+libz.so.1!*
+libz.so.1!deflate
+
+##################################################
+# i#70: pthread_create -> __libc_thread_freeres -> arena_thread_freeres
+
+UNADDRESSABLE ACCESS
+name=default i#70 (pthread)
+libc.so.6!*
+libc.so.6!*
+libpthread.so.0!start_thread
+
+##################################################
+# i#1451: bitfield in std::_Bit_reference
+
+UNINITIALIZED READ
+name=default i#1451 std::_Bit_reference bitfield
+*!std::_Bit_reference::operator bool
+*!std::_Bit_const_iterator::operator*
+...
+*!std::vector<>::*
+
+##################################################
+# i#267: tcmalloc deliberate leaks
+
+LEAK
+name=default (tcmalloc)
+...
+*!InitModule
+...
+*!MallocExtension::Register
+*!TCMallocGuard::TCMallocGuard
+
+##################################################
+# i#1856: Android emutls actual leaks with offset pointers
+
+LEAK
+name=default (emutls)
+libc.so!emutls_alloc
+
+###########################################################################
