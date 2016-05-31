@@ -171,6 +171,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_cast.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_inline.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\template_impl.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\this_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\vector.cpp" />
   </ItemGroup>

@@ -12,7 +12,7 @@
 
 int main()
 {
-	test_vector_access();
+	test_template6();
 
 	std::cout << "\nok" << std::endl;
 	return 0;

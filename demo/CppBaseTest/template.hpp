@@ -199,10 +199,21 @@ template<> struct PrintType <std::string> {
 	}
 };
 
+template <typename T>
+inline const T& max_mum(const T& x, const T& y);
+
+template<class T>
+class A {
+public:
+	void f();
+};
+
 void test_template1();
 void test_template2();
 void test_template3();
 void test_template4();
 void test_template5();
+void test_template6();
+void test_template7();
 
 #endif // FBC_MESSY_TEST_TEMPLATE_HPP_

@@ -70,3 +70,16 @@ void test_template5()
 	std::cout << type_string.type() << std::endl;
 }
 
+void test_template6()
+{
+	int ret = 0, a = 5, b = 7;
+	ret = max_mum(a, b);
+	std::cout << ret << std::endl;
+}
+
+void test_template7()
+{
+	A<int> a;
+	a.f();
+}
+
