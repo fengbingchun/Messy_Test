@@ -9,10 +9,11 @@
 #include "template.hpp"
 #include "data_type_convert.hpp"
 #include "vector.hpp"
+#include "fstream.hpp"
 
 int main()
 {
-	test_template6();
+	test_fstream4();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
