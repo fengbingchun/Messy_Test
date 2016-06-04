@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppBaseTest", "..\CppBaseTe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Json11_Test", "..\Json11_Test\Json11_Test.vcxproj", "{860F4BA1-27C0-4F6E-AA2B-6126837F9681}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DesignPatternsTest", "..\DesignPatternsTest\DesignPatternsTest.vcxproj", "{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -45,6 +47,12 @@ Global
 		{860F4BA1-27C0-4F6E-AA2B-6126837F9681}.Release|Win32.ActiveCfg = Release|Win32
 		{860F4BA1-27C0-4F6E-AA2B-6126837F9681}.Release|Win32.Build.0 = Release|Win32
 		{860F4BA1-27C0-4F6E-AA2B-6126837F9681}.Release|x64.ActiveCfg = Release|x64
+		{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}.Debug|Win32.Build.0 = Debug|Win32
+		{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}.Debug|x64.ActiveCfg = Debug|x64
+		{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}.Release|Win32.ActiveCfg = Release|Win32
+		{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}.Release|Win32.Build.0 = Release|Win32
+		{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -199,9 +199,11 @@ template<> struct PrintType <std::string> {
 	}
 };
 
+// 函数模板声明与定义分开
 template <typename T>
 inline const T& max_mum(const T& x, const T& y);
 
+// 类模板声明与定义分开
 template<class T>
 class A {
 public:
