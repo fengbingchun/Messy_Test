@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Json11_Test", "..\Json11_Te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DesignPatternsTest", "..\DesignPatternsTest\DesignPatternsTest.vcxproj", "{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrMemoryTest", "..\DrMemoryTest\DrMemoryTest.vcxproj", "{A26D5F01-995A-4D51-BA6D-29A265125D0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -53,6 +55,12 @@ Global
 		{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}.Release|Win32.ActiveCfg = Release|Win32
 		{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}.Release|Win32.Build.0 = Release|Win32
 		{3CEADC4C-6E81-435E-8F4C-D30E05C90D85}.Release|x64.ActiveCfg = Release|x64
+		{A26D5F01-995A-4D51-BA6D-29A265125D0C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A26D5F01-995A-4D51-BA6D-29A265125D0C}.Debug|Win32.Build.0 = Debug|Win32
+		{A26D5F01-995A-4D51-BA6D-29A265125D0C}.Debug|x64.ActiveCfg = Debug|x64
+		{A26D5F01-995A-4D51-BA6D-29A265125D0C}.Release|Win32.ActiveCfg = Release|Win32
+		{A26D5F01-995A-4D51-BA6D-29A265125D0C}.Release|Win32.Build.0 = Release|Win32
+		{A26D5F01-995A-4D51-BA6D-29A265125D0C}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
