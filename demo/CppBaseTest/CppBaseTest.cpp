@@ -10,10 +10,11 @@
 #include "data_type_convert.hpp"
 #include "vector.hpp"
 #include "fstream.hpp"
+#include "function_pointers.hpp"
 
 int main()
 {
-	test_fstream4();
+	test_function_pointers6();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
