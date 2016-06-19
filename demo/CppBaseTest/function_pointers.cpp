@@ -23,9 +23,9 @@ int test_function_pointers1()
 	foo = &my_int_func;
 
 	// call my_int_func (note that you do not need to write (*foo)(2) )
-	foo(2);
+	foo(2); // 2
 	// but if you want to, you may 
-	(*foo)(2);
+	(*foo)(2); // 2
 
 	return 0;
 }
@@ -46,17 +46,15 @@ int int_sorter(const void *first_arg, const void *second_arg)
 int test_function_pointers2()
 {
 	int array[10];
-	int i;
-	/* fill array */
-	for (i = 0; i < 10; ++i) {
+	for (int i = 0; i < 10; ++i) {
 		array[i] = 10 - i;
 	}
 
 	// void qsort(void *base, size_t nmemb, size_t size, int(*compar)(const void *, const void *));
 	qsort(array, 10, sizeof(int), int_sorter);
 
-	for (i = 0; i < 10; ++i) {
-		printf("%d\n", array[i]);
+	for (int i = 0; i < 10; ++i) {
+		printf("%d\n", array[i]); // 1 2 3 4 5 6 7 8 9 10
 	}
 
 	return 0;
@@ -111,11 +109,11 @@ int test_function_pointers3()
 
 	// Sort the array in descending order using the descending() function
 	selectionSort(array, 9, descending);
-	printArray(array, 9);
+	printArray(array, 9); // 9 8 7 6 5 4 3 2 1
 
 	// Sort the array in ascending order using the ascending() function
 	selectionSort(array, 9, ascending);
-	printArray(array, 9);
+	printArray(array, 9); // 1 2 3 4 5 6 7 8 9
 
 	return 0;
 }
@@ -139,7 +137,7 @@ int test_function_pointers4()
 	int array[9] = { 3, 7, 9, 5, 6, 1, 8, 2, 4 };
 
 	selectionSort(array, 9, evensFirst);
-	printArray(array, 9);
+	printArray(array, 9); // 2 4 6 8 1 3 5 7 9
 
 	return 0;
 }
@@ -199,12 +197,12 @@ arithmeticFcn getArithmeticFcn(char op)
 
 int test_function_pointers5()
 {
-	int x = getInteger();
-	char op = getOperation();
-	int y = getInteger();
+	int x = getInteger(); // 5
+	char op = getOperation(); // *
+	int y = getInteger(); // 6
 
 	arithmeticFcn fcn = getArithmeticFcn(op);
-	std::cout << x << ' ' << op << ' ' << y << " = " << fcn(x, y) << '\n';
+	std::cout << x << ' ' << op << ' ' << y << " = " << fcn(x, y) << '\n'; // 5 * 6 = 30
 
 	return 0;
 }
@@ -239,7 +237,7 @@ int test_function_pointers6()
 	int y = getInteger();
 
 	arithmeticFcn fcn = getArithmeticFcn_(op);
-	std::cout << x << ' ' << op << ' ' << y << " = " << fcn(x, y) << '\n';
+	std::cout << x << ' ' << op << ' ' << y << " = " << fcn(x, y) << '\n'; // 5 * 6 = 30
 
 	return 0;
 }
@@ -253,7 +251,7 @@ double cm_to_inches(double cm)
 int test_function_pointers7()
 {
 	double(*func1)(double) = cm_to_inches;
-	printf("%f\n", func1(15.0)); // prints "5.905512"
+	printf("%f\n", func1(15.0)); // 5.905512
 
 	return 0;
 }
@@ -284,12 +282,12 @@ int test_function_pointers8()
 	// Use 'sin()' as the pointed-to function
 	fp = sin;
 	sum = compute_sum(fp, 0.0, 1.0);
-	printf("sum(sin): %f\n", sum);
+	printf("sum(sin): %f\n", sum); // sum(sin): 0.459308
 
 	// Use 'cos()' as the pointed-to function
 	fp = cos;
 	sum = compute_sum(fp, 0.0, 1.0);
-	printf("sum(cos): %f\n", sum);
+	printf("sum(cos): %f\n", sum); // sum(cos): 0.840758
 
 	return 0;
 }
@@ -317,7 +315,7 @@ int test_function_pointers9()
 
 	a = operation(7, 5, plus);
 	b = operation(20, a, minus);
-	std::cout << "a = " << a << " and b = " << b << std::endl;
+	std::cout << "a = " << a << " and b = " << b << std::endl; // a = 12 and b = 8
 
 	return 0;
 }
@@ -338,7 +336,7 @@ static double f(double x)
 int test_function_pointers10()
 {
 	double x = 1;
-	std::cout << "d/dx(x ^ 2) [@ x = " << x << "] = " << derivative(f, x, 1e-5) << std::endl;
+	std::cout << "d/dx(x ^ 2) [@ x = " << x << "] = " << derivative(f, x, 1e-5) << std::endl; // d/dx(x ^ 2) [@ x = 1] = 2
 
 	return 0;
 }
@@ -382,9 +380,9 @@ int bar3(int i, PFN pfn)
 int test_function_pointers11()
 {
 	Foo foo;
-	std::cout << "Foo::add(2,4) = " << bar1(2, 4, &foo, &Foo::add) << std::endl;
-	std::cout << "Foo::mult(3,5) = " << bar2(3, 5, &foo, &Foo::mult) << std::endl;
-	std::cout << "Foo::negate(6) = " << bar3(6, &Foo::negate) << std::endl;
+	std::cout << "Foo::add(2,4) = " << bar1(2, 4, &foo, &Foo::add) << std::endl; // Foo::add(2,3) = 6
+	std::cout << "Foo::mult(3,5) = " << bar2(3, 5, &foo, &Foo::mult) << std::endl; // Foo::mult(3,5) = 15
+	std::cout << "Foo::negate(6) = " << bar3(6, &Foo::negate) << std::endl; // Foo::negate(6) = -6
 
 	return 0;
 }
@@ -407,8 +405,8 @@ int test_function_pointers12()
 	fptr[0] = one;
 	fptr[1] = two;
 
-	fptr[0](12, 3); // one(12, 3)
-	fptr[1](5, 4); // two(5, 3)
+	fptr[0](12, 3); // one(12, 3)  // 15
+	fptr[1](5, 4); // two(5, 3)  // 20
 
 	return 0;
 }
@@ -431,8 +429,8 @@ int test_function_pointers13()
 	NumberPtr[0] = &Number::one;
 	NumberPtr[1] = &Number::two;
 
-	std::cout << (object.*NumberPtr[0])() << std::endl;
-	std::cout << (object.*NumberPtr[1])() << std::endl;
+	std::cout << (object.*NumberPtr[0])() << std::endl; // 1
+	std::cout << (object.*NumberPtr[1])() << std::endl; // 2
 
 	return 0;
 }
@@ -468,9 +466,9 @@ private:
 int test_function_pointers14()
 {
 	Employee one;
-	std::cout << one.Pay(10) << std::endl;
+	std::cout << one.Pay(10) << std::endl; // 100
 	one.UpgradeToExperienced();
-	std::cout << one.Pay(10) << std::endl;
+	std::cout << one.Pay(10) << std::endl; // 200
 
 	return 0;
 }
@@ -496,11 +494,11 @@ int test_function_pointers15()
 	unsigned int ch, a = 15, b = 10;
 
 	printf("Enter Choice: 0 for add, 1 for subtract and 2 for multiply\n");
-	scanf("%d", &ch);
+	scanf("%d", &ch); // 1
 
 	if (ch > 2) return 0;
 
-	(*fun_ptr_arr[ch])(a, b);
+	(*fun_ptr_arr[ch])(a, b); // Subtraction is 5
 
 	return 0;
 }
@@ -518,9 +516,9 @@ int test_function_pointers16()
 {
 	int (Foo_::*fptr) (std::string) = &Foo_::f;
 	Foo_ obj;
-	(obj.*fptr)("str");//call: Foo::f() through an object
+	(obj.*fptr)("str");//call: Foo::f() through an object // Foo_::f()
 	Foo_* p = &obj;
-	(p->*fptr)("str");//call: Foo::f() through a pointer
+	(p->*fptr)("str");//call: Foo::f() through a pointer // Foo_::f()
 
 	return 0;
 }
@@ -538,7 +536,7 @@ int test_function_pointers17()
 {
 	//int (Foo_1::*fptr) (string) = &Foo_1::f; // error 
 	int(*fptr) (std::string) = &Foo_1::f; // correct
-	(*fptr)("str"); // call Foo_1::f()
+	(*fptr)("str"); // call Foo_1::f() // Foo::f()
 
 	return 0;
 }
@@ -580,7 +578,7 @@ int test_function_pointers18()
 	fdptr = static_cast<int (Foo_2::*) (char*)> (fptr); // OK: contravariance
 
 	Bar obj;
-	(obj.*(BPTR)fptr)(1); // call: Foo_2::f()
+	(obj.*(BPTR)fptr)(1); // call: Foo_2::f()  // Foo_2::f()
 
 	return 0;
 }
@@ -616,10 +614,10 @@ int test_function_pointers19()
 	BPTR bptr = &Bar_3::b;
 
 	FooDerived_3 objDer;
-	(objDer.*fptr)(0); // call: FooDerived::f(), not Foo::f()
+	(objDer.*fptr)(0); // call: FooDerived::f(), not Foo::f() // FooDerived::f()
 
 	Bar_3 obj;
-	(obj.*(BPTR)fptr)(1); // call: Bar::b() , not Foo::f()
+	(obj.*(BPTR)fptr)(1); // call: Bar::b() , not Foo::f() // Bar_3::b()
 
 	return 0;
 }
@@ -660,7 +658,7 @@ int test_function_pointers20()
 	working(COPY, &machine, buff, "Strings ");
 	working(APPEND, &machine, buff, "are concatenated! ");
 
-	std::cout << buff << std::endl;
+	std::cout << buff << std::endl; // Strings are concatenated!
 
 	return 0;
 }

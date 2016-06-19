@@ -22,6 +22,5 @@ int test_function_pointers18();
 int test_function_pointers19();
 int test_function_pointers20();
 int test_function_pointers21();
-int test_function_pointers22();
 
 #endif // FBC_MESSY_TEST_FUNCTION_POINTERS_HPP_

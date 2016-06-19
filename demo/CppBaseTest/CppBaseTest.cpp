@@ -14,7 +14,7 @@
 
 int main()
 {
-	test_function_pointers6();
+	test_function_pointers21();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
