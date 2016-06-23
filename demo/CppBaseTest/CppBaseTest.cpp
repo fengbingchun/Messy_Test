@@ -11,10 +11,11 @@
 #include "vector.hpp"
 #include "fstream.hpp"
 #include "function_pointers.hpp"
+#include "friend.hpp"
 
 int main()
 {
-	test_function_pointers21();
+	test_friend15();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
