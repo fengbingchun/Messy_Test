@@ -129,8 +129,13 @@ int test_data_type_convert()
 	for (int i = 0; i < 10; i++)
 		std::cout << p[i] << std::endl;
 
+	// 18--> int[] to vector<int>
+	int x[5] = {1, 2, 3, 4, 5};
+	std::vector<int> v(x, x + sizeof(x) / sizeof(x[0]));
+	for (int i = 0; i < v.size(); i++)
+		std::cout << v[i] << std::endl;
+
 	return 0;
 }
-
 
 #endif // FBC_MESSY_TEST_DATA_TYPE_CONVERT_HPP_
