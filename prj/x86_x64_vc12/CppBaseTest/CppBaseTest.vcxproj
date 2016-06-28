@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\enum.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\friend.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\fstream.cpp" />
@@ -180,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\enum.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\friend.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\fstream.hpp" />

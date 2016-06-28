@@ -12,10 +12,11 @@
 #include "fstream.hpp"
 #include "function_pointers.hpp"
 #include "friend.hpp"
+#include "enum.hpp"
 
 int main()
 {
-	test_friend15();
+	test_enum6();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
