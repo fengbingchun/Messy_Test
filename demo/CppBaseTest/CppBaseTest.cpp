@@ -13,10 +13,11 @@
 #include "function_pointers.hpp"
 #include "friend.hpp"
 #include "enum.hpp"
+#include "nullptr.hpp"
 
 int main()
 {
-	test_enum6();
+	test_nullptr5();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
