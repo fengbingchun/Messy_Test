@@ -163,6 +163,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\auto.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\enum.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\vector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\auto.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\enum.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />

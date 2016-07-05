@@ -14,10 +14,11 @@
 #include "friend.hpp"
 #include "enum.hpp"
 #include "nullptr.hpp"
+#include "auto.hpp"
 
 int main()
 {
-	test_nullptr5();
+	test_auto3();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
