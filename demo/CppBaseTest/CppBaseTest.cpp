@@ -15,10 +15,11 @@
 #include "enum.hpp"
 #include "nullptr.hpp"
 #include "auto.hpp"
+#include "typeid.hpp"
 
 int main()
 {
-	test_auto3();
+	test_typeid3();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
