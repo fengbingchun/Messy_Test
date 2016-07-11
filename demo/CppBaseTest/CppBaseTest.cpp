@@ -16,10 +16,11 @@
 #include "nullptr.hpp"
 #include "auto.hpp"
 #include "typeid.hpp"
+#include "union.hpp"
 
 int main()
 {
-	test_typeid3();
+	test_union3();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
