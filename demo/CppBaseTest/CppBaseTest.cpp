@@ -19,10 +19,11 @@
 #include "union.hpp"
 #include "struct.hpp"
 #include "map.hpp"
+#include "class.hpp"
 
 int main()
 {
-	test_map2();
+	test_class2();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
