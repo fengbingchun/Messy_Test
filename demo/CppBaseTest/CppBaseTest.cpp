@@ -17,10 +17,11 @@
 #include "auto.hpp"
 #include "typeid.hpp"
 #include "union.hpp"
+#include "struct.hpp"
 
 int main()
 {
-	test_union3();
+	test_struct4();
 
 	std::cout << "\nok" << std::endl;
 	return 0;

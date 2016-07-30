@@ -1,5 +1,7 @@
 /doc/
 /lib/
 /obj/
+*.sdf
+*.suo
 
 
