@@ -171,6 +171,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\fstream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\function_pointers.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\istream.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nullptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\operator.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_assert.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\fstream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\function_pointers.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\istream.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nullptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\operator.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_assert.hpp" />

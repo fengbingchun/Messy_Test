@@ -18,10 +18,11 @@
 #include "typeid.hpp"
 #include "union.hpp"
 #include "struct.hpp"
+#include "map.hpp"
 
 int main()
 {
-	test_struct4();
+	test_map2();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
