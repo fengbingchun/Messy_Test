@@ -21,10 +21,11 @@
 #include "map.hpp"
 #include "class.hpp"
 #include "encapsulation.hpp"
+#include "inheritance.hpp"
 
 int main()
 {
-	test_encapsulation1();
+	test_inheritance4();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
