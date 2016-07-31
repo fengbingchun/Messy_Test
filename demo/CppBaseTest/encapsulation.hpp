@@ -1,0 +1,6 @@
+#ifndef FBC_MESSY_TEST_ENCAPSULATION_HPP_
+#define FBC_MESSY_TEST_ENCAPSULATION_HPP_
+
+int test_encapsulation1();
+
+#endif // FBC_MESSY_TEST_ENCAPSULATION_HPP_

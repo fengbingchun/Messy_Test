@@ -20,10 +20,11 @@
 #include "struct.hpp"
 #include "map.hpp"
 #include "class.hpp"
+#include "encapsulation.hpp"
 
 int main()
 {
-	test_class2();
+	test_encapsulation1();
 
 	std::cout << "\nok" << std::endl;
 	return 0;

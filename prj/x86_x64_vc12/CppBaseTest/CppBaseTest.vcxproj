@@ -166,6 +166,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\auto.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\encapsulation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\enum.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\friend.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\auto.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\encapsulation.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\enum.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\friend.hpp" />
