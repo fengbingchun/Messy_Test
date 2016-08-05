@@ -22,10 +22,11 @@
 #include "class.hpp"
 #include "encapsulation.hpp"
 #include "inheritance.hpp"
+#include "linked_list.hpp"
 
 int main()
 {
-	test_inheritance4();
+	test_linked_list2();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
