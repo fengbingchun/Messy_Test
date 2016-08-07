@@ -28,7 +28,7 @@
 
 int main()
 {
-	test_polymorphism4();
+	test_abstract_class6();
 
 	std::cout << "\nok" << std::endl;
 	return 0;

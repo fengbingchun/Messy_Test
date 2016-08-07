@@ -249,3 +249,56 @@ int test_abstract_class5()
 
 	return 0;
 }
+
+///////////////////////////////////////////
+// reference: https://www.eduonix.com/blog/system-programming/learn-abstract-classes-virtual-functions-c/
+class point
+{
+protected:
+	float x, y;
+public:
+	point(float px, float py)
+	{
+		x = px; y = py;
+	}
+};
+
+class shape				// Abstract Class
+{
+public:
+	virtual float perimeter() = 0;	//pure virtual function
+	virtual float area() = 0;	//another pure virtual function
+};
+
+/* The circle class will inherit from both point and shape */
+class circle : public point, public shape
+{
+	float radius;
+public:
+	circle(float x, float y, float rad) : point(x, y)
+	{
+		radius = rad;
+	}
+	float getRadius()
+	{
+		return radius;
+	}
+	float perimeter()
+	{
+		return 2 * 3.14 * radius;
+	}
+	float area()
+	{
+		return 3.14 * radius * radius;
+	}
+};
+
+int test_abstract_class6()
+{
+	circle c(5, -1, 4);
+	std::cout << "\nFor a circle with radius = " << c.getRadius();
+	std::cout << "\nPerimeter: " << c.perimeter();
+	std::cout << "\nArea: " << c.area() << std::endl;
+
+	return 0;
+}
