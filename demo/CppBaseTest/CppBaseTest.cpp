@@ -23,10 +23,12 @@
 #include "encapsulation.hpp"
 #include "inheritance.hpp"
 #include "linked_list.hpp"
+#include "polymorphism.hpp"
+#include "abstract_class.hpp"
 
 int main()
 {
-	test_linked_list2();
+	test_polymorphism4();
 
 	std::cout << "\nok" << std::endl;
 	return 0;

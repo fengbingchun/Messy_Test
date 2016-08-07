@@ -163,6 +163,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\abstract_class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\auto.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nullptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\operator.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\polymorphism.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_assert.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_cast.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_inline.cpp" />
@@ -190,6 +192,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\vector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\abstract_class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\auto.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
@@ -205,6 +208,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nullptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\operator.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\polymorphism.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_assert.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_cast.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_inline.hpp" />
