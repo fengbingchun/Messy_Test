@@ -25,10 +25,11 @@
 #include "linked_list.hpp"
 #include "polymorphism.hpp"
 #include "abstract_class.hpp"
+#include "shared_ptr.hpp"
 
 int main()
 {
-	test_abstract_class6();
+	test_shared_ptr5();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
