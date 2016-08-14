@@ -27,11 +27,11 @@
 #include "abstract_class.hpp"
 #include "shared_ptr.hpp"
 #include "unique_ptr.hpp"
-//#include "weak_ptr.hpp"
+#include "weak_ptr.hpp"
 
 int main()
 {
-	//test_shared_ptr5();
+	test_shared_ptr5();
 
 	std::cout << "\nok" << std::endl;
 	return 0;

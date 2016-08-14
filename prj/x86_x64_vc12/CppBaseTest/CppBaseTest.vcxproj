@@ -192,6 +192,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\union.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\unique_ptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\vector.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\weak_ptr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\abstract_class.hpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\union.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_ptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\vector.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\weak_ptr.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
