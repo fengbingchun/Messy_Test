@@ -190,6 +190,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\this_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\typeid.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\union.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\unique_ptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\vector.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +220,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\this_pointer.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\typeid.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\union.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\unique_ptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\vector.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
