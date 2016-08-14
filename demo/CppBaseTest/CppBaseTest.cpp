@@ -28,10 +28,11 @@
 #include "shared_ptr.hpp"
 #include "unique_ptr.hpp"
 #include "weak_ptr.hpp"
+#include "pair.hpp"
 
 int main()
 {
-	test_shared_ptr5();
+	test_pair3();
 
 	std::cout << "\nok" << std::endl;
 	return 0;

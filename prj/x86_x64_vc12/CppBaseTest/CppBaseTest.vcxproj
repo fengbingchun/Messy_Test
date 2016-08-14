@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nullptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\operator.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\pair.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\polymorphism.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\shared_ptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_assert.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nullptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\operator.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\pair.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\polymorphism.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\shared_ptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_assert.hpp" />
