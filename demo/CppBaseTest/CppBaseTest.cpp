@@ -29,10 +29,11 @@
 #include "unique_ptr.hpp"
 #include "weak_ptr.hpp"
 #include "pair.hpp"
+#include "unordered_map.hpp"
 
 int main()
 {
-	test_pair3();
+	test_unordered_map3();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
