@@ -170,6 +170,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\encapsulation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\enum.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\for.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\friend.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\fstream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\function_pointers.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\encapsulation.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\enum.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\for.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\friend.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\fstream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\function_pointers.hpp" />

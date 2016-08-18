@@ -30,10 +30,11 @@
 #include "weak_ptr.hpp"
 #include "pair.hpp"
 #include "unordered_map.hpp"
+#include "for.hpp"
 
 int main()
 {
-	test_unordered_map3();
+	test_for3();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
