@@ -31,10 +31,11 @@
 #include "pair.hpp"
 #include "unordered_map.hpp"
 #include "for.hpp"
+#include "for_each.hpp"
 
 int main()
 {
-	test_for3();
+	test_for_each5();
 
 	std::cout << "\nok" << std::endl;
 	return 0;
