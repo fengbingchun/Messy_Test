@@ -32,11 +32,12 @@
 #include "unordered_map.hpp"
 #include "for.hpp"
 #include "for_each.hpp"
+#include "override.hpp"
 
 int main()
 {
-	test_for_each5();
+	test_override1();
 
-	std::cout << "\nok" << std::endl;
+	std::cout << "ok" << std::endl;
 	return 0;
 }
