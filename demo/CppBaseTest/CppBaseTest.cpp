@@ -33,10 +33,10 @@
 #include "for.hpp"
 #include "for_each.hpp"
 #include "override.hpp"
+#include "final.hpp"
 
 int main()
 {
-	test_override1();
 
 	std::cout << "ok" << std::endl;
 	return 0;
