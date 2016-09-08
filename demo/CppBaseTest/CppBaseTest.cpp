@@ -34,9 +34,14 @@
 #include "for_each.hpp"
 #include "override.hpp"
 #include "final.hpp"
+#include "Lambda.hpp"
+#include "default.hpp"
+#include "delete.hpp"
 
 int main()
 {
+	test_default1();
+	test_delete1();
 
 	std::cout << "ok" << std::endl;
 	return 0;

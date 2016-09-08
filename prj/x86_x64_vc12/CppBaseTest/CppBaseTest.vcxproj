@@ -167,6 +167,8 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\auto.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\default.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\delete.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\encapsulation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\enum.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
@@ -178,6 +180,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\function_pointers.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\inheritance.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\istream.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\Lambda.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\linked_list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nullptr.cpp" />
@@ -205,6 +208,8 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\auto.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\default.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\delete.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\encapsulation.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\enum.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
@@ -216,6 +221,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\function_pointers.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\inheritance.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\istream.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\Lambda.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\linked_list.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nullptr.hpp" />
