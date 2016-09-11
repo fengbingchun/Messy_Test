@@ -38,10 +38,11 @@
 #include "default.hpp"
 #include "delete.hpp"
 #include "decltype.hpp"
+#include "init_list.hpp"
 
 int main()
 {
-	test_decltype2();
+	test_init_list3();
 
 	std::cout << "ok" << std::endl;
 	return 0;
