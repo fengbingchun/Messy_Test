@@ -167,6 +167,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\auto.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\decltype.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\default.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\delete.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\encapsulation.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\auto.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\decltype.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\default.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\delete.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\encapsulation.hpp" />

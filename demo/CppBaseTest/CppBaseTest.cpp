@@ -37,11 +37,11 @@
 #include "Lambda.hpp"
 #include "default.hpp"
 #include "delete.hpp"
+#include "decltype.hpp"
 
 int main()
 {
-	test_default1();
-	test_delete1();
+	test_decltype2();
 
 	std::cout << "ok" << std::endl;
 	return 0;
