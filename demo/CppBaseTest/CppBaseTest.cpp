@@ -40,10 +40,11 @@
 #include "decltype.hpp"
 #include "init_list.hpp"
 #include "move.hpp"
+#include "rvalue_references.hpp"
 
 int main()
 {
-	test_move3();
+	test_rvalue_references3();
 
 	std::cout << "ok" << std::endl;
 	return 0;
