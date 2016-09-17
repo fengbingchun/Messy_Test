@@ -41,10 +41,11 @@
 #include "init_list.hpp"
 #include "move.hpp"
 #include "rvalue_references.hpp"
+#include "function.hpp"
 
 int main()
 {
-	test_rvalue_references3();
+	test_function3();
 
 	std::cout << "ok" << std::endl;
 	return 0;
