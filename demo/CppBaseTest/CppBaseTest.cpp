@@ -42,10 +42,11 @@
 #include "move.hpp"
 #include "rvalue_references.hpp"
 #include "function.hpp"
+#include "forward.hpp"
 
 int main()
 {
-	test_function3();
+	test_forward4();
 
 	std::cout << "ok" << std::endl;
 	return 0;
