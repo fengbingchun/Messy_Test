@@ -43,10 +43,11 @@
 #include "rvalue_references.hpp"
 #include "function.hpp"
 #include "forward.hpp"
+#include "bind.hpp"
 
 int main()
 {
-	test_forward4();
+	test_bind5();
 
 	std::cout << "ok" << std::endl;
 	return 0;
