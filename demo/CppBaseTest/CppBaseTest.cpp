@@ -47,7 +47,7 @@
 
 int main()
 {
-	test_bind5();
+	test_lambda6();
 
 	std::cout << "ok" << std::endl;
 	return 0;

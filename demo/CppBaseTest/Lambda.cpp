@@ -9,6 +9,14 @@
 // reference: http://en.cppreference.com/w/cpp/language/lambda
 int test_lambda1()
 {
+	/*
+	[]		Capture nothing (or, a scorched earth strategy?)
+	[&]		Capture any referenced variable by reference
+	[=]		Capture any referenced variable by making a copy
+	[=, &foo]	Capture any referenced variable by making a copy, but capture variable foo by reference
+	[bar]		Capture bar by making a copy; don't copy anything else
+	[this]		Capture the this pointer of the enclosing class
+	*/
 	int a = 1, b = 1, c = 1;
 
 	auto m1 = [a, &b, &c]() mutable {
@@ -56,9 +64,14 @@ int test_lambda2()
 // reference: https://msdn.microsoft.com/zh-cn/library/dd293608.aspx
 int test_lambda3()
 {
+	// The following example contains a lambda expression that explicitly captures the variable n by value
+	// and implicitly captures the variable m by reference:
 	int m = 0;
 	int n = 0;
 	[&, n](int a) mutable { m = ++n + a; }(4);
+
+	// Because the variable n is captured by value, its value remains 0 after the call to the lambda expression.
+	// The mutable specification allows n to be modified within the lambda.
 	std::cout << m << std::endl << n << std::endl;
 
 	return 0;
@@ -128,5 +141,58 @@ int test_lambda4()
 	fillVector(v);
 	print("vector v after 2nd call to fillVector(): ", v);
 
+	return 0;
+}
+
+/////////////////////////////////////////////////
+// reference: http://blogorama.nerdworks.in/somenotesonc11lambdafunctions/
+
+template<typename T>
+std::function<T()> makeAccumulator(T& val, T by) {
+	return [=, &val]() {
+		return (val += by);
+	};
+}
+
+int test_lambda5()
+{
+	int val = 10;
+	auto add5 = makeAccumulator(val, 5);
+	std::cout << add5() << std::endl;
+	std::cout << add5() << std::endl;
+	std::cout << add5() << std::endl;
+	std::cout << std::endl;
+
+	val = 100;
+	auto add10 = makeAccumulator(val, 10);
+	std::cout << add10() << std::endl;
+	std::cout << add10() << std::endl;
+	std::cout << add10() << std::endl;
+
+	return 0;
+}
+
+////////////////////////////////////////////////////////
+// reference: http://blogorama.nerdworks.in/somenotesonc11lambdafunctions/
+class Foo_lambda {
+public:
+	Foo_lambda() {
+		std::cout << "Foo_lambda::Foo_lambda()" << std::endl;
+	}
+
+	Foo_lambda(const Foo_lambda& f) {
+		std::cout << "Foo_lambda::Foo_lambda(const Foo_lambda&)" << std::endl;
+	}
+
+	~Foo_lambda() {
+		std::cout << "Foo_lambda~Foo_lambda()" << std::endl;
+	}
+};
+
+int test_lambda6()
+{
+	Foo_lambda f;
+	auto fn = [f]() { std::cout << "lambda" << std::endl; };
+	std::cout << "Quitting." << std::endl;
 	return 0;
 }
