@@ -3,5 +3,6 @@
 /obj/
 *.sdf
 *.suo
+*.opensdf
 
 

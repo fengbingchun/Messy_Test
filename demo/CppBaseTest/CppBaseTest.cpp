@@ -44,10 +44,18 @@
 #include "function.hpp"
 #include "forward.hpp"
 #include "bind.hpp"
+#include "sort.hpp"
 
 int main()
 {
-	test_lambda6();
+	test_sort_bubble();
+	test_sort_insertion();
+	test_sort_selection();
+	test_sort_shell();
+	test_sort_merge();
+	test_sort_quick();
+	test_sort_heap();
+	test_sort_STL();
 
 	std::cout << "ok" << std::endl;
 	return 0;
