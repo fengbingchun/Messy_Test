@@ -45,17 +45,11 @@
 #include "forward.hpp"
 #include "bind.hpp"
 #include "sort.hpp"
+#include "fill.hpp"
 
 int main()
 {
-	test_sort_bubble();
-	test_sort_insertion();
-	test_sort_selection();
-	test_sort_shell();
-	test_sort_merge();
-	test_sort_quick();
-	test_sort_heap();
-	test_sort_STL();
+	test_fill_n_1();
 
 	std::cout << "ok" << std::endl;
 	return 0;
