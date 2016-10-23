@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DesignPatternsTest", "..\De
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrMemoryTest", "..\DrMemoryTest\DrMemoryTest.vcxproj", "{A26D5F01-995A-4D51-BA6D-29A265125D0C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "miniz_Test", "..\miniz_Test\miniz_Test.vcxproj", "{71D081C7-4344-4579-8E36-C38E382EAADC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -61,6 +63,12 @@ Global
 		{A26D5F01-995A-4D51-BA6D-29A265125D0C}.Release|Win32.ActiveCfg = Release|Win32
 		{A26D5F01-995A-4D51-BA6D-29A265125D0C}.Release|Win32.Build.0 = Release|Win32
 		{A26D5F01-995A-4D51-BA6D-29A265125D0C}.Release|x64.ActiveCfg = Release|Win32
+		{71D081C7-4344-4579-8E36-C38E382EAADC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{71D081C7-4344-4579-8E36-C38E382EAADC}.Debug|Win32.Build.0 = Debug|Win32
+		{71D081C7-4344-4579-8E36-C38E382EAADC}.Debug|x64.ActiveCfg = Debug|x64
+		{71D081C7-4344-4579-8E36-C38E382EAADC}.Release|Win32.ActiveCfg = Release|Win32
+		{71D081C7-4344-4579-8E36-C38E382EAADC}.Release|Win32.Build.0 = Release|Win32
+		{71D081C7-4344-4579-8E36-C38E382EAADC}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
