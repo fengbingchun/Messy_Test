@@ -196,3 +196,36 @@ int test_lambda6()
 	std::cout << "Quitting." << std::endl;
 	return 0;
 }
+
+template<typename Cal>
+static void display(Cal cal)
+{
+	fprintf(stderr, "start\n");
+	cal();
+}
+
+int test_lambda7()
+{
+	int num { 1 };
+	// create callback
+	auto fun = [&](){
+		if (num % 5 == 0) {
+			fprintf(stderr, "****** reset ******\n");
+			fprintf(stderr, "num = %d\n", num);
+
+			num = 0;
+		} else {
+			fprintf(stderr, "++++++ continue ++++++\n");
+			fprintf(stderr, "num = %d\n", num);
+		}
+
+		num++;
+	};
+
+	for (int i = 0; i < 20; i++) {
+		fprintf(stderr, "========= i = %d\n", i);
+		display(fun);
+	}
+
+	return 0;
+}

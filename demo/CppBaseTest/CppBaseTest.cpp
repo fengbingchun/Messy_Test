@@ -49,8 +49,9 @@
 
 int main()
 {
-	test_fill_n_1();
+	int ret = test_lambda7();
+	if (ret == 0) fprintf(stderr, "test success\n");
+	else fprintf(stderr, "test fail\n");
 
-	std::cout << "ok" << std::endl;
 	return 0;
 }
