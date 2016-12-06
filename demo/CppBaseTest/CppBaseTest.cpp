@@ -46,10 +46,11 @@
 #include "bind.hpp"
 #include "sort.hpp"
 #include "fill.hpp"
+#include "jinghao.hpp"
 
 int main()
 {
-	int ret = test_lambda7();
+	int ret = test_jinghao2();
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");
 
