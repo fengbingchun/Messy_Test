@@ -205,6 +205,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\struct.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template_impl.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\test_thread.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\this_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\typeid.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\union.cpp" />
@@ -255,7 +256,9 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_inline.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\struct.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\template.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\test_thread.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\this_pointer.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\thread.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\typeid.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\union.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_ptr.hpp" />

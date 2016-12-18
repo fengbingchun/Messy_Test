@@ -47,10 +47,12 @@
 #include "sort.hpp"
 #include "fill.hpp"
 #include "jinghao.hpp"
+#include "test_thread.hpp"
 
 int main()
 {
-	int ret = test_jinghao2();
+	int ret = test_thread_cond3();
+
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");
 
