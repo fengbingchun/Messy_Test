@@ -132,6 +132,7 @@ int test_thread_cond1()
 	pthread_create(&tid2, NULL, increment_count1, NULL);
 	Sleep(2000);
 
+	std::cout << "count1 = " << count1 << std::endl;
 	pthread_join(tid1, NULL);
 	pthread_join(tid2, NULL);
 	pthread_mutex_destroy(&count_lock1);

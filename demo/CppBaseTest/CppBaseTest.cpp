@@ -48,10 +48,11 @@
 #include "fill.hpp"
 #include "jinghao.hpp"
 #include "test_thread.hpp"
+#include "tar.hpp"
 
 int main()
 {
-	int ret = test_thread_cond3();
+	int ret = test_tar();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");

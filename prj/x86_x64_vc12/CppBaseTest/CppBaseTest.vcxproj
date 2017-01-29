@@ -203,6 +203,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_cast.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_inline.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\struct.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\tar.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template_impl.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\test_thread.cpp" />
@@ -255,6 +256,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_cast.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_inline.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\struct.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\tar.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\template.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\test_thread.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\this_pointer.hpp" />

@@ -29,6 +29,9 @@ int test_map1()
 	months["november"] = 30;
 	months["december"] = 31;
 
+	int tmp1 = months.count("aaa");
+	int tmp2 = months.count("july");
+
 	std::cout << "june -> " << months["june"] << std::endl;
 	std::map<const char*, int, ltstr>::iterator cur = months.find("june");
 	std::map<const char*, int, ltstr>::iterator prev = cur;
