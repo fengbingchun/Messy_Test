@@ -196,6 +196,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\override.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\pair.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\polymorphism.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\regex.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\rvalue_references.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\shared_ptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sort.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\override.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\pair.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\polymorphism.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\regex.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\rvalue_references.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\shared_ptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sort.hpp" />

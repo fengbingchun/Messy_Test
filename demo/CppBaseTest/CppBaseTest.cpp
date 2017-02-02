@@ -49,10 +49,11 @@
 #include "jinghao.hpp"
 #include "test_thread.hpp"
 #include "tar.hpp"
+#include "regex.hpp"
 
 int main()
 {
-	int ret = test_tar();
+	int ret = test_regex_replace2();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");
