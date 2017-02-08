@@ -50,6 +50,7 @@
 #include "test_thread.hpp"
 #include "tar.hpp"
 #include "regex.hpp"
+#include "forward_declaration.hpp"
 
 int main()
 {

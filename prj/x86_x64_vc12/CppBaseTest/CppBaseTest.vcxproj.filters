@@ -329,5 +329,8 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\regex.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\forward_declaration.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
