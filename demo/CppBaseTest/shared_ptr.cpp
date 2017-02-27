@@ -184,3 +184,152 @@ int test_shared_ptr5()
 
 	return 0;
 }
+
+////////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/shared_ptr/reset/
+int test_shared_ptr_reset()
+{
+	std::shared_ptr<int> sp;  // empty
+
+	sp.reset(new int);       // takes ownership of pointer
+	*sp = 10;
+	std::cout << *sp << '\n';
+
+	sp.reset(new int);       // deletes managed object, acquires new pointer
+	*sp = 20;
+	std::cout << *sp << '\n';
+
+	sp.reset();               // deletes managed object
+
+	return 0;
+}
+
+//////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/shared_ptr/get/
+int test_shared_ptr_get()
+{
+	int* p = new int(10);
+	std::shared_ptr<int> a(p);
+
+	if (a.get() == p)
+		std::cout << "a and p point to the same location\n";
+
+	// three ways of accessing the same address:
+	std::cout << *a.get() << "\n";
+	std::cout << *a << "\n";
+	std::cout << *p << "\n";
+
+	return 0;
+}
+
+///////////////////////////////////////////////////////////////
+struct C { int a; int b; };
+
+int test_shared_ptr_operator()
+{
+	// reference: http://www.cplusplus.com/reference/memory/shared_ptr/operator%20bool/
+	// std::shared_ptr::operator bool: The function returns the same as get()!=0.
+	std::shared_ptr<int> foo;
+	std::shared_ptr<int> bar(new int(34));
+
+	if (foo) std::cout << "foo points to " << *foo << '\n';
+	else std::cout << "foo is null\n";
+
+	if (bar) std::cout << "bar points to " << *bar << '\n';
+	else std::cout << "bar is null\n";
+
+	// reference: http://www.cplusplus.com/reference/memory/shared_ptr/operator*/
+	// std::shared_ptr::operator*: It is equivalent to: *get().
+	std::shared_ptr<int> foo_2(new int);
+	std::shared_ptr<int> bar_2(new int(100));
+
+	*foo_2 = *bar_2 * 2;
+
+	std::cout << "foo_2: " << *foo_2 << '\n';
+	std::cout << "bar_2: " << *bar_2 << '\n';
+
+	// reference: http://www.cplusplus.com/reference/memory/shared_ptr/operator-%3E/
+	// std::shared_ptr::operator->: It returns the same value as get()
+	std::shared_ptr<C> foo_3;
+	std::shared_ptr<C> bar_3(new C);
+
+	foo_3 = bar_3;
+
+	foo_3->a = 10;
+	bar_3->b = 20;
+
+	if (foo_3) std::cout << "foo_3: " << foo_3->a << ' ' << foo_3->b << '\n';
+	if (bar_3) std::cout << "bar_3: " << bar_3->a << ' ' << bar_3->b << '\n';
+
+	// reference: http://www.cplusplus.com/reference/memory/shared_ptr/operator=/
+	std::shared_ptr<int> foo_4;
+	std::shared_ptr<int> bar_4(new int(10));
+
+	foo_4 = bar_4;                          // copy
+
+	bar_4 = std::make_shared<int>(20);   // move
+
+	std::unique_ptr<int> unique(new int(30));
+	foo_4 = std::move(unique);            // move from unique_ptr
+
+	std::cout << "*foo_4: " << *foo_4 << '\n';
+	std::cout << "*bar_4: " << *bar_4 << '\n';
+
+	return 0;
+}
+
+//////////////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/shared_ptr/owner_before/
+int test_shared_ptr_owner_before()
+{
+	int * p = new int(10);
+
+	std::shared_ptr<int> a(new int(20));
+	std::shared_ptr<int> b(a, p);  // alias constructor
+
+	// owner_before: true if the object is considered to be different from x and
+	// go before it in a strict weak order based on ownership. false otherwise.
+	std::cout << "comparing a and b...\n" << std::boolalpha;
+	std::cout << "value-based: " << (!(a<b) && !(b<a)) << '\n';
+	std::cout << "owner-based: " << (!a.owner_before(b) && !b.owner_before(a)) << '\n';
+
+	delete p;
+	return 0;
+}
+
+/////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/shared_ptr/swap/
+int test_shared_ptr_swap()
+{
+	std::shared_ptr<int> foo(new int(10));
+	std::shared_ptr<int> bar(new int(20));
+
+	foo.swap(bar);
+
+	std::cout << "*foo: " << *foo << '\n';
+	std::cout << "*bar: " << *bar << '\n';
+
+	return 0;
+}
+
+//////////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/shared_ptr/unique/
+int test_shared_ptr_unique()
+{
+	// std::shared_ptr::unique: This function shall return the same as (use_count()==1),
+	// although it may do so in a more efficient way.
+	std::shared_ptr<int> foo;
+	std::shared_ptr<int> bar(new int);
+
+	std::cout << "foo unique?\n" << std::boolalpha;
+
+	std::cout << "1: " << foo.unique() << '\n';  // false (empty)
+
+	foo = bar;
+	std::cout << "2: " << foo.unique() << '\n';  // false (shared with bar)
+
+	bar = nullptr;
+	std::cout << "3: " << foo.unique() << '\n';  // true
+
+	return 0;
+}

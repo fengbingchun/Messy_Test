@@ -54,7 +54,7 @@
 
 int main()
 {
-	int ret = test_regex_replace2();
+	int ret = test_shared_ptr_unique();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");
