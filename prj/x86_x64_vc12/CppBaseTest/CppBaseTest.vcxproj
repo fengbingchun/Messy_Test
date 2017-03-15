@@ -203,6 +203,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_assert.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_cast.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_inline.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\string.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\struct.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\tar.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_assert.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_cast.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_inline.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\string.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\struct.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\tar.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\template.hpp" />

@@ -51,10 +51,11 @@
 #include "tar.hpp"
 #include "regex.hpp"
 #include "forward_declaration.hpp"
+#include "string.hpp"
 
 int main()
 {
-	int ret = test_shared_ptr_unique();
+	int ret = test_string_func();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");
