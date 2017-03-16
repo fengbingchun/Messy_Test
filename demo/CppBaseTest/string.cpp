@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 #include <cctype>
+#include <cstddef> // std::size_t
+#include <fstream>
 
 /*
 	typedef basic_string<char, char_traits<char>, allocator<char> >			string;
@@ -9,242 +11,6 @@
 	typedef basic_string<char16_t, char_traits<char16_t>, allocator<char16_t> >	u16string;
 	typedef basic_string<char32_t, char_traits<char32_t>, allocator<char32_t> >	u32string;
 */
-
-// reference: http://www.cplusplus.com/reference/string/string/
-int test_string_func()
-{
-	{ // append
-		std::string str;
-		std::string str2 = "Writing ";
-		std::string str3 = "print 10 and then 5 more";
-
-		// used in the same order as described above:
-		str.append(str2);                       // "Writing "
-		str.append(str3, 6, 3);                   // "10 "
-		str.append("dots are cool", 5);          // "dots "
-		str.append("here: ");                   // "here: "
-		str.append(10u, '.');                    // ".........."
-		str.append(str3.begin() + 8, str3.end());  // " and then 5 more"
-		str.append(5, 0x2E);                // "....."
-
-		std::cout << str << '\n';
-	}
-
-	{ // assign
-		std::string str;
-		std::string base = "The quick brown fox jumps over a lazy dog.";
-
-		// used in the same order as described above:
-		str.assign(base);
-		std::cout << str << '\n';
-
-		str.assign(base, 10, 9);
-		std::cout << str << '\n';         // "brown fox"
-
-		str.assign("pangrams are cool", 7);
-		std::cout << str << '\n';         // "pangram"
-
-		str.assign("c-string");
-		std::cout << str << '\n';         // "c-string"
-
-		str.assign(10, '*');
-		std::cout << str << '\n';         // "**********"
-
-		str.assign(10, 0x2D);
-		std::cout << str << '\n';         // "----------"
-
-		str.assign(base.begin() + 16, base.end() - 12);
-		std::cout << str << '\n';         // "fox jumps over"
-	}
-
-	{ // at
-		std::string str("Test string");
-		for (unsigned i = 0; i<str.length(); ++i) {
-			std::cout << str.at(i);
-		}
-		std::cout << '\n';
-	}
-
-	{ // back
-		std::string str("hello world.");
-		str.back() = '!';
-		std::cout << str << '\n';
-	}
-
-	{ // begin/end
-		std::string str("Test string");
-		for (std::string::iterator it = str.begin(); it != str.end(); ++it)
-			std::cout << *it;
-		std::cout << '\n';
-	}
-
-	{ // capacity
-		std::string str("Test string");
-		std::cout << "size: " << str.size() << "\n";
-		std::cout << "length: " << str.length() << "\n";
-		std::cout << "capacity: " << str.capacity() << "\n";
-		std::cout << "max_size: " << str.max_size() << "\n";
-	}
-
-	{ // cbegin/cend
-		std::string str("Lorem ipsum");
-		for (auto it = str.cbegin(); it != str.cend(); ++it)
-			std::cout << *it;
-		std::cout << '\n';
-	}
-
-	{ // clear
-		char c;
-		std::string str;
-		std::cout << "Please type some lines of text. Enter a dot (.) to finish:\n";
-		do {
-			c = std::cin.get();
-			str += c;
-			if (c == '\n') {
-				std::cout << str;
-				str.clear();
-			}
-		} while (c != '.');
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	{ //
-
-	}
-
-	return 0;
-}
 
 int test_string_init()
 {
@@ -505,4 +271,689 @@ int test_string_cctype()
 	return 0;
 }
 
+static void SplitFilename(const std::string& str)
+{
+	std::cout << "Splitting: " << str << '\n';
+	std::size_t found = str.find_last_of("/\\");
+	std::cout << " path: " << str.substr(0, found) << '\n';
+	std::cout << " file: " << str.substr(found + 1) << '\n';
+}
 
+int test_string_func()
+{
+	// reference: http://www.cplusplus.com/reference/string/string/
+
+	{ // append
+		std::string str;
+		std::string str2 = "Writing ";
+		std::string str3 = "print 10 and then 5 more";
+
+		// used in the same order as described above:
+		str.append(str2);                       // "Writing "
+		str.append(str3, 6, 3);                   // "10 "
+		str.append("dots are cool", 5);          // "dots "
+		str.append("here: ");                   // "here: "
+		str.append(10u, '.');                    // ".........."
+		str.append(str3.begin() + 8, str3.end());  // " and then 5 more"
+		str.append(5, 0x2E);                // "....."
+
+		std::cout << str << '\n';
+	}
+
+	{ // assign
+	std::string str;
+	std::string base = "The quick brown fox jumps over a lazy dog.";
+
+	// used in the same order as described above:
+	str.assign(base);
+	std::cout << str << '\n';
+
+	str.assign(base, 10, 9);
+	std::cout << str << '\n';         // "brown fox"
+
+	str.assign("pangrams are cool", 7);
+	std::cout << str << '\n';         // "pangram"
+
+	str.assign("c-string");
+	std::cout << str << '\n';         // "c-string"
+
+	str.assign(10, '*');
+	std::cout << str << '\n';         // "**********"
+
+	str.assign(10, 0x2D);
+	std::cout << str << '\n';         // "----------"
+
+	str.assign(base.begin() + 16, base.end() - 12);
+	std::cout << str << '\n';         // "fox jumps over"
+}
+
+	{ // at
+		std::string str("Test string");
+		for (unsigned i = 0; i<str.length(); ++i) {
+			std::cout << str.at(i);
+		}
+		std::cout << '\n';
+	}
+
+	{ // back(c++11)
+		std::string str("hello world.");
+		str.back() = '!';
+		std::cout << str << '\n';
+	}
+
+	{ // begin/end
+		std::string str("Test string");
+		for (std::string::iterator it = str.begin(); it != str.end(); ++it)
+			std::cout << *it;
+		std::cout << '\n';
+	}
+
+	{ // capacity
+		std::string str("Test string");
+		std::cout << "size: " << str.size() << "\n";
+		std::cout << "length: " << str.length() << "\n";
+		std::cout << "capacity: " << str.capacity() << "\n";
+		std::cout << "max_size: " << str.max_size() << "\n";
+	}
+
+	{ // cbegin/cend(c++11)
+		std::string str("Lorem ipsum");
+		for (auto it = str.cbegin(); it != str.cend(); ++it)
+			std::cout << *it;
+		std::cout << '\n';
+	}
+
+	{ // clear
+		char c;
+		std::string str;
+		std::cout << "Please type some lines of text. Enter a dot (.) to finish:\n";
+		do {
+			c = std::cin.get();
+			str += c;
+			if (c == '\n') {
+				std::cout << str;
+				str.clear();
+			}
+		} while (c != '.');
+	}
+
+	{ // compare
+		std::string str1("green apple");
+		std::string str2("red apple");
+
+		if (str1.compare(str2) != 0)
+			std::cout << str1 << " is not " << str2 << '\n';
+
+		if (str1.compare(6, 5, "apple") == 0)
+			std::cout << "still, " << str1 << " is an apple\n";
+
+		if (str2.compare(str2.size() - 5, 5, "apple") == 0)
+			std::cout << "and " << str2 << " is also an apple\n";
+
+		if (str1.compare(6, 5, str2, 4, 5) == 0)
+			std::cout << "therefore, both are apples\n";
+	}
+
+	{ // copy
+		char buffer[20];
+		std::string str("Test string...");
+		std::size_t length = str.copy(buffer, 6, 5);
+		buffer[length] = '\0';
+		std::cout << "buffer contains: " << buffer << '\n';
+	}
+
+	{ // crbegin/crend(c++11)
+		std::string str("lorem ipsum");
+		for (auto rit = str.crbegin(); rit != str.crend(); ++rit)
+			std::cout << *rit;
+		std::cout << '\n';
+	}
+
+	{ // c_str
+		std::string str("Please split this sentence into tokens");
+
+		char * cstr = new char[str.length() + 1];
+		std::strcpy(cstr, str.c_str());
+
+		// cstr now contains a c-string copy of str
+		char * p = std::strtok(cstr, " ");
+		while (p != 0) {
+			std::cout << p << '\n';
+			p = std::strtok(NULL, " ");
+		}
+
+		delete[] cstr;
+	}
+
+	{ // data
+		int length;
+
+		std::string str = "Test string";
+		char* cstr = "Test string";
+
+		if (str.length() == std::strlen(cstr)) {
+			std::cout << "str and cstr have the same length.\n";
+
+			if (memcmp(cstr, str.data(), str.length()) == 0)
+				std::cout << "str and cstr have the same content.\n";
+		}
+	}
+
+	{ // empty
+		std::string content;
+		std::string line;
+		std::cout << "Please introduce a text. Enter an empty line to finish:\n";
+		do {
+			getline(std::cin, line);
+			content += line + '\n';
+		} while (!line.empty());
+		std::cout << "The text you introduced was:\n" << content;
+	}
+
+	{ // erase
+		std::string str("This is an example sentence.");
+		std::cout << str << '\n';
+		// "This is an example sentence."
+		str.erase(10, 8);                        //            ^^^^^^^^
+		std::cout << str << '\n';
+		// "This is an sentence."
+		str.erase(str.begin() + 9);               //           ^
+		std::cout << str << '\n';
+		// "This is a sentence."
+		str.erase(str.begin() + 5, str.end() - 9);  //       ^^^^^
+		std::cout << str << '\n';
+		// "This sentence."
+	}
+
+	{ // find
+		std::string str("There are two needles in this haystack with needles.");
+		std::string str2("needle");
+
+		// different member versions of find in the same order as above:
+		std::size_t found = str.find(str2);
+		if (found != std::string::npos)
+			std::cout << "first 'needle' found at: " << found << '\n';
+
+		found = str.find("needles are small", found + 1, 6);
+		if (found != std::string::npos)
+			std::cout << "second 'needle' found at: " << found << '\n';
+
+		found = str.find("haystack");
+		if (found != std::string::npos)
+			std::cout << "'haystack' also found at: " << found << '\n';
+
+		found = str.find('.');
+		if (found != std::string::npos)
+			std::cout << "Period found at: " << found << '\n';
+
+		// let's replace the first needle:
+		str.replace(str.find(str2), str2.length(), "preposition");
+		std::cout << str << '\n';
+	}
+
+	{ // find_first_not_of
+		std::string str("look for non-alphabetic characters...");
+
+		std::size_t found = str.find_first_not_of("abcdefghijklmnopqrstuvwxyz ");
+
+		if (found != std::string::npos) {
+			std::cout << "The first non-alphabetic character is " << str[found];
+			std::cout << " at position " << found << '\n';
+		}
+	}
+
+	{ // find_first_of
+		std::string str("Please, replace the vowels in this sentence by asterisks.");
+		std::size_t found = str.find_first_of("aeiou");
+		while (found != std::string::npos) {
+			str[found] = '*';
+			found = str.find_first_of("aeiou", found + 1);
+		}
+
+		std::cout << str << '\n';
+	}
+
+	{ // find_last_not_of
+		std::string str("Please, erase trailing white-spaces   \n");
+		std::string whitespaces(" \t\f\v\n\r");
+
+		std::size_t found = str.find_last_not_of(whitespaces);
+		if (found != std::string::npos)
+			str.erase(found + 1);
+		else
+			str.clear();            // str is all whitespace
+
+		std::cout << '[' << str << "]\n";
+	}
+
+	{ // find_last_of
+		std::string str1("/usr/bin/man");
+		std::string str2("c:\\windows\\winhelp.exe");
+
+		SplitFilename(str1);
+		SplitFilename(str2);
+	}
+
+	{ // front(c++11)
+		std::string str("test string");
+		str.front() = 'T';
+		std::cout << str << '\n';
+	}
+
+	{ // get_allocator
+		// reference: http://www.tenouk.com/cpluscodesnippet/cplusbasic_stringget_allocator.html
+		// using the default allocator
+		std::string str1 = "1234";
+		std::basic_string <char> str2 = "567ABC";
+		std::basic_string <char, std::char_traits<char>, std::allocator<char> > str3 = "DefauLt";
+		std::cout << "str1 = " << str1 << std::endl;
+		std::cout << "str2 = " << str2 << std::endl;
+		std::cout << "str3 = " << str3 << std::endl;
+
+		// str4 will use the same allocator class as str1
+		std::basic_string <char> str4(str1.get_allocator());
+		std::basic_string <char>::allocator_type xchar = str1.get_allocator();
+		str4 = "Just a string";
+		std::cout << "str4 = " << str4 << std::endl;
+
+		if (xchar == str1.get_allocator())
+			std::cout << "The allocator objects xchar and str1.get_allocator() are equal." << std::endl;
+		else
+			std::cout << "The allocator objects xchar and str1.get_allocator() are not equal." << std::endl;
+
+		// you can now call functions on the allocator class xchar used by str1
+		std::string str5(xchar);
+	}
+
+	{ // insert
+		std::string str = "to be question";
+		std::string str2 = "the ";
+		std::string str3 = "or not to be";
+		std::string::iterator it;
+
+		// used in the same order as described above:
+		str.insert(6, str2);                 // to be (the )question
+		str.insert(6, str3, 3, 4);             // to be (not )the question
+		str.insert(10, "that is cool", 8);    // to be not (that is )the question
+		str.insert(10, "to be ");            // to be not (to be )that is the question
+		str.insert(15, 1, ':');               // to be not to be(:) that is the question
+		it = str.insert(str.begin() + 5, ','); // to be(,) not to be: that is the question
+		str.insert(str.end(), 3, '.');       // to be, not to be: that is the question(...)
+		str.insert(it + 2, str3.begin(), str3.begin() + 3); // (or )
+
+		std::cout << str << '\n';
+	}
+
+	{ // length
+		std::string str("Test string");
+		std::cout << "The size of str is " << str.length() << " bytes.\n";
+	}
+
+	{ // max_size
+		std::string str("Test string");
+		std::cout << "size: " << str.size() << "\n";
+		std::cout << "length: " << str.length() << "\n";
+		std::cout << "capacity: " << str.capacity() << "\n";
+		std::cout << "max_size: " << str.max_size() << "\n";
+	}
+
+	{ // operator +=
+		std::string name("John");
+		std::string family("Smith");
+		name += " K. ";         // c-string
+		name += family;         // string
+		name += '\n';           // character
+
+		std::cout << name;
+	}
+
+	{ // operator =
+		std::string str1, str2, str3;
+		str1 = "Test string: ";   // c-string
+		str2 = 'x';               // single character
+		str3 = str1 + str2;       // string
+
+		std::cout << str3 << '\n';
+	}
+
+	{ // operator []
+		std::string str("Test string");
+		for (int i = 0; i<str.length(); ++i) {
+			std::cout << str[i];
+		}
+	}
+
+	{ // pop_back(c++11)
+		std::string str("hello world!");
+		str.pop_back();
+		std::cout << str << '\n';
+	}
+
+	{ // push_back
+		std::string str;
+		std::ifstream file("test.txt", std::ios::in);
+		if (file) {
+			while (!file.eof()) str.push_back(file.get());
+		}
+		std::cout << str << '\n';
+	}
+
+	{ // rbegin/rend
+		std::string str("now step live...");
+		for (std::string::reverse_iterator rit = str.rbegin(); rit != str.rend(); ++rit)
+			std::cout << *rit;
+	}
+
+	{ // replace
+		std::string base = "this is a test string.";
+		std::string str2 = "n example";
+		std::string str3 = "sample phrase";
+		std::string str4 = "useful.";
+
+		// replace signatures used in the same order as described above:
+
+		// Using positions:                 0123456789*123456789*12345
+		std::string str = base;           // "this is a test string."
+		str.replace(9, 5, str2);          // "this is an example string." (1)
+		str.replace(19, 6, str3, 7, 6);     // "this is an example phrase." (2)
+		str.replace(8, 10, "just a");     // "this is just a phrase."     (3)
+		str.replace(8, 6, "a shorty", 7);  // "this is a short phrase."    (4)
+		str.replace(22, 1, 3, '!');        // "this is a short phrase!!!"  (5)
+
+		// Using iterators:                                               0123456789*123456789*
+		str.replace(str.begin(), str.end() - 3, str3);                    // "sample phrase!!!"      (1)
+		str.replace(str.begin(), str.begin() + 6, "replace");             // "replace phrase!!!"     (3)
+		str.replace(str.begin() + 8, str.begin() + 14, "is coolness", 7);    // "replace is cool!!!"    (4)
+		str.replace(str.begin() + 12, str.end() - 4, 4, 'o');                // "replace is cooool!!!"  (5)
+		str.replace(str.begin() + 11, str.end(), str4.begin(), str4.end());// "replace is useful."    (6)
+		std::cout << str << '\n';
+	}
+
+	{ // reserve
+		std::string str;
+
+		std::ifstream file("test.txt", std::ios::in | std::ios::ate);
+		if (file) {
+			std::ifstream::streampos filesize = file.tellg();
+			str.reserve(filesize);
+
+			file.seekg(0);
+			while (!file.eof()) {
+				str += file.get();
+			}
+			std::cout << str;
+		}
+	}
+
+	{ // resize
+		std::string str("I like to code in C");
+		std::cout << str << '\n';
+
+		unsigned sz = str.size();
+
+		str.resize(sz + 2, '+');
+		std::cout << str << '\n';
+
+		str.resize(14);
+		std::cout << str << '\n';
+	}
+
+	{ // rfind
+		std::string str("The sixth sick sheik's sixth sheep's sick.");
+		std::string key("sixth");
+
+		std::size_t found = str.rfind(key);
+		if (found != std::string::npos)
+			str.replace(found, key.length(), "seventh");
+
+		std::cout << str << '\n';
+	}
+
+	{ // shrink_to_fit(c++11)
+		std::string str(100, 'x');
+		std::cout << "1. capacity of str: " << str.capacity() << '\n';
+
+		str.resize(10);
+		std::cout << "2. capacity of str: " << str.capacity() << '\n';
+
+		str.shrink_to_fit();
+		std::cout << "3. capacity of str: " << str.capacity() << '\n';
+	}
+
+	{ // size
+		std::string str("Test string");
+		std::cout << "The size of str is " << str.size() << " bytes.\n";
+	}
+
+	{ // substr
+		std::string str = "We think in generalities, but we live in details.";
+		// (quoting Alfred N. Whitehead)
+
+		std::string str2 = str.substr(3, 5);     // "think"
+
+		std::size_t pos = str.find("live");      // position of "live" in str
+
+		std::string str3 = str.substr(pos);     // get from "live" to the end
+
+		std::cout << str2 << ' ' << str3 << '\n';
+	}
+
+	{ // swap
+		std::string buyer("money");
+		std::string seller("goods");
+
+		std::cout << "Before the swap, buyer has " << buyer;
+		std::cout << " and seller has " << seller << '\n';
+
+		seller.swap(buyer);
+
+		std::cout << " After the swap, buyer has " << buyer;
+		std::cout << " and seller has " << seller << '\n';
+	}
+
+	{ // npos
+		/*
+		std::string::npos : public static member constant
+		static const size_t npos = -1;
+		npos is a static member constant value with the greatest possible value for an element of type size_t.
+		This constant is defined with a value of -1, which because size_t is an unsigned integral type,
+		it is the largest possible representable value for this type.
+		*/
+	}
+
+	{ // getline
+		std::string name;
+
+		std::cout << "Please, enter your full name: ";
+		std::getline(std::cin, name);
+		std::cout << "Hello, " << name << "!\n";
+	}
+
+	{ // operator +
+		std::string firstlevel("com");
+		std::string secondlevel("cplusplus");
+		std::string scheme("http://");
+		std::string hostname;
+		std::string url;
+
+		hostname = "www." + secondlevel + '.' + firstlevel;
+		url = scheme + hostname;
+
+		std::cout << url << '\n';
+	}
+
+	{ // operator <<
+		std::string str = "Hello world!";
+		std::cout << str << '\n';
+	}
+
+	{ // operator >>
+		std::string name;
+
+		std::cout << "Please, enter your name: ";
+		std::cin >> name;
+		std::cout << "Hello, " << name << "!\n";
+	}
+
+	{ // string comparisons
+		std::string foo = "alpha";
+		std::string bar = "beta";
+
+		if (foo == bar) std::cout << "foo and bar are equal\n";
+		if (foo != bar) std::cout << "foo and bar are not equal\n";
+		if (foo< bar) std::cout << "foo is less than bar\n";
+		if (foo> bar) std::cout << "foo is greater than bar\n";
+		if (foo <= bar) std::cout << "foo is less than or equal to bar\n";
+		if (foo >= bar) std::cout << "foo is greater than or equal to bar\n";
+	}
+
+	{ // swap strings
+		std::string buyer("money");
+		std::string seller("goods");
+
+		std::cout << "Before the swap, buyer has " << buyer;
+		std::cout << " and seller has " << seller << '\n';
+
+		swap(buyer, seller);
+
+		std::cout << " After the swap, buyer has " << buyer;
+		std::cout << " and seller has " << seller << '\n';
+	}
+
+	{ // stod(c++11)
+		std::string orbits("365.24 29.53");
+		std::string::size_type sz;     // alias of size_t
+
+		double earth = std::stod(orbits, &sz);
+		double moon = std::stod(orbits.substr(sz));
+		std::cout << "The moon completes " << (earth / moon) << " orbits per Earth year.\n";
+	}
+
+	{ // stof(c++11)
+		std::string orbits("686.97 365.24");
+		std::string::size_type sz;     // alias of size_t
+
+		float mars = std::stof(orbits, &sz);
+		float earth = std::stof(orbits.substr(sz));
+		std::cout << "One martian year takes " << (mars / earth) << " Earth years.\n";
+	}
+
+	{ // stoi(c++11)
+		std::string str_dec = "2001, A Space Odyssey";
+		std::string str_hex = "40c3";
+		std::string str_bin = "-10010110001";
+		std::string str_auto = "0x7f";
+
+		std::string::size_type sz;   // alias of size_t
+
+		int i_dec = std::stoi(str_dec, &sz);
+		int i_hex = std::stoi(str_hex, nullptr, 16);
+		int i_bin = std::stoi(str_bin, nullptr, 2);
+		int i_auto = std::stoi(str_auto, nullptr, 0);
+
+		std::cout << str_dec << ": " << i_dec << " and [" << str_dec.substr(sz) << "]\n";
+		std::cout << str_hex << ": " << i_hex << '\n';
+		std::cout << str_bin << ": " << i_bin << '\n';
+		std::cout << str_auto << ": " << i_auto << '\n';
+	}
+
+	{ // stol(c++11)
+		std::string str_dec = "1987520";
+		std::string str_hex = "2f04e009";
+		std::string str_bin = "-11101001100100111010";
+		std::string str_auto = "0x7fffff";
+
+		std::string::size_type sz;   // alias of size_t
+
+		long li_dec = std::stol(str_dec, &sz);
+		long li_hex = std::stol(str_hex, nullptr, 16);
+		long li_bin = std::stol(str_bin, nullptr, 2);
+		long li_auto = std::stol(str_auto, nullptr, 0);
+
+		std::cout << str_dec << ": " << li_dec << '\n';
+		std::cout << str_hex << ": " << li_hex << '\n';
+		std::cout << str_bin << ": " << li_bin << '\n';
+		std::cout << str_auto << ": " << li_auto << '\n';
+	}
+
+	{ // stold(c++11)
+		std::string orbits("90613.305 365.24");
+		std::string::size_type sz;     // alias of size_t
+
+		long double pluto = std::stod(orbits, &sz);
+		long double earth = std::stod(orbits.substr(sz));
+		std::cout << "Pluto takes " << (pluto / earth) << " years to complete an orbit.\n";
+	}
+
+	{ // stoll(c++11)
+		std::string str = "8246821 0xffff 020";
+
+		std::string::size_type sz = 0;   // alias of size_t
+
+		while (!str.empty()) {
+			long long ll = std::stoll(str, &sz, 0);
+			std::cout << str.substr(0, sz) << " interpreted as " << ll << '\n';
+			str = str.substr(sz);
+		}
+	}
+
+	{ // stoul(c++11)
+		std::string str{ "1111" };
+		//std::cout << "Enter an unsigned number: ";
+		//std::getline(std::cin, str);
+		unsigned long ul = std::stoul(str, nullptr, 0);
+		std::cout << "You entered: " << ul << '\n';
+	}
+
+	{ // stoull(c++11)
+		std::string str = "8246821 0xffff 020 -1";
+
+		std::string::size_type sz = 0;   // alias of size_t
+
+		while (!str.empty()) {
+			unsigned long long ull = std::stoull(str, &sz, 0);
+			std::cout << str.substr(0, sz) << " interpreted as " << ull << '\n';
+			str = str.substr(sz);
+		}
+	}
+
+	{ // to_string(c++11)
+		/*
+		string to_string (int val);
+		string to_string (long val);
+		string to_string (long long val);
+		string to_string (unsigned val);
+		string to_string (unsigned long val);
+		string to_string (unsigned long long val);
+		string to_string (float val);
+		string to_string (double val);
+		string to_string (long double val);
+		*/
+
+		std::string pi = "pi is " + std::to_string(3.1415926);
+		std::string perfect = std::to_string(1 + 2 + 4 + 7 + 14) + " is a perfect number";
+		std::cout << pi << '\n';
+		std::cout << perfect << '\n';
+	}
+
+	{ // to_wstring(c++11)
+		/*
+		wstring to_wstring (int val);
+		wstring to_wstring (long val);
+		wstring to_wstring (long long val);
+		wstring to_wstring (unsigned val);
+		wstring to_wstring (unsigned long val);
+		wstring to_wstring (unsigned long long val);
+		wstring to_wstring (float val);
+		wstring to_wstring (double val);
+		wstring to_wstring (long double val);
+		*/
+
+		std::wstring pi = L"pi is " + std::to_wstring(3.1415926);
+		std::wstring perfect = std::to_wstring(1 + 2 + 4 + 7 + 14) + L" is a perfect number";
+		std::wcout << pi << L'\n';
+		std::wcout << perfect << L'\n';
+	}
+
+	return 0;
+}
