@@ -53,10 +53,11 @@
 #include "forward_declaration.hpp"
 #include "string.hpp"
 #include "transform.hpp"
+#include "set.hpp"
 
 int main()
 {
-	int ret = test_transform2();
+	int ret = test_set_cppreference();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");

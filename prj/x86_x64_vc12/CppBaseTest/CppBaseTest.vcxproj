@@ -198,6 +198,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\polymorphism.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\regex.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\rvalue_references.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\set.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\shared_ptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sort.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_assert.cpp" />
@@ -255,6 +256,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\polymorphism.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\regex.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\rvalue_references.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\set.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\shared_ptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sort.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_assert.hpp" />
