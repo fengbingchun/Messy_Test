@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_iostream_w();
+	int ret = test_nothrow2();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");

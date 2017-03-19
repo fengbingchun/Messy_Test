@@ -57,5 +57,6 @@
 #include "transform.hpp"
 #include "set.hpp"
 #include "iostream.hpp"
+#include "nothrow.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

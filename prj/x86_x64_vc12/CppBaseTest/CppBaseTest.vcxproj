@@ -192,6 +192,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\linked_list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\move.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\nothrow.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nullptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\operator.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\override.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\linked_list.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\move.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\nothrow.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nullptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\operator.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\override.hpp" />
