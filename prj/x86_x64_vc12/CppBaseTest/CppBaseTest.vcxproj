@@ -185,6 +185,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\function_pointers.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\inheritance.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\init_list.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\iostream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\istream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\jinghao.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\Lambda.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\auto.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\bind.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\common.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\decltype.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\default.hpp" />
@@ -243,6 +245,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\function_pointers.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\inheritance.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\init_list.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\iostream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\istream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\jinghao.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\Lambda.hpp" />
