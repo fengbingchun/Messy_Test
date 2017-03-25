@@ -186,6 +186,9 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\nothrow.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\try_catch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp">
@@ -363,6 +366,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\demo\CppBaseTest\nothrow.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\try_catch.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

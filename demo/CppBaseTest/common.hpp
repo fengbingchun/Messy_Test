@@ -58,5 +58,6 @@
 #include "set.hpp"
 #include "iostream.hpp"
 #include "nothrow.hpp"
+#include "try_catch.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
