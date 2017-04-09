@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_stringstream();
+	int ret = test_reference_3();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");
