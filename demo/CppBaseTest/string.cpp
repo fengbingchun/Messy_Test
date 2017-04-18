@@ -957,3 +957,18 @@ int test_string_func()
 
 	return 0;
 }
+
+int test_string_ifstream_to_string()
+{
+	// reference: http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
+	std::ifstream file("E:/GitCode/Messy_Test/testdata/regex.txt");
+	if (!file) {
+		fprintf(stderr, "read file failed!\n");
+		return -1;
+	}
+
+	std::string str((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+	fprintf(stderr, "file content: \n%s\n", str.c_str());
+
+	return 0;
+}
