@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_string_ifstream_to_string();
+	int ret = test_addressof_4();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");
