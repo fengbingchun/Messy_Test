@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_reverse_copy_2();
+	int ret = test_queue_3();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");
