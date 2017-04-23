@@ -64,5 +64,6 @@
 #include "addressof.hpp"
 #include "reverse.hpp"
 #include "queue.hpp"
+#include "priority_queue.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

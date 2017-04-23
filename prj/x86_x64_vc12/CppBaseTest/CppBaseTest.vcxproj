@@ -199,6 +199,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\override.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\pair.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\polymorphism.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\priority_queue.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\queue.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reference.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\regex.cpp" />
@@ -266,6 +267,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\override.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\pair.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\polymorphism.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\priority_queue.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\queue.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reference.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\regex.hpp" />

@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_queue_3();
+	int ret = test_priority_queue_4();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");
