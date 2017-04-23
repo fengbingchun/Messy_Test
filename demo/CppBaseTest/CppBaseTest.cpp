@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_addressof_4();
+	int ret = test_reverse_copy_2();
 
 	if (ret == 0) fprintf(stderr, "test success\n");
 	else fprintf(stderr, "test fail\n");

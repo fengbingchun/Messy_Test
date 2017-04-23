@@ -62,5 +62,6 @@
 #include "sstream.hpp"
 #include "reference.hpp"
 #include "addressof.hpp"
+#include "reverse.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
