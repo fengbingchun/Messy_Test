@@ -65,5 +65,6 @@
 #include "reverse.hpp"
 #include "queue.hpp"
 #include "priority_queue.hpp"
+#include "sort1.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

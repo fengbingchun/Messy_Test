@@ -208,6 +208,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\set.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\shared_ptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sort.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\sort1.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sstream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_assert.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_cast.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\set.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\shared_ptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sort.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\sort1.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sstream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_assert.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_cast.hpp" />
