@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VLDtest", "..\VLDtest\VLDtest.vcxproj", "{A848C72E-3109-47F7-951F-95E11C2A2D15}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrMemoryTest", "..\DrMemoryTest\DrMemoryTest.vcxproj", "{A26D5F01-995A-4D51-BA6D-29A265125D0C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "miniz_Test", "..\miniz_Test\miniz_Test.vcxproj", "{71D081C7-4344-4579-8E36-C38E382EAADC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtest", "..\gtest\gtest.vcxproj", "{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,12 @@ Global
 		{71D081C7-4344-4579-8E36-C38E382EAADC}.Release|Win32.ActiveCfg = Release|Win32
 		{71D081C7-4344-4579-8E36-C38E382EAADC}.Release|Win32.Build.0 = Release|Win32
 		{71D081C7-4344-4579-8E36-C38E382EAADC}.Release|x64.ActiveCfg = Release|x64
+		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}.Debug|Win32.Build.0 = Debug|Win32
+		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}.Debug|x64.ActiveCfg = Debug|x64
+		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}.Release|Win32.ActiveCfg = Release|Win32
+		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}.Release|Win32.Build.0 = Release|Win32
+		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
