@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "miniz_Test", "..\miniz_Test
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtest", "..\gtest\gtest.vcxproj", "{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtest_Test", "..\gtest_Test\gtest_Test.vcxproj", "{A7CCA5DC-C34C-4574-BAF3-BCC2DEF867BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -77,6 +79,12 @@ Global
 		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}.Release|Win32.ActiveCfg = Release|Win32
 		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}.Release|Win32.Build.0 = Release|Win32
 		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}.Release|x64.ActiveCfg = Release|x64
+		{A7CCA5DC-C34C-4574-BAF3-BCC2DEF867BA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A7CCA5DC-C34C-4574-BAF3-BCC2DEF867BA}.Debug|Win32.Build.0 = Debug|Win32
+		{A7CCA5DC-C34C-4574-BAF3-BCC2DEF867BA}.Debug|x64.ActiveCfg = Debug|x64
+		{A7CCA5DC-C34C-4574-BAF3-BCC2DEF867BA}.Release|Win32.ActiveCfg = Release|Win32
+		{A7CCA5DC-C34C-4574-BAF3-BCC2DEF867BA}.Release|Win32.Build.0 = Release|Win32
+		{A7CCA5DC-C34C-4574-BAF3-BCC2DEF867BA}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
