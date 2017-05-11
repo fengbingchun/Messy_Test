@@ -20,6 +20,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtest", "..\gtest\gtest.vcxproj", "{164300F1-0BA0-44E9-A0D1-D3684BA61DA0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtest_Test", "..\gtest_Test\gtest_Test.vcxproj", "{A7CCA5DC-C34C-4574-BAF3-BCC2DEF867BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{164300F1-0BA0-44E9-A0D1-D3684BA61DA0} = {164300F1-0BA0-44E9-A0D1-D3684BA61DA0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

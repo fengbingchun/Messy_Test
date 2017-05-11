@@ -167,7 +167,12 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\demo\gtest_Test\funset.cpp" />
     <ClCompile Include="..\..\..\demo\gtest_Test\gtest_Test.cpp" />
+    <ClCompile Include="..\..\..\demo\gtest_Test\test_TEST.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\demo\gtest_Test\funset.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
