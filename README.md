@@ -8,6 +8,7 @@
 - miniz's usage [richgel999/miniz](https://github.com/richgel999/miniz)
 - tar package' parse
 - regular expression's usage
+- Google Test(gtest)'s usage [google/googletest](https://github.com/google/googletest)
 
 **The project support platform: windows7/10 64 bits. It can be directly build with VS2013 in windows7/10 64bits.**
 
