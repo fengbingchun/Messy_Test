@@ -24,6 +24,9 @@
     <ClCompile Include="..\..\..\demo\gtest_Test\funset.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\gtest_Test\test_TEST_F.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\gtest_Test\funset.hpp">

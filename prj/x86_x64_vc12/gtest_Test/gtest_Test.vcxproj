@@ -170,6 +170,7 @@
     <ClCompile Include="..\..\..\demo\gtest_Test\funset.cpp" />
     <ClCompile Include="..\..\..\demo\gtest_Test\gtest_Test.cpp" />
     <ClCompile Include="..\..\..\demo\gtest_Test\test_TEST.cpp" />
+    <ClCompile Include="..\..\..\demo\gtest_Test\test_TEST_F.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\gtest_Test\funset.hpp" />
