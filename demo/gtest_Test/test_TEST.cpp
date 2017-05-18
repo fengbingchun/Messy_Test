@@ -96,3 +96,71 @@ TEST(MyString, Set) {
 	EXPECT_STREQ(NULL, s.c_string());
 }
 
+////////////////////////////////////////////////////////
+TEST(MoreAssertions, assertion_fail) {
+	FAIL() << "oh, over"; // you can only use FAIL() in functions that return void
+}
+
+static int test_exception()
+{
+	try {
+		throw 20;
+	}
+	catch (int e) {
+		std::cout << "An exception occurred. Exception Nr. " << e << '\n';
+	}
+
+	return 0;
+}
+
+TEST(MoreAssertions, assertion_throw) {
+	EXPECT_THROW(test_exception, int);
+}
+
+static bool MutuallyPrime(int m, int n)
+{
+	if (n / m == 1) return true;
+	else return false;
+}
+
+TEST(MoreAssertions, assertion_predicate) {
+	const int a = 3;
+	const int b = 4;
+	const int c = 10;
+
+	EXPECT_PRED2(MutuallyPrime, a, b);
+	EXPECT_PRED2(MutuallyPrime, b, c);
+}
+
+::testing::AssertionResult IsEven(int n)
+{
+	if ((n % 2) == 0)
+		return ::testing::AssertionSuccess() << n << " is even";
+	else
+		return ::testing::AssertionFailure() << n << " is odd";
+}
+
+TEST(MoreAssertions, assertion_result) {
+	EXPECT_TRUE(IsEven(2));
+	EXPECT_TRUE(IsEven(3));
+	EXPECT_FALSE(IsEven(2));
+}
+
+///////////////////////////////////////////////////////////
+TEST(FloatPoint, float_double_eq) {
+	float expected1{ 1.111111f }, actual1{ 1.11111111111f };
+	EXPECT_FLOAT_EQ(expected1, actual1);
+
+	double expected2{ 1.11111111f }, actual2{ 1.11111111111f };
+	EXPECT_DOUBLE_EQ(expected2, actual2);
+}
+
+TEST(FloatPoint, float_double_near) {
+	float expected1{ 1.11f }, actual1{ 1.11111111111f };
+	EXPECT_NEAR(expected1, actual1, 0.01f);
+}
+
+TEST(FloatPoint, float_double_format2) {
+	float expected1{ 1.111111f }, actual1{ 1.12f };
+	ASSERT_PRED_FORMAT2(::testing::FloatLE, expected1, actual1);
+}
