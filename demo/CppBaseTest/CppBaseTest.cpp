@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_deque_2();
+	int ret = test_stack_2();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");
