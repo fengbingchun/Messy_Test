@@ -68,5 +68,6 @@
 #include "sort1.hpp"
 #include "stack.hpp"
 #include "deque.hpp"
+#include "array.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
