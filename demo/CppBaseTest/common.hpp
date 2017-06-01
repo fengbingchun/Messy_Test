@@ -69,5 +69,6 @@
 #include "stack.hpp"
 #include "deque.hpp"
 #include "array.hpp"
+#include "tuple.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
