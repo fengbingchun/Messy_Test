@@ -194,6 +194,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\jinghao.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\Lambda.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\linked_list.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\move.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nothrow.cpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\jinghao.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\Lambda.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\linked_list.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\list.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\move.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nothrow.hpp" />

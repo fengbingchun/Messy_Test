@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_forward_list_1();
+	int ret = test_list_1();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");
