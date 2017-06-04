@@ -70,5 +70,6 @@
 #include "deque.hpp"
 #include "array.hpp"
 #include "tuple.hpp"
+#include "forward_list.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

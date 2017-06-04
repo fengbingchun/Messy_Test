@@ -181,6 +181,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\final.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\for.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\forward.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\forward_list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\for_each.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\friend.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\fstream.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\for.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\forward.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\forward_declaration.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\forward_list.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\for_each.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\friend.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\fstream.hpp" />
