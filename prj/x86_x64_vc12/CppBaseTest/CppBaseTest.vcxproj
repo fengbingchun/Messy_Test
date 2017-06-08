@@ -168,6 +168,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\array.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\auto.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\bind.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\chrono.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\decltype.cpp" />
@@ -205,6 +206,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\polymorphism.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\priority_queue.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\queue.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\ratio.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reference.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\regex.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reverse.cpp" />
@@ -241,6 +243,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\array.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\auto.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\bind.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\chrono.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\common.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
@@ -280,6 +283,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\polymorphism.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\priority_queue.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\queue.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\ratio.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reference.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\regex.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reverse.hpp" />

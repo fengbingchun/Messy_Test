@@ -72,5 +72,7 @@
 #include "tuple.hpp"
 #include "forward_list.hpp"
 #include "list.hpp"
+#include "chrono.hpp"
+#include "ratio.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
