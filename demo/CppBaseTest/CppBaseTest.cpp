@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_ratio_1();
+	int ret = test_chrono_time_point();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");
