@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_chrono_time_point();
+	int ret = test_this_thread_yield();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");
