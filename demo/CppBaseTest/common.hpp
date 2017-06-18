@@ -75,5 +75,6 @@
 #include "chrono.hpp"
 #include "ratio.hpp"
 #include "thread2.hpp"
+#include "atomic.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

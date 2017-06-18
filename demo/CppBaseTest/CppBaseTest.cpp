@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_this_thread_yield();
+	int ret = atomic::test_atomic_flag_atomic_clear();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");
