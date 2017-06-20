@@ -199,6 +199,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\move.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\mutex.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nothrow.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nullptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\operator.cpp" />
@@ -278,6 +279,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\list.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\move.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\mutex.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nothrow.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nullptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\operator.hpp" />

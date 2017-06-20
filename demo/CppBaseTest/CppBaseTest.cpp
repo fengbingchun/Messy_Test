@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = atomic::test_atomic_flag_atomic_clear();
+	int ret = mutex_::test_mutex_3();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");

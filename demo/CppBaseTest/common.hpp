@@ -76,5 +76,6 @@
 #include "ratio.hpp"
 #include "thread2.hpp"
 #include "atomic.hpp"
+#include "mutex.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
