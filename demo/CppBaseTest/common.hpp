@@ -77,5 +77,6 @@
 #include "thread2.hpp"
 #include "atomic.hpp"
 #include "mutex.hpp"
+#include "condition_variable.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

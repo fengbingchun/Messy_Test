@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = mutex_::test_mutex_3();
+	int ret = condition_variable_::test_condition_variable_2();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");
