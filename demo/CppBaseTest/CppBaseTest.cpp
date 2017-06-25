@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = condition_variable_::test_condition_variable_2();
+	int ret = test_bernoulli_distribution_3();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");

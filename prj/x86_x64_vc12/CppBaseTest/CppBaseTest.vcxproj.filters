@@ -246,6 +246,9 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\bernoulli_distribution.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp">
@@ -483,6 +486,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\bernoulli_distribution.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

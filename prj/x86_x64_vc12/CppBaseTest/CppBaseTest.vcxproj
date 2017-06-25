@@ -168,6 +168,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\array.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\atomic.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\auto.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\bernoulli_distribution.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\bind.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\chrono.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\array.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\atomic.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\auto.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\bernoulli_distribution.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\bind.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\chrono.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
