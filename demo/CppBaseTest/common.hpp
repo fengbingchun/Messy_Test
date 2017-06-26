@@ -79,5 +79,6 @@
 #include "mutex.hpp"
 #include "condition_variable.hpp"
 #include "bernoulli_distribution.hpp"
+#include "normal_distribution.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
