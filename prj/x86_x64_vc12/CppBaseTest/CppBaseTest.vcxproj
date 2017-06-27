@@ -181,6 +181,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\encapsulation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\enum.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\exponential_distribution.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\fill.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\final.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\for.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\encapsulation.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\enum.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\exponential_distribution.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\fill.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\final.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\for.hpp" />
