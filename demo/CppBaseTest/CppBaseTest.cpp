@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_exponential_distribution_3();
+	int ret = test_const_pointer_2();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");
