@@ -1,0 +1,6 @@
+#ifndef FBC_CPP_BASE_TEST_STATIC_HPP_
+#define FBC_CPP_BASE_TEST_STATIC_HPP_
+
+int test_static_1();
+
+#endif // FBC_CPP_BASE_TEST_STATIC_HPP_

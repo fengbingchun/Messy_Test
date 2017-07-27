@@ -102,7 +102,7 @@ int test_chrono_duration()
 
 //////////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/chrono/high_resolution_clock/
-int test_chrono_high_resolution_clock()
+int test_chrono_high_resolution_clock() 
 {
 	// high_resolution_clock::now: Returns the current time_point in the frame of the high_resolution_clock
 	using namespace std::chrono;

@@ -82,5 +82,6 @@
 #include "normal_distribution.hpp"
 #include "exponential_distribution.hpp"
 #include "const_pointer.hpp"
+#include "static.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

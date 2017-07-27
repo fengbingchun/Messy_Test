@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_const_pointer_2();
+	int ret = test_static_1();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");
