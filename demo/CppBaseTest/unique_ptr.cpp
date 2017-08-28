@@ -152,3 +152,33 @@ int test_unique_ptr4()
 	return 0;
 }
 
+//////////////////////////////////////////////////////////////////
+template <typename T>
+class Add {
+public:
+	T add_sub(T a, T b)
+	{
+		return (a + b) * (a - b);
+	}
+};
+
+
+int test_unique_ptr5()
+{
+	std::unique_ptr<Add<int>> tt(new Add<int>());
+	int a{ 10 }, b{ 5 };
+
+	std::cout << tt->add_sub(a, b) << std::endl;
+
+	return 0;
+}
+
+//////////////////////////////////////////////////////////////////
+int test_unique_ptr6()
+{
+	std::unique_ptr<int[]> tmp(new int[100]);
+	std::for_each(tmp.get(), tmp.get() + 100, [](int& n) {n = 66; });
+	std::cout << tmp[99] << std::endl;
+
+	return 0;
+}
