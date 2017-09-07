@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_unique_ptr6();
+	int ret = test_fstream5();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");

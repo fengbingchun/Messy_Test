@@ -187,3 +187,58 @@ int test_fstream4()
 
 	return 0;
 }
+
+//////////////////////////////////////////////////////////////////////////
+std::ofstream _file;
+
+int test_init_database()
+{
+	_file.open("E:/GitCode/Messy_Test/testdata/data.bin");
+	if (!_file.is_open()) {
+		fprintf(stderr, "open file fail\n");
+		return -1;
+	}
+
+	return 0;
+}
+
+int test_store_database()
+{
+	for (int i = 0; i < 10; ++i) {
+		_file.write((char*)&i, sizeof(i));
+	}
+
+	return 0;
+}
+
+int test_close_database()
+{
+	_file.close();
+	return 0;
+}
+
+int test_fstream5()
+{
+	test_init_database();
+
+	for (int i = 0; i < 5; ++i) {
+		test_store_database();
+	}
+
+	test_close_database();
+
+	std::ifstream file("E:/GitCode/Messy_Test/testdata/data.bin");
+	if (!file.is_open()) {
+		fprintf(stderr, "open file fail\n");
+		return -1;
+	}
+
+	int a[100];
+	for (int i = 0; i < 50; ++i) {
+		file.read((char*)&a[i], sizeof(int));
+	}
+
+	file.close();
+
+	return 0;
+}
