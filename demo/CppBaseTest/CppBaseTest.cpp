@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_fstream5();
+	int ret = test_numeric_limits_1();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "********** test fail **********\n");

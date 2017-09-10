@@ -207,6 +207,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\normal_distribution.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nothrow.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nullptr.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\numeric_limits.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\operator.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\override.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\pair.cpp" />
@@ -293,6 +294,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\normal_distribution.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nothrow.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nullptr.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\numeric_limits.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\operator.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\override.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\pair.hpp" />
