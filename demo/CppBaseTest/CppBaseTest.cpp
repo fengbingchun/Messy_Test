@@ -3,10 +3,10 @@
 
 int main()
 {
-	int ret = test_numeric_limits_1();
+	int ret = test_initializer_list_1();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
-	else fprintf(stderr, "********** test fail **********\n");
+	else fprintf(stderr, "########## test fail ##########\n");
 
 	return 0;
 }

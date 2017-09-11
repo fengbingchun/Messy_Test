@@ -84,5 +84,6 @@
 #include "const_pointer.hpp"
 #include "static.hpp"
 #include "numeric_limits.hpp"
+#include "initializer_list.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
