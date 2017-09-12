@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_fstream7();
+	int ret = numeric_::test_numeric_iota();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

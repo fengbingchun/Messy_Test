@@ -85,5 +85,6 @@
 #include "static.hpp"
 #include "numeric_limits.hpp"
 #include "initializer_list.hpp"
+#include "numeric.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
