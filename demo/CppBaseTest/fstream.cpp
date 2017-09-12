@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <vector>
 
 #include "fstream.hpp"
 
@@ -240,5 +241,53 @@ int test_fstream5()
 
 	file.close();
 
+	return 0;
+}
+
+//////////////////////////////////////////////////
+static void parse_string(char* line, std::string& image_name, std::vector<int>& rect)
+{
+	std::string str(line);
+	rect.resize(0);
+
+	int pos = str.find_first_of(" ");
+	image_name = str.substr(0, pos);
+	std::string str1 = str.substr(pos + 1, str.length());
+	for (int i = 0; i < 4; ++i) {
+		pos = str1.find_first_of(" ");
+		std::string x = str1.substr(0, pos);
+		str1 = str1.erase(0, pos+1);
+		rect.push_back(std::stoi(x));
+	}
+}
+
+int test_fstream6()
+{
+	std::string name{ "E:/GitCode/Messy_Test/testdata/list.txt" };
+	std::ifstream in(name.c_str(), std::ios::in);
+	if (!in.is_open()) {
+		fprintf(stderr, "open file fail: %s\n", name.c_str());
+		return -1;
+	}
+
+	int count{ 0 };
+	char line[256];
+	in.getline(line, 256);
+	count = atoi(line);
+	std::cout << count << std::endl;
+	//while (!in.eof()) {
+	for (int i = 0; i < count; ++i) {
+		in.getline(line, 256);
+		std::cout << "line: "<< line << std::endl;
+		std::string image_name{};
+		std::vector<int> rect{};
+		parse_string(line, image_name, rect);
+		std::cout << "image name: " << image_name << std::endl;
+		for (auto x : rect)
+			std::cout << "  " << x << "  ";
+		std::cout << std::endl;
+	}
+
+	in.close();
 	return 0;
 }
