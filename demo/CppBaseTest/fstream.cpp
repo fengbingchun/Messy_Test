@@ -312,5 +312,6 @@ int test_fstream7()
 		fprintf(stdout, "image_name: %s, rect: %d, %d, %d, %d\n", image_name.c_str(), left, top, right, bottom);
 	}
 
+	in.close();
 	return 0;
 }
