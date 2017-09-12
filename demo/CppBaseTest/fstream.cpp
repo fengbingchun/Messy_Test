@@ -291,3 +291,26 @@ int test_fstream6()
 	in.close();
 	return 0;
 }
+
+//////////////////////////////////////////////
+int test_fstream7()
+{
+	std::string name{ "E:/GitCode/Messy_Test/testdata/list.txt" };
+	std::ifstream in(name.c_str(), std::ios::in);
+	if (!in.is_open()) {
+		fprintf(stderr, "open file fail: %s\n", name.c_str());
+		return -1;
+	}
+
+	int count{ 0 };
+	std::string image_name{};
+	int left{ 0 }, top{ 0 }, right{ 0 }, bottom{ 0 };
+	in >> count;
+	std::cout << "count: " << count << std::endl;
+	for (int i = 0; i < count; ++i) {
+		in >> image_name >> left >> top >> right >> bottom;
+		fprintf(stdout, "image_name: %s, rect: %d, %d, %d, %d\n", image_name.c_str(), left, top, right, bottom);
+	}
+
+	return 0;
+}

@@ -7,6 +7,7 @@ int test_fstream2();
 int test_fstream3();
 int test_fstream4();
 int test_fstream6();
+int test_fstream7();
 
 int test_init_database();
 int test_store_database();
