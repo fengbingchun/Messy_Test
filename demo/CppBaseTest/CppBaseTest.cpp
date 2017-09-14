@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = numeric_::test_numeric_iota();
+	int ret = iterator_::test_iterator_20();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
