@@ -87,5 +87,6 @@
 #include "initializer_list.hpp"
 #include "numeric.hpp"
 #include "iterator.hpp"
+#include "functional.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
