@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = functional_::test_functional_is_placeholder();
+	int ret = algorithm_::test_algorithm_swap();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

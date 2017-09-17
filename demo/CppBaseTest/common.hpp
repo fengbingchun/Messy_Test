@@ -88,5 +88,6 @@
 #include "numeric.hpp"
 #include "iterator.hpp"
 #include "functional.hpp"
+#include "algorithm.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
