@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = algorithm_::test_algorithm_swap();
+	int ret = algorithm_::test_algorithm_unique();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

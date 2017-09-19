@@ -19,6 +19,18 @@ int test_algorithm_partition();
 int test_algorithm_permutation();
 int test_algorithm_sort();
 int test_algorithm_swap();
+int test_algorithm_lexicographical_compare();
+int test_algorithm_min_max();
+int test_algorithm_mismatch();
+int test_algorithm_move();
+int test_algorithm_shuffle();
+int test_algorithm_remove();
+int test_algorithm_replace();
+int test_algorithm_reverse();
+int test_algorithm_rotate();
+int test_algorithm_set();
+int test_algorithm_transform();
+int test_algorithm_unique();
 
 } // namespace algorithm_
 

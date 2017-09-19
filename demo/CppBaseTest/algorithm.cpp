@@ -6,6 +6,9 @@
 #include <array>
 #include <ctime>
 #include <cstdlib>
+#include <string>
+#include <random>
+#include <chrono>
 
 // reference: http://www.cplusplus.com/reference/algorithm/
 
@@ -936,6 +939,596 @@ int test_algorithm_swap()
 	std::cout << "bar contains:";
 	for (std::vector<int>::iterator it = bar.begin(); it != bar.end(); ++it)
 		std::cout << ' ' << *it; // 10 10 10 33 33
+	std::cout << '\n';
+}
+
+	return 0;
+}
+
+///////////////////////////////////////////////
+static bool mycomp(char c1, char c2) { return std::tolower(c1)<std::tolower(c2); }
+
+int test_algorithm_lexicographical_compare()
+{
+	char foo[] = "Apple";
+	char bar[] = "apartment";
+
+	std::cout << std::boolalpha;
+
+	std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
+
+	std::cout << "Using default comparison (operator<): ";
+	std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9); // true
+	std::cout << '\n';
+
+	std::cout << "Using mycomp as comparison object: ";
+	std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp); // false
+	std::cout << '\n';
+
+	return 0;
+}
+
+//////////////////////////////////////
+static bool myfn(int i, int j) { return i<j; }
+
+int test_algorithm_min_max()
+{
+{
+	std::cout << "min(1, 2)==" << std::min(1, 2) << '\n'; // 1
+	std::cout << "min(2, 1)==" << std::min(2, 1) << '\n'; // 1
+	std::cout << "min('a', 'z')==" << std::min('a', 'z') << '\n'; // a
+	std::cout << "min(3.14, 2.72)==" << std::min(3.14, 2.72) << '\n'; // 2.72
+}
+
+{
+	int myints[] = { 3, 7, 2, 5, 6, 4, 9 };
+
+	// using default comparison:
+	std::cout << "The smallest element is " << *std::min_element(myints, myints + 7) << '\n'; // 2
+	std::cout << "The largest element is " << *std::max_element(myints, myints + 7) << '\n'; // 9
+
+	// using function myfn as comp:
+	std::cout << "The smallest element is " << *std::min_element(myints, myints + 7, myfn) << '\n'; // 2
+	std::cout << "The largest element is " << *std::max_element(myints, myints + 7, myfn) << '\n'; // 9
+
+	// using object myobj as comp:
+	std::cout << "The smallest element is " << *std::min_element(myints, myints + 7, myobject2) << '\n'; // 2
+	std::cout << "The largest element is " << *std::max_element(myints, myints + 7, myobject2) << '\n'; // 9
+}
+
+{
+	std::cout << "max(1,2)==" << std::max(1, 2) << '\n'; // 2
+	std::cout << "max(2,1)==" << std::max(2, 1) << '\n'; // 2
+	std::cout << "max('a','z')==" << std::max('a', 'z') << '\n'; // z
+	std::cout << "max(3.14,2.73)==" << std::max(3.14, 2.73) << '\n'; // 3.14
+}
+
+{
+	auto result = std::minmax({ 1, 2, 3, 4, 5 });
+
+	std::cout << "minmax({1,2,3,4,5}): ";
+	std::cout << result.first << ' ' << result.second << '\n'; // 1 5
+}
+
+{
+	std::array<int, 7> foo{ 3, 7, 2, 9, 5, 8, 6 };
+
+	auto result = std::minmax_element(foo.begin(), foo.end());
+
+	// print result:
+	std::cout << "min is " << *result.first; // 2
+	std::cout << ", at position " << (result.first - foo.begin()) << '\n'; // 2
+	std::cout << "max is " << *result.second; // 9
+	std::cout << ", at position " << (result.second - foo.begin()) << '\n'; // 3
+}
+
+	return 0;
+}
+
+///////////////////////////////////////////
+int test_algorithm_mismatch()
+{
+	std::vector<int> myvector;
+	for (int i = 1; i<6; i++) myvector.push_back(i * 10); // myvector: 10 20 30 40 50
+
+	int myints[] = { 10, 20, 80, 320, 1024 };                //   myints: 10 20 80 320 1024
+
+	std::pair<std::vector<int>::iterator, int*> mypair;
+
+	// using default comparison:
+	mypair = std::mismatch(myvector.begin(), myvector.end(), myints);
+	std::cout << "First mismatching elements: " << *mypair.first; // 30
+	std::cout << " and " << *mypair.second << '\n'; // 80
+
+	++mypair.first; ++mypair.second;
+
+	// using predicate comparison:
+	mypair = std::mismatch(mypair.first, myvector.end(), mypair.second, mypredicate);
+	std::cout << "Second mismatching elements: " << *mypair.first; // 40
+	std::cout << " and " << *mypair.second << '\n'; // 320
+
+	return 0;
+}
+
+//////////////////////////////////////////
+/* The behavior of std::move_backward template is equivalent to:
+template<class BidirectionalIterator1, class BidirectionalIterator2>
+BidirectionalIterator2 move_backward ( BidirectionalIterator1 first,
+	BidirectionalIterator1 last,
+	BidirectionalIterator2 result )
+{
+	while (last!=first) *(--result) = std::move(*(--last));
+	return result;
+}
+*/
+int test_algorithm_move()
+{
+{
+	std::vector<std::string> foo = { "air", "water", "fire", "earth" };
+	std::vector<std::string> bar(4);
+
+	// moving ranges:
+	std::cout << "Moving ranges...\n";
+	std::move(foo.begin(), foo.begin() + 4, bar.begin());
+
+	std::cout << "foo contains " << foo.size() << " elements:";// 4
+	std::cout << " (each in an unspecified but valid state)";
+	std::cout << '\n';
+
+	std::cout << "bar contains " << bar.size() << " elements:"; // 4
+	for (std::string& x : bar) std::cout << " [" << x << "]"; // [air] [water] [fire] [earch]
+	std::cout << '\n';
+
+	// moving container:
+	std::cout << "Moving container...\n";
+	foo = std::move(bar);
+
+	std::cout << "foo contains " << foo.size() << " elements:"; // 4
+	for (std::string& x : foo) std::cout << " [" << x << "]"; // [air] [water] [fire] [earch]
+	std::cout << '\n';
+	std::cout << "bar contains " << bar.size() << " elements" << std::endl; // 0
+	//std::cout << "bar is in an unspecified but valid state";
+	//std::cout << '\n';
+}
+
+{
+	std::string elems[10] = { "air", "water", "fire", "earth" };
+
+	// insert new element at the beginning:
+	std::move_backward(elems, elems + 4, elems + 5);
+	elems[0] = "ether";
+
+	std::cout << "elems contains:";
+	for (int i = 0; i<10; ++i)
+		std::cout << " [" << elems[i] << "]"; // [ether] [air] [water] [fire] [earch]
+	std::cout << '\n';
+}
+
+	return 0;
+}
+
+//////////////////////////////////////////////
+// random generator function:
+int myrandom(int i) { return std::rand() % i; }
+
+int test_algorithm_shuffle()
+{
+{
+	std::srand(unsigned(std::time(0)));
+	std::vector<int> myvector;
+
+	// set some values:
+	for (int i = 1; i<10; ++i) myvector.push_back(i); // 1 2 3 4 5 6 7 8 9
+
+	// using built-in random generator:
+	std::random_shuffle(myvector.begin(), myvector.end());
+
+	// using myrandom:
+	std::random_shuffle(myvector.begin(), myvector.end(), myrandom);
+
+	// print out content:
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+
+	std::cout << '\n';
+}
+
+{
+	std::array<int, 5> foo{ 1, 2, 3, 4, 5 };
+
+	// obtain a time-based seed:
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+	shuffle(foo.begin(), foo.end(), std::default_random_engine(seed));
+
+	std::cout << "shuffled elements:";
+	for (int& x : foo) std::cout << ' ' << x;
+	std::cout << '\n';
+}
+
+	return 0;
+}
+
+//////////////////////////////////////////
+int test_algorithm_remove()
+{
+{
+	int myints[] = { 10, 20, 30, 30, 20, 10, 10, 20 };      // 10 20 30 30 20 10 10 20
+
+	// bounds of range:
+	int* pbegin = myints;                                   // ^
+	int* pend = myints + sizeof(myints) / sizeof(int);      // ^                       ^
+
+	pend = std::remove(pbegin, pend, 20);                   // 10 30 30 10 10 ?  ?  ?
+	                                                        // ^              ^
+	std::cout << "range contains:";
+	for (int* p = pbegin; p != pend; ++p)
+		std::cout << ' ' << *p; // 10 30 30 10 10
+	std::cout << '\n';
+}
+
+{
+	int myints[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };            // 1 2 3 4 5 6 7 8 9
+
+	// bounds of range:
+	int* pbegin = myints;                                    // ^
+	int* pend = myints + sizeof(myints) / sizeof(int);       // ^                 ^
+
+	pend = std::remove_if(pbegin, pend, IsOdd);              // 2 4 6 8 ? ? ? ? ?
+	                                                         // ^       ^
+	std::cout << "the range contains:";
+	for (int* p = pbegin; p != pend; ++p)
+		std::cout << ' ' << *p; // 2 4 6 8
+	std::cout << '\n';
+}
+
+{
+	int myints[] = { 10, 20, 30, 30, 20, 10, 10, 20 };               // 10 20 30 30 20 10 10 20
+	std::vector<int> myvector(8);
+
+	std::remove_copy(myints, myints + 8, myvector.begin(), 20);      // 10 30 30 10 10 0 0 0
+
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 10 30 30 10 10 0 0 0
+	std::cout << '\n';
+}
+
+{
+	int myints[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	std::vector<int> myvector(9);
+
+	std::remove_copy_if(myints, myints + 9, myvector.begin(), IsOdd);
+
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 2 4 6 8 0 0 0 0 0
+	std::cout << '\n';
+}
+
+	return 0;
+}
+
+//////////////////////////////////////////////
+int test_algorithm_replace()
+{
+{
+	int myints[] = { 10, 20, 30, 30, 20, 10, 10, 20 };
+	std::vector<int> myvector(myints, myints + 8);            // 10 20 30 30 20 10 10 20
+
+	std::replace(myvector.begin(), myvector.end(), 20, 99);   // 10 99 30 30 99 10 10 99
+
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 10 99 30 30 99 10 10 99
+	std::cout << '\n';
+}
+
+{
+	std::vector<int> myvector;
+
+	// set some values:
+	for (int i = 1; i<10; i++) myvector.push_back(i);               // 1 2 3 4 5 6 7 8 9
+
+	std::replace_if(myvector.begin(), myvector.end(), IsOdd, 0);    // 0 2 0 4 0 6 0 8 0
+
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 0 2 0 4 0 6 0 8 0
+	std::cout << '\n';
+}
+
+{
+	int myints[] = { 10, 20, 30, 30, 20, 10, 10, 20 };
+
+	std::vector<int> myvector(8);
+	std::replace_copy(myints, myints + 8, myvector.begin(), 20, 99);
+
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 10 99 30 30 99 10 10 99
+	std::cout << '\n';
+}
+
+{
+	std::vector<int> foo, bar;
+
+	// set some values:
+	for (int i = 1; i<10; i++) foo.push_back(i);                         // 1 2 3 4 5 6 7 8 9
+
+	bar.resize(foo.size());   // allocate space
+	std::replace_copy_if(foo.begin(), foo.end(), bar.begin(), IsOdd, 0); // 0 2 0 4 0 6 0 8 0
+
+	std::cout << "bar contains:";
+	for (std::vector<int>::iterator it = bar.begin(); it != bar.end(); ++it)
+		std::cout << ' ' << *it; // 0 2 0 4 0 6 0 8 0
+	std::cout << '\n';
+}
+
+	return 0;
+}
+
+///////////////////////////////////////////////////
+int test_algorithm_reverse()
+{
+{
+	std::vector<int> myvector;
+
+	// set some values:
+	for (int i = 1; i<10; ++i) myvector.push_back(i);   // 1 2 3 4 5 6 7 8 9
+
+	std::reverse(myvector.begin(), myvector.end());     // 9 8 7 6 5 4 3 2 1
+
+	// print out content:
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 9 8 7 6 5 4 3 2 1
+	std::cout << '\n';
+}
+
+{
+	int myints[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	std::vector<int> myvector;
+
+	myvector.resize(9);    // allocate space
+
+	std::reverse_copy(myints, myints + 9, myvector.begin());
+
+	// print out content:
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 9 8 7 6 5 4 3 2 1
+
+	std::cout << '\n';
+}
+
+	return 0;
+}
+
+////////////////////////////////////////////
+/*
+The behavior of std::rotate template (C++98) is equivalent to:
+
+template <class ForwardIterator>
+void rotate (ForwardIterator first, ForwardIterator middle, ForwardIterator last)
+{
+	ForwardIterator next = middle;
+	while (first!=next) {
+		swap (*first++,*next++);
+		if (next==last) next=middle;
+		else if (first==middle) middle=next;
+	}
+}
+*/
+
+int test_algorithm_rotate()
+{
+{
+	std::vector<int> myvector;
+
+	// set some values:
+	for (int i = 1; i<10; ++i) myvector.push_back(i);                    // 1 2 3 4 5 6 7 8 9
+
+	std::rotate(myvector.begin(), myvector.begin() + 3, myvector.end()); // 4 5 6 7 8 9 1 2 3
+	// print out content:
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 4 5 6 7 8 9 1 2 3
+	std::cout << '\n';
+}
+
+{
+	int myints[] = { 10, 20, 30, 40, 50, 60, 70 };
+
+	std::vector<int> myvector(7);
+
+	std::rotate_copy(myints, myints + 3, myints + 7, myvector.begin());
+
+	// print out content:
+	std::cout << "myvector contains:";
+	for (std::vector<int>::iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 40 50 60 70 10 20 30
+	std::cout << '\n';
+}
+
+	return 0;
+}
+
+//////////////////////////////////////
+/*
+The behavior of std::set_difference template is equivalent to:
+
+template <class InputIterator1, class InputIterator2, class OutputIterator>
+OutputIterator set_difference (InputIterator1 first1, InputIterator1 last1,
+	InputIterator2 first2, InputIterator2 last2, OutputIterator result)
+{
+	while (first1!=last1 && first2!=last2) {
+		if (*first1<*first2) { *result = *first1; ++result; ++first1; }
+		else if (*first2<*first1) ++first2;
+		else { ++first1; ++first2; }
+	}
+	return std::copy(first1,last1,result);
+}
+*/
+
+int test_algorithm_set()
+{
+{
+	int first[] = { 5, 10, 15, 20, 25 };
+	int second[] = { 50, 40, 30, 20, 10 };
+	std::vector<int> v(10);                      // 0  0  0  0  0  0  0  0  0  0
+	std::vector<int>::iterator it;
+
+	std::sort(first, first + 5);     //  5 10 15 20 25
+	std::sort(second, second + 5);   // 10 20 30 40 50
+
+	it = std::set_difference(first, first + 5, second, second + 5, v.begin());
+						       //  5 15 25  0  0  0  0  0  0  0
+	v.resize(it - v.begin());                      //  5 15 25
+
+	std::cout << "The difference has " << (v.size()) << " elements:\n"; // 3
+	for (it = v.begin(); it != v.end(); ++it)
+		std::cout << ' ' << *it; // 5 15 25
+	std::cout << '\n';
+}
+
+{
+	int first[] = { 5, 10, 15, 20, 25 };
+	int second[] = { 50, 40, 30, 20, 10 };
+	std::vector<int> v(10);                      // 0  0  0  0  0  0  0  0  0  0
+	std::vector<int>::iterator it;
+
+	std::sort(first, first + 5);     //  5 10 15 20 25
+	std::sort(second, second + 5);   // 10 20 30 40 50
+
+	it = std::set_intersection(first, first + 5, second, second + 5, v.begin());
+	                                               // 10 20 0  0  0  0  0  0  0  0
+	v.resize(it - v.begin());                      // 10 20
+
+	std::cout << "The intersection has " << (v.size()) << " elements:\n"; // 2
+	for (it = v.begin(); it != v.end(); ++it)
+		std::cout << ' ' << *it; // 10 20
+	std::cout << '\n';
+}
+
+{
+	int first[] = { 5, 10, 15, 20, 25 };
+	int second[] = { 50, 40, 30, 20, 10 };
+	std::vector<int> v(10);                      // 0  0  0  0  0  0  0  0  0  0
+	std::vector<int>::iterator it;
+
+	std::sort(first, first + 5);     //  5 10 15 20 25
+	std::sort(second, second + 5);   // 10 20 30 40 50
+
+	it = std::set_symmetric_difference(first, first + 5, second, second + 5, v.begin());
+						       //  5 15 25 30 40 50  0  0  0  0
+	v.resize(it - v.begin());                      //  5 15 25 30 40 50
+
+	std::cout << "The symmetric difference has " << (v.size()) << " elements:\n"; // 6
+	for (it = v.begin(); it != v.end(); ++it)
+		std::cout << ' ' << *it; // 5 15 25 30 40 50
+	std::cout << '\n';
+}
+
+{
+	int first[] = { 5, 10, 15, 20, 25 };
+	int second[] = { 50, 40, 30, 20, 10 };
+	std::vector<int> v(10);                      // 0  0  0  0  0  0  0  0  0  0
+	std::vector<int>::iterator it;
+
+	std::sort(first, first + 5);     //  5 10 15 20 25
+	std::sort(second, second + 5);   // 10 20 30 40 50
+
+	it = std::set_union(first, first + 5, second, second + 5, v.begin());
+						       // 5 10 15 20 25 30 40 50  0  0
+	v.resize(it - v.begin());                      // 5 10 15 20 25 30 40 50
+
+	std::cout << "The union has " << (v.size()) << " elements:\n"; // 8
+	for (it = v.begin(); it != v.end(); ++it)
+		std::cout << ' ' << *it; // 5 10 15 20 25 30 40 50
+	std::cout << '\n';
+}
+
+	return 0;
+}
+
+/////////////////////////////////////
+int op_increase(int i) { return ++i; }
+
+int test_algorithm_transform()
+{
+	std::vector<int> foo;
+	std::vector<int> bar;
+
+	// set some values:
+	for (int i = 1; i<6; i++)
+		foo.push_back(i * 10);                         // foo: 10 20 30 40 50
+
+	bar.resize(foo.size());                         // allocate space
+
+	std::transform(foo.begin(), foo.end(), bar.begin(), op_increase);
+	                                                       // bar: 11 21 31 41 51
+
+	// std::plus adds together its two arguments:
+	std::transform(foo.begin(), foo.end(), bar.begin(), foo.begin(), std::plus<int>());
+	                                                       // foo: 21 41 61 81 101
+
+	std::cout << "foo contains:";
+	for (std::vector<int>::iterator it = foo.begin(); it != foo.end(); ++it)
+		std::cout << ' ' << *it; // 21 41 61 81 101
+	std::cout << '\n';
+
+	return 0;
+}
+
+/////////////////////////////////////////
+int test_algorithm_unique()
+{
+{
+	int myints[] = { 10, 20, 20, 20, 30, 30, 20, 20, 10 };           // 10 20 20 20 30 30 20 20 10
+	std::vector<int> myvector(myints, myints + 9);
+
+	// using default comparison:
+	std::vector<int>::iterator it;
+	it = std::unique(myvector.begin(), myvector.end());              // 10 20 30 20 10 ?  ?  ?  ?
+	                                                                 //                ^
+
+	myvector.resize(std::distance(myvector.begin(), it));            // 10 20 30 20 10
+
+	// using predicate comparison:
+	std::unique(myvector.begin(), myvector.end(), myfunction);   // (no changes)
+
+	// print out content:
+	std::cout << "myvector contains:";
+	for (it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 10 20 30 20 10
+	std::cout << '\n';
+}
+
+{
+	int myints[] = { 10, 20, 20, 20, 30, 30, 20, 20, 10 };
+	std::vector<int> myvector(9);                                   // 0  0  0  0  0  0  0  0  0
+
+	// using default comparison:
+	std::vector<int>::iterator it;
+	it = std::unique_copy(myints, myints + 9, myvector.begin());   // 10 20 30 20 10 0  0  0  0
+	                                                               //                ^
+
+	std::sort(myvector.begin(), it);                               // 10 10 20 20 30 0  0  0  0
+	                                                               //                ^
+
+	// using predicate comparison:
+	it = std::unique_copy(myvector.begin(), it, myvector.begin(), myfunction);
+	                                                               // 10 20 30 20 30 0  0  0  0
+	                                                               //          ^
+
+	myvector.resize(std::distance(myvector.begin(), it));    // 10 20 30
+
+	// print out content:
+	std::cout << "myvector contains:";
+	for (it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it; // 10 20 30
 	std::cout << '\n';
 }
 
