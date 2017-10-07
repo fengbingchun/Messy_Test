@@ -173,6 +173,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\bind.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\chrono.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\cmath.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\const_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\bind.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\chrono.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\cmath.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\common.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\const_pointer.hpp" />

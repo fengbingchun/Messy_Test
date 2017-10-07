@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = algorithm_::test_algorithm_unique();
+	int ret = cmath_::test_cmath_compare();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

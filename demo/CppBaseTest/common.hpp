@@ -89,5 +89,6 @@
 #include "iterator.hpp"
 #include "functional.hpp"
 #include "algorithm.hpp"
+#include "cmath.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
