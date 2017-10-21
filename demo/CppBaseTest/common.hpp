@@ -90,5 +90,6 @@
 #include "functional.hpp"
 #include "algorithm.hpp"
 #include "cmath.hpp"
+#include "exception.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

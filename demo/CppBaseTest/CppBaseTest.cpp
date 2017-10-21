@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = cmath_::test_cmath_compare();
+	int ret = exception_::test_exception_3();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

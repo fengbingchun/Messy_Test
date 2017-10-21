@@ -108,6 +108,7 @@
       <ObjectFileName>.\../../../obj/dbg/x64_vc12/CppBaseTest\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/CppBaseTest\</ProgramDataBaseFileName>
       <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\demo\CppBaseTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -183,6 +184,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\deque.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\encapsulation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\enum.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\exception.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\exponential_distribution.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\fill.cpp" />
@@ -275,6 +277,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\deque.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\encapsulation.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\enum.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\exception.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\exponential_distribution.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\fill.hpp" />
