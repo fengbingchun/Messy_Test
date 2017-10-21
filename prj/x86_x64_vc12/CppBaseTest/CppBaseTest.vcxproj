@@ -226,6 +226,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\reference.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\regex.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reverse.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\runtime_error.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\rvalue_references.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\set.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\shared_ptr.cpp" />
@@ -320,6 +321,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\reference.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\regex.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reverse.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\runtime_error.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\rvalue_references.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\set.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\shared_ptr.hpp" />
