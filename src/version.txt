@@ -2,3 +2,7 @@
 	commit: ec44c6c
 	date: 2016.08.22
 	url: https://github.com/google/googletest/releases/tag/release-1.8.0
+2. spdlog: Version 0.14.0
+	commit: 4fba14c
+	date: 2017.08.20
+	url: https://github.com/gabime/spdlog/releases
