@@ -12,5 +12,6 @@ int test_shared_ptr_operator();
 int test_shared_ptr_owner_before();
 int test_shared_ptr_swap();
 int test_shared_ptr_unique();
+int test_shared_ptr_reset_delete();
 
 #endif // FBC_MESSY_TEST_SHARED_PTR_HPP_

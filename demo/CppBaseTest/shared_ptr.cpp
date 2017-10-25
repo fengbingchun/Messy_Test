@@ -4,6 +4,7 @@
 #include <thread>
 #include <chrono>
 #include <mutex>
+#include <algorithm>
 
 //////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/memory/shared_ptr
@@ -330,6 +331,51 @@ int test_shared_ptr_unique()
 
 	bar = nullptr;
 	std::cout << "3: " << foo.unique() << '\n';  // true
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////
+int test_shared_ptr_reset_delete()
+{
+	// new int[], with shard_ptr'reset function delete
+	int* p1 = new int[10];
+{
+	std::for_each(p1, p1 + 10, [](int& v){v = 5; });
+
+	std::shared_ptr<int> p2;
+	// p2和p1指向同一个内存空间
+	p2.reset(p1, [](int* p) {delete[] p; });
+
+	for (int i = 0; i < 10; ++i) {
+		fprintf(stdout, "p1:  %d  \n", p1[i]);
+		fprintf(stdout, "p2:  %d  \n", p2.get()[i]);
+	}
+}
+	// 运行到大括号外，此时p1的空间已经被释放
+	for (int i = 0; i < 10; ++i) {
+		fprintf(stdout, "p1:  %d  \n", p1[i]);
+	}
+	//delete[] p1; // p1已释放，不能再delete
+
+	int* pa = new int[10];
+{
+	std::for_each(pa, pa + 10, [](int& v){v = 8; });
+
+	std::shared_ptr<int> pb;
+	// pb和pa指向同一个内存空间
+	pb.reset(pa, [](int*) { });
+
+	for (int i = 0; i < 10; ++i) {
+		fprintf(stdout, "pa:  %d  \n", pa[i]);
+		fprintf(stdout, "pb:  %d  \n", pb.get()[i]);
+	}
+}
+	// 运行到大括号外，此时pa的空间没有被释放
+	for (int i = 0; i < 10; ++i) {
+		fprintf(stdout, "pa:  %d  \n", pa[i]);
+	}
+	delete[] pa; // pa没有被释放，需要delete
 
 	return 0;
 }
