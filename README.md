@@ -9,7 +9,7 @@
 - tar package' parse
 - regular expression's usage
 - Google Test(gtest)'s usage [google/googletest](https://github.com/google/googletest)
-- spdlog's usage [gabime/spdlog] (https://github.com/gabime/spdlog)
+- spdlog's usage [gabime/spdlog](https://github.com/gabime/spdlog)
 
 **The project support platform: windows7/10 64 bits. It can be directly build with VS2013 in windows7/10 64bits.**
 
