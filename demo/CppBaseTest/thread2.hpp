@@ -10,5 +10,7 @@ int test_thread_operator();
 int test_this_thread_sleep_for();
 int test_this_thread_sleep_until();
 int test_this_thread_yield();
+int test_thread_pool(); // thread pool
+int test_thread_hardware_concurrency();
 
 #endif // FBC_CPP_BASE_THREAD2_HPP_

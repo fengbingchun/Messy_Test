@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_shared_ptr_reset_delete();
+	int ret = test_thread_hardware_concurrency();
 
 	if (ret == 0) fprintf(stderr, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
