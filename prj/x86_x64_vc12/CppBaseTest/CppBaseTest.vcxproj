@@ -253,6 +253,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\union.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\unique_ptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\unordered_map.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\variable_arguments.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\vector.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\weak_ptr.cpp" />
   </ItemGroup>
@@ -348,6 +349,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\union.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_ptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unordered_map.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\variable_arguments.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\vector.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\weak_ptr.hpp" />
   </ItemGroup>
