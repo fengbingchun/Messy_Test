@@ -208,9 +208,11 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\Lambda.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\linked_list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\list.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\local_class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\move.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\mutex.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\nested_class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\normal_distribution.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nothrow.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nullptr.cpp" />
@@ -304,9 +306,11 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\Lambda.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\linked_list.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\list.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\local_class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\move.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\mutex.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\nested_class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\normal_distribution.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nothrow.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nullptr.hpp" />
