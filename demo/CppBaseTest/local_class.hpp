@@ -10,6 +10,7 @@ int test_local_class_4();
 int test_local_class_5();
 int test_local_class_6();
 int test_local_class_7();
+int test_local_class_8();
 
 } // namespace local_class_
 

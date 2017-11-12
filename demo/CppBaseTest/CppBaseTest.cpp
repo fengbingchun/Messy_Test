@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = local_class_::test_local_class_7();
+	int ret = nested_class_::test_nested_class_7();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

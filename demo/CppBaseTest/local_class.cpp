@@ -1,5 +1,7 @@
 #include "local_class.hpp"
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 namespace local_class_ {
 // reference: C++ Primer(Fifth Edition) 19.7
@@ -167,6 +169,24 @@ void g()
 int test_local_class_7()
 {
 	g();
+	return 0;
+}
+
+//////////////////////////////////////////////////////
+// reference: http://en.cppreference.com/w/cpp/language/class
+int test_local_class_8()
+{
+	struct Local {
+		bool operator()(int n, int m) {
+			return n > m;
+		}
+	};
+
+	std::vector<int> v{ 1, 2, 3 };
+	std::sort(v.begin(), v.end(), Local()); // since C++11
+	for (int n : v) std::cout << n << ' ';
+	std::cout << std::endl;
+
 	return 0;
 }
 
