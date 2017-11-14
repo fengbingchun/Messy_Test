@@ -95,5 +95,6 @@
 #include "variable_arguments.hpp"
 #include "local_class.hpp"
 #include "nested_class.hpp"
+#include "enum_class.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
