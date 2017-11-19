@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = enum_class_::test_enum_class_3();
+	int ret = namespace_::test_namespace_6();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

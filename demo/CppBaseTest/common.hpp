@@ -96,5 +96,6 @@
 #include "local_class.hpp"
 #include "nested_class.hpp"
 #include "enum_class.hpp"
+#include "namespace.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
