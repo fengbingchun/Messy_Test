@@ -97,5 +97,6 @@
 #include "nested_class.hpp"
 #include "enum_class.hpp"
 #include "namespace.hpp"
+#include "lvalue_rvalue.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
