@@ -98,5 +98,6 @@
 #include "enum_class.hpp"
 #include "namespace.hpp"
 #include "lvalue_rvalue.hpp"
+#include "extern_c.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

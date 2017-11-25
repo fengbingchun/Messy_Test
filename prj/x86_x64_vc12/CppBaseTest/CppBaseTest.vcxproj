@@ -178,6 +178,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\const_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\c_head.c" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\decltype.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\default.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\delete.cpp" />
@@ -188,6 +189,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\exception.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\explicit.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\exponential_distribution.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\extern_c.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\fill.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\final.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\for.cpp" />
@@ -277,6 +279,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\common.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\const_pointer.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\c_head.h" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\decltype.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\default.hpp" />
@@ -288,6 +291,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\exception.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\exponential_distribution.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\extern_c.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\fill.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\final.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\for.hpp" />
