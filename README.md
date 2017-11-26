@@ -8,6 +8,7 @@
 - miniz's usage [richgel999/miniz](https://github.com/richgel999/miniz)
 - tar package' parse
 - regular expression's usage
+- multi thread's usage
 - Google Test(gtest)'s usage [google/googletest](https://github.com/google/googletest)
 - spdlog's usage [gabime/spdlog](https://github.com/gabime/spdlog)
 

@@ -258,6 +258,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\tuple.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\typeid.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\union.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\unique_lock.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\unique_ptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\unordered_map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\variable_arguments.cpp" />
@@ -361,6 +362,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\tuple.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\typeid.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\union.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\unique_lock.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_ptr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unordered_map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\variable_arguments.hpp" />
