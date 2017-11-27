@@ -315,6 +315,9 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\unique_lock.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\lock_guard.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp">
@@ -621,6 +624,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_lock.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\lock_guard.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
