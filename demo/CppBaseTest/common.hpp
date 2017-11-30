@@ -102,5 +102,6 @@
 #include "unique_lock.hpp"
 #include "lock_guard.hpp"
 #include "emplace.hpp"
+#include "call_once.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
