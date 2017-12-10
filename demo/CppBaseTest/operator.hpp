@@ -5,6 +5,8 @@
 #include <ostream>
 #include <iostream>
 
+namespace operator_ {
+
 class Point {
 public:
 	// various constructors
@@ -19,11 +21,6 @@ public:
 	Point& operator += (const Point& pt_);
 	Point& operator -= (const Point& pt_);
 	Point& operator *= (const Point& pt_);
-
-	// binary arithmetic operators: + - * / %
-	Point& operator + (const Point& pt_);
-	Point& operator - (const Point& pt_);
-	Point& operator * (const Point& pt_);
 
 	// comparison operators: == != > < >= <=
 	bool operator == (const Point& pt_) const;
@@ -46,6 +43,14 @@ public:
 	int x, y; //< the point coordinates
 };
 
-int test_operator();
+// note: these function are not member function
+Point operator + (const Point& pt_, int a);
+Point operator + (const Point& a, const Point& b);
+Point operator - (const Point& a, const Point& b);
+Point operator * (const Point& a, const Point& b);
+
+int test_operator_1();
+
+} // namespace operator_
 
 #endif // FBC_MESSY_TEST_OPERATOR_HPP_

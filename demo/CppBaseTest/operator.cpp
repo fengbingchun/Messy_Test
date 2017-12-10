@@ -1,5 +1,8 @@
 #include <assert.h>
 #include "operator.hpp"
+#include "universal.hpp"
+
+namespace operator_ {
 
 Point& Point::operator = (const Point& pt_)
 {
@@ -35,21 +38,6 @@ Point& Point::operator *= (const Point& pt_)
 	this->y *= pt_.y;
 
 	return *this;
-}
-
-Point& Point::operator + (const Point& pt_)
-{
-	return operator += (pt_);
-}
-
-Point& Point::operator - (const Point& pt_)
-{
-	return operator -= (pt_);
-}
-
-Point& Point::operator * (const Point& pt_)
-{
-	return operator *= (pt_);
 }
 
 bool Point::operator == (const Point& pt_) const
@@ -103,8 +91,7 @@ Point& Point::operator ++ (int)
 	return tmp;
 }
 
-// note: this function is not a member function
-Point& operator + (const Point& pt_, int a)
+Point operator + (const Point& pt_, int a)
 {
 	Point tmp;
 	tmp.x = pt_.x + a;
@@ -113,7 +100,30 @@ Point& operator + (const Point& pt_, int a)
 	return tmp;
 }
 
-int test_operator()
+Point operator + (const Point& a, const Point& b)
+{
+	Point pt = a;
+	pt += b;
+	return pt;
+}
+
+Point operator - (const Point& a, const Point& b)
+{
+	//return Point((a.x - b.x), (a.y - b.y));
+	Point pt = a;
+	pt -= b;
+	return pt;
+}
+
+Point operator * (const Point& a, const Point& b)
+{
+	//return Point((a.x * b.x), (a.y * b.y));
+	Point pt = a;
+	pt *= b;
+	return pt;
+}
+
+int test_operator_1()
 {
 	Point pt1;
 	Point pt2(1, 2);
@@ -121,54 +131,53 @@ int test_operator()
 
 	Point pt3;
 	pt3 = pt2; // =, same as pt3.operator=(pt2);
-	assert(pt3.x == 1 && pt3.y == 2);
+	CHECK(pt3.x == 1 && pt3.y == 2);
 
 	Point pt4(3, 4);
 	pt4 += pt3;
-	assert(pt4.x == 4 && pt4.y == 6);
+	CHECK(pt4.x == 4 && pt4.y == 6);
 
 	pt4 -= pt2;
-	assert(pt4.x == 3 && pt4.y == 4);
+	CHECK(pt4.x == 3 && pt4.y == 4);
 
 	pt4 *= pt2;
-	assert(pt4.x == 3 && pt4.y == 8);
+	CHECK(pt4.x == 3 && pt4.y == 8);
 
-	pt4 = pt4 + pt2;
-	assert(pt4.x == 4 && pt4.y == 10);
+	pt4 = pt3 + pt2;
+	CHECK(pt4.x == 2 && pt4.y == 4);
 
-	pt4 = pt4 - pt2;
-	assert(pt4.x == 3 && pt4.y == 8);
+	pt4 += pt2;
+	CHECK(pt4.x == 3 && pt4.y == 6);
 
-	pt4 = pt4 * pt2;
-	assert(pt4.x == 3 && pt4.y == 16);
-
-	Point pt5(3, 16);
+	Point pt5(3, 6);
 	bool flag = (pt4 == pt5);
-	assert(flag == true);
+	CHECK(flag == true);
 
 	flag = (pt4 != pt5);
-	assert(flag == false);
+	CHECK(flag == false);
 
 	flag = (pt4 > pt2);
-	assert(flag == true);
+	CHECK(flag == true);
 
 	Point pt6(4, 5);
 	std::cout << pt4 << std::endl; // output
 
 	std::cin >> pt1; // input
+	std::cout << pt1 << std::endl;
 
 	Point pt7(4, 5);
 	++pt7;
-	assert(pt7.x == 5 && pt7.y == 6);
+	CHECK(pt7.x == 5 && pt7.y == 6);
 
 	Point pt8(6, 7);
 	pt7 = pt8++;
-	assert(pt7.x == 6 && pt7.y == 7);
+	CHECK(pt7.x == 6 && pt7.y == 7);
 
 	int a = 10;
 	pt7 = pt7 + a;
-	assert(pt7.x == 16 && pt7.y == 17);
+	CHECK(pt7.x == 16 && pt7.y == 17);
 
 	return 0;
 }
 
+} // namespace operator_

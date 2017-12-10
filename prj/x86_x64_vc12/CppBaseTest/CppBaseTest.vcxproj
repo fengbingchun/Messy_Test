@@ -180,6 +180,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\const_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\c_head.c" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\data_type_convert.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\decltype.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\default.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\delete.cpp" />
@@ -370,6 +371,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\union.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_lock.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_ptr.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\universal.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unordered_map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\variable_arguments.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\vector.hpp" />
