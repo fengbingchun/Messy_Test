@@ -3,7 +3,7 @@
 #include "universal.hpp"
 
 namespace operator_ {
-
+/////////////////////////////////////////////////////////////
 Point& Point::operator = (const Point& pt_)
 {
 	if (this == &pt_) {
@@ -176,6 +176,104 @@ int test_operator_1()
 	int a = 10;
 	pt7 = pt7 + a;
 	CHECK(pt7.x == 16 && pt7.y == 17);
+
+	return 0;
+}
+
+/////////////////////////////////////////////////
+int test_operator_2()
+{
+	int i = -42;
+	absInt absobj;
+	int ui = absobj(i);
+	fprintf(stdout, "ui = %d\n", ui); // 42
+
+	return 0;
+}
+
+/////////////////////////////////////////////
+int test_operator_3()
+{
+	const std::string s{ "http://blog.csdn.net/fengbingchun/" };
+
+	PrintString printer;
+	printer(s);
+
+	PrintString errors(std::cerr, '\n');
+	errors(s);
+
+	return 0;
+}
+
+////////////////////////////////////////
+std::ostream& operator << (std::ostream& out, const Fraction& f)
+{
+	return out << f.num() << '/' << f.den();
+}
+
+bool operator == (const Fraction& lhs, const Fraction& rhs)
+{
+	return lhs.num() == rhs.num() && lhs.den() == rhs.den();
+}
+
+bool operator != (const Fraction& lhs, const Fraction& rhs)
+{
+	return !(lhs == rhs);
+}
+
+Fraction operator * (Fraction lhs, const Fraction& rhs)
+{
+	return lhs *= rhs;
+}
+
+int test_operator_4()
+{
+	Fraction f1(3, 8), f2(1, 2), f3(10, 2);
+	std::cout << f1 << " * " << f2 << " = " << f1 * f2 << '\n'
+		<< f2 << " * " << f3 << " = " << f2 * f3 << '\n'
+		<< 2 << " * " << f1 << " = " << 2 * f1 << '\n';
+
+	//Fraction f(2, 5);
+	//float val = f;
+	//std::cout << val <<std::endl;
+
+	return 0;
+}
+
+///////////////////////////////////////////////////////
+// note: this function is not a member function!
+Cents operator+(const Cents &c1, const Cents &c2)
+{
+	// use the Cents constructor and operator+(int, int)
+	// we can access m_cents directly because this is a friend function
+	return Cents(c1.m_cents + c2.m_cents);
+}
+
+int test_operator_5()
+{
+	Cents cents1(6);
+	Cents cents2(8);
+	Cents centsSum = cents1 + cents2;
+	std::cout << "I have " << centsSum.getCents() << " cents." << std::endl;
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////
+// Operator overloaded using a member function
+Complex Complex::operator+(Complex &other)
+{
+	return Complex(re + other.re, im + other.im);
+}
+
+int test_operator_6()
+{
+	Complex a = Complex(1.2, 3.4);
+	Complex b = Complex(5.6, 7.8);
+	Complex c = Complex(0.0, 0.0);
+
+	c = a + b;
+	c.Display();
 
 	return 0;
 }
