@@ -104,5 +104,6 @@
 #include "emplace.hpp"
 #include "call_once.hpp"
 #include "test_library.hpp"
+#include "extern.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
