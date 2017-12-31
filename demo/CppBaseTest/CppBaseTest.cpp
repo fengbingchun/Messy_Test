@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = extern_::test_extern_2();
+	int ret = allocator_::test_allocator_1();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

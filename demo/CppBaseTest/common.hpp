@@ -105,5 +105,6 @@
 #include "call_once.hpp"
 #include "test_library.hpp"
 #include "extern.hpp"
+#include "allocator.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
