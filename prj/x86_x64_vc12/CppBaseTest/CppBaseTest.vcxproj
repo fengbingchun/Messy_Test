@@ -170,6 +170,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\numeric.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\numeric_limits.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\operator.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\operator_new.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\override.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\pair.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\polymorphism.cpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\numeric.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\numeric_limits.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\operator.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\operator_new.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\override.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\pair.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\polymorphism.hpp" />
