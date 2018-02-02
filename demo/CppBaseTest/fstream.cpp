@@ -6,6 +6,8 @@
 
 #include "fstream.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51570728
+
 /* reference: 
 	http://www.tutorialspoint.com/cplusplus/cpp_files_streams.htm
 	https://www.ntu.edu.sg/home/ehchua/programming/cpp/cp10_IO.html

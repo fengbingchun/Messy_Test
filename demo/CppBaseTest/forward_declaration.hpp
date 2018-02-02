@@ -1,6 +1,8 @@
 #ifndef FBC_MESSY_TEST_FORWARD_DECLARATION_HPP_
 #define FBC_MESSY_TEST_FORWARD_DECLARATION_HPP_
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/54957885
+
 // reference: http://stackoverflow.com/questions/553682/when-can-i-use-a-forward-declaration
 
 namespace forward_declaraion_ {

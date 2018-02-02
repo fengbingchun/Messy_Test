@@ -7,6 +7,8 @@
 #include <numeric>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78006735
+
 // reference: http://www.cplusplus.com/reference/functional/
 
 namespace functional_ {

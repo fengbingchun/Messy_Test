@@ -6,6 +6,8 @@
 #include <tuple>
 #include <utility>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78670376
+
 namespace emplace_ {
 
 /////////////////////////////////////////////////////////

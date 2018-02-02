@@ -1,5 +1,7 @@
 #include "Decorator.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/29237955
+
 Component_2::Component_2()
 {
 

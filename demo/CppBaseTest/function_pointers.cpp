@@ -6,6 +6,8 @@
 #include <iostream>
 #include "function_pointers.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51713906
+
 // reference: http://www.newty.de/fpt/intro.html
 
 // reference: http://www.cprogramming.com/tutorial/function-pointers.html

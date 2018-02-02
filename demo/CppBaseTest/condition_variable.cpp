@@ -6,6 +6,8 @@
 #include <condition_variable>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/73695596
+
 namespace condition_variable_ {
 
 //////////////////////////////////////////////////////////////////////

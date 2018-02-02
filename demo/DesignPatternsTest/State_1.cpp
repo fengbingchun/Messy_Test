@@ -3,6 +3,7 @@
 #include "State_1.hpp"
 #include "Context_1.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/33385599
 
 State_3::State_3()
 {

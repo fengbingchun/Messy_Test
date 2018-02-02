@@ -4,6 +4,8 @@
 #include <vector>
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/54835571
+
 int test_regex_match()
 {
 	std::string pattern{ "\\d{3}-\\d{8}|\\d{4}-\\d{7}" }; // fixed telephone

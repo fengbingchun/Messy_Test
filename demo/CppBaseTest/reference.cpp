@@ -2,6 +2,8 @@
 #include <iostream>
 #include <utility> // std::move
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/69820184
+
 int test_reference_1()
 {
 	// 1. 普通的引用

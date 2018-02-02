@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52653313
+
 ///////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/lambda
 int test_lambda1()

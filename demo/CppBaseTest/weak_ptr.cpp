@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52203825
+
 ///////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/memory/weak_ptr
 std::weak_ptr<int> gw;

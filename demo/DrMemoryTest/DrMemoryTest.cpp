@@ -1,5 +1,7 @@
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51626705
+
 void test1(); // 内存泄露
 void test2(); // 非法访问
 void test3(); // 未初始化读

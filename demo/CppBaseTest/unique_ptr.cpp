@@ -7,6 +7,8 @@
 #include <vector>
 #include <algorithm>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52203664
+
 ///////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/memory/unique_ptr
 struct Foo

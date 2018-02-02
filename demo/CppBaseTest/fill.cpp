@@ -5,6 +5,8 @@
 #include <string>
 #include <list>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52895344
+
 ///////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/algorithm/fill/
 int test_fill_1()

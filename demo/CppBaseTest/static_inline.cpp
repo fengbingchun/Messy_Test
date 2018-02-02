@@ -1,6 +1,8 @@
 #include "static_inline.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51234209
+
 void test_static_inline1()
 {
 	float a = 4.1, b = 4.9;

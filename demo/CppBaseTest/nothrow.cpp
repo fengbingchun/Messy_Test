@@ -2,6 +2,8 @@
 #include <iostream>
 #include <new> // std::nothrow
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/63686673
+
 // reference: http://www.cplusplus.com/reference/new/nothrow/
 int test_nothrow1()
 {

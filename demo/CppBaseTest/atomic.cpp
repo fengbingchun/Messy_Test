@@ -5,6 +5,8 @@
 #include <thread>
 #include <sstream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/73436710
+
 namespace atomic {
 /////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/atomic/atomic/atomic/

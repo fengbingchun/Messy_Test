@@ -6,6 +6,8 @@
 #include <string>
 #include <initializer_list>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78483471
+
 namespace variable_arguments_ {
 ///////////////////////////////////////////////////////////
 #define LOG(...) { \

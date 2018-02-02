@@ -6,6 +6,8 @@
 #include <memory>
 #include <algorithm>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52653313
+
 //////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/utility/functional/bind
 static void f(int n1, int n2, int n3, const int& n4, int n5)

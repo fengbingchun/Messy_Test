@@ -3,6 +3,8 @@
 #include <vector>
 #include <typeinfo>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78513239
+
 namespace nested_class_ {
 //////////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/nested_types

@@ -1,6 +1,8 @@
 #include "override.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52304284
+
 //////////////////////////////////////////////
 // reference: http://stackoverflow.com/questions/18198314/what-is-the-override-keyword-in-c-used-for
 struct base_override {

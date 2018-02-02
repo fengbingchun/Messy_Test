@@ -5,6 +5,8 @@
 #include <string>
 #include <set>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52505504
+
 ///////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/list_initialization
 struct Foo {

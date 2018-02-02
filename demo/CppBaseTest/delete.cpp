@@ -1,6 +1,8 @@
 #include "delete.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52475108
+
 //////////////////////////////////////////////////////////
 // reference: http://www.learncpp.com/cpp-tutorial/b-6-new-virtual-function-controls-override-final-default-and-delete/
 class Foo

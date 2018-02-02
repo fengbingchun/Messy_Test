@@ -3,6 +3,8 @@
 #include "Iterator.hpp"
 #include "Aggregate.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/37314531
+
 
 Iterator::Iterator()
 {

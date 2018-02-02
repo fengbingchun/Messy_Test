@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cstddef> // for std::nullptr_t
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51793497
+
 ///////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/nullptr
 template<class F, class A>

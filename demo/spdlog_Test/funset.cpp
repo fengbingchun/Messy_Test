@@ -3,6 +3,8 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78347105
+
 namespace spd = spdlog;
 
 int test_spdlog_console()

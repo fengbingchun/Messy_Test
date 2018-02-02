@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78943527
+
 namespace allocator_ {
 
 ////////////////////////////////////////////////

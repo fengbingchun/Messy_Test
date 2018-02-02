@@ -3,6 +3,8 @@
 #include <string>
 #include <utility>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52562004
+
 //////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/reference
 void double_string(std::string& s)

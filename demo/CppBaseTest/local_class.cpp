@@ -3,6 +3,8 @@
 #include <vector>
 #include <algorithm>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78511394
+
 namespace local_class_ {
 // reference: C++ Primer(Fifth Edition) 19.7
 int a{ 0 }, val{ 0 };

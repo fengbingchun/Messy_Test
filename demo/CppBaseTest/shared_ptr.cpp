@@ -6,6 +6,8 @@
 #include <mutex>
 #include <algorithm>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52202007
+
 //////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/memory/shared_ptr
 struct Base

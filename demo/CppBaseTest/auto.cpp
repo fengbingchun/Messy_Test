@@ -8,6 +8,8 @@
 #include <deque>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51834927
+
 //////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/auto
 template<class T, class U>

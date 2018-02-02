@@ -2,6 +2,8 @@
 #include <iostream>
 #include <ratio>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/72934929
+
 //////////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/ratio/
 int test_ratio_1()

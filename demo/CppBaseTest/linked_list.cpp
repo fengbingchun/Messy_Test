@@ -1,6 +1,8 @@
 #include "linked_list.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52132610
+
 ///////////////////////////////////////////////
 // reference: http://www.bogotobogo.com/cplusplus/linkedlist.php
 typedef struct Element

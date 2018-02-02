@@ -1,6 +1,8 @@
 #include "ChainOfResponsibility.hpp"
 #include "Handle.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/37111697
+
 int test_ChainOfResponsibility1()
 {
 	Manager* common = new CommonManager("’≈æ≠¿Ì");

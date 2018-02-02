@@ -4,6 +4,8 @@
 #include <memory>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52589454
+
 //////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/utility/forward
 struct A {

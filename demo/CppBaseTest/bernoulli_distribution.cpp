@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <map>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/73716003
+
 /////////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/random/bernoulli_distribution/
 int test_bernoulli_distribution_1()

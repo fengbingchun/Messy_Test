@@ -6,6 +6,8 @@
 #include <vector>
 #include <functional> // std::plus c++14
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/63252470
+
 /*
 // reference: http://en.cppreference.com/w/cpp/algorithm/transform
 

@@ -5,6 +5,8 @@
 #include <string>
 #include <cmath>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/72859402
+
 //////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/list/list/
 // compare only integral part:

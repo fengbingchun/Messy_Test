@@ -4,6 +4,8 @@
 
 #include "vector.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51510916
+
 int test_vector_init()
 {
 	std::vector<int> a; // 声明一个int型向量a,size为0

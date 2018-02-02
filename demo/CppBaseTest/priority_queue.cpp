@@ -7,6 +7,8 @@
 #include <deque>
 #include <list>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/70505628
+
 //template < class T,
 //	   class Container = vector<T>,
 //	   class Compare = less<typename Container::value_type> >

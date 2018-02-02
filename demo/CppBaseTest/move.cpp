@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52558914
+
 //////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/utility/move
 int test_move1()

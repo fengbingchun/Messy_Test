@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51884282
+
 ///////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/union
 union S

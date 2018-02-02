@@ -2,6 +2,8 @@
 #include "Strategy.hpp"
 #include "Context_2.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/32179281
+
 Strategy_4::Strategy_4()
 {
 

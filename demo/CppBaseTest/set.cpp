@@ -7,6 +7,8 @@
 #include <functional>
 #include <iomanip>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/63268962
+
 // reference: http://www.cplusplus.com/reference/set/set/
 static bool fncomp(int lhs, int rhs) { return lhs<rhs; }
 

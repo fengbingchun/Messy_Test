@@ -4,6 +4,8 @@
 #include <utility>
 #include <iomanip>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52504519
+
 //////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/decltype
 struct A { double x; };

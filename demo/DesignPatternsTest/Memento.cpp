@@ -1,5 +1,7 @@
 #include "Memento.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/35802321
+
 Memo_1* Originator_1::CreateMemo()
 {
 	return new Memo_1(state);

@@ -5,6 +5,8 @@
 #include <ctime>
 #include <iomanip>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/73302364
+
 ///////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/chrono/duration/
 int test_chrono_duration()

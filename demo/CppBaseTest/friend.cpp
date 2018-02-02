@@ -3,6 +3,8 @@
 #include <sstream>
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51747056
+
 // reference: https://msdn.microsoft.com/zh-cn/library/465sdshe.aspx
 class Point_ {
 	friend void ChangePrivate(Point_ &);

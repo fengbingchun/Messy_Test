@@ -1,6 +1,8 @@
 #include "inheritance.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52079305
+
 ///////////////////////////////////////////////
 // reference: http://www.tutorialspoint.com/cplusplus/cpp_inheritance.htm
 // Base class

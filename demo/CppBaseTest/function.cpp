@@ -4,6 +4,8 @@
 #include <functional>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52562918
+
 ///////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/utility/functional/function
 struct Foo {

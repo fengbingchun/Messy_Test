@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <map>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/73826114
+
 ///////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/random/exponential_distribution/
 int test_exponential_distribution_1()

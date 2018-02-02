@@ -4,6 +4,8 @@
 #include <string>
 #include <algorithm>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51778977
+
 /////////////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/enum
 // enum that takes 16 bits

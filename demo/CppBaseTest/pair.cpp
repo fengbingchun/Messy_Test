@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52205149
+
 ////////////////////////////////////////////
 // reference: https://www.quora.com/How-can-I-use-pair-int-int-v-in-C++-language
 int test_pair1()

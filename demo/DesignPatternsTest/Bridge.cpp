@@ -1,6 +1,8 @@
 #include "Bridge.hpp"
 #include "abstractionImp.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/24177569
+
 Abstraction::Abstraction()
 {
 

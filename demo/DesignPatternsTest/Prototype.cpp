@@ -1,5 +1,7 @@
 #include "Prototype.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/24130315
+
 Prototype_1::Prototype_1()
 {
 

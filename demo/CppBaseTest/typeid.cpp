@@ -5,6 +5,7 @@
 #include <typeinfo>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51866559
 
 int func(int a)
 {

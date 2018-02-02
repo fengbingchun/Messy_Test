@@ -1,6 +1,8 @@
 #include "final.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52318564
+
 /////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/final
 struct Base {

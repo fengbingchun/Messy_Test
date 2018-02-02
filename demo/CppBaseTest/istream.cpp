@@ -3,6 +3,8 @@
 #include <string>
 #include "istream.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51287210
+
 void test_istream()
 {
 	//std::istringstream

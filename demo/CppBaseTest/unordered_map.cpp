@@ -3,6 +3,8 @@
 #include <string>
 #include <unordered_map>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52235026
+
 //////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/container/unordered_map
 int test_unordered_map1()

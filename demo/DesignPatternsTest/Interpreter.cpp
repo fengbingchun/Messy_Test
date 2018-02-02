@@ -1,6 +1,8 @@
 #include <vector>
 #include "Interpreter.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/37325051
+
 AbstractExpression_1::AbstractExpression_1()
 {
 

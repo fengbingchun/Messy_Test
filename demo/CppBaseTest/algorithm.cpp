@@ -10,6 +10,8 @@
 #include <random>
 #include <chrono>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78034969
+
 // reference: http://www.cplusplus.com/reference/algorithm/
 
 namespace algorithm_ {

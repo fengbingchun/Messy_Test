@@ -1,5 +1,7 @@
 #include "Facade.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/30972323
+
 Subsystem1::Subsystem1()
 {
 

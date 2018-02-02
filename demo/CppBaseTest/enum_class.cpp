@@ -1,6 +1,8 @@
 #include "enum_class.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78535754
+
 namespace enum_class_ {
 
 typedef short int16_t;

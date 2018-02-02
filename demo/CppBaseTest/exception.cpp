@@ -5,6 +5,8 @@
 #include <utility>
 #include <cstring>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78303734
+
 // Fix: error C3646: 'noexcept' : unknown override specifier
 #ifndef _MSC_VER
 #define NOEXCEPT noexcept

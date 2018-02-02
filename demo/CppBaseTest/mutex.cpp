@@ -3,6 +3,8 @@
 #include <mutex>
 #include <thread>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/73521630
+
 namespace mutex_ {
 
 ///////////////////////////////////////////////////////////

@@ -5,6 +5,8 @@
 #include <functional>
 #include <cmath>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/72858282
+
 ///////////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/forward_list/forward_list/
 template<class Container>

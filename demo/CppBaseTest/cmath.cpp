@@ -4,6 +4,8 @@
 #include <fenv.h> // fegetround, FE_*
 #include <float.h> // FLT_RADIX
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78171987
+
 // reference: http://www.cplusplus.com/reference/cmath/
 
 #define PI 3.14159265

@@ -2,6 +2,8 @@
 #include "Component.hpp"
 #include "Leaf.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/29401213
+
 Composite_1::Composite_1()
 {
 	//vector<Component*>::iterator itend = comVec.begin();

@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include "template.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51339659
+
 void test_template1()
 {
 	int a = 3, b = 7;

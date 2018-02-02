@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78575978
+
 namespace namespace_ {
 
 ////////////////////////////////////////////////////

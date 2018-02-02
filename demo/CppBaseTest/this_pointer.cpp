@@ -1,5 +1,7 @@
 #include "this_pointer.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51228177
+
 Buf::Buf(char* szBuffer, size_t sizeOfBuffer)
 {
 	sizeOfBuffer++; // account for a NULL terminator

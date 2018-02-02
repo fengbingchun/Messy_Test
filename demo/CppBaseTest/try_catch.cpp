@@ -3,6 +3,8 @@
 #include <exception>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/65939258
+
 //////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/doc/tutorial/exceptions/
 int test_exception1()

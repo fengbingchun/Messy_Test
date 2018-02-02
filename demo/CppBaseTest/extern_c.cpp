@@ -1,6 +1,8 @@
 #include "extern_c.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78634831
+
 namespace extern_c_ {
 //////////////////////////////////////////////////////////
 // reference: http://www.thegeekstuff.com/2013/01/mix-c-and-cpp/

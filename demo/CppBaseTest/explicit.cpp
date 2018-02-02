@@ -1,5 +1,7 @@
 #include <explicit.hpp>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51168728
+
 static void test1()
 {
 	String s1 = 'a'; // 错误：不能做隐式char->String转换

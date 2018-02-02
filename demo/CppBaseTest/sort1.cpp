@@ -6,6 +6,8 @@
 #include <array>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/71305229
+
 ///////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/algorithm/sort/
 static bool myfunction(int i, int j) { return (i < j); }

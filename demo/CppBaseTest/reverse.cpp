@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/70490297
+
 /* The behavior of this function template(std::reverse) is equivalent to
 template <class BidirectionalIterator>
 void reverse (BidirectionalIterator first, BidirectionalIterator last)

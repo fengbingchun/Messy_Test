@@ -1,5 +1,7 @@
 #include "Adapter.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/29191955
+
 Target::Target()
 {
 

@@ -1,6 +1,8 @@
 #include "Mediator.hpp"
 #include "Colleague.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/35815763
+
 Mediator_1::Mediator_1()
 {
 

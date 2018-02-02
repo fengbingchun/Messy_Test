@@ -5,6 +5,8 @@
 #include <vector>
 #include <chrono>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78638138
+
 namespace unique_lock_ {
 
 //////////////////////////////////////////////////////////////

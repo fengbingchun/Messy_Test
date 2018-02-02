@@ -3,6 +3,8 @@
 #include <sstream> // ostringstream/istringstream/stringstream
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/69788873
+
 // reference: http://www.cplusplus.com/reference/sstream/ostringstream/
 int test_ostringstream()
 {

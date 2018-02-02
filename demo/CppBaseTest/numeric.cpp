@@ -3,6 +3,8 @@
 #include <functional>
 #include <numeric>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/77949873
+
 // reference: http://www.cplusplus.com/reference/numeric/
 
 namespace numeric_ {

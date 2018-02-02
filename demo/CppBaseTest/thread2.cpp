@@ -12,6 +12,8 @@
 #include <iomanip>
 #include <ctime>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/73393229
+
 ///////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/thread/thread/thread/
 std::atomic<int> global_counter(0);

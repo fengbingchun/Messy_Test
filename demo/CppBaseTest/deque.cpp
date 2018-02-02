@@ -3,6 +3,8 @@
 #include <deque>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/72757856
+
 ////////////////////////////////////////////////////////
 // https://msdn.microsoft.com/en-us/library/22a9t119.aspx
 int test_deque_2()

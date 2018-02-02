@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78825004
+
 FBC_API int library_add(int a, int b)
 {
 	value = 11;

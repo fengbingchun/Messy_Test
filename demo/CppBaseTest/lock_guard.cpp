@@ -6,6 +6,8 @@
 #include <list>
 #include <algorithm>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78649260
+
 namespace lock_guard_ {
 
 ///////////////////////////////////////////////////////

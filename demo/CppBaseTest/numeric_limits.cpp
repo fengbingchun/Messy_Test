@@ -2,6 +2,8 @@
 #include <limits>
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/77922558
+
 //////////////////////////////////////////////////////////////////////
 /* reference:
 	http://www.cplusplus.com/reference/limits/numeric_limits/

@@ -6,6 +6,8 @@
 #include <list>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/72773603
+
 ////////////////////////////////////////////////////////////
 // https://msdn.microsoft.com/en-us/library/56fa1zk5.aspx
 int test_stack_2()

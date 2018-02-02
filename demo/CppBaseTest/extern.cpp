@@ -1,6 +1,8 @@
 #include "extern.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78941738
+
 extern std::string extern_variable_blog_addr;
 extern std::string extern_variable_github_addr;
 extern int extern_function_add(int a, int b);

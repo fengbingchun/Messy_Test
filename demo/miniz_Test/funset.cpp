@@ -1,6 +1,8 @@
 #include "funset.hpp"
 #include "../../src/miniz/miniz.c"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52903219
+
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint;

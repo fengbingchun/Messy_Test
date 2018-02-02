@@ -1,5 +1,7 @@
 #include "TemplateMethod.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/30990475
+
 AbstractClass_1::AbstractClass_1()
 {
 

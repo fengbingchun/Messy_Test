@@ -1,6 +1,8 @@
 #include "Visitor.hpp"
 #include "Element.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/37058681
+
 Visitor::Visitor()
 {
 

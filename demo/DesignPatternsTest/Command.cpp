@@ -2,6 +2,8 @@
 #include "Receiver.hpp"
 #include "Invoker.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/36221901
+
 Command_1::Command_1()
 {
 

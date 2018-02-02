@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52072206
+
 ///////////////////////////////////////////
 // reference: https://msdn.microsoft.com/zh-cn/library/64973255.aspx
 struct PERSON {   // Declare PERSON struct type

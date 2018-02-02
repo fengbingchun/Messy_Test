@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52245142
+
 ////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/language/range-for
 int test_for1()

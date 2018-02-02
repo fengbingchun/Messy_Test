@@ -1,5 +1,7 @@
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51114925
+
 #ifdef _DEBUG
 	#define DEBUG_CLIENTBLOCK   new( _CLIENT_BLOCK, __FILE__, __LINE__)
 #else

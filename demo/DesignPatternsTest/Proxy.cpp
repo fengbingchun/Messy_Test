@@ -1,5 +1,7 @@
 #include "Proxy.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/30976879
+
 Subject_1::Subject_1()
 {
 

@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78991749
+
 namespace operator_new_ {
 ////////////////////////////////////////////////////////////////
 // reference: http://zh.cppreference.com/w/cpp/memory/new/operator_new

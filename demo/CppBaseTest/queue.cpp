@@ -5,6 +5,8 @@
 #include <string>
 #include <list>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/70495791
+
 //////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/queue/queue/
 int test_queue_1()

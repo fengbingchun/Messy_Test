@@ -6,6 +6,8 @@
 #include <string.h>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/49404293
+
 int test_data_type_convert()
 {
 	// 1--> int to char[]

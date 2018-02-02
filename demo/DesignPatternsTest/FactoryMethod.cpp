@@ -2,6 +2,8 @@
 #include "factory.hpp"
 #include "product_2.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/21876069
+
 int test_FactoryMethod1()
 {
 	LeiFangFactory* sf = new LeiFangFactory();

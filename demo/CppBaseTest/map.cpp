@@ -3,6 +3,8 @@
 #include <map>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52074286
+
 //////////////////////////////////////////////////
 // reference: https://www.sgi.com/tech/stl/Map.html
 int test_map1()

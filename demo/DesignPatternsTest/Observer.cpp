@@ -1,5 +1,7 @@
 #include "Observer.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/34933089
+
 void StockObserver::Update()
 {
 	std::cout << name << ":" << sub->action << "，不要玩股票了，要开始工作了" << std::endl;

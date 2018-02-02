@@ -1,6 +1,8 @@
 #include "Flyweight.hpp"
 #include "FlyweightFactory.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/29907359
+
 Flyweight::Flyweight(std::string intrinsicState)
 {
 	this->_intrinsicState = intrinsicState;

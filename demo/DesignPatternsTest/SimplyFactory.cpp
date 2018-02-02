@@ -1,6 +1,8 @@
 #include "SimplyFactory.hpp"
 #include "Factory_1.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/24872725
+
 int test_SimplyFactory1()
 {
 	//CCalculatorFactory* calFactory = new CCalculatorFactory();

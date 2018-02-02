@@ -1,6 +1,8 @@
 #ifndef FBC_MESSY_TEST_THREAD_HPP_
 #define FBC_MESSY_TEST_THREAD_HPP_
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/53726760
+
 /* reference:
 	http://locklessinc.com/articles/pthreads_on_windows/
 	http://locklessinc.com/downloads/winpthreads.h

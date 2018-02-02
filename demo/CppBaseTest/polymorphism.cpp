@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52142629
+
 ///////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/doc/tutorial/polymorphism/
 class Polygon {

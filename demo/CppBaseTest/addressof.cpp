@@ -2,6 +2,8 @@
 #include <iostream>
 #include <memory> // std::addressof
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/70406274
+
 ////////////////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/memory/addressof
 template<class T>

@@ -1,5 +1,7 @@
 #include "FlyweightFactory.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/29907359
+
 FlyweightFactory::FlyweightFactory()
 {
 

@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78306461
+
 namespace runtime_error_ {
 //////////////////////////////////////////////////////////////
 // reference: https://msdn.microsoft.com/en-us/library/tyahh3a9.aspx

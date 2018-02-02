@@ -5,6 +5,8 @@
 #include <sstream>
 #include <vector>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/77938005
+
 ///////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/initializer_list/initializer_list/
 struct myclass {

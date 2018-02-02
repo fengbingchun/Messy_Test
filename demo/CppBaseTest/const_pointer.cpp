@@ -1,6 +1,8 @@
 #include <iostream>
 #include "const_pointer.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/74656836
+
 int test_const_pointer_1()
 {
 { // reference: https://stackoverflow.com/questions/3247285/const-int-int-const

@@ -1,6 +1,8 @@
 #include "encapsulation.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52078478
+
 /////////////////////////////////////////////////
 // reference: http://www.tutorialspoint.com/cplusplus/cpp_data_encapsulation.htm
 class Adder{

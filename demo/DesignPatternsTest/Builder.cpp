@@ -1,6 +1,8 @@
 #include "Builder.hpp"
 #include "director.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/22593157
+
 Builder_1::Builder_1()
 {
 

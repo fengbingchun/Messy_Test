@@ -1,6 +1,8 @@
 #include "jinghao.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/44133701
+
 //test1
 #define WARN_IF(EXP) \
 	if (EXP) \

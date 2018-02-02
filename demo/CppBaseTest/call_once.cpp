@@ -5,6 +5,8 @@
 #include <chrono>
 #include <future>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78681323
+
 /*
 template< class Callable, class... Args >
 void call_once( std::once_flag& flag, Callable&& f, Args&&... args );

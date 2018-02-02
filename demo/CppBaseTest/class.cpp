@@ -1,6 +1,8 @@
 #include "class.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52075202
+
 ///////////////////////////////////////
 // reference: http://www.cplusplus.com/doc/tutorial/classes/
 class Circle {

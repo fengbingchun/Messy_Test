@@ -2,6 +2,8 @@
 #include <vector>
 #include <gtest/gtest.h>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/72353374
+
 int main()
 {
 	std::vector<char*> argv{

@@ -6,6 +6,8 @@
 #include <map>
 #include <iomanip>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/73770856
+
 ///////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/random/normal_distribution/
 int test_normal_distribution_1()

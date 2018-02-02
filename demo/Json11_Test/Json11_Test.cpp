@@ -4,6 +4,8 @@
 #include <vector>
 #include "json11.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51396932
+
 #ifdef _MSC_VER
 #include <Windows.h>
 static std::string utf8_to_gbk(const char* utf8) {

@@ -1,6 +1,8 @@
 #include "AbstractFactory.hpp"
 #include "product.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/21872127
+
 AbstractFactory::AbstractFactory()
 {
 

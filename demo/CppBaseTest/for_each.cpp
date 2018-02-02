@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/52294862
+
 ////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/algorithm/for_each
 struct Sum {

@@ -5,6 +5,8 @@
 #include <functional>
 #include <utility>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/72858282
+
 //////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/tuple/tuple/
 int test_tuple_4()

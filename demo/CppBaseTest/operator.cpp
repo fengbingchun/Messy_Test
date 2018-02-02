@@ -2,6 +2,8 @@
 #include "operator.hpp"
 #include "universal.hpp"
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51292506
+
 namespace operator_ {
 /////////////////////////////////////////////////////////////
 Point& Point::operator = (const Point& pt_)

@@ -4,6 +4,8 @@
 #include <tuple>
 #include <string>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/72809699
+
 ///////////////////////////////////////////////////////
 // https://msdn.microsoft.com/en-us/library/bb983093.aspx
 int test_array_3()

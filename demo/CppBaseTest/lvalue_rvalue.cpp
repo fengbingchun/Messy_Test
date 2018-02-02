@@ -3,6 +3,8 @@
 #include <string>
 #include <utility>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/78619152
+
 namespace lvalue_rvalue_ {
 ////////////////////////////////////////////////////////////
 namespace {

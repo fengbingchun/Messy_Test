@@ -1,6 +1,8 @@
 #include "iostream.hpp"
 #include <iostream>
 
+// Blog: http://blog.csdn.net/fengbingchun/article/details/63685373
+
 // reference: http://www.tutorialspoint.com/cplusplus/cpp_basic_input_output.htm
 int test_iostream_cout()
 {
