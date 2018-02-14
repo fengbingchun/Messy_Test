@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = operator_new_::test_operator_new_5();
+	int ret = parse_cvs_::test_parse_cvs_1();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

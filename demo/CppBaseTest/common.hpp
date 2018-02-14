@@ -107,5 +107,6 @@
 #include "extern.hpp"
 #include "allocator.hpp"
 #include "operator_new.hpp"
+#include "test_parse_cvs.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

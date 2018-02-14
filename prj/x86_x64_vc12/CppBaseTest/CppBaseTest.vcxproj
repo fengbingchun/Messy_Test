@@ -198,6 +198,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\template.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template_impl.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\test_library.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\test_parse_cvs.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\test_thread.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\this_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\thread2.cpp" />
@@ -285,6 +286,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\operator_new.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\override.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\pair.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\parse_csv.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\polymorphism.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\priority_queue.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\queue.hpp" />
@@ -309,6 +311,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\tar.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\template.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\test_library.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\test_parse_cvs.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\test_thread.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\this_pointer.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\thread.hpp" />
