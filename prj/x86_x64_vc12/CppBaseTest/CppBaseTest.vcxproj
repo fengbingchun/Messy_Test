@@ -212,6 +212,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\unordered_map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\variable_arguments.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\vector.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\virtual_function_table.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\weak_ptr.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -327,6 +328,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\unordered_map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\variable_arguments.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\vector.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\virtual_function_table.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\weak_ptr.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
