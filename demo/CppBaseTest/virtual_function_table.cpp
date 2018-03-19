@@ -12,7 +12,7 @@ public:
 	virtual void function1() { fprintf(stdout, "Base::function1\n"); }
 	virtual void function2() { fprintf(stdout, "Base::function2\n"); }
 	void f1() { fprintf(stdout, "Base::f1\n"); }
-	~Base() { fprintf(stdout, "Base::~Base\n"); }
+	virtual ~Base() { fprintf(stdout, "Base::~Base\n"); }
 };
 
 class D1 : public Base {
@@ -21,7 +21,7 @@ public:
 	virtual void function1() override { fprintf(stdout, "D1::function1\n"); }
 	virtual void function3() { fprintf(stdout, "D1::function3\n"); }
 	void f2() { fprintf(stdout, "D1::f2\n"); }
-	~D1() { fprintf(stdout, "D1::~D1\n"); }
+	virtual ~D1() { fprintf(stdout, "D1::~D1\n"); }
 };
 
 class D2 : public Base {
@@ -29,7 +29,7 @@ public:
 	D2() { fprintf(stdout, "D2::D2\n"); }
 	virtual void function2() override { fprintf(stdout, "D2::function2\n"); }
 	void f3() { fprintf(stdout, "D2::f3\n"); }
-	~D2() { fprintf(stdout, "D2::~D2\n"); }
+	virtual ~D2() { fprintf(stdout, "D2::~D2\n"); }
 };
 
 class D3 {
@@ -43,7 +43,7 @@ int test_virtual_function_table_1()
 {
 	D1* p1 = new D1();
 	fprintf(stdout, "p1 address: %p\n", (void*)p1);
-	Base* b = static_cast<D1*>(p1);
+	Base* b = p1;
 	fprintf(stdout, "b address: %p\n", (void*)b);
 	b->function1();
 	b->function2();
@@ -56,7 +56,7 @@ int test_virtual_function_table_1()
 	fprintf(stdout, "p2 address: %p\n", (void*)p2);
 	p2->function1();
 	p2->function2();
-	delete dynamic_cast<D1*>(p2);
+	delete p2;
 	fprintf(stdout, "\n");
 
 	D1 d1 = D1();
