@@ -1,6 +1,8 @@
 #include "string.hpp"
 #include <string>
+#include <vector>
 #include <iostream>
+#include <algorithm>
 #include <cctype>
 #include <cstddef> // std::size_t
 #include <fstream>
@@ -971,6 +973,46 @@ int test_string_ifstream_to_string()
 
 	std::string str((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 	fprintf(stderr, "file content: \n%s\n", str.c_str());
+
+	return 0;
+}
+
+int test_string_name_match()
+{
+	const std::vector<std::string> all{ "abc.jpg", "de1.png", "saf.jpg", "sdvv.jpg", "fsd.jpg", "32f.jpg", "12.png",
+		"Del.png", "sAF.jpg", "fad.jpg", "fsf.png", "12.jpg", "saf.png", "fad.png", "sdvv.png" };
+
+	std::vector<std::string> vec_jpg, vec_png;
+	for (auto& name : all) {
+		std::string tmp = name;
+		int pos = tmp.find_last_of(".");
+		std::string prefix = tmp.substr(0, pos);
+		std::string suffix = tmp.substr(pos + 1);
+		//fprintf(stdout, "prefix: %s, suffix: %s\n", prefix.c_str(), suffix.c_str());
+
+		if (suffix == "jpg") vec_jpg.emplace_back(prefix);
+		else if (suffix == "png") vec_png.emplace_back(prefix);
+	}
+
+	std::sort(vec_jpg.begin(), vec_jpg.end());
+	std::sort(vec_png.begin(), vec_png.end());
+
+	std::vector<std::string> ret;
+	for (int i = 0; i < vec_jpg.size(); ++i) {
+		std::string& tmp1 = vec_jpg[i];
+
+		for (int j = 0; j < vec_png.size(); ++j) {
+			std::string& tmp2 = vec_png[j];
+			if (tmp1 == tmp2) {
+				ret.emplace_back(tmp1);
+				break;
+			}
+		}
+	}
+
+	for (auto& name : ret) {
+		fprintf(stdout, "name: %s\n", name.c_str());
+	}
 
 	return 0;
 }

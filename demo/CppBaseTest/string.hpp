@@ -6,5 +6,6 @@ int test_string_base();
 int test_string_cctype();
 int test_string_func();
 int test_string_ifstream_to_string();
+int test_string_name_match();
 
 #endif // FBC_MESSY_TEST_STRING_HPP_

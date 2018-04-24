@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = virtual_function_table_::test_virtual_function_table_1();
+	int ret = test_string_name_match();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
