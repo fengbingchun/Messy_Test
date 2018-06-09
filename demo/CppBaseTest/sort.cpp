@@ -12,7 +12,7 @@ static void print_result(const std::vector<int>& vec)
 	fprintf(stderr, "\n");
 }
 
-int test_sort_bubble() // Ã°ÅİÅÅĞò
+int test_sort_bubble() // å†’æ³¡æ’åº
 {
 	// reference: http://mathbits.com/MathBits/CompSci/Arrays/Bubble.htm
 	std::vector<int> vec(array_src.begin(), array_src.end());
@@ -34,7 +34,7 @@ int test_sort_bubble() // Ã°ÅİÅÅĞò
 	return 0;
 }
 
-int test_sort_insertion() // ²åÈëÅÅĞò
+int test_sort_insertion() // æ’å…¥æ’åº
 {
 	// reference: http://cforbeginners.com/insertionsort.html
 	std::vector<int> vec(array_src.begin(), array_src.end());
@@ -57,7 +57,7 @@ int test_sort_insertion() // ²åÈëÅÅĞò
 	return 0;
 }
 
-int test_sort_selection() // Ñ¡ÔñÅÅĞò
+int test_sort_selection() // é€‰æ‹©æ’åº
 {
 	// reference: http://mathbits.com/MathBits/CompSci/Arrays/Selection.htm
 	std::vector<int> vec(array_src.begin(), array_src.end());
@@ -81,7 +81,7 @@ int test_sort_selection() // Ñ¡ÔñÅÅĞò
 	return 0;
 }
 
-int test_sort_shell() // Ï£¶ûÅÅĞò
+int test_sort_shell() // å¸Œå°”æ’åº
 {
 	// reference: http://www.cplusplus.com/forum/general/123961/
 	std::vector<int> vec(array_src.begin(), array_src.end());
@@ -142,7 +142,7 @@ static void merge(std::vector<int>& vecSrc, int left, int right, std::vector<int
 	}
 }
 
-int test_sort_merge() // ¹é²¢ÅÅĞò
+int test_sort_merge() // å½’å¹¶æ’åº
 {
 	// reference: http://www.cprogramming.com/tutorial/computersciencetheory/merge.html
 	std::vector<int> vecSrc(array_src.begin(), array_src.end());
@@ -184,7 +184,7 @@ static void quick(std::vector<int>& vec, int left, int right)
 		quick(vec, i, right);
 }
 
-int test_sort_quick() // ¿ìËÙÅÅĞò
+int test_sort_quick() // å¿«é€Ÿæ’åº
 {
 	// reference: http://www.algolist.net/Algorithms/Sorting/Quicksort
 	std::vector<int> vec(array_src.begin(), array_src.end());
@@ -234,7 +234,7 @@ static void build_maxheap(std::vector<int>& vec, int n)
 		max_heapify(vec, i, n);
 }
 
-int test_sort_heap() // ¶ÑÅÅĞò
+int test_sort_heap() // å †æ’åº
 {
 	// reference: http://proprogramming.org/heap-sort-in-c/
 	std::vector<int> vec(array_src.begin(), array_src.end());

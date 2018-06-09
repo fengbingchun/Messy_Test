@@ -52,7 +52,7 @@ Point operator - (const Point& a, const Point& b);
 Point operator * (const Point& a, const Point& b);
 
 ///////////////////////////////////////////////////////////
-// º¯Êıµ÷ÓÃÔËËã·û operator ()
+// å‡½æ•°è°ƒç”¨è¿ç®—ç¬¦ operator ()
 struct absInt {
 	int operator () (int val) const
 	{
@@ -61,7 +61,7 @@ struct absInt {
 };
 
 ///////////////////////////////////////////////////////////
-// º¬ÓĞ×´Ì¬µÄº¯Êı¶ÔÏóÀà
+// å«æœ‰çŠ¶æ€çš„å‡½æ•°å¯¹è±¡ç±»
 class PrintString {
 public:
 	PrintString(std::ostream& o = std::cout, char c = ' ') : os(o), sep(c) {}

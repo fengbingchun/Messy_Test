@@ -73,9 +73,9 @@ struct B_ {
 };
 
 struct D_ : B_ {
-	void f() override;     // OK: ÖØĞ´ B::f()
-	// void g() override;     // error: ²»Í¬µÄº¯ÊıÉùÃ÷£¬²»ÄÜÖØĞ´
-	virtual void h(char);  // ÖØĞ´ B::h( char ); ¿ÉÄÜ»áÓĞ¾¯¸æ
-	// void k() override;     // error: B::k() ²»ÊÇĞéº¯Êı
-	// virtual void m();       // error: m()ÔÚ»ùÀàÖĞÉùÃ÷½ûÖ¹ÖØĞ´
+	void f() override;     // OK: é‡å†™ B::f()
+	// void g() override;     // error: ä¸åŒçš„å‡½æ•°å£°æ˜ï¼Œä¸èƒ½é‡å†™
+	virtual void h(char);  // é‡å†™ B::h( char ); å¯èƒ½ä¼šæœ‰è­¦å‘Š
+	// void k() override;     // error: B::k() ä¸æ˜¯è™šå‡½æ•°
+	// virtual void m();       // error: m()åœ¨åŸºç±»ä¸­å£°æ˜ç¦æ­¢é‡å†™
 };

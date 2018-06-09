@@ -240,7 +240,7 @@ int test_variable_arguments_function_5()
 }
 
 ///////////////////////////////////////////////////////
-// reference: ���������C++11----C++11�����Խ�����Ӧ�á� 6.2
+// reference: 《深入理解C++11----C++11新特性解析与应用》 6.2
 template <long... nums> struct Multiply;
 
 template<long first, long... last>
@@ -318,29 +318,29 @@ int test_variable_arguments_template_function_2()
 }
 
 /////////////////////////////////////////////////////////////
-// ������ֹ�ݹ鲢��ӡ���һ��Ԫ�صĺ������˺��������ڿɱ�����汾��print����֮ǰ����
+// 用来终止递归并打印最后一个元素的函数，此函数必须在可变参数版本的print定义之前声明
 template<typename T>
 std::ostream& print(std::ostream& os, const T& t)
 {
-	return os << t; // �������һ��Ԫ��֮�󲻴�ӡ�ָ��
+	return os << t; // 包中最后一个元素之后不打印分隔符
 }
 
-// ���г������һ��Ԫ��֮�������Ԫ�ض����������汾��print
+// 包中除了最后一个元素之外的其它元素都会调用这个版本的print
 template<typename T, typename... Args>
 std::ostream& print(std::ostream& os, const T& t, const Args&... rest)
 {
-	os << t << ", "; // ��ӡ��һ���ַ�
-	return print(os, rest...); // �ݹ���ã���ӡ����ʵ��
+	os << t << ", "; // 打印第一个字符
+	return print(os, rest...); // 递归调用，打印其它实参
 }
 
 int test_variable_arguments_template_function_3()
 {
-	// �������һ�����ã����������ṩͬ���õ�ƥ�䡣���ǣ��ǿɱ����ģ��ȿɱ����ģ���
-	// ����������˱�����ѡ��ǿɱ�����汾
+	// 对于最后一个调用，两个函数提供同样好的匹配。但是，非可变参数模板比可变参数模板更
+	// 特例化，因此编译器选择非可变参数版本
 	char i{ 'A' }, s{ 'b' };
 	print(std::cout, i, s, 42);
 
-	// ������ɱ�����汾��printʱ���ǿɱ�����汾�������������������У����򣬿ɱ�����汾�����޵ݹ顣
+	// 当定义可变参数版本的print时，非可变参数版本的声明必须在作用域中，否则，可变参数版本会无限递归。
 
 	return 0;
 }

@@ -12,7 +12,7 @@ const T& max_mum(const T& x, const T& y)
 	}
 }
 
-// º¯ÊıÄ£°åÉùÃ÷Óë¶¨Òå·Ö¿ª£ºº¯ÊıÄ£°åÏÔÊ¾ÊµÀı»¯
+// å‡½æ•°æ¨¡æ¿å£°æ˜ä¸å®šä¹‰åˆ†å¼€ï¼šå‡½æ•°æ¨¡æ¿æ˜¾ç¤ºå®ä¾‹åŒ–
 template const int& max_mum<int>(const int&, const int&);
 
 template<class T>
@@ -21,5 +21,5 @@ void A<T>::f()
 	std::cout << " template class impl" << std::endl;
 }
 
-// ÀàÄ£°åÉùÃ÷Óë¶¨Òå·Ö¿ª£ºÀàÄ£°åÏÔÊ¾ÊµÀı»¯
+// ç±»æ¨¡æ¿å£°æ˜ä¸å®šä¹‰åˆ†å¼€ï¼šç±»æ¨¡æ¿æ˜¾ç¤ºå®ä¾‹åŒ–
 template class A < int > ;

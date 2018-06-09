@@ -22,7 +22,7 @@ struct classcomp {
 
 int test_set_cplusplus()
 {
-{ // set:���캯��
+{ // set:构造函数
 	std::set<int> first;                           // empty set of ints
 
 	int myints[] = { 10, 20, 30, 40, 50 };
@@ -38,7 +38,7 @@ int test_set_cplusplus()
 	std::set<int, bool(*)(int, int)> sixth(fn_pt);  // function pointer as Compare
 }
 
-{ // begin/end:����ָ���һ��Ԫ�صĵ���/����ָ�����һ��Ԫ��֮��ĵ��������������һ��Ԫ��
+{ // begin/end:返回指向第一个元素的迭代/返回指向最后一个元素之后的迭代器，不是最后一个元素
 	int myints[] = { 75, 23, 65, 42, 13 };
 	std::set<int> myset(myints, myints + 5);
 
@@ -49,7 +49,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // clear:�������Ԫ��
+{ // clear:清除所有元素
 	std::set<int> myset;
 
 	myset.insert(100);
@@ -71,7 +71,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // count:�ж�ĳһ���ؼ����Ƿ���set�ڣ�����0����1
+{ // count:判断某一个关键字是否在set内，返回0或者1
 	std::set<int> myset;
 
 	// set some initial values:
@@ -109,7 +109,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // emplace(c++11):�����Ԫ�ص�ֵ��Ψһ�ģ��������Ԫ��
+{ // emplace(c++11):如果新元素的值是唯一的，将插入该元素
 	std::set<std::string> myset;
 
 	myset.emplace("foo");
@@ -134,7 +134,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // empty:�������Ϊ�գ�����true
+{ // empty:如果集合为空，返回true
 	std::set<int> myset;
 
 	myset.insert(20);
@@ -149,7 +149,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // equal_range:���ؼ����������ֵ��ȵ������޵�����������
+{ // equal_range:返回集合中与给定值相等的上下限的两个迭代器
 	std::set<int> myset;
 
 	for (int i = 1; i <= 5; i++) myset.insert(i * 10);   // myset: 10 20 30 40 50
@@ -161,7 +161,7 @@ int test_set_cplusplus()
 	std::cout << "the upper bound points to: " << *ret.second << '\n';
 }
 
-{ // erase:ɾ�������е�Ԫ��
+{ // erase:删除集合中的元素
 	std::set<int> myset;
 	std::set<int>::iterator it;
 
@@ -184,7 +184,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // find:����һ��ָ�򱻲��ҵ�Ԫ�صĵ����������û�ҵ��򷵻�end()
+{ // find:返回一个指向被查找到元素的迭代器，如果没找到则返回end()
 	std::set<int> myset;
 	std::set<int>::iterator it;
 
@@ -201,7 +201,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // get_allocator:���ؼ���set�ķ�����
+{ //  get_allocator:返回集合set的分配器
 	std::set<int> myset;
 	int * p;
 	unsigned int i;
@@ -219,7 +219,7 @@ int test_set_cplusplus()
 	myset.get_allocator().deallocate(p, 5);
 }
 
-{ // insert:�ڼ����в���Ԫ��
+{ // insert:在集合中插入元素
 	std::set<int> myset;
 	std::set<int>::iterator it;
 	std::pair<std::set<int>::iterator, bool> ret;
@@ -263,7 +263,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // lower_bond:����ָ����ڣ�����ڣ�ĳֵ�ĵ�һ��Ԫ�صĵ�����
+{ // lower_bond:返回指向大于（或等于）某值的第一个元素的迭代器
 	std::set<int> myset;
 	std::set<int>::iterator itlow, itup;
 
@@ -280,7 +280,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // max_size:���ؼ��������ɵ�Ԫ�ص������ֵ
+{ // max_size:返回集合能容纳的元素的最大限值ֵ
 	int i;
 	std::set<int> myset;
 
@@ -303,7 +303,7 @@ int test_set_cplusplus()
 	std::cout << "Size of second: " << int(second.size()) << '\n';
 }
 
-{ // rbegin/rend:����ָ�򼯺������һ��Ԫ�صķ��������/����ָ�򼯺��е�һ��Ԫ�صķ��������
+{ // rbegin/rend:返回指向集合中最后一个元素的反向迭代器/返回指向集合中第一个元素的反向迭代器
 	int myints[] = { 21, 64, 17, 78, 49 };
 	std::set<int> myset(myints, myints + 5);
 
@@ -316,7 +316,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // size:������Ԫ�ص���Ŀ
+{ // size:集合中元素的数目
 	std::set<int> myints;
 	std::cout << "0. size: " << myints.size() << '\n';
 
@@ -330,7 +330,7 @@ int test_set_cplusplus()
 	std::cout << "3. size: " << myints.size() << '\n';
 }
 
-{ // swap:�����������ϱ���
+{ // swap:交换两个集合变量
 	int myints[] = { 12, 75, 10, 32, 20, 25 };
 	std::set<int> first(myints, myints + 3);     // 10,12,75
 	std::set<int> second(myints + 3, myints + 6);  // 20,25,32
@@ -348,7 +348,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // upper_bound:���ش���ĳ��ֵԪ�صĵ�����
+{ // upper_bound:返回大于某个值元素的迭代器
 	std::set<int> myset;
 	std::set<int>::iterator itlow, itup;
 

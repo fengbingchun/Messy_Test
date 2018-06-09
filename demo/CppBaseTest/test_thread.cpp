@@ -11,7 +11,7 @@ void* run1(void* para)
 {
 	std::cout << "start new thread!" << std::endl;
 
-	//sleep(5);//suspend 5 s������ʽ�Ĵ����У�һ�㲻Ҫ��sleep����
+	//sleep(5);//suspend 5 s，在正式的代码中，一般不要用sleep函数
 	int* iptr = (int*)((void**)para)[0];
 	float* fptr = (float*)((void**)para)[1];
 	char* str = (char*)((void**)para)[2];
@@ -32,10 +32,10 @@ int test_create_thread()
 
 	pthread_create(&pid, NULL, run1, para);
 
-	// ���̴߳���֮�����߳��������----���̰߳�˳�����ִ����һ�г���
+	// 新线程创建之后主线程如何运行----主线程按顺序继续执行下一行程序
 	std::cout << "main thread!" << std::endl;
 
-	// ���߳̽���ʱ��δ���----���߳���ֹͣ��Ȼ����Ϊ��������̵�һ���֣��ȴ�����һ���̺߳ϲ������ӡ�
+	// 新线程结束时如何处理----新线程先停止，然后作为其清理过程的一部分，等待与另一个线程合并或“连接”
 	pthread_join(pid, NULL);
 
 	return 0;
@@ -163,10 +163,10 @@ void* decrement_counter2(void* argv)
 
 	pthread_mutex_lock(&counter_lock2);
 	while (counter2 == 0)
-		pthread_cond_wait(&counter_nonzero2, &counter_lock2); //��������(wait)���ȴ�����(signal)
+		pthread_cond_wait(&counter_nonzero2, &counter_lock2); //进入阻塞(wait)，等待激活(signal)
 
 	std::cout << "counter--(decrement, before): " << counter2 << std::endl;
-	counter2--; //�ȴ�signal�������ִ��
+	counter2--; //等待signal激活后再执行
 	std::cout << "counter--(decrement, after): " << counter2 << std::endl;
 	pthread_mutex_unlock(&counter_lock2);
 
@@ -179,7 +179,7 @@ void* increment_counter2(void* argv)
 
 	pthread_mutex_lock(&counter_lock2);
 	if (counter2 == 0)
-		pthread_cond_signal(&counter_nonzero2); //����(signal)����(wait)���߳�(��ִ����signal�̣߳�Ȼ����ִ��wait�߳�)  
+		pthread_cond_signal(&counter_nonzero2); //激活(signal)阻塞(wait)的线程(先执行完signal线程，然后再执行wait线程)
 
 	std::cout << "counter++(increment, before): " << counter2 << std::endl;
 	counter2++;
@@ -232,17 +232,17 @@ void* decrement_increment_counter3(void* argv)
 	pthread_mutex_lock(&counter_lock3_1);
 	std::cout << "counter(decrement): " << counter3 << std::endl;
 	while (counter3 == 1)
-		pthread_cond_wait(&counter_nonzero3_1, &counter_lock3_1); //��������(wait)���ȴ�����(signal)
+		pthread_cond_wait(&counter_nonzero3_1, &counter_lock3_1); //进入阻塞(wait)，等待激活(signal)
 
 	std::cout << "counter--(decrement, before): " << counter3 << std::endl;
-	counter3--; //�ȴ�signal�������ִ��  
+	counter3--; //等待signal激活后再执行
 	std::cout << "counter--(decrement, after): " << counter3 << std::endl;
 	pthread_mutex_unlock(&counter_lock3_1);
 
 	pthread_mutex_lock(&counter_lock3_2);
 	std::cout << "counter(increment): " << counter3 << std::endl;
 	if (counter3 == 0)
-		pthread_cond_signal(&counter_nonzero3_2); //����(signal)����(wait)���߳�(��ִ����signal�̣߳�Ȼ����ִ��wait�߳�)  
+		pthread_cond_signal(&counter_nonzero3_2); //激活(signal)阻塞(wait)的线程(先执行完signal线程，然后再执行wait线程)
 
 	std::cout << "counter++(increment, before): " << counter3 << std::endl;
 	counter3++;

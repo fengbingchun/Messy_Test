@@ -26,17 +26,17 @@ int test_bernoulli_distribution_1()
 	std::cout << "false: " << nrolls - count << std::endl;
 }
 
-{ // (1)¡¢bernoulli_distribution::bernoulli_distribution: Constructs a bernoulli_distribution object
+{ // (1)ã€bernoulli_distribution::bernoulli_distribution: Constructs a bernoulli_distribution object
 //   with a probability of p (or with the probability specified by object parm)
-//   (2)¡¢bernoulli_distribution::operator(): Generate random number
+//   (2)ã€bernoulli_distribution::operator(): Generate random number
 //   Returns a new random value with the probability associated to the object (version 1) or
 //   with the probability specified by parm (version 2)
-//   (3)¡¢bernoulli_distribution::p: Probability of true
+//   (3)ã€bernoulli_distribution::p: Probability of true
 //   Returns the parameter p associated with the bernoulli_distribution.
 //   This parameter represents the probabily that member function operator() returns true.
-//   (4)¡¢bernoulli_distribution::max£ºMaximum value, Returns the least upper bound of the range of
+//   (4)ã€bernoulli_distribution::maxï¼šMaximum value, Returns the least upper bound of the range of
 //   values potentially returned by member operator(), which for bernoulli_distribution is true.
-//   (5)¡¢bernoulli_distribution::min: Minimum value, Returns the greatest lower bound of the range of
+//   (5)ã€bernoulli_distribution::min: Minimum value, Returns the greatest lower bound of the range of
 //   values potentially returned by member operator(), which for bernoulli_distribution is false.
 	std::cout << "Please, enter a yes/no question (I will answer it):" << std::endl;
 	std::string text;
@@ -108,8 +108,8 @@ int test_bernoulli_distribution_2()
 /////////////////////////////////////////////////////////////
 int test_bernoulli_distribution_3()
 {
-	std::random_device rd; std::mt19937 gen(rd()); // Ã¿´Î²úÉú²»¹Ì¶¨µÄ²»Í¬µÄÖµ
-	//std::default_random_engine gen; // Ã¿´Î²úÉú¹Ì¶¨µÄ²»Í¬µÄÖµ
+	std::random_device rd; std::mt19937 gen(rd()); // æ¯æ¬¡äº§ç”Ÿä¸å›ºå®šçš„ä¸åŒçš„å€¼
+	//std::default_random_engine gen; // æ¯æ¬¡äº§ç”Ÿå›ºå®šçš„ä¸åŒçš„å€¼
 	std::bernoulli_distribution d(0.5);
 
 	for (int i = 0; i < 10; ++i)

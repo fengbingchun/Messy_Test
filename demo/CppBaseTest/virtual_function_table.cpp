@@ -47,8 +47,8 @@ int test_virtual_function_table_1()
 	fprintf(stdout, "b address: %p\n", (void*)b);
 	b->function1();
 	b->function2();
-	// 任何妄图使用父类指针想调用子类中的未覆盖父类的成员函数的行为都会被编译器视为非法
-	//b->function3(); // Error: class "virtual _function_table_::Base" 没有成员 "function3"
+	// 浠讳綍濡勫浘浣跨敤鐖剁被鎸囬拡鎯宠皟鐢ㄥ瓙绫讳腑鐨勬湭瑕嗙洊鐖剁被鐨勬垚鍛樺嚱鏁扮殑琛屼负閮戒細琚紪璇戝櫒瑙嗕负闈炴硶
+	//b->function3(); // Error: class "virtual _function_table_::Base" 娌℃湁鎴愬憳 "function3"
 	delete p1;
 	fprintf(stdout, "\n");
 

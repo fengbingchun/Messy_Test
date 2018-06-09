@@ -40,7 +40,7 @@ int test_typeid1()
 	Base* pBase_ = new Base;
 	Base& Base__ = Base_;
 
-	// ���ڷ����ַ����ľ������ݣ���������й�
+	// 对于返回字符串的具体内容，与编译器有关
 	std::cout << "char_ type: " << typeid(char_).name() << std::endl; // char_ type: char
 	assert(typeid(char).name() == typeid(char_).name());
 	

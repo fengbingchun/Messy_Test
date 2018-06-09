@@ -61,7 +61,7 @@ int test_ostringstream()
 	std::cout << bar3.str() << '\n'; // Test string101
 
 	std::string s{ "abcde" };
-	std::ostringstream foo4(s); // �����洢s�ĸ�����ostringstream����
+	std::ostringstream foo4(s); // 创建存储s的副本的ostringstream对象
 	std::cout << "foo4: " << foo4.str() << std::endl;
 
 	// reference: https://latedev.wordpress.com/2011/11/16/c-stringstreams/

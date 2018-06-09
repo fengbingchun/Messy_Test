@@ -3,11 +3,11 @@
 
 class FastMath {
 public:
-	int round(float value) { //ÀàÌåÄÚ²¿¶¨ÒåµÄº¯ÊıÄ¬ÈÏ¾ÍÊÇÄÚÁªº¯Êı,Ò²¿ÉÒÔ¼Ó inline ¹Ø¼ü×Ö£¬µ«ÕâÊÇ¶àÓàµÄ
+	int round(float value) { //ç±»ä½“å†…éƒ¨å®šä¹‰çš„å‡½æ•°é»˜è®¤å°±æ˜¯å†…è”å‡½æ•°,ä¹Ÿå¯ä»¥åŠ  inline å…³é”®å­—ï¼Œä½†è¿™æ˜¯å¤šä½™çš„
 		return (int)(value + (value >= 0 ? 0.5f : -0.5f));
 	}
 
-	inline int floor(float value); // ÉùÃ÷ÎªÄÚÁªº¯Êı
+	inline int floor(float value); // å£°æ˜ä¸ºå†…è”å‡½æ•°
 };
 
 int FastMath::floor(float value)

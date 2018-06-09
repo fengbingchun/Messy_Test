@@ -28,7 +28,7 @@ private:
 
 int test_iterator_1()
 {
-	// std::iterator: µü´úÆ÷»ùÀà
+	// std::iterator: è¿­ä»£å™¨åŸºç±»
 	int numbers[] = { 10, 20, 30, 40, 50 };
 	MyIterator from(numbers);
 	MyIterator until(numbers + 5);
@@ -42,7 +42,7 @@ int test_iterator_1()
 /////////////////////////////////////////////////
 int test_iterator_2()
 {
-	// std::iterator_traits: ¶¨Òåµü´úÆ÷ÊôĞÔ
+	// std::iterator_traits: å®šä¹‰è¿­ä»£å™¨å±æ€§
 	typedef std::iterator_traits<int*> traits;
 	if (typeid(traits::iterator_category) == typeid(std::random_access_iterator_tag))
 		std::cout << "int* is a random-access iterator" << std::endl;;
@@ -53,7 +53,7 @@ int test_iterator_2()
 ///////////////////////////////////////////////
 int test_iterator_3()
 {
-	// std::advance: ½«µü´úÆ÷ÍÆ½øµ½n¸öÔªËØÎ»ÖÃ£¬¿ÉÒÔÊÇ¸ºÖµ
+	// std::advance: å°†è¿­ä»£å™¨æ¨è¿›åˆ°nä¸ªå…ƒç´ ä½ç½®ï¼Œå¯ä»¥æ˜¯è´Ÿå€¼
 	std::list<int> mylist;
 	for (int i = 0; i<10; i++) mylist.push_back(i * 10);
 
@@ -69,7 +69,7 @@ int test_iterator_3()
 ////////////////////////////////////////////////////////
 int test_iterator_4()
 {
-	// std::back_inserter: ¹¹ÔìÒ»¸öÔÚxµÄÄ©Î²²åÈëĞÂÔªËØµÄºó²åÈëµü´úÆ÷
+	// std::back_inserter: æ„é€ ä¸€ä¸ªåœ¨xçš„æœ«å°¾æ’å…¥æ–°å…ƒç´ çš„åæ’å…¥è¿­ä»£å™¨
 	std::vector<int> foo, bar;
 	for (int i = 1; i <= 5; i++) {
 		foo.push_back(i); bar.push_back(i * 10);
@@ -88,8 +88,8 @@ int test_iterator_4()
 //////////////////////////////////////////////////////
 int test_iterator_5()
 {
-	// std::begin: ·µ»ØÖ¸ÏòĞòÁĞÖĞµÚÒ»¸öÔªËØµÄµü´úÆ÷
-	// std::end: ·µ»ØÖ¸ÏòĞòÁĞÖĞ¹ıÈ¥µÄ×îºóÒ»¸öÔªËØµÄµü´úÆ÷
+	// std::begin: è¿”å›æŒ‡å‘åºåˆ—ä¸­ç¬¬ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
+	// std::end: è¿”å›æŒ‡å‘åºåˆ—ä¸­è¿‡å»çš„æœ€åä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 	int foo[] = { 10, 20, 30, 40, 50 };
 	std::vector<int> bar;
 
@@ -109,7 +109,7 @@ int test_iterator_5()
 //////////////////////////////////////////
 int test_iterator_6()
 {
-	// std::distance: ¼ÆËãfirstºÍlastÖ®¼äµÄÔªËØÊıÁ¿
+	// std::distance: è®¡ç®—firstå’Œlastä¹‹é—´çš„å…ƒç´ æ•°é‡
 	std::list<int> mylist;
 	for (int i = 0; i<10; i++) mylist.push_back(i * 10);
 
@@ -124,7 +124,7 @@ int test_iterator_6()
 ////////////////////////////////////////
 int test_iterator_7()
 {
-	// std::front_inserter: ¹¹ÔìÒ»¸öÇ°²åÈëµü´úÆ÷£¬ÔÚxµÄ¿ªÍ·²åÈëĞÂÔªËØ
+	// std::front_inserter: æ„é€ ä¸€ä¸ªå‰æ’å…¥è¿­ä»£å™¨ï¼Œåœ¨xçš„å¼€å¤´æ’å…¥æ–°å…ƒç´ 
 	std::deque<int> foo, bar;
 	for (int i = 1; i <= 5; i++) {
 		foo.push_back(i); bar.push_back(i * 10);
@@ -143,7 +143,7 @@ int test_iterator_7()
 //////////////////////////////////////////////////
 int test_iterator_8()
 {
-	// std::inserter: ¹¹ÔìÒ»¸ö²åÈëµü´úÆ÷£¬´ÓÖ¸ÏòµÄÎ»ÖÃ¿ªÊ¼£¬ÔÚÁ¬ĞøµÄÎ»ÖÃÖĞ²åÈëĞÂÔªËØx
+	// std::inserter: æ„é€ ä¸€ä¸ªæ’å…¥è¿­ä»£å™¨ï¼Œä»æŒ‡å‘çš„ä½ç½®å¼€å§‹ï¼Œåœ¨è¿ç»­çš„ä½ç½®ä¸­æ’å…¥æ–°å…ƒç´ x
 	std::list<int> foo, bar;
 	for (int i = 1; i <= 5; i++) {
 		foo.push_back(i); bar.push_back(i * 10);
@@ -165,7 +165,7 @@ int test_iterator_8()
 ////////////////////////////////////////////////////
 int test_iterator_9()
 {
-	// std::make_move_iterator: ´Óit¹¹ÔìÒ»¸ömove_iterator¶ÔÏó
+	// std::make_move_iterator: ä»itæ„é€ ä¸€ä¸ªmove_iteratorå¯¹è±¡
 	std::vector<std::string> foo(3);
 	std::vector<std::string> bar{ "one", "two", "three" };
 
@@ -184,7 +184,7 @@ int test_iterator_9()
 //////////////////////////////////////////////
 int test_iterator_10()
 {
-	// std::next: »ñÈ¡ÏÂÒ»¸öÔªËØµÄµü´úÆ÷
+	// std::next: è·å–ä¸‹ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 	std::list<int> mylist;
 	for (int i = 0; i<10; i++) mylist.push_back(i * 10);
 
@@ -199,7 +199,7 @@ int test_iterator_10()
 //////////////////////////////////////
 int test_iterator_11()
 {
-	// std::prev: »ñÈ¡Ç°Ò»¸öÔªËØµÄµü´úÆ÷
+	// std::prev: è·å–å‰ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 	std::list<int> mylist;
 	for (int i = 0; i<10; i++) mylist.push_back(i * 10);
 
@@ -211,7 +211,7 @@ int test_iterator_11()
 ////////////////////////////////////////
 int test_iterator_12()
 {
-	// std::back_insert_iterator: ÔÚÈİÆ÷Ä©Î²²åÈëÔªËØµÄµü´úÆ÷
+	// std::back_insert_iterator: åœ¨å®¹å™¨æœ«å°¾æ’å…¥å…ƒç´ çš„è¿­ä»£å™¨
 	std::vector<int> foo, bar;
 	for (int i = 1; i <= 5; i++) {
 		foo.push_back(i); bar.push_back(i * 10);
@@ -232,7 +232,7 @@ int test_iterator_12()
 ///////////////////////////////////////////////
 int test_iterator_13()
 {
-	// std::front_insert_iterator: ÔÚÈİÆ÷¿ªÍ·²åÈëÔªËØµÄµü´úÆ÷
+	// std::front_insert_iterator: åœ¨å®¹å™¨å¼€å¤´æ’å…¥å…ƒç´ çš„è¿­ä»£å™¨
 	std::deque<int> foo, bar;
 	for (int i = 1; i <= 5; i++) {
 		foo.push_back(i); bar.push_back(i * 10);
@@ -253,7 +253,7 @@ int test_iterator_13()
 //////////////////////////////////////////////
 int test_iterator_14()
 {
-	// std::insert_iterator: ²åÈëµü´úÆ÷
+	// std::insert_iterator: æ’å…¥è¿­ä»£å™¨
 	std::list<int> foo, bar;
 	for (int i = 1; i <= 5; i++) {
 		foo.push_back(i); bar.push_back(i * 10);
@@ -277,7 +277,7 @@ int test_iterator_14()
 ///////////////////////////////////////////////////////
 int test_iterator_15()
 {
-	// std::istreambuf_iterator: ÊäÈëÁ÷»º´æµü´úÆ÷
+	// std::istreambuf_iterator: è¾“å…¥æµç¼“å­˜è¿­ä»£å™¨
 	std::istreambuf_iterator<char> eos;                    // end-of-range iterator
 	std::istreambuf_iterator<char> iit(std::cin.rdbuf()); // stdin iterator
 	std::string mystring;
@@ -294,7 +294,7 @@ int test_iterator_15()
 ///////////////////////////////////////////////////
 int test_iterator_16()
 {
-	// std::istream_iterator: ´ÓÊäÈëÁ÷¶ÁÈ¡Á¬ĞøÔªËØµÄÊäÈëµü´úÆ÷
+	// std::istream_iterator: ä»è¾“å…¥æµè¯»å–è¿ç»­å…ƒç´ çš„è¾“å…¥è¿­ä»£å™¨
 	double value1, value2;
 	std::cout << "Please, insert two values: ";
 
@@ -314,7 +314,7 @@ int test_iterator_16()
 ///////////////////////////////////////////////////////
 int test_iterator_17()
 {
-	// std::move_iterator: ÓÃÓÚ½âÒıÓÃ(Dereference)µ½Ò»¸öÓÒÖµÒıÓÃ(Rvalue reference)µÄµü´úÆ÷
+	// std::move_iterator: ç”¨äºè§£å¼•ç”¨(Dereference)åˆ°ä¸€ä¸ªå³å€¼å¼•ç”¨(Rvalue reference)çš„è¿­ä»£å™¨
 	std::vector<std::string> foo(3);
 	std::vector<std::string> bar{ "one", "two", "three" };
 
@@ -335,7 +335,7 @@ int test_iterator_17()
 ///////////////////////////////////////////////////////
 int test_iterator_18()
 {
-	// std::ostreambuf_iterator: Êä³öÁ÷»º´æµü´úÆ÷
+	// std::ostreambuf_iterator: è¾“å‡ºæµç¼“å­˜è¿­ä»£å™¨
 	std::string mystring("Some text here...\n");
 	std::ostreambuf_iterator<char> out_it(std::cout); // stdout iterator
 
@@ -347,7 +347,7 @@ int test_iterator_18()
 /////////////////////////////////////////
 int test_iterator_19()
 {
-	// std::ostream_iterator: Ë³ĞòĞ´ÈëÊä³öÁ÷µÄÊä³öµü´úÆ÷
+	// std::ostream_iterator: é¡ºåºå†™å…¥è¾“å‡ºæµçš„è¾“å‡ºè¿­ä»£å™¨
 	std::vector<int> myvector;
 	for (int i = 1; i<10; ++i) myvector.push_back(i * 10);
 
@@ -360,7 +360,7 @@ int test_iterator_19()
 ///////////////////////////////////////////
 int test_iterator_20()
 {
-	// std::reverse_iterator: ·´Ïòµü´úÆ÷
+	// std::reverse_iterator: åå‘è¿­ä»£å™¨
 	std::vector<int> myvector;
 	for (int i = 0; i<10; i++) myvector.push_back(i);
 

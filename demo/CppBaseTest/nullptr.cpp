@@ -24,7 +24,7 @@ int test_nullptr1()
 	g(0);              // Fine
 
 	Fwd(g, nullptr);   // Fine
-	// Fwd(g, NULL);  // ERROR: No function g(int) // error C2664: ��void (int *)��: �޷������� 1 �ӡ�int��ת��Ϊ��int *��
+	// Fwd(g, NULL);  // ERROR: No function g(int) // error C2664: “void (int *)”: 无法将参数 1 从“int”转换为“int *”
 
 	int length1 = sizeof(NULL); // x64, length1 = 4
 	int length2 = sizeof(nullptr); // x64, length2 = 8
@@ -76,7 +76,7 @@ int test_nullptr3()
 	f((int *) nullptr); // f(int *)
 	f(0); // f(int *)
 	f(NULL); // f(int *)
-	//f((int &) nullptr); // error C2101: �����ϵġ�&��
+	//f((int &) nullptr); // 常量上的“&”
 
 	return 0;
 }
@@ -122,7 +122,7 @@ void doSomething_(std::nullptr_t ptr)
 int test_nullptr5()
 {
 	int* a = NULL; // ok
-	//int* b = (void*)0; // error C2440: ����ʼ����: �޷��ӡ�void *��ת��Ϊ��int *��
+	//int* b = (void*)0; // error C2440: “初始化”: 无法从“void *”转换为“int *”
 	int* c = 0; // ok
 
 	// the argument is definitely a null pointer (not an integer)

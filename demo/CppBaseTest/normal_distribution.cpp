@@ -34,13 +34,13 @@ int test_normal_distribution_1()
 	}
 }
 
-{ // (1)°¢normal_distribution::normal_distribution: Constructs a normal_distribution object,
+{ // (1)„ÄÅnormal_distribution::normal_distribution: Constructs a normal_distribution object,
 //   adopting the distribution parameters specified either by mean and stddev or by object parm.
-//   (2)°¢normal_distribution::max: Returns the least upper bound of the range of values potentially returned by member operator().
-//   (3)°¢normal_distribution::min: Returns the greatest lower bound of the range of values potentially returned by member operator().
-//   (4)°¢normal_distribution::mean: Returns the mean(¶Ã)parameter associated with the normal_distribution object
-//   (5)°¢normal_distribution::stddev: Returns the standard deviation (¶“) associated with the normal_distribution object
-//   (6)°¢normal_distribution::operator(): Returns a new random number that follows the distribution's parameters associated
+//   (2)„ÄÅnormal_distribution::max: Returns the least upper bound of the range of values potentially returned by member operator().
+//   (3)„ÄÅnormal_distribution::min: Returns the greatest lower bound of the range of values potentially returned by member operator().
+//   (4)„ÄÅnormal_distribution::mean: Returns the mean(Œº)parameter associated with the normal_distribution object
+//   (5)„ÄÅnormal_distribution::stddev: Returns the standard deviation (œÉ) associated with the normal_distribution object
+//   (6)„ÄÅnormal_distribution::operator(): Returns a new random number that follows the distribution's parameters associated
 //    to the object (version 1) or those specified by parm (version 2).
 
 	// construct a trivial random generator engine from a time-based seed:

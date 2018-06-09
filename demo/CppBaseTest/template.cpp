@@ -10,9 +10,9 @@ void test_template1()
 	int a = 3, b = 7;
 	float x = 3.0, y = 7.0;
 	//Calling template function
-	std::cout << maximum<int>(a, b) << std::endl; //Êä³ö 7
-	std::cout << maximum(a, b) << std::endl; //×Ô¶¯²¹³äÀàÐÍÉùÃ÷,Êä³ö 7
-	std::cout << maximum<double>(x, y) << std::endl; //Êä³ö 7
+	std::cout << maximum<int>(a, b) << std::endl; //è¾“å‡º 7
+	std::cout << maximum(a, b) << std::endl; //è‡ªåŠ¨è¡¥å……ç±»åž‹å£°æ˜Ž,è¾“å‡º 7
+	std::cout << maximum<double>(x, y) << std::endl; //è¾“å‡º 7
 }
 
 void test_template2()

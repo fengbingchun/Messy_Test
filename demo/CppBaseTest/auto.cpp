@@ -43,7 +43,7 @@ int test_auto1()
 	std::cout << "type of my_fun: " << typeid(my_fun).name() << '\n'; // type of my_fun: double (__cdecl*)(double)
 	std::cout << "my_fun: " << my_fun(3) << '\n'; // my_fun: 0.14112
 
-	// auto int x; // error as of C++11: "auto" is no longer a storage-class specifier // error C3530: ¡°auto¡±²»ÄÜÓëÈÎºÎÆäËûÀàĞÍËµÃ÷·û×éºÏ
+	// auto int x; // error as of C++11: "auto" is no longer a storage-class specifier // error C3530: â€œautoâ€ä¸èƒ½ä¸ä»»ä½•å…¶ä»–ç±»å‹è¯´æ˜ç¬¦ç»„åˆ
 
 	return 0;
 }
@@ -64,16 +64,16 @@ int test_auto2()
 	myAuto = 12;
 	std::cout << count << std::endl; // 11
 
-	// 1. ÏÂÃæµÄÉùÃ÷µÈĞ§¡£ ÔÚµÚÒ»¸öÓï¾äÖĞ£¬ÉùÃ÷ j ±äÁ¿ÎªÀàĞÍ int¡£ ÔÚµÚ¶ş¸öÓï¾ä£¬ÒòÎª³õÊ¼»¯±í´ïÊ½ (0) ÊÇÕûÊı£¬ËùÒÔ±äÁ¿ k ÍÆµ¼Îª int ÀàĞÍ
+	// 1. ä¸‹é¢çš„å£°æ˜ç­‰æ•ˆã€‚ åœ¨ç¬¬ä¸€ä¸ªè¯­å¥ä¸­ï¼Œå£°æ˜ j å˜é‡ä¸ºç±»å‹ intã€‚ åœ¨ç¬¬äºŒä¸ªè¯­å¥ï¼Œå› ä¸ºåˆå§‹åŒ–è¡¨è¾¾å¼ (0) æ˜¯æ•´æ•°ï¼Œæ‰€ä»¥å˜é‡ k æ¨å¯¼ä¸º int ç±»å‹
 	int j = 0;  // Variable j is explicitly type int.
 	auto k = 0; // Variable k is implicitly type int because 0 is an integer.
 
-	// 2. ÒÔÏÂÉùÃ÷µÈĞ§£¬µ«µÚ¶ş¸öÉùÃ÷±ÈµÚÒ»¸ö¼òµ¥
+	// 2. ä»¥ä¸‹å£°æ˜ç­‰æ•ˆï¼Œä½†ç¬¬äºŒä¸ªå£°æ˜æ¯”ç¬¬ä¸€ä¸ªç®€å•
 	std::map<int, std::list<std::string>> m;
 	std::map<int, std::list<std::string>>::iterator i = m.begin();
 	auto i_ = m.begin();
 
-	// 3. ÉùÃ÷ iter ºÍ elem ±äÁ¿ÀàĞÍ
+	// 3. å£°æ˜ iter å’Œ elem å˜é‡ç±»å‹
 	std::deque<double> dqDoubleData(10, 0.1);
 
 	for (auto iter = dqDoubleData.begin(); iter != dqDoubleData.end(); ++iter) { /* ... */}
@@ -90,21 +90,21 @@ int test_auto2()
 	for (const auto& elem : dqDoubleData) // observes elements IN-PLACE
 	{ /* ... */ }
 
-	// 4. Ê¹ÓÃ new ÔËËã·û
+	// 4. ä½¿ç”¨ new è¿ç®—ç¬¦
 	double x = 12.34;
 	auto *y = new auto(x), **z = new auto(&x);
 
-	// 5. ËùÓĞ·ûºÅ½âÎöÎªÍ¬Ò»ÀàĞÍ
+	// 5. æ‰€æœ‰ç¬¦å·è§£æä¸ºåŒä¸€ç±»å‹
 	auto x_ = 1, *y_ = &x_, **z_ = &y_; // Resolves to int.
 	auto a(2.01), *b(&a);         // Resolves to double.
 	auto c = 'a', *d(&c);          // Resolves to char.
 	auto m_ = 1, &n_ = m_;            // Resolves to int.
 
-	// 6. Ê¹ÓÃÌõ¼şÔËËã·û (?:)
+	// 6. ä½¿ç”¨æ¡ä»¶è¿ç®—ç¬¦ (?:)
 	int v1 = 100, v2 = 200;
 	auto e = v1 > v2 ? v1 : v2;
 
-	// 7. ½«±äÁ¿ x7 ³õÊ¼»¯ÀàĞÍ int£¬½«ÒıÓÃµÄ±äÁ¿ y7 ³õÊ¼»¯ÎªÀàĞÍ const int£¬¼°½«±äÁ¿ fp ³õÊ¼»¯ÎªÖ¸Ïò·µ»ØÀàĞÍ int µÄº¯ÊıµÄÖ¸Õë
+	// 7. å°†å˜é‡ x7 åˆå§‹åŒ–ç±»å‹ intï¼Œå°†å¼•ç”¨çš„å˜é‡ y7 åˆå§‹åŒ–ä¸ºç±»å‹ const intï¼ŒåŠå°†å˜é‡ fp åˆå§‹åŒ–ä¸ºæŒ‡å‘è¿”å›ç±»å‹ int çš„å‡½æ•°çš„æŒ‡é’ˆ
 	auto x7 = f(0);
 	const auto & y7 = f(1);
 	int(*p)(int x7);

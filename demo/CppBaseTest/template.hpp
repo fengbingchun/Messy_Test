@@ -4,7 +4,7 @@
 #include <vector>
 
 // reference: https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF_(C%2B%2B)
-// º¯ÊıÄ£°å£¬´Ëº¯ÊıÔÚ±àÒëÊ±»á×Ô¶¯²úÉú¶ÔÓ¦²ÎÊıÀàĞÍµÄ´úÂë£¬¶ø²»ÓÃÏÔÊ½ÉùÃ÷
+// å‡½æ•°æ¨¡æ¿ï¼Œæ­¤å‡½æ•°åœ¨ç¼–è¯‘æ—¶ä¼šè‡ªåŠ¨äº§ç”Ÿå¯¹åº”å‚æ•°ç±»å‹çš„ä»£ç ï¼Œè€Œä¸ç”¨æ˜¾å¼å£°æ˜
 template <typename T>
 inline const T& maximum(const T& x, const T& y)
 {
@@ -15,7 +15,7 @@ inline const T& maximum(const T& x, const T& y)
 	}
 }
 
-// ÀàÄ£°å
+// ç±»æ¨¡æ¿
 template <typename Ty>
 class ComPtr
 {
@@ -87,13 +87,13 @@ public:
 	}
 };
 
-// Ä£°åµÄÇ¶Ì×£º³ÉÔ±Ä£°å
+// æ¨¡æ¿çš„åµŒå¥—ï¼šæˆå‘˜æ¨¡æ¿
 template <typename C> class myc{
 public:
 	template <typename S> C foo(S s);
 };
 
-//ÏÂĞĞĞèÒª¸ø³öÍâ²¿ÀàÓëÄÚ²¿Ç¶Ì×ÀàµÄÄ£°åĞÎ²ÎÁĞ±í£º
+//ä¸‹è¡Œéœ€è¦ç»™å‡ºå¤–éƒ¨ç±»ä¸å†…éƒ¨åµŒå¥—ç±»çš„æ¨¡æ¿å½¢å‚åˆ—è¡¨ï¼š
 template<typename C> template <typename S> C myc<C>::foo(S s){
 	C var;
 	return var;
@@ -150,7 +150,7 @@ T Stack<T>::top() const
 }
 
 // reference: http://www.prglab.com/cms/pages/c-tutorial/advanced-concepts/templates.php
-// Ä£°åÌØÊâ»¯(ÌØÀı»¯£¬Template specialization)
+// æ¨¡æ¿ç‰¹æ®ŠåŒ–(ç‰¹ä¾‹åŒ–ï¼ŒTemplate specialization)
 template <class T> class pair {
 private:
 	T value1, value2;
@@ -199,11 +199,11 @@ template<> struct PrintType <std::string> {
 	}
 };
 
-// º¯ÊıÄ£°åÉùÃ÷Óë¶¨Òå·Ö¿ª
+// å‡½æ•°æ¨¡æ¿å£°æ˜ä¸å®šä¹‰åˆ†å¼€
 template <typename T>
 inline const T& max_mum(const T& x, const T& y);
 
-// ÀàÄ£°åÉùÃ÷Óë¶¨Òå·Ö¿ª
+// ç±»æ¨¡æ¿å£°æ˜ä¸å®šä¹‰åˆ†å¼€
 template<class T>
 class A {
 public:

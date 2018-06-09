@@ -30,7 +30,7 @@ int test_chrono_duration()
 	std::cout << ms_onehour.count() << "ms in 1h" << std::endl;
 }
 
-{ // duration operators: +°¢-°¢*°¢/°¢>°¢<°¢!=°¢and so on
+{ // duration operators: +„ÄÅ-„ÄÅ*„ÄÅ/„ÄÅ>„ÄÅ<„ÄÅ!=„ÄÅand so on
 	std::chrono::duration<int> foo;
 	std::chrono::duration<int> bar(10);
 
@@ -218,7 +218,7 @@ int test_chrono_system_clock()
 // reference: http://www.cplusplus.com/reference/chrono/time_point/
 int test_chrono_time_point()
 {
-{ // time_point operators: +°¢-°¢==°¢!=
+{ // time_point operators: +„ÄÅ-„ÄÅ==„ÄÅ!=
 	using namespace std::chrono;
 
 	system_clock::time_point tp, tp2;                // epoch value

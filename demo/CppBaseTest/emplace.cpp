@@ -152,7 +152,7 @@ int test_emplace_4()
 	vec.reserve(3);
 
 	vec.push_back(Dat(89, "New", 'G')); // efficiency lesser
-	//vec.push_back(678, "Newer", 'O'); // error,push_back can¡¯t accept three arguments
+	//vec.push_back(678, "Newer", 'O'); // error,push_back canâ€™t accept three arguments
 	vec.emplace_back(890, "Newest", 'D'); // work fine, efficiency is also more
 
 	return 0;

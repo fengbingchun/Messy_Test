@@ -14,21 +14,21 @@ namespace {
 	int fcn() { return 0; }
 }
 
-extern double pi = 3.1415; // ¶¨Òå
+extern double pi = 3.1415; // å®šä¹‰
 
-/* reference: C++ Primer(Fifth ÖÐÎÄ°æ) pages 63
-Ä³Ð©Ê±ºòÓÐÕâÑùÒ»ÖÖconst±äÁ¿£¬ËüµÄ³õÊ¼Öµ²»ÊÇÒ»¸ö³£Á¿±í´ïÊ½£¬µ«ÓÖÈ·ÊµÓÐ±ØÒªÔÚÎÄ¼þ¼ä¹²Ïí¡£
-ÕâÖÖÇé¿öÏÂ£¬ÎÒÃÇ²»Ï£Íû±àÒëÆ÷ÎªÃ¿¸öÎÄ¼þ·Ö±ðÉú³É¶ÀÁ¢µÄ±äÁ¿¡£Ïà·´£¬ÎÒÃÇÏëÈÃÕâÀàconst¶ÔÏó
-ÏñÆäËü(·Ç³£Á¿)¶ÔÏóÒ»Ñù¹¤×÷£¬Ò²¾ÍÊÇËµ£¬Ö»ÔÚÒ»¸öÎÄ¼þÖÐ¶¨Òåconst£¬¶øÔÚÆäËü¶à¸öÎÄ¼þÖÐÉùÃ÷
-²¢Ê¹ÓÃËü¡£½â¾öµÄ°ì·¨ÊÇ£¬¶ÔÓÚconst±äÁ¿²»¹ÜÊÇÉùÃ÷»¹ÊÇ¶¨Òå¶¼Ìí¼Óextern¹Ø¼ü×Ö£¬ÕâÑùÖ»Ðè¶¨ÒåÒ»´Î¾Í¿ÉÒÔÁË
+/* reference: C++ Primer(Fifth ä¸­æ–‡ç‰ˆ) pages 63
+æŸäº›æ—¶å€™æœ‰è¿™æ ·ä¸€ç§constå˜é‡ï¼Œå®ƒçš„åˆå§‹å€¼ä¸æ˜¯ä¸€ä¸ªå¸¸é‡è¡¨è¾¾å¼ï¼Œä½†åˆç¡®å®žæœ‰å¿…è¦åœ¨æ–‡ä»¶é—´å…±äº«ã€‚
+è¿™ç§æƒ…å†µä¸‹ï¼Œæˆ‘ä»¬ä¸å¸Œæœ›ç¼–è¯‘å™¨ä¸ºæ¯ä¸ªæ–‡ä»¶åˆ†åˆ«ç”Ÿæˆç‹¬ç«‹çš„å˜é‡ã€‚ç›¸åï¼Œæˆ‘ä»¬æƒ³è®©è¿™ç±»constå¯¹è±¡
+åƒå…¶å®ƒ(éžå¸¸é‡)å¯¹è±¡ä¸€æ ·å·¥ä½œï¼Œä¹Ÿå°±æ˜¯è¯´ï¼Œåªåœ¨ä¸€ä¸ªæ–‡ä»¶ä¸­å®šä¹‰constï¼Œè€Œåœ¨å…¶å®ƒå¤šä¸ªæ–‡ä»¶ä¸­å£°æ˜Ž
+å¹¶ä½¿ç”¨å®ƒã€‚è§£å†³çš„åŠžæ³•æ˜¯ï¼Œå¯¹äºŽconstå˜é‡ä¸ç®¡æ˜¯å£°æ˜Žè¿˜æ˜¯å®šä¹‰éƒ½æ·»åŠ externå…³é”®å­—ï¼Œè¿™æ ·åªéœ€å®šä¹‰ä¸€æ¬¡å°±å¯ä»¥äº†
 */
 extern const int bufsize = fcn();
 
 int test_extern_1()
 {
-	extern int i; // ÉùÃ÷i¶ø·Ç¶¨Òåi
-	int j; // ÉùÃ÷²¢¶¨Òåj
-	//extern double pi = 3.1415; // ¶¨Òå,ÔÚº¯ÊýÌåÄÚ²¿£¬Èç¹ûÊÔÍ¼³õÊ¼»¯Ò»¸öÓÉextern¹Ø¼ü×Ö±ê¼ÇµÄ±äÁ¿£¬½«Òý·¢´íÎó
+	extern int i; // å£°æ˜Žiè€Œéžå®šä¹‰i
+	int j; // å£°æ˜Žå¹¶å®šä¹‰j
+	//extern double pi = 3.1415; // å®šä¹‰,åœ¨å‡½æ•°ä½“å†…éƒ¨ï¼Œå¦‚æžœè¯•å›¾åˆå§‹åŒ–ä¸€ä¸ªç”±externå…³é”®å­—æ ‡è®°çš„å˜é‡ï¼Œå°†å¼•å‘é”™è¯¯
 
 	return 0;
 }

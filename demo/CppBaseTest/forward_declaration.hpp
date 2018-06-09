@@ -71,7 +71,7 @@ X* f5() { X* x = nullptr; return x; }
 	(denoting an entity such as a type, a variable, or a function) for which the
 	programmer has not yet given a complete definition."
 	In C++, you should forward declare classes instead of including headers.
-	Don¡¯t use an #include when a forward declaration would suffice.
+	Donâ€™t use an #include when a forward declaration would suffice.
 	When you include a header file you introduce a dependency
 	that will cause your code to be recompiled whenever the header file changes.
 	If your header file includes other header files, any change to those files will

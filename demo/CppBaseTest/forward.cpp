@@ -90,8 +90,8 @@ struct some_struct{
 
 int test_forward3()
 {
-	/* remember the reference collapsing rules(ÒýÓÃÕÛµþ¹æÔò):
-	Ç°Õß´ú±í½ÓÊÜÀàÐÍ£¬ºóÕß´ú±í½øÈëÀàÐÍ£¬=>±íÊ¾ÒýÓÃÕÛµþÖ®ºóµÄÀàÐÍ£¬¼´×îºó±»ÍÆµ¼¾ö¶ÏµÄÀàÐÍ
+	/* remember the reference collapsing rules(å¼•ç”¨æŠ˜å è§„åˆ™):
+	å‰è€…ä»£è¡¨æŽ¥å—ç±»åž‹ï¼ŒåŽè€…ä»£è¡¨è¿›å…¥ç±»åž‹ï¼Œ=>è¡¨ç¤ºå¼•ç”¨æŠ˜å ä¹‹åŽçš„ç±»åž‹ï¼Œå³æœ€åŽè¢«æŽ¨å¯¼å†³æ–­çš„ç±»åž‹
 	TR   R
 
 	T&   &->T&   // lvalue reference to cv TR -> lvalue reference to T

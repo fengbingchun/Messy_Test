@@ -3,7 +3,7 @@
 
 namespace extern_ {
 
-extern const int bufsize; // Óë.cppÖĞ¶¨ÒåµÄbufsizeÊÇÍ¬Ò»¸ö
+extern const int bufsize; // ä¸.cppä¸­å®šä¹‰çš„bufsizeæ˜¯åŒä¸€ä¸ª
 
 int test_extern_1();
 int test_extern_2();

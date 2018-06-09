@@ -11,8 +11,8 @@
 
 // reference: https://msdn.microsoft.com/zh-cn/library/dd293588.aspx
 
-// static_assert ���������෶Χ�� static_assert ��֤ģ������Ƿ�Ϊ�������� (POD) ���͡�
-// �������������� static_assert ����ʱ������������������ constant-expression ������ֱ���� main() ��ʵ���� basic_string ��ģ��
+// static_assert 声明具有类范围。 static_assert 验证模板参数是否为纯旧数据 (POD) 类型。
+// 编译器将在声明 static_assert 声明时检查该声明，但不计算 constant-expression 参数，直到在 main() 中实例化 basic_string 类模板
 #ifdef _MSC_VER
 template <class CharT, class Traits = std::char_traits<CharT> >
 class basic_string {

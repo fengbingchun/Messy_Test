@@ -70,5 +70,5 @@ struct widget
 	inline widget& operator=(const widget&);
 };
 
-// Notice that you can default a special member function outside the body of a class as long as it¡¯s inlinable.
+// Notice that you can default a special member function outside the body of a class as long as itâ€™s inlinable.
 inline widget& widget::operator=(const widget&) = default;

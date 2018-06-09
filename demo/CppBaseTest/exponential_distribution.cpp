@@ -37,17 +37,17 @@ int test_exponential_distribution_1()
 	}
 }
 
-{ // (1)°¢exponential_distribution::exponential_distribution: Construct exponential distribution,
+{ // (1)„ÄÅexponential_distribution::exponential_distribution: Construct exponential distribution,
 //   Constructs an exponential_distribution object, adopting the distribution parameters specified either by lambda or by object parm.
-//   (2)°¢exponential_distribution::lambda: Returns the parameter lambda (¶À) associated with the exponential_distribution.
+//   (2)„ÄÅexponential_distribution::lambda: Returns the parameter lambda (Œª) associated with the exponential_distribution.
 //   This parameter represents the number of times the random events are observed by interval, on average.
 //   This parameter is set on construction.
-//   (3)°¢exponential_distribution::max: Maximum value
+//   (3)„ÄÅexponential_distribution::max: Maximum value
 //   Returns the least upper bound of the range of values potentially returned by member operator().
-//   (4)°¢exponential_distribution::min: Minimum value
+//   (4)„ÄÅexponential_distribution::min: Minimum value
 //   Returns the greatest lower bound of the range of values potentially returned by member operator(),
 //   which for exponential_distribution is always zero.
-//   (5)°¢exponential_distribution::operator(): Generate random number
+//   (5)„ÄÅexponential_distribution::operator(): Generate random number
 //   Returns a new random number that follows the distribution's parameters associated to the object (version 1)
 //   or those specified by parm (version 2).
 

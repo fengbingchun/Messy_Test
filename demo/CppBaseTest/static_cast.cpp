@@ -7,9 +7,9 @@ void CCTest::setNumber(int num) { number = num; }
 
 void CCTest::printNumber() const {
 	std::cout << "\nBefore: " << number;
-	//this ָ�����������Ϊ const CCTest *��
-	//const_cast ������Ὣ this ָ����������͸���Ϊ CCTest *���������޸ĳ�Ա number��
-	//ǿ��ת�����������ڵ�����е����ಿ�ֳ���
+	//this 指针的数据类型为 const CCTest *。
+	//const_cast 运算符会将 this 指针的数据类型更改为 CCTest *，以允许修改成员 number。
+	//强制转换仅对其所在的语句中的其余部分持续
 	const_cast< CCTest * >(this)->number--;
 	std::cout << "\nAfter: " << number;
 }
@@ -36,14 +36,14 @@ void D4::f()
 
 #ifdef _MSC_VER
 unsigned short Hash(void *p) {
-	//reinterpret_cast ����ָ����Ϊ�������͡������󽫰�λ��λ����������С��������������Ψһ������������Ψһ�Եĸ��ʷǳ��ߣ���
-	//��������󱻱�׼ C ��ʽǿ��ת���ض�Ϊ�����ķ������͡�
+	//reinterpret_cast 允许将指针视为整数类型。结果随后将按位移位并与自身进行“异或”运算以生成唯一的索引（具有唯一性的概率非常高）。
+	//该索引随后被标准 C 样式强制转换截断为函数的返回类型。
 	unsigned int val = reinterpret_cast<unsigned int>(p);
 	return (unsigned short)(val ^ (val >> 16));
 }
 #endif
 
-// C���ǿ������ת��
+// C风格强制类型转换
 void test_static_cast1()
 {
 	float a = 1.1, b = 1.9;
@@ -56,18 +56,18 @@ void test_static_cast1()
 
 void test_static_cast2(B1* pb, D1* pd)
 {
-	//�� dynamic_cast ��ͬ��pb �� static_cast ת����ִ������ʱ��顣
-	//�� pb ָ��Ķ�����ܲ��� D ���͵Ķ��������������ʹ�� *pd2 ���������Եġ�
-	//���磬���� D �ࣨ���� B �ࣩ�ĳ�Ա�������ܻᵼ�·��ʳ�ͻ��
+	//与 dynamic_cast 不同，pb 的 static_cast 转换不执行运行时检查。
+	//由 pb 指向的对象可能不是 D 类型的对象，在这种情况下使用 *pd2 会是灾难性的。
+	//例如，调用 D 类（而非 B 类）的成员函数可能会导致访问冲突。
 	D1* pd2 = static_cast<D1*>(pb);   // Not safe, D can have fields and methods that are not in B.
 	B1* pb2 = static_cast<B1*>(pd);   // Safe conversion, D always contains all of B.
 }
 
 void test_static_cast3(B1* pb)
 {
-	//��� pb ȷʵָ�� D ���͵Ķ����� pd1 �� pd2 ����ȡ��ͬ��ֵ����� pb == 0������Ҳ����ȡ��ͬ��ֵ��
-	//��� pb ָ�� B ���͵Ķ��󣬶���ָ�������� D �࣬�� dynamic_cast �����жϷ����㡣
-	//���ǣ�static_cast �����ڳ���Ա�Ķ��ԣ��� pb ָ�� D ���͵Ķ������ֻ�Ƿ���ָ���Ǹ��ٶ��� D �����ָ�롣
+	//如果 pb 确实指向 D 类型的对象，则 pd1 和 pd2 将获取相同的值。如果 pb == 0，它们也将获取相同的值。
+	//如果 pb 指向 B 类型的对象，而非指向完整的 D 类，则 dynamic_cast 足以判断返回零。
+	//但是，static_cast 依赖于程序员的断言，即 pb 指向 D 类型的对象，因而只是返回指向那个假定的 D 对象的指针。
 	D1* pd1 = dynamic_cast<D1*>(pb);
 	D1* pd2 = static_cast<D1*>(pb);
 }
@@ -93,7 +93,7 @@ void test_static_cast5()
 
 void test_static_cast6(D2* pd)
 {
-	//��ת�����ͳ�Ϊ������ת��������Ϊ���������νṹ�ϵ�ָ�룬�����������Ƶ������������ࡣ����ת����һ����ʽת����
+	//此转换类型称为“向上转换”，因为它将在类层次结构上的指针，从派生的类移到该类派生的类。向上转换是一种隐式转换。
 	C2* pc = dynamic_cast<C2*>(pd);   // ok: C is a direct base class pc points to C subobject of pd 
 	B2* pb = dynamic_cast<B2*>(pd);   // ok: B is an indirect base class pb points to B subobject of pd
 }
@@ -111,7 +111,7 @@ void test_static_cast8()
 	B4* pb = new D4;   // unclear but ok
 	B4* pb2 = new B4;
 
-	//��ת�����ͳ�Ϊ������ת��������Ϊ���������νṹ�µ�ָ�룬�Ӹ��������Ƶ������������ࡣ
+	//此转换类型称为“向下转换”，因为它将在类层次结构下的指针，从给定的类移到该类派生的类。ࡣ
 	D4* pd = dynamic_cast<D4*>(pb);   // ok: pb actually points to a D
 	D4* pd2 = dynamic_cast<D4*>(pb2);   // pb2 points to a B not a D
 }

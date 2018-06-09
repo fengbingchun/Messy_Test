@@ -44,7 +44,7 @@ int test_move2()
 {
 	int a = 0;
 	ProcessValue(a);
-	// std::moveº¯Êı¿ÉÒÔÒÔ·Ç³£¼òµ¥µÄ·½Ê½½«×óÖµÒıÓÃ×ª»»ÎªÓÒÖµÒıÓÃ
+	// std::moveå‡½æ•°å¯ä»¥ä»¥éå¸¸ç®€å•çš„æ–¹å¼å°†å·¦å€¼å¼•ç”¨è½¬æ¢ä¸ºå³å€¼å¼•ç”¨
 	ProcessValue(std::move(a));
 
 	return 0;

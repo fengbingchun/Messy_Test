@@ -19,24 +19,24 @@
 
 int test_string_init()
 {
-	// ï¿½ï¿½ï¿½Ê¹ï¿½ÃµÈºï¿½(=)ï¿½ï¿½Ê¼ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ðµï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÑµÈºï¿½ï¿½Ò²ï¿½Ä³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½
-	// ï¿½ï¿½Ö®ï¿½à·´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ÃµÈºÅ£ï¿½ï¿½ï¿½Ö´ï¿½Ðµï¿½ï¿½ï¿½Ö±ï¿½Ó³ï¿½Ê¼ï¿½ï¿½
-	std::string s1; // Ä¬ï¿½Ï³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½s1ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Õ´ï¿½
-	std::string s2(s1); // s2ï¿½ï¿½s1ï¿½Ä¸ï¿½ï¿½ï¿½
-	std::string s3 = s1; // ï¿½È¼ï¿½ï¿½ï¿½s3(s1)ï¿½ï¿½s3ï¿½ï¿½s1ï¿½Ä¸ï¿½ï¿½ï¿½
-	std::string s4("value"); // s4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ"value"ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½â£¬Ö±ï¿½Ó³ï¿½Ê¼ï¿½ï¿½
-	std::string s5 = "value"; // ï¿½È¼ï¿½ï¿½ï¿½s5("value"),s5ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ"value"ï¿½Ä¸ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
-	std::string s6(10, 'c'); // ï¿½ï¿½s6ï¿½ï¿½Ê¼ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½10ï¿½ï¿½ï¿½Ö·ï¿½cï¿½ï¿½ÉµÄ´ï¿½ï¿½ï¿½Ö±ï¿½Ó³ï¿½Ê¼ï¿½ï¿½
-	// ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½Öµï¿½ï¿½ï¿½Ð³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ä·ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½Ô£ï¿½
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ê¾ï¿½Ø´ï¿½ï¿½ï¿½Ò»ï¿½ï¿½(ï¿½ï¿½Ê±)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½
-	std::string s7 = std::string(10, 'c'); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½ï¿½Ú£ï¿½ std::string tmp(10, 'c'); std::string s7 = tmp;
-	// string s(s2, pos2) : sï¿½ï¿½string s2ï¿½ï¿½ï¿½Â±ï¿½pos2ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ö·ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pos2>s2.size()ï¿½ï¿½ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÎ´ï¿½ï¿½ï¿½ï¿½
+	// Èç¹ûÊ¹ÓÃµÈºÅ(=)³õÊ¼»¯Ò»¸ö±äÁ¿£¬Êµ¼ÊÉÏÖ´ÐÐµÄÊÇ¿½±´³õÊ¼»¯£¬±àÒëÆ÷°ÑµÈºÅÓÒ²àµÄ³õÊ¼»¯¿½±´µ½ÐÂ´´½¨µÄ¶ÔÏóÖÐÈ¥¡£
+	// ÓëÖ®Ïà·´£¬Èç¹û²»Ê¹ÓÃµÈºÅ£¬ÔòÖ´ÐÐµÄÊÇÖ±½Ó³õÊ¼»¯
+	std::string s1; // Ä¬ÈÏ³õÊ¼»¯£¬s1ÊÇÒ»¸ö¿Õ´®
+	std::string s2(s1); // s2ÊÇs1µÄ¸±±¾
+	std::string s3 = s1; // µÈ¼ÛÓÚs3(s1)£¬s3ÊÇs1µÄ¸±±¾
+	std::string s4("value"); // s4ÊÇ×ÖÃæÖµ"value"µÄ¸±±¾£¬³ýÁË×ÖÃæÖµ×îºóµÄÄÇ¸ö¿Õ×Ö·ûÍâ£¬Ö±½Ó³õÊ¼»¯
+	std::string s5 = "value"; // µÈ¼ÛÓÚs5("value"),s5ÊÇ×ÖÃæÖµ"value"µÄ¸±±¾,¿½±´³õÊ¼»¯
+	std::string s6(10, 'c'); // °Ñs6³õÊ¼»¯ÎªÓÉÁ¬Ðø10¸ö×Ö·ûc×é³ÉµÄ´®£¬Ö±½Ó³õÊ¼»¯
+	// ¶ÔÓÚÓÃ¶à¸öÖµ½øÐÐ³õÊ¼»¯µÄÇé¿ö£¬·ÇÒªÓÃ¿½±´³õÊ¼»¯µÄ·½Ê½À´´¦ÀíÒ²²»ÊÇ²»¿ÉÒÔ£¬
+	// ²»¹ýÐèÒªÏÔÊ¾µØ´´½¨Ò»¸ö(ÁÙÊ±)¶ÔÏóÓÃÓÚ¿½±´
+	std::string s7 = std::string(10, 'c'); // ¿½±´³õÊ¼»¯£¬µÈ¼ÛÓÚ£º std::string tmp(10, 'c'); std::string s7 = tmp;
+	// string s(s2, pos2) : sÊÇstring s2´ÓÏÂ±êpos2¿ªÊ¼µÄ×Ö·ûµÄ¿½±´£¬Èôpos2>s2.size()£¬¹¹Ôìº¯ÊýµÄÐÐÎªÎ´¶¨Òå
 	std::string s8(s4, 2);
-	// string s(cp, n) : sï¿½ï¿½cpÖ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°nï¿½ï¿½ï¿½Ö·ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ã°ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½Ö·ï¿½
+	// string s(cp, n) : sÊÇcpÖ¸ÏòµÄÊý×éÖÐÇ°n¸ö×Ö·ûµÄ¿½±´£¬´ËÊý×éÖÁÉÙÓ¦¸Ã°üº¬n¸ö×Ö·û
 	char cp[6] {"abcde"};
 	std::string s9(cp, 2);
-	// string s(s2, pos2, len2) : sï¿½ï¿½string s2ï¿½ï¿½ï¿½Â±ï¿½pos2ï¿½ï¿½Ê¼len2ï¿½ï¿½ï¿½Ö·ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pos2>s2.size(),ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÎ´ï¿½ï¿½ï¿½ï¿½.
-	// ï¿½ï¿½ï¿½ï¿½len2ï¿½ï¿½Öµï¿½Ç¶ï¿½ï¿½Ù£ï¿½ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½à¿½ï¿½ï¿½s2.size()-pos2ï¿½ï¿½ï¿½Ö·ï¿½
+	// string s(s2, pos2, len2) : sÊÇstring s2´ÓÏÂ±êpos2¿ªÊ¼len2¸ö×Ö·ûµÄ¿½±´¡£Èôpos2>s2.size(),¹¹Ôìº¯ÊýµÄÐÐÎªÎ´¶¨Òå.
+	// ²»¹Ülen2µÄÖµÊÇ¶àÉÙ£¬¹¹Ôìº¯ÊýÖÁ¶à¿½±´s2.size()-pos2¸ö×Ö·û
 	std::string s10(s4, 1, 2);
 
 	return 0;
@@ -49,193 +49,193 @@ int test_string_base()
 
 	switch (num) {
 	case 0: {
-		// ï¿½ï¿½Ð´stringï¿½ï¿½ï¿½ï¿½
-		std::string s1;
-		std::cin >> s1; // ï¿½ï¿½stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s1,ï¿½ï¿½ï¿½ï¿½ï¿½Õ°ï¿½Í£Ö¹, stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½È»ï¿½ï¿½Í·ï¿½Ä¿Õ°ï¿½(ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½)
-				// ï¿½ï¿½ï¿½Óµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Õ°ï¿½ÎªÖ¹
-		std::cout << s1 << std::endl; // ï¿½ï¿½ï¿½s1;
+			// ¶ÁÐ´string¶ÔÏó
+			std::string s1;
+			std::cin >> s1; // ½«string¶ÔÏó¶ÁÈës1,Óöµ½¿Õ°×Í£Ö¹, string¶ÔÏó»á×Ô¶¯ºöÈ»¿ªÍ·µÄ¿Õ°×(¼´¿Õ¸ñ·û¡¢»»ÐÐ·û¡¢ÖÆ±í·ûµÈ)
+			// ²¢´ÓµÚÒ»¸öÕæÕýµÄ×Ö·û¿ªÊ¼¶ÁÆð£¬Ö±µ½Óö¼ûÏÂÒ»¸ö¿Õ°×ÎªÖ¹
+			std::cout << s1 << std::endl; // Êä³ös1;
 
-		std::string s2, s3;
-		std::cin >> s2 >> s3; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½Ò»ï¿½ï¿½
-		std::cout << s2 << s3 << std::endl;
+			std::string s2, s3;
+			std::cin >> s2 >> s3; // ¶à¸öÊäÈë»ò¶à¸öÊä³ö¿ÉÒÔÁ¬Ð´ÔÚÒ»Æð
+			std::cout << s2 << s3 << std::endl;
 	}
-	break;
+		break;
 	case 1: {
-		// ï¿½ï¿½È¡Î´Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½stringï¿½ï¿½ï¿½ï¿½
-		std::string s4;
-		while (std::cin >> s4) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Ä©Î²(ctrl+z)
-			std::cout << s4 << std::endl; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê£ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		}
+			// ¶ÁÈ¡Î´ÖªÊýÁ¿µÄstring¶ÔÏó
+			std::string s4;
+			while (std::cin >> s4) { // ·´¸´¶ÁÈ¡£¬Ö±ÖÁµ½´ïÎÄ¼þÄ©Î²(ctrl+z)
+				std::cout << s4 << std::endl; // Öð¸öÊä³öµ¥´Ê£¬Ã¿¸öµ¥´ÊºóÃæ½ô¸úÒ»¸ö»»ÐÐ
+			}
 	}
-	break;
+		break;
 	case 2: {
-		// Ê¹ï¿½ï¿½getlineï¿½ï¿½È¡Ò»ï¿½ï¿½ï¿½ï¿½,getlineÖ»ÒªÒ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½Í½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø½ï¿½ï¿½
-		std::string s5;
-		while (std::getline(std::cin, s5)) { // ï¿½ï¿½ctrl+zï¿½Ë³ï¿½Ñ­ï¿½ï¿½
-			std::cout << s5 << std::endl; // ï¿½ï¿½ï¿½ï¿½getlineï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½Ç¸ï¿½ï¿½ï¿½ï¿½Ð·ï¿½Êµï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½
-						      // ï¿½Ãµï¿½ï¿½ï¿½stringï¿½ï¿½ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ð·ï¿½
-		}
+			// Ê¹ÓÃgetline¶ÁÈ¡Ò»ÕûÐÐ,getlineÖ»ÒªÒ»Óöµ½»»ÐÐ·û¾Í½áÊø¶ÁÈ¡²Ù×÷²¢·µ»Ø½á¹û
+			std::string s5;
+			while (std::getline(std::cin, s5)) { // °´ctrl+zÍË³öÑ­»·
+				std::cout << s5 << std::endl; // ´¥·¢getlineº¯Êý·µ»ØµÄÄÇ¸ö»»ÐÐ·ûÊµ¼ÊÉÏ±»¶ªÆúµôÁË£¬
+				// µÃµ½µÄstring¶ÔÏóÖÐ²¢²»°üº¬¸Ã»»ÐÐ·û
+			}
 	}
-	break;
+		break;
 	case 3: {
-		// emptyï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½Õ·ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ä²ï¿½ï¿½ï¿½Öµ
-		// Ã¿ï¿½Î¶ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		std::string s6;
-		while (std::getline(std::cin, s6)) {
-			if (!s6.empty())
-				std::cout << s6 << std::endl;
-			else
-				std::cout << "it is empty" << std::endl;
-		}
+			// empty£ºÊÇ·ñÎª¿Õ·µ»ØÒ»¸ö¶ÔÓ¦µÄ²¼¶ûÖµ
+			// Ã¿´Î¶ÁÈëÒ»ÕûÐÐ£¬Óöµ½¿ÕÐÐÖ±½ÓÌø¹ý
+			std::string s6;
+			while (std::getline(std::cin, s6)) {
+				if (!s6.empty())
+					std::cout << s6 << std::endl;
+				else
+					std::cout << "it is empty" << std::endl;
+			}
 	}
-	break;
+		break;
 	case 4: {
-		// sizeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½stringï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½(ï¿½ï¿½stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½)
-		std::string s7;
-		while (std::getline(std::cin, s7)) {
-			auto len = s7.size(); // sizeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Ò»ï¿½ï¿½std::string::size_typeï¿½ï¿½ï¿½Íµï¿½Öµï¿½ï¿½
-					      // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã¹»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½stringï¿½ï¿½ï¿½ï¿½Ä´ï¿½Ð¡,
-			std::cout << "string size: " << len << std::endl;
-		}
+			// size£º ·µ»Østring¶ÔÏóµÄ³¤¶È(¼´string¶ÔÏóÖÐ×Ö·ûµÄ¸öÊý)
+			std::string s7;
+			while (std::getline(std::cin, s7)) {
+				auto len = s7.size(); // sizeº¯Êý·µ»ØµÄÊÇÒ»¸östd::string::size_typeÀàÐÍµÄÖµ£¬
+				// ËüÊÇÒ»¸öÎÞ·ûºÅÀàÐÍµÄÖµ£¬¶øÇÒÄÜ×ã¹»´æ·ÅÏÂÈÎºÎstring¶ÔÏóµÄ´óÐ¡,
+				std::cout << "string size: " << len << std::endl;
+			}
 	}
-	break;
+		break;
 	case 5: {
-		// ï¿½È½ï¿½stringï¿½ï¿½ï¿½ó£º´ï¿½Ð¡Ð´ï¿½ï¿½Ð£ï¿½==ï¿½ï¿½!=ï¿½ï¿½<ï¿½ï¿½<=ï¿½ï¿½>ï¿½ï¿½>=
-		std::string s1{ "hello" }, s2{ "Hello" }, s3{"Hello world"};
-		if (s1 > s2)
-			std::cout << "s1 > s2" << std::endl;
-		else if (s1 == s2)
-			std::cout << "s1 == s2" << std::endl;
-		else if (s1 < s2)
-			std::cout << "s1 < s2" << std::endl;
+			// ±È½Ïstring¶ÔÏó£º´óÐ¡Ð´Ãô¸Ð£º==¡¢!=¡¢<¡¢<=¡¢>¡¢>=
+			std::string s1{ "hello" }, s2{ "Hello" }, s3{ "Hello world" };
+			if (s1 > s2)
+				std::cout << "s1 > s2" << std::endl;
+			else if (s1 == s2)
+				std::cout << "s1 == s2" << std::endl;
+			else if (s1 < s2)
+				std::cout << "s1 < s2" << std::endl;
 
-		if (s2 <= s3)
-			std::cout << "s2 <= s3" << std::endl;
+			if (s2 <= s3)
+				std::cout << "s2 <= s3" << std::endl;
 
 	}
-	break;
+		break;
 	case 6: {
-		// +: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó´®½ï¿½
-		std::string s1{ "hello, " }, s2{ "world" }, s3;
-		s3 = s1 + s2;
-		std::cout << "s3: " << s3 << std::endl;
+			// +: ÆäÄÚÈÝÊÇ°Ñ×ó²àµÄÔËËã¶ÔÏóÓëÓÒ²àµÄÔËËã¶ÔÏó´®½Ó
+			std::string s1{ "hello, " }, s2{ "world" }, s3;
+			s3 = s1 + s2;
+			std::cout << "s3: " << s3 << std::endl;
 
-		// ï¿½ï¿½ï¿½ï¿½stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Ê±ï¿½ï¿½
-		// ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(+)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½string,
-		// ï¿½ï¿½ï¿½Ü°ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÖ±ï¿½ï¿½ï¿½ï¿½ï¿½
-		// Note: ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½stringï¿½Ç²ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		std::string s4{ "csdn blog" }, s5{ "http://blog.csdn.net/" }, s6;
-		s6 = s4 + ": " + s5 + "fengbingchun";
-		std::cout << s6 << std::endl;
+			// µ±°Ñstring¶ÔÏóºÍ×Ö·û×ÖÃæÖµ¼°×Ö·û´®×ÖÃæÖµ»ìÔÚÒ»ÌõÓï¾äÖÐÊ¹ÓÃÊ±£¬
+			// ±ØÐëÈ·±£Ã¿¸ö¼Ó·¨ÔËËã·û(+)µÄÁ½²àµÄ¶ÔÏóÖÁÉÙÓÐÒ»¸öÊÇstring,
+			// ²»ÄÜ°Ñ×ÖÃæÖµÖ±½ÓÏà¼Ó
+			// Note: ×Ö·û´®×ÖÃæÖµÓëstringÊÇ²»Í¬µÄÀàÐÍ
+			std::string s4{ "csdn blog" }, s5{ "http://blog.csdn.net/" }, s6;
+			s6 = s4 + ": " + s5 + "fengbingchun";
+			std::cout << s6 << std::endl;
 	}
-	break;
+		break;
 	case 7: {
-		// substr: ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­Ê¼stringï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö»ï¿½È«ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½,
-		// ï¿½ï¿½ï¿½Ô´ï¿½ï¿½Ý¸ï¿½substrÒ»ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½Ä¿ï¿½Ê¼Î»ï¿½ÃºÍ¼ï¿½ï¿½ï¿½Öµ
-		std::string s{ "hello world" };
-		std::string s2 = s.substr(0, 5); // s2 = hello
-		std::string s3 = s.substr(6); // s3 = world
-		std::string s4 = s.substr(6, 11); // s3 = world
-		//std::string s5 = s.substr(12); // ï¿½×³ï¿½Ò»ï¿½ï¿½out_of_rangeï¿½ì³£
-		fprintf(stderr, "s2: %s; s3: %s; s4: %s\n", s2.c_str(), s3.c_str(), s4.c_str());
+			// substr: ·µ»ØÒ»¸östring£¬ËüÊÇÔ­Ê¼stringµÄÒ»²¿·Ö»òÈ«²¿µÄ¿½±´,
+			// ¿ÉÒÔ´«µÝ¸øsubstrÒ»¸ö¿ÉÑ¡µÄ¿ªÊ¼Î»ÖÃºÍ¼ÆÊýÖµ
+			std::string s{ "hello world" };
+			std::string s2 = s.substr(0, 5); // s2 = hello
+			std::string s3 = s.substr(6); // s3 = world
+			std::string s4 = s.substr(6, 11); // s3 = world
+			//std::string s5 = s.substr(12); // Å×³öÒ»¸öout_of_rangeÒì³£
+			fprintf(stderr, "s2: %s; s3: %s; s4: %s\n", s2.c_str(), s3.c_str(), s4.c_str());
 
-		// insertï¿½ï¿½eraseï¿½ï¿½assign
-		s.insert(s.size(), 5, '!'); // ï¿½ï¿½sÄ©Î²ï¿½ï¿½ï¿½ï¿½5ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½
-		fprintf(stdout, "s:  %s\n", s.c_str());
-		s.erase(s.size() - 5, 5); // ï¿½ï¿½sÉ¾ï¿½ï¿½ï¿½ï¿½ï¿½5ï¿½ï¿½ï¿½Ö·ï¿½
-		fprintf(stdout, "s: %s\n", s.c_str());
+			// insert¡¢erase¡¢assign
+			s.insert(s.size(), 5, '!'); // ÔÚsÄ©Î²²åÈë5¸ö¸ÐÌ¾ºÅ
+			fprintf(stdout, "s:  %s\n", s.c_str());
+			s.erase(s.size() - 5, 5); // ´ÓsÉ¾³ý×îºó5¸ö×Ö·û
+			fprintf(stdout, "s: %s\n", s.c_str());
 
-		const char* cp = "Stately, plump Buck";
-		s.assign(cp, 7); // s = "Stately"
-		fprintf(stdout, "s: %s\n", s.c_str());
-		s.insert(s.size(), cp + 7); // s = "Stately, plump Buck"
-		fprintf(stdout, "s: %s\n", s.c_str());
+			const char* cp = "Stately, plump Buck";
+			s.assign(cp, 7); // s = "Stately"
+			fprintf(stdout, "s: %s\n", s.c_str());
+			s.insert(s.size(), cp + 7); // s = "Stately, plump Buck"
+			fprintf(stdout, "s: %s\n", s.c_str());
 
-		std::string s5{ " some string " }, s6{ " some other string " };
-		s5.insert(0, s6); // ï¿½ï¿½s5ï¿½ï¿½Î»ï¿½ï¿½0Ö®Ç°ï¿½ï¿½ï¿½ï¿½s6ï¿½Ä¿ï¿½ï¿½ï¿½
-		fprintf(stdout, "s5: %s\n", s5.c_str());
-		s5.insert(0, s6, 0, s6.size()); // ï¿½ï¿½s5[0]Ö®Ç°ï¿½ï¿½ï¿½ï¿½s6ï¿½ï¿½s6[0]ï¿½ï¿½Ê¼ï¿½ï¿½s6.size()ï¿½ï¿½ï¿½Ö·ï¿½
-		fprintf(stdout, "s5: %s\n", s5.c_str());
+			std::string s5{ " some string " }, s6{ " some other string " };
+			s5.insert(0, s6); // ÔÚs5ÖÐÎ»ÖÃ0Ö®Ç°²åÈës6µÄ¿½±´
+			fprintf(stdout, "s5: %s\n", s5.c_str());
+			s5.insert(0, s6, 0, s6.size()); // ÔÚs5[0]Ö®Ç°²åÈës6ÖÐs6[0]¿ªÊ¼µÄs6.size()¸ö×Ö·û
+			fprintf(stdout, "s5: %s\n", s5.c_str());
 
-		// append: ï¿½ï¿½ï¿½ï¿½Ä©Î²ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ö¼ï¿½Ð´ï¿½ï¿½Ê½
-		std::string s7{ "C++ Primer" }, s8{ s7 };
-		s7.insert(s7.size(), " 5th Ed.");
-		s8.append(" 5th Ed.");
-		fprintf(stdout, "s7: %s; s8: %s\n", s7.c_str(), s8.c_str());
+			// append: ÊÇÔÚÄ©Î²½øÐÐ²åÈë²Ù×÷µÄÒ»ÖÖ¼òÐ´ÐÎÊ½
+			std::string s7{ "C++ Primer" }, s8{ s7 };
+			s7.insert(s7.size(), " 5th Ed.");
+			s8.append(" 5th Ed.");
+			fprintf(stdout, "s7: %s; s8: %s\n", s7.c_str(), s8.c_str());
 
-		// replace: ï¿½Çµï¿½ï¿½ï¿½eraseï¿½ï¿½insertï¿½ï¿½Ò»ï¿½Ö¼ï¿½Ð´ï¿½ï¿½Ê½
-		s7.replace(11, 3, "Fifth"); // s7.erase(11, 3); s7.insert(11, "Fifth");
-		fprintf(stdout, "s7: %s\n", s7.c_str());
+			// replace: ÊÇµ÷ÓÃeraseºÍinsertµÄÒ»ÖÖ¼òÐ´ÐÎÊ½
+			s7.replace(11, 3, "Fifth"); // s7.erase(11, 3); s7.insert(11, "Fifth");
+			fprintf(stdout, "s7: %s\n", s7.c_str());
 
-		/*
-			s.find(args)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½argsï¿½ï¿½Ò»ï¿½Î³ï¿½ï¿½Öµï¿½Î»ï¿½ï¿½
-			s.rfind(args)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½argsï¿½ï¿½ï¿½Ò»ï¿½Î³ï¿½ï¿½Öµï¿½Î»ï¿½ï¿½
-			s.find_first_of(args)ï¿½ï¿½ï¿½ï¿½sï¿½Ð²ï¿½ï¿½ï¿½argsï¿½ï¿½ï¿½Îºï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Ò»ï¿½Î³ï¿½ï¿½Öµï¿½Î»ï¿½ï¿½
-			s.find_last_of(args)ï¿½ï¿½ï¿½ï¿½sï¿½Ð²ï¿½ï¿½ï¿½argsï¿½ï¿½ï¿½Îºï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î³ï¿½ï¿½Öµï¿½Î»ï¿½ï¿½
-			s.find_first_not_of(args)ï¿½ï¿½ï¿½ï¿½sï¿½Ð²ï¿½ï¿½Òµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½argsï¿½Ðµï¿½ï¿½Ö·ï¿½
-			s.find_last_not_of(args)ï¿½ï¿½ï¿½ï¿½sï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½argsï¿½Ðµï¿½ï¿½Ö·ï¿½
-		*/
-		
-		// find: ï¿½ï¿½ï¿½Øµï¿½Ò»ï¿½ï¿½Æ¥ï¿½ï¿½Î»ï¿½Ãµï¿½ï¿½Â±ï¿½
-		std::string s9{ "AnnaBelle" };
-		auto pos1 = s9.find("Belle");
-		auto pos2 = s9.find("xxx");
-		fprintf(stdout, "pos1: %d, pos2: %d\n", pos1, pos2); // 4, -1
+			/*
+			s.find(args)£º²éÕÒsÖÐargsµÚÒ»´Î³öÏÖµÄÎ»ÖÃ
+			s.rfind(args)£º²éÕÒsÖÐargs×îºóÒ»´Î³öÏÖµÄÎ»ÖÃ
+			s.find_first_of(args)£ºÔÚsÖÐ²éÕÒargsÖÐÈÎºÎÒ»¸ö×Ö·ûµÚÒ»´Î³öÏÖµÄÎ»ÖÃ
+			s.find_last_of(args)£ºÔÚsÖÐ²éÕÒargsÖÐÈÎºÎÒ»¸ö×Ö·û×îºóÒ»´Î³öÏÖµÄÎ»ÖÃ
+			s.find_first_not_of(args)£ºÔÚsÖÐ²éÕÒµÚÒ»¸ö²»ÔÚargsÖÐµÄ×Ö·û
+			s.find_last_not_of(args)£ºÔÚsÖÐ²éÕÒ×îºóÒ»¸ö²»ÔÚargsÖÐµÄ×Ö·û
+			*/
 
-		// find_first_of: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½Æ¥ï¿½ï¿½ï¿½Î»ï¿½ï¿½
-		std::string numbers{ "0123456789" }, name{ "r2d2" };
-		auto pos3 = name.find_first_of(numbers);
-		fprintf(stdout, "pos3: %d\n", pos3); // 1, nameï¿½Ðµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Â±ï¿½
+			// find: ·µ»ØµÚÒ»¸öÆ¥ÅäÎ»ÖÃµÄÏÂ±ê
+			std::string s9{ "AnnaBelle" };
+			auto pos1 = s9.find("Belle");
+			auto pos2 = s9.find("xxx");
+			fprintf(stdout, "pos1: %d, pos2: %d\n", pos1, pos2); // 4, -1
 
-		// find_first_not_of: ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½Ö·ï¿½
-		std::string s10{ "03714p3" };
-		auto pos4 = s10.find_first_not_of(numbers);
-		fprintf(stdout, "pos4: %d\n", pos4); // 5
+			// find_first_of: ²éÕÒÓë¸ø¶¨×Ö·û´®ÖÐÈÎºÎÒ»¸ö×Ö·ûÆ¥ÅäµÄÎ»ÖÃ
+			std::string numbers{ "0123456789" }, name{ "r2d2" };
+			auto pos3 = name.find_first_of(numbers);
+			fprintf(stdout, "pos3: %d\n", pos3); // 1, nameÖÐµÚÒ»¸öÊý×ÖµÄÏÂ±ê
 
-		// compare: ï¿½ï¿½ï¿½ï¿½0(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½(Ð¡ï¿½ï¿½)
-		auto ret = numbers.compare(name);
-		fprintf(stdout, "compare result: %d\n", ret);// -1
+			// find_first_not_of: µÚÒ»¸ö²»ÔÚ²ÎÊýÖÐµÄ×Ö·û
+			std::string s10{ "03714p3" };
+			auto pos4 = s10.find_first_not_of(numbers);
+			fprintf(stdout, "pos4: %d\n", pos4); // 5
 
-		// ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½stringÖ®ï¿½ï¿½ï¿½×ªï¿½ï¿½
-		int i{ 43 };
-		std::string s11 = std::to_string(i); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½i×ªï¿½ï¿½Îªï¿½Ö·ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ê½
-		double d = std::stod(s11); // ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½s11×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		fprintf(stdout, "s11: %s, d: %f\n", s11.c_str(), d);
+			// compare: ·µ»Ø0(µÈÓÚ)¡¢ÕýÊý(´óÓÚ)»ò¸ºÊý(Ð¡ÓÚ)
+			auto ret = numbers.compare(name);
+			fprintf(stdout, "compare result: %d\n", ret);// -1
 
-		/*
-			to_string(val):Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Øºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµvalï¿½ï¿½stringï¿½ï¿½Ê¾ï¿½ï¿½valï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-			stoi(s,p,b)/stol(s,p,b)/stoul(s,p,b)/stoll(s,p,b)/stoull(s,p,b)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½Ê¼ï¿½Ó´ï¿½(ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½
-				ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·Ö±ï¿½ï¿½ï¿½intï¿½ï¿½longï¿½ï¿½unsigned longï¿½ï¿½long longï¿½ï¿½unsigned long longï¿½ï¿½bï¿½ï¿½Ê¾×ªï¿½ï¿½ï¿½ï¿½ï¿½ÃµÄ»ï¿½ï¿½ï¿½ï¿½ï¿½
-				Ä¬ï¿½ï¿½ÖµÎª10.pï¿½ï¿½size_tÖ¸ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½Ðµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ö·ï¿½ï¿½ï¿½ï¿½Â±ê£¬pÄ¬ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â±ê¡£
-			stof(s,p)/stod(s,p)/stold(s,p)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½Ê¼ï¿½Ó´ï¿½(ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Í·Ö±ï¿½ï¿½ï¿½floatï¿½ï¿½doubleï¿½ï¿½
-				long double.ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½
-		*/
+			// ÊýÖµÊý¾ÝÓëstringÖ®¼äµÄ×ª»»
+			int i{ 43 };
+			std::string s11 = std::to_string(i); // ½«ÕûÊýi×ª»»Îª×Ö·û±íÊ¾ÐÎÊ½
+			double d = std::stod(s11); // ½«×Ö·û´®s11×ª»»Îª¸¡µãÊý
+			fprintf(stdout, "s11: %s, d: %f\n", s11.c_str(), d);
+
+			/*
+			to_string(val):Ò»×éÖØÔØº¯Êý£¬·µ»ØÊýÖµvalµÄstring±íÊ¾¡£val¿ÉÒÔÊÇÈÎºÎËãÊõÀàÐÍ
+			stoi(s,p,b)/stol(s,p,b)/stoul(s,p,b)/stoll(s,p,b)/stoull(s,p,b)£º·µ»ØsµÄÆðÊ¼×Ó´®(±íÊ¾ÕûÊýÄÚÈÝ)µÄÊýÖµ£¬
+			·µ»ØÀàÐÍ·Ö±ðÊÇint¡¢long¡¢unsigned long¡¢long long¡¢unsigned long long¡£b±íÊ¾×ª»»ËùÓÃµÄ»ùÊý£¬
+			Ä¬ÈÏÖµÎª10.pÊÇsize_tÖ¸Õë£¬ÓÃÀ´±£´æsÖÐµÚÒ»¸ö·ÇÊýÖµ×Ö·ûµÄÏÂ±ê£¬pÄ¬ÈÏÊÇ0£¬¼´£¬º¯Êý²»±£´æÏÂ±ê¡£
+			stof(s,p)/stod(s,p)/stold(s,p)£º·µ»ØsµÄÆðÊ¼×Ó´®(±íÊ¾¸¡µãÊýÄÚÈÝ)µÄÊýÖµ£¬·µ»ØÖµÀàÐÍ·Ö±ðÊÇfloat¡¢double»ò
+			long double.²ÎÊýpµÄ×÷ÓÃÓëÕûÊý×ª»»º¯ÊýÖÐÒ»Ñù¡£
+			*/
 	}
-	break;
+		break;
 	default:
 		break;
 	}
-	
+
 	return 0;
 }
 
 int test_string_cctype()
 {
 	/* include <cctype>
-		isalnum(c)ï¿½ï¿½ï¿½ï¿½cï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Îªï¿½ï¿½
-		isalpha(c)ï¿½ï¿½ï¿½ï¿½cï¿½ï¿½ï¿½ï¿½Ä¸Ê±Îªï¿½ï¿½
-		isblank(c)ï¿½ï¿½ï¿½ï¿½cï¿½Ç¿Õ°ï¿½ï¿½Ö·ï¿½Ê±Îªï¿½ï¿½(C++11)
-		iscntrl(c)ï¿½ï¿½ï¿½ï¿½cÊ±ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½Ê±Îªï¿½ï¿½
-		isdigit(c)ï¿½ï¿½ï¿½ï¿½cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Îªï¿½ï¿½
-		isgraph(c)ï¿½ï¿½ï¿½ï¿½cï¿½ï¿½ï¿½Ç¿Õ¸ñµ«¿É´ï¿½Ó¡Ê±Îªï¿½ï¿½
-		islower(c)ï¿½ï¿½ï¿½ï¿½cï¿½ï¿½Ð¡Ð´ï¿½ï¿½Ä¸Ê±Îªï¿½ï¿½
-		isprint(c)ï¿½ï¿½ï¿½ï¿½cï¿½Ç¿É´ï¿½Ó¡ï¿½Ö·ï¿½Ê±Îªï¿½ï¿½(ï¿½ï¿½cï¿½Ç¿Õ¸ï¿½ï¿½cï¿½ï¿½ï¿½Ð¿ï¿½ï¿½ï¿½ï¿½ï¿½Ê½)
-		ispunct(c)ï¿½ï¿½ï¿½ï¿½cï¿½Ç±ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Îªï¿½ï¿½(ï¿½ï¿½cï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½É´ï¿½Ó¡ï¿½Õ°ï¿½ï¿½Ðµï¿½Ò»ï¿½ï¿½)
-		isspace(c)ï¿½ï¿½ï¿½ï¿½cï¿½Ç¿Õ°ï¿½Ê±Îªï¿½ï¿½(ï¿½ï¿½cï¿½Ç¿Õ¸ñ¡¢ºï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½ï¿½Ø³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½Ðµï¿½Ò»ï¿½ï¿½)
-		isupper(c)ï¿½ï¿½ï¿½ï¿½cï¿½Ç´ï¿½Ð´ï¿½ï¿½Ä¸Ê±Îªï¿½ï¿½
-		isxdigit(c)ï¿½ï¿½ï¿½ï¿½cï¿½ï¿½Ê®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Îªï¿½ï¿½
-		tolower(c)ï¿½ï¿½ï¿½ï¿½ï¿½cï¿½Ç´ï¿½Ð´ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ð¡Ð´ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½c
-		toupper(c)ï¿½ï¿½ï¿½ï¿½ï¿½cï¿½ï¿½Ð¡Ð´ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ä´ï¿½Ð´ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½c
+	isalnum(c)£ºµ±cÊÇ×ÖÄ¸»òÊý×ÖÊ±ÎªÕæ
+	isalpha(c)£ºµ±cÊÇ×ÖÄ¸Ê±ÎªÕæ
+	isblank(c)£ºµ±cÊÇ¿Õ°××Ö·ûÊ±ÎªÕæ(C++11)
+	iscntrl(c)£ºµ±cÊ±¿ØÖÆ×Ö·ûÊ±ÎªÕæ
+	isdigit(c)£ºµ±cÊÇÊý×ÖÊ±ÎªÕæ
+	isgraph(c)£ºµ±c²»ÊÇ¿Õ¸ñµ«¿É´òÓ¡Ê±ÎªÕæ
+	islower(c)£ºµ±cÊÇÐ¡Ð´×ÖÄ¸Ê±ÎªÕæ
+	isprint(c)£ºµ±cÊÇ¿É´òÓ¡×Ö·ûÊ±ÎªÕæ(¼´cÊÇ¿Õ¸ñ»òc¾ßÓÐ¿ÉÊÓÐÎÊ½)
+	ispunct(c)£ºµ±cÊÇ±êµã·ûºÅÊ±ÎªÕæ(¼´c²»ÊÇ¿ØÖÆ×Ö·û¡¢Êý×Ö¡¢×ÖÄ¸¡¢¿É´òÓ¡¿Õ°×ÖÐµÄÒ»ÖÖ)
+	isspace(c)£ºµ±cÊÇ¿Õ°×Ê±ÎªÕæ(¼´cÊÇ¿Õ¸ñ¡¢ºáÏòÖÆ±í·û¡¢×ÝÏòÖÆ±í·û¡¢»Ø³µ·û¡¢»»ÐÐ·û¡¢½øÖ½·ûÖÐµÄÒ»ÖÖ)
+	isupper(c)£ºµ±cÊÇ´óÐ´×ÖÄ¸Ê±ÎªÕæ
+	isxdigit(c)£ºµ±cÊÇÊ®Áù½øÖÆÊý×ÖÊ±ÎªÕæ
+	tolower(c)£ºÈç¹ûcÊÇ´óÐ´×ÖÄ¸£¬Êä³ö¶ÔÓ¦µÄÐ¡Ð´×ÖÄ¸£»·ñÔòÔ­ÑùÊä³öc
+	toupper(c)£ºÈç¹ûcÊÇÐ¡Ð´×ÖÄ¸£¬Êä³ö¶ÔÓ¦µÄ´óÐ´×ÖÄ¸£»·ñÔòÔ­ÑùÊä³öc
 	*/
 
 	std::string s1{ "Hello World!!!" };
@@ -247,21 +247,21 @@ int test_string_cctype()
 	}
 	std::cout << punct_cnt << " punctutation characters in " << s1 << std::endl;
 
-	for (auto &c : s1) { // ï¿½ï¿½ï¿½ï¿½s1ï¿½Ðµï¿½Ã¿ï¿½ï¿½ï¿½Ö·ï¿½(Note:cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
-		c = toupper(c); // cï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½Ë¸ï¿½Öµï¿½ï¿½ä½«ï¿½Ä±ï¿½sï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Öµ
+	for (auto &c : s1) { // ¶ÔÓÚs1ÖÐµÄÃ¿¸ö×Ö·û(Note:cÊÇÒýÓÃ)
+		c = toupper(c); // cÊÇÒ»¸öÒýÓÃ£¬Òò´Ë¸³ÖµÓï¾ä½«¸Ä±äsÖÐ×Ö·ûµÄÖµ
 	}
 	std::cout << "toupper s1: " << s1 << std::endl;
 
-	// stringï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½0ï¿½ï¿½Ð¡ï¿½ï¿½s.size()
-	// Noteï¿½ï¿½C++ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½Â±ï¿½ï¿½Ç·ï¿½Ï·ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§ï¿½ï¿½ï¿½Â±ê£¬ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤Öªï¿½Ä½ï¿½ï¿½
-	std::string s2{"some string"};
+	// string¶ÔÏóµÄÏÂ±ê±ØÐë´óÓÚµÈÓÚ0¶øÐ¡ÓÚs.size()
+	// Note£ºC++±ê×¼²¢²»ÒªÇó±ê×¼¿â¼ì²âÏÂ±êÊÇ·ñºÏ·¨¡£Ò»µ©Ê¹ÓÃÁËÒ»¸ö³¬³ö·¶Î§µÄÏÂ±ê£¬¾Í»á²úÉú²»¿ÉÔ¤ÖªµÄ½á¹û
+	std::string s2{ "some string" };
 	for (decltype(s2.size()) index = 0; index != s2.size() && !isspace(s2[index]); ++index) {
 		s2[index] = toupper(s2[index]);
 	}
 	std::cout << "s2: " << s2 << std::endl;
 
-	// Ê¹ï¿½ï¿½ï¿½Â±ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	const std::string s3{"0123456789ABCDEF"};
+	// Ê¹ÓÃÏÂ±êÖ´ÐÐËæ»ú·ÃÎÊ
+	const std::string s3{ "0123456789ABCDEF" };
 	std::cout << "Enter a series of numbers between 0 and 15"
 		<< "separated by spaces. Hit ENTER when finished: " << std::endl;
 	std::string result;

@@ -12,23 +12,23 @@ namespace allocator_ {
 // reference: C++ Primer(Fifth Edition) 12.2.2
 int test_allocator_1()
 {
-	std::allocator<std::string> alloc; // ���Է���string��allocator����
+	std::allocator<std::string> alloc; // 可以分配string的allocator对象
 	int n{ 5 };
-	auto const p = alloc.allocate(n); // ����n��δ��ʼ����string
+	auto const p = alloc.allocate(n); // 分配n个未初始化的string
 
-	auto q = p; // qָ��������Ԫ��֮���λ��
-	alloc.construct(q++); // *qΪ���ַ���
-	alloc.construct(q++, 10, 'c'); // *qΪcccccccccc
-	alloc.construct(q++, "hi"); // *qΪhi
+	auto q = p; // q指向最后构造的元素之后的位置
+	alloc.construct(q++); // *q为空字符串
+	alloc.construct(q++, 10, 'c'); // *q为cccccccccc
+	alloc.construct(q++, "hi"); // *q为hi
 
-	std::cout << *p << std::endl; // ��ȷ��ʹ��string����������
-	//std::cout << *q << std::endl; // ���ѣ�qָ��δ������ڴ�
+	std::cout << *p << std::endl; // 正确：使用string的输出运算符
+	//std::cout << *q << std::endl; // 灾难：q指向未构造的内存
 	std::cout << p[0] << std::endl;
 	std::cout << p[1] << std::endl;
 	std::cout << p[2] << std::endl;
 
 	while (q != p) {
-		alloc.destroy(--q); // �ͷ��������������string
+		alloc.destroy(--q); // 释放我们真正构造的string
 	}
 
 	alloc.deallocate(p, n);
@@ -40,18 +40,18 @@ int test_allocator_2()
 {
 	std::vector<int> vi{ 1, 2, 3, 4, 5 };
 
-	// �����vi��Ԫ����ռ�ÿռ��һ���Ķ�̬�ڴ�
+	// 分配比vi中元素所占用空间大一倍的动态内存
 	std::allocator<int> alloc;
 	auto p = alloc.allocate(vi.size() * 2);
-	// ͨ������vi�е�Ԫ���������p��ʼ��Ԫ��
-	/* ���ƿ����㷨��uninitialized_copy��������������������ǰ������ʾ�������У���������ʾ
-	��ЩԪ�ؽ�Ҫ��������Ŀ�Ŀռ䡣���ݸ�uninitialized_copy��Ŀ��λ�õ���������ָ��δ�����
-	�ڴ档��copy��ͬ��uninitialized_copy�ڸ���Ŀ��λ�ù���Ԫ�ء�
-	����copy��uninitialized_copy����(�������)Ŀ��λ�õ���������ˣ�һ��uninitialized_copy����
-	�᷵��һ��ָ�룬ָ�����һ�������Ԫ��֮���λ�á�
+	// 通过拷贝vi中的元素来构造从p开始的元素
+	/* 类似拷贝算法，uninitialized_copy接受三个迭代器参数。前两个表示输入序列，第三个表示
+	这些元素将要拷贝到的目的空间。传递给uninitialized_copy的目的位置迭代器必须指向未构造的
+	内存。与copy不同，uninitialized_copy在给定目的位置构造元素。
+	类似copy，uninitialized_copy返回(递增后的)目的位置迭代器。因此，一次uninitialized_copy调用
+	会返回一个指针，指向最后一个构造的元素之后的位置。
 	*/
 	auto q = std::uninitialized_copy(vi.begin(), vi.end(), p);
-	// ��ʣ��Ԫ�س�ʼ��Ϊ42
+	// 将剩余元素初始化为42
 	std::uninitialized_fill_n(q, vi.size(), 42);
 
 	return 0;

@@ -8,10 +8,10 @@ int test_const_pointer_1()
 { // reference: https://stackoverflow.com/questions/3247285/const-int-int-const
 	int a			= 5;
 	int *p1			= &a; //non-const pointer, non-const data
-	const int *p2		= &a; //non-const pointer, const data, value pointed to by p2 can°Øt change
+	const int *p2		= &a; //non-const pointer, const data, value pointed to by p2 can‚Äôt change
 	int * const p3		= &a; //const pointer, non-const data, p3 cannot point to a different location
 	const int * const p4	= &a; //const pointer, const data, both the pointer and the value pointed to cannot change
-	int const * const p5 = &a; // ”Î const int * const p5µ»º€
+	int const * const p5 = &a; // ‰∏é const int * const p5Á≠â‰ª∑
 }
 
 { // reference: https://stackoverflow.com/questions/162480/const-int-vs-int-const-as-function-parameter-in-c-and-c
@@ -23,7 +23,7 @@ int test_const_pointer_1()
 
 	char a = 'a';
 	const char *s = &a; // read as "s is a pointer to a char that is constant"
-	char const *y = &a; // ”Î const char *y µ»º€
+	char const *y = &a; // ‰∏é const char *y Á≠â‰ª∑
 	char c;
 	char *const t = &c; // read as "t is a constant pointer to a char"
 

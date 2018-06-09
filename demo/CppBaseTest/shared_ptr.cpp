@@ -346,7 +346,7 @@ int test_shared_ptr_reset_delete()
 	std::for_each(p1, p1 + 10, [](int& v){v = 5; });
 
 	std::shared_ptr<int> p2;
-	// p2ºÍp1Ö¸ÏòÍ¬Ò»¸öÄÚ´æ¿Õ¼ä
+	// p2å’Œp1æŒ‡å‘åŒä¸€ä¸ªå†…å­˜ç©ºé—´
 	p2.reset(p1, [](int* p) {delete[] p; });
 
 	for (int i = 0; i < 10; ++i) {
@@ -354,18 +354,18 @@ int test_shared_ptr_reset_delete()
 		fprintf(stdout, "p2:  %d  \n", p2.get()[i]);
 	}
 }
-	// ÔËĞĞµ½´óÀ¨ºÅÍâ£¬´ËÊ±p1µÄ¿Õ¼äÒÑ¾­±»ÊÍ·Å
+	// è¿è¡Œåˆ°å¤§æ‹¬å·å¤–ï¼Œæ­¤æ—¶p1çš„ç©ºé—´å·²ç»è¢«é‡Šæ”¾
 	for (int i = 0; i < 10; ++i) {
 		fprintf(stdout, "p1:  %d  \n", p1[i]);
 	}
-	//delete[] p1; // p1ÒÑÊÍ·Å£¬²»ÄÜÔÙdelete
+	//delete[] p1; // p1å·²é‡Šæ”¾ï¼Œä¸èƒ½å†delete
 
 	int* pa = new int[10];
 {
 	std::for_each(pa, pa + 10, [](int& v){v = 8; });
 
 	std::shared_ptr<int> pb;
-	// pbºÍpaÖ¸ÏòÍ¬Ò»¸öÄÚ´æ¿Õ¼ä
+	// pbå’ŒpaæŒ‡å‘åŒä¸€ä¸ªå†…å­˜ç©ºé—´
 	pb.reset(pa, [](int*) { });
 
 	for (int i = 0; i < 10; ++i) {
@@ -373,11 +373,11 @@ int test_shared_ptr_reset_delete()
 		fprintf(stdout, "pb:  %d  \n", pb.get()[i]);
 	}
 }
-	// ÔËĞĞµ½´óÀ¨ºÅÍâ£¬´ËÊ±paµÄ¿Õ¼äÃ»ÓĞ±»ÊÍ·Å
+	// è¿è¡Œåˆ°å¤§æ‹¬å·å¤–ï¼Œæ­¤æ—¶paçš„ç©ºé—´æ²¡æœ‰è¢«é‡Šæ”¾
 	for (int i = 0; i < 10; ++i) {
 		fprintf(stdout, "pa:  %d  \n", pa[i]);
 	}
-	delete[] pa; // paÃ»ÓĞ±»ÊÍ·Å£¬ĞèÒªdelete
+	delete[] pa; // paæ²¡æœ‰è¢«é‡Šæ”¾ï¼Œéœ€è¦delete
 
 	return 0;
 }

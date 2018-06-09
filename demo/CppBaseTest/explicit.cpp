@@ -4,11 +4,11 @@
 
 static void test1()
 {
-	String s1 = 'a'; // ´íÎó£º²»ÄÜ×öÒşÊ½char->String×ª»»
-	String s2(10); // ¿ÉÒÔ£ºµ÷ÓÃexplicit String(int n);
-	String s3 = String(10); // ¿ÉÒÔ£ºµ÷ÓÃexplicit String(int n);ÔÙµ÷ÓÃÄ¬ÈÏµÄ¸´ÖÆ¹¹Ôìº¯Êı
-	String s4 = "Brian"; // ¿ÉÒÔ£ºÒşÊ½×ª»»µ÷ÓÃString(const char *p);ÔÙµ÷ÓÃÄ¬ÈÏµÄ¸´ÖÆ¹¹Ôìº¯Êı
-	String s5("Fawlty"); // ¿ÉÒÔ£ºÕı³£µ÷ÓÃString(const char *p);
+	String s1 = 'a'; // é”™è¯¯ï¼šä¸èƒ½åšéšå¼char->Stringè½¬æ¢
+	String s2(10); // å¯ä»¥ï¼šè°ƒç”¨explicit String(int n);
+	String s3 = String(10); // å¯ä»¥ï¼šè°ƒç”¨explicit String(int n);å†è°ƒç”¨é»˜è®¤çš„å¤åˆ¶æ„é€ å‡½æ•°
+	String s4 = "Brian"; // å¯ä»¥ï¼šéšå¼è½¬æ¢è°ƒç”¨String(const char *p);å†è°ƒç”¨é»˜è®¤çš„å¤åˆ¶æ„é€ å‡½æ•°
+	String s5("Fawlty"); // å¯ä»¥ï¼šæ­£å¸¸è°ƒç”¨String(const char *p);
 }
 
 static void f(String)
@@ -18,9 +18,9 @@ static void f(String)
 
 static String g()
 {
-	f(10); // ´íÎó£º²»ÄÜ×öÒşÊ½int->String×ª»»
-	f("Arthur"); // ¿ÉÒÔ£ºÒşÊ½×ª»»£¬µÈ¼ÛÓÚf(String("Arthur"));
-	return 10; // Í¬ÉÏ
+	f(10); // é”™è¯¯ï¼šä¸èƒ½åšéšå¼int->Stringè½¬æ¢
+	f("Arthur"); // å¯ä»¥ï¼šéšå¼è½¬æ¢ï¼Œç­‰ä»·äºf(String("Arthur"));
+	return 10; // åŒä¸Š
 }
 
 void test_explicit()

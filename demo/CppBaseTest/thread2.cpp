@@ -138,7 +138,7 @@ int test_thread_joinable()
 {
 	// thread::joinable: Returns whether the thread object is joinable.
 	// A thread object is joinable if it represents a thread of execution.
-	std::thread foo; // ȱʡ���캯�����̲߳���ִ��
+	std::thread foo; // 缺省构造函数，线程不可执行
 	std::thread bar(mythread);
 
 	std::cout << "Joinable after construction:\n" << std::boolalpha;
@@ -315,7 +315,7 @@ private:
 	{
 		bool full = m_queue.size() >= m_maxSize;
 		if (full)
-			std::cout << "full, waiting��thread id: " << std::this_thread::get_id() << std::endl;
+			std::cout << "full, waiting, thread id: " << std::this_thread::get_id() << std::endl;
 		return !full;
 	}
 
@@ -323,7 +323,7 @@ private:
 	{
 		bool empty = m_queue.empty();
 		if (empty)
-			std::cout << "empty,waiting��thread id: " << std::this_thread::get_id() << std::endl;
+			std::cout << "empty,waiting, thread id: " << std::this_thread::get_id() << std::endl;
 		return !empty;
 	}
 
@@ -339,12 +339,12 @@ private:
 	}
 
 private:
-	std::list<T> m_queue; //������
-	std::mutex m_mutex; //�����������������������ʹ��
-	std::condition_variable m_notEmpty;//��Ϊ�յ���������
-	std::condition_variable m_notFull; //û��������������
-	int m_maxSize; //ͬ����������size
-	bool m_needStop; //ֹͣ�ı�־
+	std::list<T> m_queue; //缓冲区
+	std::mutex m_mutex; //互斥量和条件变量结合起来使用
+	std::condition_variable m_notEmpty;//不为空的条件变量
+	std::condition_variable m_notFull; //没有满的条件变量
+	int m_maxSize; //同步队列最大的size
+	bool m_needStop; //停止的标志
 };
 
 const int MaxTaskCount = 100;
@@ -358,13 +358,13 @@ public:
 
 	~ThreadPool(void)
 	{
-		//���û��ֹͣʱ������ֹͣ�̳߳�
+		//如果没有停止时则主动停止线程池
 		Stop();
 	}
 
 	void Stop()
 	{
-		std::call_once(m_flag, [this] {StopThreadGroup(); }); //��֤���߳������ֻ����һ��StopThreadGroup
+		std::call_once(m_flag, [this] {StopThreadGroup(); }); //保证多线程情况下只调用一次StopThreadGroup
 	}
 
 	void AddTask(Task&&task)
@@ -381,7 +381,7 @@ private:
 	void Start(int numThreads)
 	{
 		m_running = true;
-		//�����߳���
+		//创建线程组
 		for (int i = 0; i <numThreads; ++i) {
 			m_threadgroup.push_back(std::make_shared<std::thread>(&ThreadPool::RunInThread, this));
 		}
@@ -390,7 +390,7 @@ private:
 	void RunInThread()
 	{
 		while (m_running) {
-			//ȡ����ֱ�ִ��
+			//取任务分别执行
 			std::list<Task> list;
 			m_queue.Take(list);
 
@@ -405,19 +405,19 @@ private:
 
 	void StopThreadGroup()
 	{
-		m_queue.Stop(); //��ͬ�������е��߳�ֹͣ
-		m_running = false; //��Ϊfalse�����ڲ��߳�����ѭ�����˳�
+		m_queue.Stop(); //让同步队列中的线程停止
+		m_running = false; //置为false，让内部线程跳出循环并退出
 
-		for (auto thread : m_threadgroup) { //�ȴ��߳̽���
+		for (auto thread : m_threadgroup) { //等待线程结束
 			if (thread)
 				thread->join();
 		}
 		m_threadgroup.clear();
 	}
 
-	std::list<std::shared_ptr<std::thread>> m_threadgroup; //����������߳���
-	SyncQueue<Task> m_queue; //ͬ������     
-	std::atomic_bool m_running; //�Ƿ�ֹͣ�ı�־
+	std::list<std::shared_ptr<std::thread>> m_threadgroup; //处理任务的线程组
+	SyncQueue<Task> m_queue; //同步队列
+	std::atomic_bool m_running; //是否停止的标志
 	std::once_flag m_flag;
 };
 
