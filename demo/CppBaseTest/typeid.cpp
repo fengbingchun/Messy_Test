@@ -7,10 +7,14 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/51866559
 
+namespace {
+
 int func(int a)
 {
 	return 0;
 }
+
+} // namespace
 
 typedef int(*func_ptr)(int);
 class Base { public: Base(){} };
@@ -36,7 +40,7 @@ int test_typeid1()
 	Base* pBase_ = new Base;
 	Base& Base__ = Base_;
 
-	// ¶ÔÓÚ·µ»Ø×Ö·û´®µÄ¾ßÌåÄÚÈİ£¬Óë±àÒëÆ÷ÓĞ¹Ø
+	// ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¹ï¿½
 	std::cout << "char_ type: " << typeid(char_).name() << std::endl; // char_ type: char
 	assert(typeid(char).name() == typeid(char_).name());
 	

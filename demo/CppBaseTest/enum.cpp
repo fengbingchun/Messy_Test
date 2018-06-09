@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <stdexcept>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/51778977
 

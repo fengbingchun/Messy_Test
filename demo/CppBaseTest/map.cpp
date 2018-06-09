@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <cstring>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/52074286
 
@@ -12,7 +13,7 @@ int test_map1()
 	struct ltstr {
 		bool operator()(const char* s1, const char* s2) const
 		{
-			return strcmp(s1, s2) > 0;
+			return std::strcmp(s1, s2) > 0;
 		}
 	};
 

@@ -1,9 +1,12 @@
 #include "sstream.hpp"
+#include <string>
 #include <iostream>
 #include <sstream> // ostringstream/istringstream/stringstream
-#include <string>
+#include <utility>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/69788873
+
+#ifdef _MSC_VER
 
 // reference: http://www.cplusplus.com/reference/sstream/ostringstream/
 int test_ostringstream()
@@ -30,7 +33,9 @@ int test_ostringstream()
 	std::ostringstream bar;
 	foo << 100;
 	bar << 200;
+#ifdef _MSC_VER
 	foo.swap(bar);
+#endif
 	std::cout << "foo: " << foo.str() << '\n';
 	std::cout << "bar: " << bar.str() << '\n';
 
@@ -56,7 +61,7 @@ int test_ostringstream()
 	std::cout << bar3.str() << '\n'; // Test string101
 
 	std::string s{ "abcde" };
-	std::ostringstream foo4(s); // ´´½¨´æ´¢sµÄ¸±±¾µÄostringstream¶ÔÏó
+	std::ostringstream foo4(s); // ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢sï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ostringstreamï¿½ï¿½ï¿½ï¿½
 	std::cout << "foo4: " << foo4.str() << std::endl;
 
 	// reference: https://latedev.wordpress.com/2011/11/16/c-stringstreams/
@@ -107,7 +112,9 @@ int test_istringstream()
 	// using stringbuf directly:
 	pbuf->str("Example string");
 
+#ifdef _MSC_VER
 	int size = pbuf->in_avail();
+#endif
 	while (pbuf->in_avail()>0)
 		std::cout << static_cast<char>(pbuf->sbumpc());
 	std::cout << std::endl;
@@ -133,8 +140,9 @@ int test_istringstream()
 	// 4. swap: c++11, Exchanges all internal data between x and *this.
 	std::istringstream foo("100");
 	std::istringstream bar("200");
-
+#ifdef _MSC_VER
 	foo.swap(bar);
+#endif
 
 	int val;
 	foo >> val; std::cout << "foo: " << val << '\n'; // 200
@@ -192,8 +200,9 @@ int test_stringstream()
 
 	foo4 << 100;
 	bar4 << 200;
-
+#ifdef _MSC_VER
 	foo4.swap(bar4);
+#endif
 	int val;
 	foo4 >> val; std::cout << "foo4: " << val << '\n'; // 200
 	bar4 >> val; std::cout << "bar4: " << val << '\n'; // 100
@@ -212,3 +221,5 @@ int test_stringstream()
 
 	return 0;
 }
+
+#endif

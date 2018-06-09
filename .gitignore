@@ -5,5 +5,4 @@
 *.suo
 *.opensdf
 /testdata/
-
-
+/prj/linux_cmake_CppBaseTest/build/

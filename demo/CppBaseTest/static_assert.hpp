@@ -11,13 +11,15 @@
 
 // reference: https://msdn.microsoft.com/zh-cn/library/dd293588.aspx
 
-// static_assert ÉùÃ÷¾ßÓĞÀà·¶Î§¡£ static_assert ÑéÖ¤Ä£°å²ÎÊıÊÇ·ñÎª´¿¾ÉÊı¾İ (POD) ÀàĞÍ¡£
-// ±àÒëÆ÷½«ÔÚÉùÃ÷ static_assert ÉùÃ÷Ê±¼ì²é¸ÃÉùÃ÷£¬µ«²»¼ÆËã constant-expression ²ÎÊı£¬Ö±µ½ÔÚ main() ÖĞÊµÀı»¯ basic_string ÀàÄ£°å
+// static_assert ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à·¶Î§ï¿½ï¿½ static_assert ï¿½ï¿½Ö¤Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (POD) ï¿½ï¿½ï¿½Í¡ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ static_assert ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ constant-expression ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ main() ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ basic_string ï¿½ï¿½Ä£ï¿½ï¿½
+#ifdef _MSC_VER
 template <class CharT, class Traits = std::char_traits<CharT> >
 class basic_string {
 	static_assert(std::tr1::is_pod<CharT>::value, "Template argument CharT must be a POD type in class template basic_string");
 	// ...
 };
+#endif
 
 struct NonPOD {
 	NonPOD(const NonPOD &) {}

@@ -4,14 +4,16 @@
 
 void test_static_assert1()
 {
-	// static_assert ÉùÃ÷¾ßÓĞÃüÃû¿Õ¼ä·¶Î§¡£ÓÉÓÚ±àÒëÆ÷ÖªµÀÀàĞÍ void * µÄ´óĞ¡£¬Òò´Ë¿ÉÒÔÁ¢¼´¼ÆËã±í´ïÊ½
-	//¸Ãstatic_assertÓÃÀ´È·±£±àÒë½öÔÚ32Î»µÄÆ½Ì¨ÉÏ½øĞĞ£¬²»Ö§³Ö64Î»µÄÆ½Ì¨
+	// static_assert ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ä·¶Î§ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ void * ï¿½Ä´ï¿½Ğ¡ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
+	//ï¿½ï¿½static_assertï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½32Î»ï¿½ï¿½Æ½Ì¨ï¿½Ï½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½Ö§ï¿½ï¿½64Î»ï¿½ï¿½Æ½Ì¨
 	//static_assert(sizeof(void *) == 4, "64-bit code generation is not supported."); // sizeof(void *) = 8 ?
 }
 
 void test_static_assert2()
 {
+#ifdef _MSC_VER
 	basic_string<char> bs;
+#endif
 }
 
 void test_static_assert3()

@@ -1,4 +1,5 @@
 #include "this_pointer.hpp"
+#include <string.h>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/51228177
 
@@ -9,7 +10,11 @@ Buf::Buf(char* szBuffer, size_t sizeOfBuffer)
 	buffer = new char[sizeOfBuffer];
 	if (buffer)
 	{
+#ifdef _MSC_VER
 		strcpy_s(buffer, sizeOfBuffer, szBuffer);
+#else
+		strcpy(buffer, szBuffer);
+#endif
 		sizeOfBuffer = sizeOfBuffer;
 	}
 }
@@ -22,7 +27,11 @@ Buf& Buf::operator=(const Buf &otherbuf)
 
 		sizeOfBuffer = strlen(otherbuf.buffer) + 1;
 		buffer = new char[sizeOfBuffer];
+#ifdef _MSC_VER
 		strcpy_s(buffer, sizeOfBuffer, otherbuf.buffer);
+#else
+		strcpy(buffer, otherbuf.buffer);
+#endif
 	}
 	return *this;
 }

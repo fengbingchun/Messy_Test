@@ -3,6 +3,8 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/44133701
 
+#ifdef _MSC_VER
+
 //test1
 #define WARN_IF(EXP) \
 	if (EXP) \
@@ -13,25 +15,25 @@
 
 //test3
 #define _STRI(s) #s
-#define STRI(s) _STRI(s) //×ª»»ºê
+#define STRI(s) _STRI(s) //×ªï¿½ï¿½ï¿½ï¿½
 
 //test4
 #define paster(n) printf("token"#n" = %d\n", token##n)
 
 //test5
 #define _CONS(a, b) int(a##+##b)
-#define CONS(a, b) _CONS(a, b) //×ª»»ºê
+#define CONS(a, b) _CONS(a, b) //×ªï¿½ï¿½ï¿½ï¿½
 
 //test6
 #define  _GET_FILE_NAME(f)   #f
-#define  GET_FILE_NAME(f)    _GET_FILE_NAME(f)  //×ª»»ºê
+#define  GET_FILE_NAME(f)    _GET_FILE_NAME(f)  //×ªï¿½ï¿½ï¿½ï¿½
 
 //test7
 #define  _TYPE_BUF_SIZE(type)  sizeof #type
 #define  TYPE_BUF_SIZE(type)   _TYPE_BUF_SIZE(type) 
 
 //test8
-#define D(x)  #@x  //½ö¶Ôµ¥Ò»±ê¼Ç×ª»»ÓÐÐ§
+#define D(x)  #@x  //ï¿½ï¿½ï¿½Ôµï¿½Ò»ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Ð§
 
 int test_jinghao1()
 {
@@ -63,6 +65,7 @@ int test_jinghao1()
 	//test8
 	std::cout << D(F) << std::endl;//F
 
+
 	return 0;
 }
 
@@ -79,3 +82,5 @@ int test_jinghao2()
 
 	return 0;
 }
+
+#endif

@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <cstdio>
 #include <string>
+#include <stdexcept>
+#include <cstring>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/78991749
 
@@ -189,7 +191,7 @@ void* Blanks::operator new(size_t stAllocateBlock, char chInit)
 	std::cout << "size:" << stAllocateBlock << ",chInit:" << chInit << "end" << std::endl;
 	void *pvTemp = malloc(stAllocateBlock);
 	if (pvTemp != 0)
-		memset(pvTemp, chInit, stAllocateBlock);
+		std::memset(pvTemp, chInit, stAllocateBlock);
 	return pvTemp;
 }
 

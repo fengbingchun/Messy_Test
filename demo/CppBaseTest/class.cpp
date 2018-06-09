@@ -1,5 +1,6 @@
 #include "class.hpp"
 #include <iostream>
+#include <cmath>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/52075202
 
@@ -68,7 +69,7 @@ inline double Complex::Imag()
 
 double Complex::Magnitude()
 {
-	return sqrt(re*re + Imag()*Imag());
+	return std::sqrt(re*re + Imag()*Imag());
 }
 
 int test_class2()

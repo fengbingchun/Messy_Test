@@ -7,9 +7,9 @@ void CCTest::setNumber(int num) { number = num; }
 
 void CCTest::printNumber() const {
 	std::cout << "\nBefore: " << number;
-	//this Ö¸ÕëµÄÊý¾ÝÀàÐÍÎª const CCTest *¡£
-	//const_cast ÔËËã·û»á½« this Ö¸ÕëµÄÊý¾ÝÀàÐÍ¸ü¸ÄÎª CCTest *£¬ÒÔÔÊÐíÐÞ¸Ä³ÉÔ± number¡£
-	//Ç¿ÖÆ×ª»»½ö¶ÔÆäËùÔÚµÄÓï¾äÖÐµÄÆäÓà²¿·Ö³ÖÐø
+	//this Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª const CCTest *ï¿½ï¿½
+	//const_cast ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á½« this Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½Îª CCTest *ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Ä³ï¿½Ô± numberï¿½ï¿½
+	//Ç¿ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½à²¿ï¿½Ö³ï¿½ï¿½ï¿½
 	const_cast< CCTest * >(this)->number--;
 	std::cout << "\nAfter: " << number;
 }
@@ -34,14 +34,16 @@ void D4::f()
 
 }
 
+#ifdef _MSC_VER
 unsigned short Hash(void *p) {
-	//reinterpret_cast ÔÊÐí½«Ö¸ÕëÊÓÎªÕûÊýÀàÐÍ¡£½á¹ûËæºó½«°´Î»ÒÆÎ»²¢Óë×ÔÉí½øÐÐ¡°Òì»ò¡±ÔËËãÒÔÉú³ÉÎ¨Ò»µÄË÷Òý£¨¾ßÓÐÎ¨Ò»ÐÔµÄ¸ÅÂÊ·Ç³£¸ß£©¡£
-	//¸ÃË÷ÒýËæºó±»±ê×¼ C ÑùÊ½Ç¿ÖÆ×ª»»½Ø¶ÏÎªº¯ÊýµÄ·µ»ØÀàÐÍ¡£
+	//reinterpret_cast ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó½«°ï¿½Î»ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¨Ò»ï¿½ÔµÄ¸ï¿½ï¿½Ê·Ç³ï¿½ï¿½ß£ï¿½ï¿½ï¿½
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó±»±ï¿½×¼ C ï¿½ï¿½Ê½Ç¿ï¿½ï¿½×ªï¿½ï¿½ï¿½Ø¶ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¡ï¿½
 	unsigned int val = reinterpret_cast<unsigned int>(p);
 	return (unsigned short)(val ^ (val >> 16));
 }
+#endif
 
-// C·ç¸ñÇ¿ÖÆÀàÐÍ×ª»»
+// Cï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
 void test_static_cast1()
 {
 	float a = 1.1, b = 1.9;
@@ -54,18 +56,18 @@ void test_static_cast1()
 
 void test_static_cast2(B1* pb, D1* pd)
 {
-	//Óë dynamic_cast ²»Í¬£¬pb µÄ static_cast ×ª»»²»Ö´ÐÐÔËÐÐÊ±¼ì²é¡£
-	//ÓÉ pb Ö¸ÏòµÄ¶ÔÏó¿ÉÄÜ²»ÊÇ D ÀàÐÍµÄ¶ÔÏó£¬ÔÚÕâÖÖÇé¿öÏÂÊ¹ÓÃ *pd2 »áÊÇÔÖÄÑÐÔµÄ¡£
-	//ÀýÈç£¬µ÷ÓÃ D Àà£¨¶ø·Ç B Àà£©µÄ³ÉÔ±º¯Êý¿ÉÄÜ»áµ¼ÖÂ·ÃÎÊ³åÍ»¡£
+	//ï¿½ï¿½ dynamic_cast ï¿½ï¿½Í¬ï¿½ï¿½pb ï¿½ï¿½ static_cast ×ªï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½é¡£
+	//ï¿½ï¿½ pb Ö¸ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ D ï¿½ï¿½ï¿½ÍµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ *pd2 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÔµÄ¡ï¿½
+	//ï¿½ï¿½ï¿½ç£¬ï¿½ï¿½ï¿½ï¿½ D ï¿½à£¨ï¿½ï¿½ï¿½ï¿½ B ï¿½à£©ï¿½Ä³ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü»áµ¼ï¿½Â·ï¿½ï¿½Ê³ï¿½Í»ï¿½ï¿½
 	D1* pd2 = static_cast<D1*>(pb);   // Not safe, D can have fields and methods that are not in B.
 	B1* pb2 = static_cast<B1*>(pd);   // Safe conversion, D always contains all of B.
 }
 
 void test_static_cast3(B1* pb)
 {
-	//Èç¹û pb È·ÊµÖ¸Ïò D ÀàÐÍµÄ¶ÔÏó£¬Ôò pd1 ºÍ pd2 ½«»ñÈ¡ÏàÍ¬µÄÖµ¡£Èç¹û pb == 0£¬ËüÃÇÒ²½«»ñÈ¡ÏàÍ¬µÄÖµ¡£
-	//Èç¹û pb Ö¸Ïò B ÀàÐÍµÄ¶ÔÏó£¬¶ø·ÇÖ¸ÏòÍêÕûµÄ D Àà£¬Ôò dynamic_cast ×ãÒÔÅÐ¶Ï·µ»ØÁã¡£
-	//µ«ÊÇ£¬static_cast ÒÀÀµÓÚ³ÌÐòÔ±µÄ¶ÏÑÔ£¬¼´ pb Ö¸Ïò D ÀàÐÍµÄ¶ÔÏó£¬Òò¶øÖ»ÊÇ·µ»ØÖ¸ÏòÄÇ¸ö¼Ù¶¨µÄ D ¶ÔÏóµÄÖ¸Õë¡£
+	//ï¿½ï¿½ï¿½ pb È·ÊµÖ¸ï¿½ï¿½ D ï¿½ï¿½ï¿½ÍµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ pd1 ï¿½ï¿½ pd2 ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Í¬ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ pb == 0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Í¬ï¿½ï¿½Öµï¿½ï¿½
+	//ï¿½ï¿½ï¿½ pb Ö¸ï¿½ï¿½ B ï¿½ï¿½ï¿½ÍµÄ¶ï¿½ï¿½ó£¬¶ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ D ï¿½à£¬ï¿½ï¿½ dynamic_cast ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï·ï¿½ï¿½ï¿½ï¿½ã¡£
+	//ï¿½ï¿½ï¿½Ç£ï¿½static_cast ï¿½ï¿½ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½Ô±ï¿½Ä¶ï¿½ï¿½Ô£ï¿½ï¿½ï¿½ pb Ö¸ï¿½ï¿½ D ï¿½ï¿½ï¿½ÍµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½Ç·ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ç¸ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ D ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ë¡£
 	D1* pd1 = dynamic_cast<D1*>(pb);
 	D1* pd2 = static_cast<D1*>(pb);
 }
@@ -91,7 +93,7 @@ void test_static_cast5()
 
 void test_static_cast6(D2* pd)
 {
-	//´Ë×ª»»ÀàÐÍ³ÆÎª¡°ÏòÉÏ×ª»»¡±£¬ÒòÎªËü½«ÔÚÀà²ã´Î½á¹¹ÉÏµÄÖ¸Õë£¬´ÓÅÉÉúµÄÀàÒÆµ½¸ÃÀàÅÉÉúµÄÀà¡£ÏòÉÏ×ª»»ÊÇÒ»ÖÖÒþÊ½×ª»»¡£
+	//ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½á¹¹ï¿½Ïµï¿½Ö¸ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à¡£ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ê½×ªï¿½ï¿½ï¿½ï¿½
 	C2* pc = dynamic_cast<C2*>(pd);   // ok: C is a direct base class pc points to C subobject of pd 
 	B2* pb = dynamic_cast<B2*>(pd);   // ok: B is an indirect base class pb points to B subobject of pd
 }
@@ -109,7 +111,7 @@ void test_static_cast8()
 	B4* pb = new D4;   // unclear but ok
 	B4* pb2 = new B4;
 
-	//´Ë×ª»»ÀàÐÍ³ÆÎª¡°ÏòÏÂ×ª»»¡±£¬ÒòÎªËü½«ÔÚÀà²ã´Î½á¹¹ÏÂµÄÖ¸Õë£¬´Ó¸ø¶¨µÄÀàÒÆµ½¸ÃÀàÅÉÉúµÄÀà¡£
+	//ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½á¹¹ï¿½Âµï¿½Ö¸ï¿½ë£¬ï¿½Ó¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à¡£
 	D4* pd = dynamic_cast<D4*>(pb);   // ok: pb actually points to a D
 	D4* pd2 = dynamic_cast<D4*>(pb2);   // pb2 points to a B not a D
 }
@@ -124,7 +126,9 @@ void test_static_cast10()
 {
 	int a[20];
 	for (int i = 0; i < 20; i++) {
+#ifdef _MSC_VER
 		std::cout << Hash(a + i) << std::endl;
+#endif
 	}
 }
 

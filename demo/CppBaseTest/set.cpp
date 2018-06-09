@@ -6,6 +6,7 @@
 #include <chrono>
 #include <functional>
 #include <iomanip>
+#include <algorithm>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/63268962
 
@@ -21,7 +22,7 @@ struct classcomp {
 
 int test_set_cplusplus()
 {
-{ // set:¹¹Ôìº¯Êı
+{ // set:ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
 	std::set<int> first;                           // empty set of ints
 
 	int myints[] = { 10, 20, 30, 40, 50 };
@@ -37,7 +38,7 @@ int test_set_cplusplus()
 	std::set<int, bool(*)(int, int)> sixth(fn_pt);  // function pointer as Compare
 }
 
-{ // begin/end:·µ»ØÖ¸ÏòµÚÒ»¸öÔªËØµÄµü´ú/·µ»ØÖ¸Ïò×îºóÒ»¸öÔªËØÖ®ºóµÄµü´úÆ÷£¬²»ÊÇ×îºóÒ»¸öÔªËØ
+{ // begin/end:ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ôªï¿½ØµÄµï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ôªï¿½ï¿½Ö®ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ôªï¿½ï¿½
 	int myints[] = { 75, 23, 65, 42, 13 };
 	std::set<int> myset(myints, myints + 5);
 
@@ -48,7 +49,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // clear:Çå³ıËùÓĞÔªËØ
+{ // clear:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
 	std::set<int> myset;
 
 	myset.insert(100);
@@ -70,7 +71,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // count:ÅĞ¶ÏÄ³Ò»¸ö¹Ø¼ü×ÖÊÇ·ñÔÚsetÄÚ£¬·µ»Ø0»òÕß1
+{ // count:ï¿½Ğ¶ï¿½Ä³Ò»ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½setï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½1
 	std::set<int> myset;
 
 	// set some initial values:
@@ -108,7 +109,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // emplace(c++11):Èç¹ûĞÂÔªËØµÄÖµÊÇÎ¨Ò»µÄ£¬½«²åÈë¸ÃÔªËØ
+{ // emplace(c++11):ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½Øµï¿½Öµï¿½ï¿½Î¨Ò»ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
 	std::set<std::string> myset;
 
 	myset.emplace("foo");
@@ -133,7 +134,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // empty:Èç¹û¼¯ºÏÎª¿Õ£¬·µ»Øtrue
+{ // empty:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½true
 	std::set<int> myset;
 
 	myset.insert(20);
@@ -148,7 +149,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // equal_range:·µ»Ø¼¯ºÏÖĞÓë¸ø¶¨ÖµÏàµÈµÄÉÏÏÂÏŞµÄÁ½¸öµü´úÆ÷
+{ // equal_range:ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Şµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	std::set<int> myset;
 
 	for (int i = 1; i <= 5; i++) myset.insert(i * 10);   // myset: 10 20 30 40 50
@@ -160,7 +161,7 @@ int test_set_cplusplus()
 	std::cout << "the upper bound points to: " << *ret.second << '\n';
 }
 
-{ // erase:É¾³ı¼¯ºÏÖĞµÄÔªËØ
+{ // erase:É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğµï¿½Ôªï¿½ï¿½
 	std::set<int> myset;
 	std::set<int>::iterator it;
 
@@ -183,7 +184,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // find:·µ»ØÒ»¸öÖ¸Ïò±»²éÕÒµ½ÔªËØµÄµü´úÆ÷£¬Èç¹ûÃ»ÕÒµ½Ôò·µ»Øend()
+{ // find:ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ö¸ï¿½ò±»²ï¿½ï¿½Òµï¿½Ôªï¿½ØµÄµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Òµï¿½ï¿½ò·µ»ï¿½end()
 	std::set<int> myset;
 	std::set<int>::iterator it;
 
@@ -200,7 +201,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // get_allocator:·µ»Ø¼¯ºÏsetµÄ·ÖÅäÆ÷
+{ // get_allocator:ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½setï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½
 	std::set<int> myset;
 	int * p;
 	unsigned int i;
@@ -218,7 +219,7 @@ int test_set_cplusplus()
 	myset.get_allocator().deallocate(p, 5);
 }
 
-{ // insert:ÔÚ¼¯ºÏÖĞ²åÈëÔªËØ
+{ // insert:ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½Ğ²ï¿½ï¿½ï¿½Ôªï¿½ï¿½
 	std::set<int> myset;
 	std::set<int>::iterator it;
 	std::pair<std::set<int>::iterator, bool> ret;
@@ -262,7 +263,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // lower_bond:·µ»ØÖ¸Ïò´óÓÚ£¨»òµÈÓÚ£©Ä³ÖµµÄµÚÒ»¸öÔªËØµÄµü´úÆ÷
+{ // lower_bond:ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½Ä³Öµï¿½Äµï¿½Ò»ï¿½ï¿½Ôªï¿½ØµÄµï¿½ï¿½ï¿½ï¿½ï¿½
 	std::set<int> myset;
 	std::set<int>::iterator itlow, itup;
 
@@ -279,7 +280,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // max_size:·µ»Ø¼¯ºÏÄÜÈİÄÉµÄÔªËØµÄ×î´óÏŞÖµ
+{ // max_size:ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éµï¿½Ôªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	int i;
 	std::set<int> myset;
 
@@ -302,7 +303,7 @@ int test_set_cplusplus()
 	std::cout << "Size of second: " << int(second.size()) << '\n';
 }
 
-{ // rbegin/rend:·µ»ØÖ¸Ïò¼¯ºÏÖĞ×îºóÒ»¸öÔªËØµÄ·´Ïòµü´úÆ÷/·µ»ØÖ¸Ïò¼¯ºÏÖĞµÚÒ»¸öÔªËØµÄ·´Ïòµü´úÆ÷
+{ // rbegin/rend:ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ò¼¯ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ôªï¿½ØµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ò¼¯ºï¿½ï¿½Ğµï¿½Ò»ï¿½ï¿½Ôªï¿½ØµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	int myints[] = { 21, 64, 17, 78, 49 };
 	std::set<int> myset(myints, myints + 5);
 
@@ -315,7 +316,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // size:¼¯ºÏÖĞÔªËØµÄÊıÄ¿
+{ // size:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½Øµï¿½ï¿½ï¿½Ä¿
 	std::set<int> myints;
 	std::cout << "0. size: " << myints.size() << '\n';
 
@@ -329,7 +330,7 @@ int test_set_cplusplus()
 	std::cout << "3. size: " << myints.size() << '\n';
 }
 
-{ // swap:½»»»Á½¸ö¼¯ºÏ±äÁ¿
+{ // swap:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½
 	int myints[] = { 12, 75, 10, 32, 20, 25 };
 	std::set<int> first(myints, myints + 3);     // 10,12,75
 	std::set<int> second(myints + 3, myints + 6);  // 20,25,32
@@ -347,7 +348,7 @@ int test_set_cplusplus()
 	std::cout << '\n';
 }
 
-{ // upper_bound:·µ»Ø´óÓÚÄ³¸öÖµÔªËØµÄµü´úÆ÷
+{ // upper_bound:ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ÖµÔªï¿½ØµÄµï¿½ï¿½ï¿½ï¿½ï¿½
 	std::set<int> myset;
 	std::set<int>::iterator itlow, itup;
 

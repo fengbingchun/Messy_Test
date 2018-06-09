@@ -136,6 +136,7 @@ int test_local_class_5()
 
 /////////////////////////////////////////////////////////
 // reference: https://stackoverflow.com/questions/3235172/local-classes-in-c
+#ifdef _MSC_VER
 int pqr()
 {
 	class abc {
@@ -152,6 +153,7 @@ int test_local_class_6()
 	std::cout << "Return " << pqr() << std::endl;
 	return 0;
 }
+#endif
 
 //////////////////////////////////////////////////////////
 // reference: https://www.hscripts.com/tutorials/cpp/local-classes.php

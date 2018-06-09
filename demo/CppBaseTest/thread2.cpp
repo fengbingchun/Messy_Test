@@ -1,11 +1,11 @@
 #include "thread2.hpp"
 #include <iostream>
 #include <vector>
-#include<functional>
-#include<memory>
-#include<list>
-#include<mutex>
-#include<condition_variable>
+#include <functional>
+#include <memory>
+#include <list>
+#include <mutex>
+#include <condition_variable>
 #include <atomic>
 #include <thread>
 #include <chrono>
@@ -13,6 +13,8 @@
 #include <ctime>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/73393229
+
+#ifdef _MSC_VER
 
 ///////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/thread/thread/thread/
@@ -136,7 +138,7 @@ int test_thread_joinable()
 {
 	// thread::joinable: Returns whether the thread object is joinable.
 	// A thread object is joinable if it represents a thread of execution.
-	std::thread foo; // È±Ê¡¹¹Ôìº¯Êý£¬Ïß³Ì²»¿ÉÖ´ÐÐ
+	std::thread foo; // È±Ê¡ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ß³Ì²ï¿½ï¿½ï¿½Ö´ï¿½ï¿½
 	std::thread bar(mythread);
 
 	std::cout << "Joinable after construction:\n" << std::boolalpha;
@@ -203,13 +205,16 @@ int test_this_thread_sleep_until()
 	std::time_t tt = system_clock::to_time_t(system_clock::now());
 
 	struct std::tm * ptm = std::localtime(&tt);
+#ifdef _MSC_VER
 	std::cout << "Current time: " << std::put_time(ptm, "%X") << '\n';
+#endif
 
 	std::cout << "Waiting for the next minute to begin...\n";
 	++ptm->tm_min; ptm->tm_sec = 0;
 	std::this_thread::sleep_until(system_clock::from_time_t(mktime(ptm)));
-
+#ifdef _MSC_VER
 	std::cout << std::put_time(ptm, "%X") << " reached!\n";
+#endif
 
 	return 0;
 }
@@ -310,7 +315,7 @@ private:
 	{
 		bool full = m_queue.size() >= m_maxSize;
 		if (full)
-			std::cout << "full, waiting£¬thread id: " << std::this_thread::get_id() << std::endl;
+			std::cout << "full, waitingï¿½ï¿½thread id: " << std::this_thread::get_id() << std::endl;
 		return !full;
 	}
 
@@ -318,7 +323,7 @@ private:
 	{
 		bool empty = m_queue.empty();
 		if (empty)
-			std::cout << "empty,waiting£¬thread id: " << std::this_thread::get_id() << std::endl;
+			std::cout << "empty,waitingï¿½ï¿½thread id: " << std::this_thread::get_id() << std::endl;
 		return !empty;
 	}
 
@@ -334,12 +339,12 @@ private:
 	}
 
 private:
-	std::list<T> m_queue; //»º³åÇø
-	std::mutex m_mutex; //»¥³âÁ¿ºÍÌõ¼þ±äÁ¿½áºÏÆðÀ´Ê¹ÓÃ
-	std::condition_variable m_notEmpty;//²»Îª¿ÕµÄÌõ¼þ±äÁ¿
-	std::condition_variable m_notFull; //Ã»ÓÐÂúµÄÌõ¼þ±äÁ¿
-	int m_maxSize; //Í¬²½¶ÓÁÐ×î´óµÄsize
-	bool m_needStop; //Í£Ö¹µÄ±êÖ¾
+	std::list<T> m_queue; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	std::mutex m_mutex; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½
+	std::condition_variable m_notEmpty;//ï¿½ï¿½Îªï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	std::condition_variable m_notFull; //Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int m_maxSize; //Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½size
+	bool m_needStop; //Í£Ö¹ï¿½Ä±ï¿½Ö¾
 };
 
 const int MaxTaskCount = 100;
@@ -353,13 +358,13 @@ public:
 
 	~ThreadPool(void)
 	{
-		//Èç¹ûÃ»ÓÐÍ£Ö¹Ê±ÔòÖ÷¶¯Í£Ö¹Ïß³Ì³Ø
+		//ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Í£Ö¹Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½ß³Ì³ï¿½
 		Stop();
 	}
 
 	void Stop()
 	{
-		std::call_once(m_flag, [this] {StopThreadGroup(); }); //±£Ö¤¶àÏß³ÌÇé¿öÏÂÖ»µ÷ÓÃÒ»´ÎStopThreadGroup
+		std::call_once(m_flag, [this] {StopThreadGroup(); }); //ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½StopThreadGroup
 	}
 
 	void AddTask(Task&&task)
@@ -376,7 +381,7 @@ private:
 	void Start(int numThreads)
 	{
 		m_running = true;
-		//´´½¨Ïß³Ì×é
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½
 		for (int i = 0; i <numThreads; ++i) {
 			m_threadgroup.push_back(std::make_shared<std::thread>(&ThreadPool::RunInThread, this));
 		}
@@ -385,7 +390,7 @@ private:
 	void RunInThread()
 	{
 		while (m_running) {
-			//È¡ÈÎÎñ·Ö±ðÖ´ÐÐ
+			//È¡ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ö´ï¿½ï¿½
 			std::list<Task> list;
 			m_queue.Take(list);
 
@@ -400,19 +405,19 @@ private:
 
 	void StopThreadGroup()
 	{
-		m_queue.Stop(); //ÈÃÍ¬²½¶ÓÁÐÖÐµÄÏß³ÌÍ£Ö¹
-		m_running = false; //ÖÃÎªfalse£¬ÈÃÄÚ²¿Ïß³ÌÌø³öÑ­»·²¢ÍË³ö
+		m_queue.Stop(); //ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ß³ï¿½Í£Ö¹
+		m_running = false; //ï¿½ï¿½Îªfalseï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½
 
-		for (auto thread : m_threadgroup) { //µÈ´ýÏß³Ì½áÊø
+		for (auto thread : m_threadgroup) { //ï¿½È´ï¿½ï¿½ß³Ì½ï¿½ï¿½ï¿½
 			if (thread)
 				thread->join();
 		}
 		m_threadgroup.clear();
 	}
 
-	std::list<std::shared_ptr<std::thread>> m_threadgroup; //´¦ÀíÈÎÎñµÄÏß³Ì×é
-	SyncQueue<Task> m_queue; //Í¬²½¶ÓÁÐ     
-	std::atomic_bool m_running; //ÊÇ·ñÍ£Ö¹µÄ±êÖ¾
+	std::list<std::shared_ptr<std::thread>> m_threadgroup; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½
+	SyncQueue<Task> m_queue; //Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½     
+	std::atomic_bool m_running; //ï¿½Ç·ï¿½Í£Ö¹ï¿½Ä±ï¿½Ö¾
 	std::once_flag m_flag;
 };
 
@@ -452,3 +457,5 @@ int test_thread_hardware_concurrency()
 	std::cout << " the number of hardware thread contexts: " << std::thread::hardware_concurrency() << std::endl;
 	return 0;
 }
+
+#endif

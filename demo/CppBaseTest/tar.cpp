@@ -1,4 +1,5 @@
 #include "tar.hpp"
+#include <string.h>
 
 TarFile::TarFile(const char* tar_name)
 	: file(nullptr), size(0)

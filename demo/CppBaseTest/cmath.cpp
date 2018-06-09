@@ -600,7 +600,7 @@ int test_cmath_compare()
 }
 
 { // std::islessgreater: Returns whether x is less than or greater than y
-	if (islessgreater(result, 0.0))
+	if (std::islessgreater(result, 0.0))
 		printf("log(10.0) is not zero\n"); // log(10.0) is not zero
 	else
 		printf("log(10.0) is zero\n");

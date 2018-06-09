@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <typeinfo>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/78306461
 
@@ -22,6 +23,7 @@ int test_runtime_error_1()
 
 /////////////////////////////////////////////////////////////
 // reference: http://www.java2s.com/Tutorial/Cpp/0120__Exceptions/Throwyourownexceptionclassbasedonruntimeerror.htm
+#ifdef _MSC_VER
 class DivideByZeroException : public std::runtime_error {
 public:
 	DivideByZeroException::DivideByZeroException() : runtime_error("attempted to divide by zero") {}
@@ -44,6 +46,7 @@ int test_runtime_error_2()
 
 	return 0;
 }
+#endif
 
 ////////////////////////////////////////////////////////////////
 class CppBase_RunTime_Exception : public std::runtime_error {

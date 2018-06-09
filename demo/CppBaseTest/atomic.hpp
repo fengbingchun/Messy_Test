@@ -1,7 +1,7 @@
 #ifndef FBC_CPP_BASE_ATOMIC_HPP_
 #define FBC_CPP_BASE_ATOMIC_HPP_
 
-namespace atomic {
+namespace atomic_ {
 
 int test_atomic_atomic();
 int test_atomic_compare_exchange_weak();
@@ -11,6 +11,6 @@ int test_atomic_operator();
 int test_atomic_store();
 int test_atomic_flag_atomic_clear();
 
-} // namespace atomic
+} // namespace atomic_
 
 #endif // FBC_CPP_BASE_ATOMIC_HPP_

@@ -1,5 +1,8 @@
 #include "test_thread.hpp"
 #include <iostream>
+#ifndef _MSC_VER
+#include <unistd.h>
+#endif
 #include "thread.hpp"
 
 // test code reference: http://blog.csdn.net/fengbingchun/article/details/48579725
@@ -8,7 +11,7 @@ void* run1(void* para)
 {
 	std::cout << "start new thread!" << std::endl;
 
-	//sleep(5);//suspend 5 s£¬ÔÚÕýÊ½µÄ´úÂëÖÐ£¬Ò»°ã²»ÒªÓÃsleepº¯Êý
+	//sleep(5);//suspend 5 sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½Ð£ï¿½Ò»ï¿½ã²»Òªï¿½ï¿½sleepï¿½ï¿½ï¿½ï¿½
 	int* iptr = (int*)((void**)para)[0];
 	float* fptr = (float*)((void**)para)[1];
 	char* str = (char*)((void**)para)[2];
@@ -29,10 +32,10 @@ int test_create_thread()
 
 	pthread_create(&pid, NULL, run1, para);
 
-	// ÐÂÏß³Ì´´½¨Ö®ºóÖ÷Ïß³ÌÈçºÎÔËÐÐ----Ö÷Ïß³Ì°´Ë³Ðò¼ÌÐøÖ´ÐÐÏÂÒ»ÐÐ³ÌÐò
+	// ï¿½ï¿½ï¿½ß³Ì´ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½----ï¿½ï¿½ï¿½ß³Ì°ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ð³ï¿½ï¿½ï¿½
 	std::cout << "main thread!" << std::endl;
 
-	// ÐÂÏß³Ì½áÊøÊ±ÈçºÎ´¦Àí----ÐÂÏß³ÌÏÈÍ£Ö¹£¬È»ºó×÷ÎªÆäÇåÀí¹ý³ÌµÄÒ»²¿·Ö£¬µÈ´ýÓëÁíÒ»¸öÏß³ÌºÏ²¢»ò¡°Á¬½Ó¡±
+	// ï¿½ï¿½ï¿½ß³Ì½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Î´ï¿½ï¿½ï¿½----ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½Í£Ö¹ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½Ò»ï¿½ï¿½ï¿½Ö£ï¿½ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ß³ÌºÏ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½
 	pthread_join(pid, NULL);
 
 	return 0;
@@ -127,10 +130,18 @@ int test_thread_cond1()
 	pthread_cond_init(&count_nonzero1, NULL);
 
 	pthread_create(&tid1, NULL, decrement_count1, NULL);
+#ifdef _MSC_VER
 	Sleep(2000); // == linux sleep(2)
+#else
+	sleep(2);
+#endif
 
 	pthread_create(&tid2, NULL, increment_count1, NULL);
+#ifdef _MSC_VER
 	Sleep(2000);
+#else
+	sleep(2);
+#endif
 
 	std::cout << "count1 = " << count1 << std::endl;
 	pthread_join(tid1, NULL);
@@ -152,10 +163,10 @@ void* decrement_counter2(void* argv)
 
 	pthread_mutex_lock(&counter_lock2);
 	while (counter2 == 0)
-		pthread_cond_wait(&counter_nonzero2, &counter_lock2); //½øÈë×èÈû(wait)£¬µÈ´ý¼¤»î(signal)
+		pthread_cond_wait(&counter_nonzero2, &counter_lock2); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(wait)ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½(signal)
 
 	std::cout << "counter--(decrement, before): " << counter2 << std::endl;
-	counter2--; //µÈ´ýsignal¼¤»îºóÔÙÖ´ÐÐ
+	counter2--; //ï¿½È´ï¿½signalï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½
 	std::cout << "counter--(decrement, after): " << counter2 << std::endl;
 	pthread_mutex_unlock(&counter_lock2);
 
@@ -168,7 +179,7 @@ void* increment_counter2(void* argv)
 
 	pthread_mutex_lock(&counter_lock2);
 	if (counter2 == 0)
-		pthread_cond_signal(&counter_nonzero2); //¼¤»î(signal)×èÈû(wait)µÄÏß³Ì(ÏÈÖ´ÐÐÍêsignalÏß³Ì£¬È»ºóÔÙÖ´ÐÐwaitÏß³Ì)  
+		pthread_cond_signal(&counter_nonzero2); //ï¿½ï¿½ï¿½ï¿½(signal)ï¿½ï¿½ï¿½ï¿½(wait)ï¿½ï¿½ï¿½ß³ï¿½(ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½signalï¿½ß³Ì£ï¿½È»ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½waitï¿½ß³ï¿½)  
 
 	std::cout << "counter++(increment, before): " << counter2 << std::endl;
 	counter2++;
@@ -193,7 +204,11 @@ int test_thread_cond2()
 	int counter2 = 0;
 	while (counter2 != 10) {
 		std::cout << "counter(main): " << counter2 << std::endl;
+#ifdef _MSC_VER
 		Sleep(1);
+#else
+		sleep(1);
+#endif
 		counter2++;
 	}
 
@@ -217,17 +232,17 @@ void* decrement_increment_counter3(void* argv)
 	pthread_mutex_lock(&counter_lock3_1);
 	std::cout << "counter(decrement): " << counter3 << std::endl;
 	while (counter3 == 1)
-		pthread_cond_wait(&counter_nonzero3_1, &counter_lock3_1); //½øÈë×èÈû(wait)£¬µÈ´ý¼¤»î(signal)
+		pthread_cond_wait(&counter_nonzero3_1, &counter_lock3_1); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(wait)ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½(signal)
 
 	std::cout << "counter--(decrement, before): " << counter3 << std::endl;
-	counter3--; //µÈ´ýsignal¼¤»îºóÔÙÖ´ÐÐ  
+	counter3--; //ï¿½È´ï¿½signalï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½  
 	std::cout << "counter--(decrement, after): " << counter3 << std::endl;
 	pthread_mutex_unlock(&counter_lock3_1);
 
 	pthread_mutex_lock(&counter_lock3_2);
 	std::cout << "counter(increment): " << counter3 << std::endl;
 	if (counter3 == 0)
-		pthread_cond_signal(&counter_nonzero3_2); //¼¤»î(signal)×èÈû(wait)µÄÏß³Ì(ÏÈÖ´ÐÐÍêsignalÏß³Ì£¬È»ºóÔÙÖ´ÐÐwaitÏß³Ì)  
+		pthread_cond_signal(&counter_nonzero3_2); //ï¿½ï¿½ï¿½ï¿½(signal)ï¿½ï¿½ï¿½ï¿½(wait)ï¿½ï¿½ï¿½ß³ï¿½(ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½signalï¿½ß³Ì£ï¿½È»ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½waitï¿½ß³ï¿½)  
 
 	std::cout << "counter++(increment, before): " << counter3 << std::endl;
 	counter3++;
@@ -252,7 +267,11 @@ int test_thread_cond3()
 	counter3 = 0;
 	while (counter3 != 10) {
 		std::cout << "counter(main): " << counter3 << std::endl;
+#ifdef _MSC_VER
 		Sleep(1000);
+#else
+		sleep(1);
+#endif
 		counter3++;
 	}
 

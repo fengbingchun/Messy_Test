@@ -12,7 +12,10 @@
 - Google Test(gtest)'s usage [google/googletest](https://github.com/google/googletest)
 - spdlog's usage [gabime/spdlog](https://github.com/gabime/spdlog)
 
-**The project support platform: windows7/10 64 bits. It can be directly build with VS2013 in windows7/10 64bits.**
+**The project support platform:**
+- windows7/10 64 bits: It can be directly build with VS2013 in windows7/10 64bits.
+- Linux: 
+	- CppBaseTest supports cmake build(file position: prj/linux_cmake_CppBaseTest)
 
 **Screenshot:**  
 ![](https://github.com/fengbingchun/Messy_Test/blob/master/prj/x86_x64_vc12/Screenshot.png)

@@ -3,6 +3,9 @@
 #include <array>
 #include <tuple>
 #include <string>
+#include <algorithm>
+#include <iterator>
+#include <cstring>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/72809699
 
@@ -21,6 +24,7 @@ int test_array_3()
 		std::cout << " " << *it;
 	std::cout << std::endl;
 
+#ifdef _MSC_VER
 	Myarray c1;
 	c1.assign(4);
 
@@ -29,6 +33,7 @@ int test_array_3()
 		it != c1.end(); ++it)
 		std::cout << " " << *it; // 4 4 4 4
 	std::cout << std::endl;
+#endif
 
 	return 0;
 }

@@ -4,8 +4,7 @@
 #include <iostream>
 
 // reference: http://www.tutorialspoint.com/cplusplus/cpp_this_pointer.htm
-class Box
-{
+class Box {
 public:
 	// Constructor definition
 	Box(double l = 2.0, double b = 2.0, double h = 2.0)
@@ -37,8 +36,7 @@ private:
 }*/
 
 // reference: https://msdn.microsoft.com/en-us/library/y0dddwwd.aspx
-class Buf
-{
+class Buf {
 public:
 	Buf(char* szBuffer, size_t sizeOfBuffer);
 	Buf& operator=(const Buf &);
@@ -50,8 +48,7 @@ private:
 };
 
 // reference: http://en.cppreference.com/w/cpp/language/this
-class T
-{
+class T {
 	int x;
 
 	void foo()
@@ -92,7 +89,7 @@ class Outer {
 			//int c[sizeof(*this)]; // error: not inside a member function of Inner
 		};
 	}
-}
+};
 
 void test_this_pointer1();
 void test_this_pointer2();

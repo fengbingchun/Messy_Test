@@ -7,7 +7,7 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/73436710
 
-namespace atomic {
+namespace atomic_ {
 /////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/atomic/atomic/atomic/
 std::atomic<bool> ready(false);
@@ -127,6 +127,7 @@ int test_atomic_load()
 
 ////////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/atomic/atomic/operator=/
+#ifdef _MSC_VER
 std::atomic<int> foo_ = 0;
 
 void set_foo_(int x)
@@ -154,6 +155,7 @@ int test_atomic_operator()
 
 	return 0;
 }
+#endif
 
 ///////////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/atomic/atomic/store/
@@ -198,4 +200,4 @@ int test_atomic_flag_atomic_clear()
 	return 0;
 }
 
-} // namespace atomic
+} // namespace atomic_

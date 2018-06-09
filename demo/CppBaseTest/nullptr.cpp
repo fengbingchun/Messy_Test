@@ -24,7 +24,7 @@ int test_nullptr1()
 	g(0);              // Fine
 
 	Fwd(g, nullptr);   // Fine
-	// Fwd(g, NULL);  // ERROR: No function g(int) // error C2664: ¡°void (int *)¡±: ÎÞ·¨½«²ÎÊý 1 ´Ó¡°int¡±×ª»»Îª¡°int *¡±
+	// Fwd(g, NULL);  // ERROR: No function g(int) // error C2664: ï¿½ï¿½void (int *)ï¿½ï¿½: ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Ó¡ï¿½intï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½int *ï¿½ï¿½
 
 	int length1 = sizeof(NULL); // x64, length1 = 4
 	int length2 = sizeof(nullptr); // x64, length2 = 8
@@ -76,7 +76,7 @@ int test_nullptr3()
 	f((int *) nullptr); // f(int *)
 	f(0); // f(int *)
 	f(NULL); // f(int *)
-	//f((int &) nullptr); // error C2101: ³£Á¿ÉÏµÄ¡°&¡±
+	//f((int &) nullptr); // error C2101: ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÄ¡ï¿½&ï¿½ï¿½
 
 	return 0;
 }
@@ -96,7 +96,9 @@ void func(char *s)
 int test_nullptr4()
 {
 	func(0); // func (int n)
+#ifdef _MSC_VER
 	func(NULL); // func (int n)
+#endif
 	func(nullptr); // func (char *s)
 
 	return 0;
@@ -120,7 +122,7 @@ void doSomething_(std::nullptr_t ptr)
 int test_nullptr5()
 {
 	int* a = NULL; // ok
-	//int* b = (void*)0; // error C2440: ¡°³õÊ¼»¯¡±: ÎÞ·¨´Ó¡°void *¡±×ª»»Îª¡°int *¡±
+	//int* b = (void*)0; // error C2440: ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½: ï¿½Þ·ï¿½ï¿½Ó¡ï¿½void *ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½int *ï¿½ï¿½
 	int* c = 0; // ok
 
 	// the argument is definitely a null pointer (not an integer)
