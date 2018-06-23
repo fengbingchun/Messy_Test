@@ -73,3 +73,17 @@ int test_move3()
 
 	return 0;
 }
+
+/////////////////////////////////////////////////////
+int test_move4()
+{
+	std::string str1{ "abc" }, str2;
+	fprintf(stdout, "str1: %s\n", str1.c_str()); // abc
+	std::move(str1);
+	fprintf(stdout, "str1: %s\n", str1.c_str()); // abc
+	str2 = std::move(str1);
+	fprintf(stdout, "str1: %s\n", str1.c_str()); // 
+	fprintf(stdout, "str2: %s\n", str2.c_str()); // abc
+
+	return 0;
+}
