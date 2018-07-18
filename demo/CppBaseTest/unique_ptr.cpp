@@ -6,8 +6,13 @@
 #include <utility>
 #include <vector>
 #include <algorithm>
+#include <cassert>
+#include <fstream>
+#include <functional>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/52203664
+
+namespace unique_ptr_ {
 
 ///////////////////////////////////////////////////////
 // reference: http://en.cppreference.com/w/cpp/memory/unique_ptr
@@ -184,3 +189,194 @@ int test_unique_ptr6()
 
 	return 0;
 }
+
+///////////////////////////////////////////////////////////////////////
+// reference: https://en.cppreference.com/w/cpp/memory/unique_ptr
+struct B {
+	virtual void bar() { std::cout << "B::bar\n"; }
+	virtual ~B() = default;
+};
+struct D : B
+{
+	D() { std::cout << "D::D\n"; }
+	~D() { std::cout << "D::~D\n"; }
+	void bar() override { std::cout << "D::bar\n"; }
+};
+
+// a function consuming a unique_ptr can take it by value or by rvalue reference
+std::unique_ptr<D> pass_through(std::unique_ptr<D> p)
+{
+	p->bar();
+	return p;
+}
+
+void close_file(std::FILE* fp) { std::fclose(fp); }
+
+int test_unique_ptr7()
+{
+	std::cout << "unique ownership semantics demo\n";
+	{
+		auto p = std::make_unique<D>(); // p is a unique_ptr that owns a D
+		auto q = pass_through(std::move(p));
+		assert(!p); // now p owns nothing and holds a null pointer
+		q->bar();   // and q owns the D object
+	} // ~D called here
+
+	std::cout << "Runtime polymorphism demo\n";
+	{
+		std::unique_ptr<B> p = std::make_unique<D>(); // p is a unique_ptr that owns a D
+		// as a pointer to base
+		p->bar(); // virtual dispatch
+
+		std::vector<std::unique_ptr<B>> v;  // unique_ptr can be stored in a container
+		v.push_back(std::make_unique<D>());
+		v.push_back(std::move(p));
+		v.emplace_back(new D);
+		for (auto& p : v) p->bar(); // virtual dispatch
+	} // ~D called 3 times
+
+	std::cout << "Custom deleter demo\n";
+	std::ofstream("demo.txt") << 'x'; // prepare the file to read
+	{
+		std::unique_ptr<std::FILE, decltype(&close_file)> fp(std::fopen("demo.txt", "r"), &close_file);
+		if (fp) // fopen could have failed; in which case fp holds a null pointer
+			std::cout << (char)std::fgetc(fp.get()) << '\n';
+	} // fclose() called here, but only if FILE* is not a null pointer
+	// (that is, if fopen succeeded)
+
+	std::cout << "Custom lambda-expression deleter demo\n";
+	{
+		std::unique_ptr<D, std::function<void(D*)>> p(new D, [](D* ptr)
+		{
+			std::cout << "destroying from a custom deleter...\n";
+			delete ptr;
+		});  // p owns D
+		p->bar();
+	} // the lambda above is called and D is destroyed
+
+	std::cout << "Array form of unique_ptr demo\n";
+	{
+		std::unique_ptr<D[]> p{ new D[3] };
+	} // calls ~D 3 times
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/unique_ptr/~unique_ptr/
+int test_unique_ptr8()
+{
+	auto deleter = [](int*p){
+		delete p;
+		std::cout << "[deleter called]\n";
+	};
+
+	std::unique_ptr<int, decltype(deleter)> foo(new int, deleter);
+
+	std::cout << "foo " << (foo ? "is not" : "is") << " empty\n";
+
+	return 0;                        // [deleter called]
+}
+
+/////////////////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/unique_ptr/get_deleter/
+class state_deleter {  // a deleter class with state
+	int count_;
+public:
+	state_deleter() : count_(0) {}
+	template <class T>
+	void operator()(T* p) {
+		std::cout << "[deleted #" << ++count_ << "]\n";
+		delete p;
+	}
+};
+
+int test_unique_ptr9()
+{
+	state_deleter del;
+
+	std::unique_ptr<int> p;   // uses default deleter
+
+	// alpha and beta use independent copies of the deleter:
+	std::unique_ptr<int, state_deleter> alpha(new int);
+	std::unique_ptr<int, state_deleter> beta(new int, alpha.get_deleter());
+
+	// gamma and delta share the deleter "del" (deleter type is a reference!):
+	std::unique_ptr<int, state_deleter&> gamma(new int, del);
+	std::unique_ptr<int, state_deleter&> delta(new int, gamma.get_deleter());
+
+	std::cout << "resetting alpha..."; alpha.reset(new int);
+	std::cout << "resetting beta..."; beta.reset(new int);
+	std::cout << "resetting gamma..."; gamma.reset(new int);
+	std::cout << "resetting delta..."; delta.reset(new int);
+
+	std::cout << "calling gamma/delta deleter...";
+	gamma.get_deleter()(new int);
+
+	alpha.get_deleter() = state_deleter();  // a brand new deleter for alpha
+
+	// additional deletions when unique_ptr objects reach out of scope
+	// (in inverse order of declaration)
+
+	return 0;
+}
+
+//////////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/unique_ptr/operator=/
+int test_unique_ptr10()
+{
+	std::unique_ptr<int> foo;
+	std::unique_ptr<int> bar;
+
+	foo = std::unique_ptr<int>(new int(101));  // rvalue
+
+	bar = std::move(foo);                       // using std::move
+
+	std::cout << "foo: ";
+	if (foo) std::cout << *foo << '\n'; else std::cout << "empty\n";
+
+	std::cout << "bar: ";
+	if (bar) std::cout << *bar << '\n'; else std::cout << "empty\n";
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/unique_ptr/release/
+int test_unique_ptr11()
+{
+	std::unique_ptr<int> auto_pointer(new int);
+	int * manual_pointer;
+
+	*auto_pointer = 10;
+
+	manual_pointer = auto_pointer.release();
+	// (auto_pointer is now empty)
+
+	std::cout << "manual_pointer points to " << *manual_pointer << '\n';
+
+	delete manual_pointer;
+
+	return 0;
+
+}
+
+///////////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/memory/unique_ptr/swap/
+int test_unique_ptr12()
+{
+	std::unique_ptr<int> foo(new int(10)), foo2(new int(10));
+	std::unique_ptr<int> bar(new int(20)), bar2(new int(20));
+
+	foo.swap(bar);
+	std::cout << "foo: " << *foo << '\n';
+	std::cout << "bar: " << *bar << '\n';
+
+	std::swap(foo2, bar2);
+	std::cout << "foo2: " << *foo2 << '\n';
+	std::cout << "bar2: " << *bar2 << '\n';
+
+	return 0;
+}
+
+} // namespace unique_ptr_
