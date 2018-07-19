@@ -15,6 +15,7 @@ int test_unique_ptr9();
 int test_unique_ptr10();
 int test_unique_ptr11();
 int test_unique_ptr12();
+int test_unique_ptr13();
 
 } // namespace unique_ptr_
 

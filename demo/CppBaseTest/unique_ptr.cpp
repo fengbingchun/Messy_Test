@@ -379,4 +379,44 @@ int test_unique_ptr12()
 	return 0;
 }
 
+////////////////////////////////////////////////////////////////
+void math_add(int* a)
+{
+	int b = ++(*a);
+	delete a;
+	fprintf(stdout, "add operation: %d\n", b);
+}
+
+void math_subtract(int* a)
+{
+	int b = --(*a);
+	delete a;
+	fprintf(stdout, "subtraction operation: %d\n", b);
+}
+
+int test_unique_ptr13()
+{
+	{
+		std::unique_ptr<int, decltype(&math_add)> A(new int, &math_add);
+		if (!A) {
+			fprintf(stderr, "A is nullptr\n");
+			return -1;
+		}
+
+		*A = 10;
+	}
+
+	{
+		typedef std::unique_ptr<int, std::function<void(int*)>> Oper;
+
+		Oper A(new int, math_add);
+		*A = 10;
+
+		Oper B(new int, math_subtract);
+		*B = 10;
+	}
+
+	return 0;
+}
+
 } // namespace unique_ptr_
