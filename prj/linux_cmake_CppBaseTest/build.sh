@@ -1,8 +1,14 @@
 #! /bin/bash
 
-echo "Note: new create build directory, and executable binary file in build"
-echo ${PWD}
-mkdir -p build
-cd build
+real_path=$(realpath $0)
+dir_name=`dirname "${real_path}"`
+echo "real_path: ${real_path}, dir_name: ${dir_name}"
+
+new_dir_name=${dir_name}/build
+mkdir -p ${new_dir_name}
+cd ${new_dir_name}
 cmake ..
 make
+
+cd -
+
