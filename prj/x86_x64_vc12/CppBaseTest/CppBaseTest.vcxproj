@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\lock_guard.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\lvalue_rvalue.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\memory_alignment.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\move.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\mutex.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\namespace.cpp" />
@@ -205,6 +206,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\transform.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\try_catch.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\tuple.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\typedef.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\typeid.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\union.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\unique_lock.cpp" />
@@ -274,6 +276,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\lock_guard.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\lvalue_rvalue.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\memory_alignment.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\move.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\mutex.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\namespace.hpp" />
@@ -320,6 +323,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\transform.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\try_catch.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\tuple.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\typedef.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\typeid.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\union.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_lock.hpp" />

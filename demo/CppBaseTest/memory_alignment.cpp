@@ -1,6 +1,8 @@
 #include "memory_alignment.hpp"
 #include <iostream>
 #include <cstdlib>
+#include <stdint.h>
+
 
 // Blog: https://blog.csdn.net/fengbingchun/article/details/81270326
 
@@ -38,6 +40,8 @@ int test_memory_alignment_1()
 // reference: https://stackoverflow.com/questions/17091382/memory-alignment-how-to-use-alignof-alignas
 int test_memory_alignment_2()
 {
+
+#ifdef __linux__
 {
 	// alignas: 类型或对象或变量按指定的字节对齐
 	// Alignment of 16 means that memory addresses that are a multiple of 16 are the only valid addresses.
@@ -64,30 +68,33 @@ int test_memory_alignment_2()
  	// the array "cacheline" will be aligned to 128-byte boundary
 	alignas(128) char cacheline[128];
 }
+#endif
 
 	return 0;
 }
 
 //////////////////////////////////////////////////////////////
 // reference: https://en.cppreference.com/w/cpp/language/alignof
-struct Foo {
-    int   i;
-    float f;
-    char  c;
-};
- 
-struct Empty {};
- 
-struct alignas(64) Empty64 {};
-
 int test_memory_alignment_3()
 {
+#ifdef __linux__
+	struct Foo {
+		int   i;
+		float f;
+		char  c;
+	};
+
+	struct Empty {};
+
+	struct alignas(64) Empty64{};
+
 	std::cout << "Alignment of"  "\n"
 		"- char             : " << alignof(char)    << "\n"
 		"- pointer          : " << alignof(int*)    << "\n"
 		"- class Foo        : " << alignof(Foo)     << "\n"
 		"- empty class      : " << alignof(Empty)   << "\n"
 		"- alignas(64) Empty: " << alignof(Empty64) << "\n";
+#endif
 
 	return 0;
 }
