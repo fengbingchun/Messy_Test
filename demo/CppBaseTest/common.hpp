@@ -110,5 +110,6 @@
 #include "test_parse_cvs.hpp"
 #include "virtual_function_table.hpp"
 #include "typedef.hpp"
+#include "memory_alignment.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

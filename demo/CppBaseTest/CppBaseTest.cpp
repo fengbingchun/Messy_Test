@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = typedef_::test_typedef_1();
+	int ret = memory_alignment_::test_memory_alignment_4();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
