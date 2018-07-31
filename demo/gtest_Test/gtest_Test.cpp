@@ -4,24 +4,24 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/72353374
 
-int main()
+int main(int argc, char* argv[])
 {
-	std::vector<char*> argv{
-#ifdef _DEBUG
-		"E:/GitCode/Messy_Test/lib/dbg/x64_vc12/gtest_Test.exe",
-#else
-		"E:/GitCode/Messy_Test/lib/rel/x64_vc12/gtest_Test.exe",
-#endif
-		//"--gtest_repeat=2 ", // ÖØ¸´ÔËĞĞ²âÊÔ´ÎÊı
-		//"--gtest_break_on_failure", // Óöµ½failureÍË³ö
-		"--gtest_filter=*", // Ö¸¶¨ĞèÒªÔËĞĞµÄtests
+	std::vector<char*> argv_{
+		argv[0],
+		//"--gtest_repeat=2 ", // é‡å¤è¿è¡Œæµ‹è¯•æ¬¡æ•°
+		//"--gtest_break_on_failure", // é‡åˆ°failureé€€å‡º
+		"--gtest_filter=*", // æŒ‡å®šéœ€è¦è¿è¡Œçš„tests
 		//"--gtest_print_time=0", // don't print the elapsed time of each test
-		"--gtest_output=xml:E:/GitCode/Messy_Test/testdata/info.xml" // ½á¹ûÊä³öµ½Ö¸¶¨µÄxmlÎÄ¼ş
+#ifdef __linux__
+		"--gtest_output=xml:./build/info.xml"
+#else
+		"--gtest_output=xml:E:/GitCode/Messy_Test/testdata/info.xml" // ç»“æœè¾“å‡ºåˆ°æŒ‡å®šçš„xmlæ–‡ä»¶
+#endif
 	};
-	int argc = argv.size();
+	int argc_ = argv_.size();
 
 	// Initializes Google Test.  This must be called before calling RUN_ALL_TESTS()
-	testing::InitGoogleTest(&argc, argv.data());
+	testing::InitGoogleTest(&argc_, argv_.data());
 
 	// Use this function in main() to run all tests.  It returns 0 if all
 	// tests are successful, or 1 otherwise
@@ -31,3 +31,4 @@ int main()
 
 	return ret;
 }
+

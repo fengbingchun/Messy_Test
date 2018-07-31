@@ -2,6 +2,7 @@
 #define FBC_GTEST_TEST_FUNSET_HPP_
 
 #include <string>
+#include <string.h>
 
 // reference: googletest/samples
 

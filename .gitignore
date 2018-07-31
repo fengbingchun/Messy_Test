@@ -7,4 +7,5 @@
 /testdata/
 /prj/linux_cmake_CppBaseTest/build/
 /prj/linux_cmake_DesignPatternsTest/build/
+/prj/linux_cmake_gtest_Test/build/
 
