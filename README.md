@@ -16,6 +16,7 @@
 - windows7/10 64 bits: It can be directly build with VS2013 in windows7/10 64bits.
 - Linux: 
 	- CppBaseTest supports cmake build(file position: prj/linux_cmake_CppBaseTest)
+	- DesignPatternsTest supports cmake build(file position: prj/linux_cmake_DesignPatternsTest)
 
 **Screenshot:**  
 ![](https://github.com/fengbingchun/Messy_Test/blob/master/prj/x86_x64_vc12/Screenshot.png)

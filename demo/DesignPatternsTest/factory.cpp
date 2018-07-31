@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "factory.hpp"
-#include "Product_2.hpp"
+#include "product_2.hpp"
 
 
 Factory::Factory()

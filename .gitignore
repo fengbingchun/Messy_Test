@@ -6,3 +6,5 @@
 *.opensdf
 /testdata/
 /prj/linux_cmake_CppBaseTest/build/
+/prj/linux_cmake_DesignPatternsTest/build/
+
