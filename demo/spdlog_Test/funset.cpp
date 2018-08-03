@@ -30,16 +30,28 @@ int test_spdlog_console()
 		spd::get("console")->info("loggers can be retrieved from a global registry using the spdlog::get(logger_name) function");
 
 		// Create basic file logger (not rotated)
+#ifdef __linux__
+		auto my_logger = spd::basic_logger_mt("basic_logger", "testdata/basic_log");
+#else
 		auto my_logger = spd::basic_logger_mt("basic_logger", "E:/GitCode/Messy_Test/testdata/basic_log");
+#endif
 		my_logger->info("Some log message");
 
 		// Create a file rotating logger with 5mb size max and 3 rotated files
+#ifdef __linux__
+		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "testdata/mylogfile_log", 1048576 * 5, 3);
+#else
 		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "E:/GitCode/Messy_Test/testdata/mylogfile_log", 1048576 * 5, 3);
+#endif
 		for (int i = 0; i < 10; ++i)
 			rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
 
 		// Create a daily logger - a new file is created every day on 2:30am
+#ifdef __linux__
+		auto daily_logger = spd::daily_logger_mt("daily_logger", "testdata/daily_log", 2, 30);
+#else
 		auto daily_logger = spd::daily_logger_mt("daily_logger", "E:/GitCode/Messy_Test/testdata/daily_log", 2, 30);
+#endif
 		// trigger flush if the log severity is error or higher
 		daily_logger->flush_on(spd::level::err);
 		daily_logger->info(123.44);
@@ -81,7 +93,11 @@ int test_spdlog_async()
 	// Just call spdlog::set_async_mode(q_size) and all created loggers from now on will be asynchronous..
 	size_t q_size = 4096; //queue size must be power of 2
 	spdlog::set_async_mode(q_size);
+#ifdef __linux__
+	auto async_file = spd::daily_logger_st("async_file_logger", "testdata/async_log");
+#else
 	auto async_file = spd::daily_logger_st("async_file_logger", "E:/GitCode/Messy_Test/testdata/async_log");
+#endif
 
 	for (int i = 0; i < 100; ++i)
 		async_file->info("Async message #{}", i);
