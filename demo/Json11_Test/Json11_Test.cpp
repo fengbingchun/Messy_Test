@@ -8,7 +8,8 @@
 
 #ifdef _MSC_VER
 #include <Windows.h>
-static std::string utf8_to_gbk(const char* utf8) {
+static std::string utf8_to_gbk(const char* utf8)
+{
 	char gbk[256];
 	const int maxlen = 256;
 	wchar_t unicode_str[maxlen];
@@ -19,6 +20,11 @@ static std::string utf8_to_gbk(const char* utf8) {
 	std::string str;
 	str.assign(gbk);
 	return str;
+}
+#else // linux
+static std::string utf8_to_gbk(const char* utf8)
+{
+	return (std::string)utf8;
 }
 #endif
 
@@ -39,7 +45,11 @@ int test4()
 {
 	//std::istringstream  
 	std::filebuf in;
+#ifdef __linux__
+	if (!in.open("testdata/json.data", std::ios::in)) {
+#else
 	if (!in.open("E:/GitCode/Messy_Test/testdata/json.data", std::ios::in)) {
+#endif
 		std::cout << "fail to open file" << std::endl;
 		return -1;
 	}
