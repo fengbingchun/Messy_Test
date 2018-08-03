@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = memory_alignment_::test_memory_alignment_4();
+	int ret = test_string_ifstream_to_string();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

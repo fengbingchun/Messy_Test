@@ -966,7 +966,11 @@ int test_string_func()
 int test_string_ifstream_to_string()
 {
 	// reference: http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
+#ifdef __linux__
+	std::ifstream file("testdata/regex.txt");
+#else
 	std::ifstream file("E:/GitCode/Messy_Test/testdata/regex.txt");
+#endif
 	if (!file) {
 		fprintf(stderr, "read file failed!\n");
 		return -1;

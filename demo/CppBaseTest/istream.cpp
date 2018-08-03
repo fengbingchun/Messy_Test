@@ -9,7 +9,11 @@ void test_istream()
 {
 	//std::istringstream
 	std::filebuf in;
+#ifdef __linux__
+	if (!in.open("testdata/istream.data", std::ios::in)) {
+#else
 	if (!in.open("E:/GitCode/Messy_Test/testdata/istream.data", std::ios::in)) {
+#endif
 		std::cout << "fail to open file" << std::endl;
 		return;
 	}

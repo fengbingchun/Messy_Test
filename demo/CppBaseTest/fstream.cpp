@@ -16,7 +16,11 @@
 
 int test_file_size()
 {
+#ifdef __linux__	
+	std::ifstream in("testdata/fstream_data.bin", std::ios::binary);
+#else
 	std::ifstream in("E:/GitCode/Messy_Test/testdata/fstream_data.bin", std::ios::binary);
+#endif
 	if (!in.is_open()) {
 		std::cout << "fail to open file\n";
 		return -1;
@@ -40,7 +44,11 @@ int test_fstream1()
 
 	// open a file in write mode.
 	std::ofstream outfile;
+#ifdef __linux_
+	outfile.open("testdata/fstream.dat");
+#else
 	outfile.open("E:/GitCode/Messy_Test/testdata/fstream.dat");
+#endif
 	if (!outfile.is_open()) {
 		std::cout << "fail to open file to write\n";
 		return -1;
@@ -65,7 +73,11 @@ int test_fstream1()
 
 	// open a file in read mode.
 	std::ifstream infile;
+#ifdef __linux__
+	infile.open("testdata/fstream.dat");
+#else
 	infile.open("E:/GitCode/Messy_Test/testdata/fstream.dat");
+#endif
 	if (!infile.is_open()) {
 		std::cout << "fail to open file to read\n";
 		return -1;
@@ -90,8 +102,11 @@ int test_fstream1()
 int test_fstream2()
 {
 	/* Testing Simple File IO (TestSimpleFileIO.cpp) */
+#ifdef __linux__
+	std::string filename = "testdata/test.txt";
+#else
 	std::string filename = "E:/GitCode/Messy_Test/testdata/test.txt";
-
+#endif
 	// Write to File
 	std::ofstream fout(filename.c_str());  // default mode is ios::out | ios::trunc
 	if (!fout) {
@@ -120,7 +135,11 @@ int test_fstream2()
 int test_fstream3()
 {
 	/* Testing Binary File IO (TestBinaryFileIO.cpp) */
+#ifdef __linux__
+	std::string filename = "testdata/test.bin";
+#else
 	std::string filename = "E:/GitCode/Messy_Test/testdata/test.bin";
+#endif
 
 	// Write to File
 	std::ofstream fout(filename.c_str(), std::ios::out | std::ios::binary);
@@ -158,7 +177,11 @@ int test_fstream4()
 	theNames.append("Leslie Lamport: Formulated algorithms in distributed systems (e.g. the bakery algorithm).\n");
 	theNames.append("Stephen Cook: Formalized the notion of NP-completeness.\n");
 
+#ifdef __linux__
+	std::ofstream ofs("testdata/theNames.txt");
+#else
 	std::ofstream ofs("E:/GitCode/Messy_Test/testdata/theNames.txt");
+#endif
 	if (!ofs)	{
 		std::cout << "Error opening file for output" << std::endl;
 		return -1;
@@ -170,7 +193,11 @@ int test_fstream4()
 	int i;
 	std::string line;
 
+#ifdef __linux__
+	std::ifstream reader("testdata/theNames.txt");
+#else
 	std::ifstream reader("E:/GitCode/Messy_Test/testdata/theNames.txt");
+#endif
 
 	if (!reader) {
 		std::cout << "Error opening input file" << std::endl;
@@ -196,7 +223,11 @@ std::ofstream _file;
 
 int test_init_database()
 {
+#ifdef __linux__
+	_file.open("testdata/data.bin");
+#else
 	_file.open("E:/GitCode/Messy_Test/testdata/data.bin");
+#endif
 	if (!_file.is_open()) {
 		fprintf(stderr, "open file fail\n");
 		return -1;
@@ -230,7 +261,11 @@ int test_fstream5()
 
 	test_close_database();
 
+#ifdef __linux__
+	std::ifstream file("testdata/data.bin");
+#else
 	std::ifstream file("E:/GitCode/Messy_Test/testdata/data.bin");
+#endif
 	if (!file.is_open()) {
 		fprintf(stderr, "open file fail\n");
 		return -1;
@@ -265,7 +300,11 @@ static void parse_string(char* line, std::string& image_name, std::vector<int>& 
 
 int test_fstream6()
 {
+#ifdef __linux__
+	std::string name{ "testdata/list.txt" };
+#else
 	std::string name{ "E:/GitCode/Messy_Test/testdata/list.txt" };
+#endif
 	std::ifstream in(name.c_str(), std::ios::in);
 	if (!in.is_open()) {
 		fprintf(stderr, "open file fail: %s\n", name.c_str());
@@ -297,7 +336,11 @@ int test_fstream6()
 //////////////////////////////////////////////
 int test_fstream7()
 {
+#ifdef __linux__
+	std::string name{ "testdata/list.txt" };
+#else
 	std::string name{ "E:/GitCode/Messy_Test/testdata/list.txt" };
+#endif
 	std::ifstream in(name.c_str(), std::ios::in);
 	if (!in.is_open()) {
 		fprintf(stderr, "open file fail: %s\n", name.c_str());
