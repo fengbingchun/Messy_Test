@@ -4,7 +4,7 @@
 
 int main()
 {
-	int ret = test_miniz_5();
+	int ret = test_miniz_2();
 	if (ret == 0)
 		std::cout << "ok" << std::endl;
 	else

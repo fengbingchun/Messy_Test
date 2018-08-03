@@ -1,4 +1,5 @@
 #include "funset.hpp"
+#include <limits.h>
 #include "../../src/miniz/miniz.c"
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/52903219
@@ -125,7 +126,11 @@ int test_miniz_2()
 	const int N = 5; //50;
 	char data[2048];
 	char archive_filename[64];
+#ifdef __linux__
+	static const char *s_Test_archive_filename = "testdata/miniz2.zip";
+#else
 	static const char *s_Test_archive_filename = "E:/GitCode/Messy_Test/testdata/miniz2.zip";
+#endif
 
 	assert((strlen(s_pTest_str) + 64) < sizeof(data));
 
@@ -252,8 +257,13 @@ int test_miniz_3()
 	printf("miniz.c version: %s\n", MZ_VERSION);
 
 	int argc = 5;
+#ifdef __linux__
+	char* argv[5] {"", "-l5", "c", "testdata/infile.zip", "testdata/outfile_compress.zip"};
+	//char* argv[5] {"", "-l5", "d", "testdata/outfile_compress.zip", "testdata/outfile_decompress.zip"};
+#else
 	char* argv[5] {"", "-l5", "c", "E:/GitCode/Messy_Test/testdata/infile.zip", "E:/GitCode/Messy_Test/testdata/outfile_compress.zip"};
 	//char* argv[5] {"", "-l5", "d", "E:/GitCode/Messy_Test/testdata/outfile_compress.zip", "E:/GitCode/Messy_Test/testdata/outfile_decompress.zip"};
+#endif
 
 	if (argc < 4) {
 		printf("Usage: example3 [options] [mode:c or d] infile outfile\n");
