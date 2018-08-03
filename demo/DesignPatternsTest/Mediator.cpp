@@ -69,20 +69,20 @@ int test_Mediator1()
 {
 	ConcreteMediator* m = new ConcreteMediator();
 
-	//��ͬ����ʶ�н�
+	//让同事认识中介
 	Colleague1* col1 = new Colleague1(m);
 	Colleague2* col2 = new Colleague2(m);
 
-	//���н���ʶ�����ͬ����
+	//让中介认识具体的同事类
 	m->col1 = col1;
 	m->col2 = col2;
 
-	col1->Send("�Է�����");
-	col2->Send("��û�ԣ�������");
+	col1->Send("吃饭了吗？");
+	col2->Send("还没吃，你请吗？");
 
 	/*result
-		ͬ�¶��������Ϣ�Է�����
-		ͬ��һ�������Ϣ��û�ԣ�������
+		同事二获得了消息吃饭了吗？
+		同事一获得了消息还没吃，你请吗？
 	*/
 
 	return 0;

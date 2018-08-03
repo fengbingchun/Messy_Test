@@ -54,7 +54,7 @@ int test_Strategy1()
 	int a, b;
 	char c;
 	std::cin >> a >> b;
-	std::cout << "ÇëÊäÈëÔËËã·û£º";
+	std::cout << "è¯·è¾“å…¥è¿ç®—ç¬¦ï¼š";
 	std::cin >> c;
 
 	switch (c)
@@ -72,7 +72,7 @@ int test_Strategy1()
 	/*result
 		5
 		8
-		ÇëÊäÈëÔËËã·û£º+
+		è¯·è¾“å…¥è¿ç®—ç¬¦ï¼š+
 		13
 	*/
 

@@ -9,7 +9,7 @@ typedef enum ProductTypeTag_1
 	DIV_ = 4
 }PRODUCTTYPE_1;
 
-//»ùÀà
+//åŸºç±»
 class COperation_1
 {
 public:
@@ -22,7 +22,7 @@ protected:
 	double m_numB;
 };
 
-//¼Ó·¨
+//åŠ æ³•
 class CAddOperation_1 : public COperation_1
 {
 public:
@@ -31,7 +31,7 @@ public:
 	virtual double GetResult();
 };
 
-//¼õ·¨
+//å‡æ³•
 class CSubOperation_1 : public COperation_1
 {
 public:
@@ -40,7 +40,7 @@ public:
 	virtual double GetResult();
 };
 
-//³Ë·¨
+//ä¹˜æ³•
 class CMulOperation_1 : public COperation_1
 {
 public:
@@ -49,7 +49,7 @@ public:
 	virtual double GetResult();
 };
 
-//³ı·¨
+//é™¤æ³•
 class CDivOperation_1 : public COperation_1
 {
 public:
@@ -58,7 +58,7 @@ public:
 	virtual double GetResult();
 };
 
-//¹¤³§Àà
+//å·¥å‚ç±»
 class CCalculatorFactory_1
 {
 public:

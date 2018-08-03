@@ -40,9 +40,9 @@ public:
 		std::cout << "execute" << std::endl;
 
 		if ((w->hour) < 13)
-			std::cout << "»¹²»´íÀ²" << std::endl;
+			std::cout << "è¿˜ä¸é”™å•¦" << std::endl;
 		else
-			std::cout << "²»ĞĞÁË£¬»¹ÊÇË¯¾õ°É" << std::endl;
+			std::cout << "ä¸è¡Œäº†ï¼Œè¿˜æ˜¯ç¡è§‰å§" << std::endl;
 	}
 };
 
@@ -52,10 +52,10 @@ public:
 	virtual void WriteProgram(Work* w)
 	{
 		if ((w->hour) < 12)
-			std::cout << "ÏÖÔÚµÄ¾«ÉñÎŞµĞºÃ" << std::endl;
+			std::cout << "ç°åœ¨çš„ç²¾ç¥æ— æ•Œå¥½" << std::endl;
 		else {
 			w->SetState(new NoonState());
-			w->Writeprogram();//×¢Òâ¼ÓÉÏÕâ¾ä
+			w->Writeprogram();//æ³¨æ„åŠ ä¸Šè¿™å¥
 		}
 
 	}

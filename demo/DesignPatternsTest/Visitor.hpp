@@ -7,7 +7,7 @@
 class Man;
 class Woman;
 
-//ĞĞÎª
+//è¡Œä¸º
 class Action
 {
 public:
@@ -15,44 +15,44 @@ public:
 	virtual void GetWomanConclusion(Woman* concreteElementB) = 0;
 };
 
-//³É¹¦
+//æˆåŠŸ
 class Success : public Action
 {
 public:
 	virtual void GetManConclusion(Man* concreteElementA)
 	{
-		std::cout << "ÄĞÈË³É¹¦Ê±£¬±³ºóÓĞ¸öÎ°´óµÄÅ®ÈË" << std::endl;
+		std::cout << "ç”·äººæˆåŠŸæ—¶ï¼ŒèƒŒåæœ‰ä¸ªä¼Ÿå¤§çš„å¥³äºº" << std::endl;
 	}
 
 	virtual void GetWomanConclusion(Woman* concreteElementB)
 	{
-		std::cout << "Å®ÈË³É¹¦Ê±£¬±³ºóÓĞ¸öÃ»ÓÃµÄÄĞÈË" << std::endl;
+		std::cout << "å¥³äººæˆåŠŸæ—¶ï¼ŒèƒŒåæœ‰ä¸ªæ²¡ç”¨çš„ç”·äºº" << std::endl;
 	}
 };
 
-//Ê§°Ü
+//å¤±è´¥
 class Failure : public Action
 {
 public:
 	virtual void GetManConclusion(Man* concreteElementA)
 	{
-		std::cout << "ÄĞÈËÊ§°ÜÊ±£¬±³ºóÓĞ¸öÎ°´óµÄÅ®ÈË" << std::endl;
+		std::cout << "ç”·äººå¤±è´¥æ—¶ï¼ŒèƒŒåæœ‰ä¸ªä¼Ÿå¤§çš„å¥³äºº" << std::endl;
 	}
 
 	virtual void GetWomanConclusion(Woman* concreteElementB)
 	{
-		std::cout << "Å®ÈËÊ§°ÜÊ±£¬±³ºóÓĞ¸öÃ»ÓÃµÄÄĞÈË" << std::endl;
+		std::cout << "å¥³äººå¤±è´¥æ—¶ï¼ŒèƒŒåæœ‰ä¸ªæ²¡ç”¨çš„ç”·äºº" << std::endl;
 	}
 };
 
-//³éÏóÈËÀà
+//æŠ½è±¡äººç±»
 class Person_2
 {
 public:
 	virtual void Accept(Action* visitor) = 0;
 };
 
-//ÄĞÈË
+//ç”·äºº
 class Man : public Person_2
 {
 public:
@@ -62,7 +62,7 @@ public:
 	}
 };
 
-//Å®ÈË
+//å¥³äºº
 class Woman : public Person_2
 {
 public:
@@ -72,7 +72,7 @@ public:
 	}
 };
 
-//¶ÔÏó½á¹¹Àà
+//å¯¹è±¡ç»“æ„ç±»
 class ObjectStructure
 {
 private:

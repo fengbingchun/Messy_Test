@@ -99,8 +99,8 @@ int test_Adapter1()
 	delete ada;
 
 	/*result
-		ÌØÊâµÄÇëÇó
-		ÆÕÍ¨µÄÇëÇó
+		ç‰¹æ®Šçš„è¯·æ±‚
+		æ™®é€šçš„è¯·æ±‚
 	*/
 
 	return 0;
@@ -108,11 +108,11 @@ int test_Adapter1()
 
 int test_Adapter2()
 {
-	Player* p = new TransLater("Ğ¡Àî");
+	Player* p = new TransLater("å°æ");
 	p->Attack();
 
 	/*result
-		Ğ¡ÀîÖĞ³¡½ø¹¥
+		å°æä¸­åœºè¿›æ”»
 	*/
 
 	return 0;

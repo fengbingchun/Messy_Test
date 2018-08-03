@@ -6,7 +6,7 @@
 
 class Memo_1;
 
-//·¢ÆğÈËÀà
+//å‘èµ·äººç±»
 class Originator_1
 {
 public:
@@ -15,11 +15,11 @@ public:
 	void SetMemo(Memo_1* memo);
 	void Show()
 	{
-		std::cout << "×´Ì¬" << state << std::endl;
+		std::cout << "çŠ¶æ€" << state << std::endl;
 	}
 };
 
-//±¸ÍüÂ¼Àà
+//å¤‡å¿˜å½•ç±»
 class Memo_1
 {
 public:
@@ -30,7 +30,7 @@ public:
 	}
 };
 
-//¹ÜÀíÕßÀà
+//ç®¡ç†è€…ç±»
 class Caretaker_1
 {
 public:
@@ -64,7 +64,7 @@ class Memento
 public:
 protected:
 private:
-	//ÕâÊÇ×î¹Ø¼üµÄµØ·½£¬½«OriginatorÎªfriendÀà£¬¿ÉÒÔ·ÃÎÊÄÚ²¿ĞÅÏ¢£¬µ«ÊÇÆäËûÀà²»ÄÜ·ÃÎÊ
+	//è¿™æ˜¯æœ€å…³é”®çš„åœ°æ–¹ï¼Œå°†Originatorä¸ºfriendç±»ï¼Œå¯ä»¥è®¿é—®å†…éƒ¨ä¿¡æ¯ï¼Œä½†æ˜¯å…¶ä»–ç±»ä¸èƒ½è®¿é—®
 	friend class Originator_2;
 	typedef std::string State;
 	Memento();

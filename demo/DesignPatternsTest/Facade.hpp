@@ -8,7 +8,7 @@ class SubSysOne
 public:
 	void MethodOne()
 	{
-		std::cout << "·½·¨Ò»" << std::endl;
+		std::cout << "æ–¹æ³•ä¸€" << std::endl;
 	}
 };
 
@@ -17,7 +17,7 @@ class SubSysTwo
 public:
 	void MethodTwo()
 	{
-		std::cout << "·½·¨¶þ" << std::endl;
+		std::cout << "æ–¹æ³•äºŒ" << std::endl;
 	}
 };
 
@@ -26,11 +26,11 @@ class SubSysThree
 public:
 	void MethodThree()
 	{
-		std::cout << "·½·¨Èý" << std::endl;
+		std::cout << "æ–¹æ³•ä¸‰" << std::endl;
 	}
 };
 
-//Íâ¹ÛÀà
+//å¤–è§‚ç±»
 class Facade
 {
 private:

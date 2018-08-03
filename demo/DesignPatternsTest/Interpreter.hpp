@@ -19,7 +19,7 @@ class Expression : public AbstractExpression
 public:
 	virtual void Interpret(Context* context)
 	{
-		std::cout << "ÖÕ¶Ë½âÊÍÆ÷" << std::endl;
+		std::cout << "ç»ˆç«¯è§£é‡Šå™¨" << std::endl;
 	}
 };
 
@@ -28,7 +28,7 @@ class NonterminalExpression : public AbstractExpression
 public:
 	virtual void Interpret(Context* context)
 	{
-		std::cout << "·ÇÖÕ¶Ë½âÊÍÆ÷" << std::endl;
+		std::cout << "éžç»ˆç«¯è§£é‡Šå™¨" << std::endl;
 	}
 };
 

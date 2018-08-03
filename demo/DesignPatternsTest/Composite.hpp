@@ -151,7 +151,7 @@ public:
 
 	virtual void LineOfDuty()
 	{
-		std::cout << m_strName << ":ÕÐÆ¸ÈË²Å" << std::endl;
+		std::cout << m_strName << ":æ‹›è˜äººæ‰" << std::endl;
 	}
 };
 

@@ -56,9 +56,9 @@ int test_Facade1()
 	test->FacadeMethod();
 
 	/*result
-		·½·¨Ò»
-		·½·¨¶þ
-		·½·¨Èý
+		æ–¹æ³•ä¸€
+		æ–¹æ³•äºŒ
+		æ–¹æ³•ä¸‰
 	*/
 
 	return 0;

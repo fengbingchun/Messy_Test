@@ -12,7 +12,7 @@ typedef enum ProductTypeTag
 	DIV = 4
 }PRODUCTTYPE;
 
-//»ùÀà
+//åŸºç±»
 class COperation
 {
 public:
@@ -33,7 +33,7 @@ protected:
 	double m_numB;
 };
 
-//¼Ó·¨
+//åŠ æ³•
 class CAddOperation : public COperation
 {
 public:
@@ -55,7 +55,7 @@ public:
 	}
 };
 
-//¼õ·¨
+//å‡æ³•
 class CSubOperation : public COperation
 {
 public:
@@ -77,7 +77,7 @@ public:
 	}
 };
 
-//³Ë·¨
+//ä¹˜æ³•
 class CMulOperation : public COperation
 {
 public:
@@ -99,7 +99,7 @@ public:
 	}
 };
 
-//³ı·¨
+//é™¤æ³•
 class CDivOperation : public COperation
 {
 public:
@@ -121,7 +121,7 @@ public:
 	}
 };
 
-//¹¤³§Àà
+//å·¥å‚ç±»
 class CCalculatorFactory
 {
 public:

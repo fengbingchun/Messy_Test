@@ -3,7 +3,7 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/22584107
 
-Singleton* Singleton::single = NULL;//静态变量类外初始化
+Singleton* Singleton::single = NULL;//闈欐�佸彉閲忕被澶栧垵濮嬪寲
 
 Singleton_1* Singleton_1::_instance = 0;
 

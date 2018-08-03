@@ -7,14 +7,14 @@ namespace static_ {
 
 class A {
 public:
-	static int func(); // Ö»ÄÜµ÷ÓÃ¾²Ì¬³ÉÔ±
+	static int func(); // åªèƒ½è°ƒç”¨é™æ€æˆå‘˜
 	int func2();
 
 public:
 	static int val;
 private:
 	int val2 = 5;
-	static int val3; // ±ØĞëÔÚÀàÍâ½øĞĞ³õÊ¼»¯
+	static int val3; // å¿…é¡»åœ¨ç±»å¤–è¿›è¡Œåˆå§‹åŒ–
 };
 
 struct X {
@@ -55,7 +55,7 @@ public:
 	static Singleton& Instance();
 
 private:
-	Singleton(); // Singleton²»¿ÉÒÔ±»ÊµÀı»¯£¬Òò´Ë½«Æä¹¹Ôìº¯ÊıÉùÃ÷Îªprotected»òÕßÖ±½ÓÉùÃ÷Îªprivate
+	Singleton(); // Singletonä¸å¯ä»¥è¢«å®ä¾‹åŒ–ï¼Œå› æ­¤å°†å…¶æ„é€ å‡½æ•°å£°æ˜ä¸ºprotectedæˆ–è€…ç›´æ¥å£°æ˜ä¸ºprivate
 };
 
 int test_static_1();

@@ -4,34 +4,34 @@
 #include <iostream>
 
 // ==================================================
-//ÊÖ»úÈí¼ş
+//æ‰‹æœºè½¯ä»¶
 class HandsetSoft
 {
 public:
 	virtual void Run() = 0;
 };
 
-//ÓÎÏ·Èí¼ş
+//æ¸¸æˆè½¯ä»¶
 class HandsetGame : public HandsetSoft
 {
 public:
 	virtual void Run()
 	{
-		std::cout << "ÔËĞĞÊÖ»úÓÎÏ·" << std::endl;
+		std::cout << "è¿è¡Œæ‰‹æœºæ¸¸æˆ" << std::endl;
 	}
 };
 
-//Í¨Ñ¶Â¼Èí¼ş
+//é€šè®¯å½•è½¯ä»¶
 class HandSetAddressList : public HandsetSoft
 {
 public:
 	virtual void Run()
 	{
-		std::cout << "ÊÖ»úÍ¨Ñ¶Â¼" << std::endl;
+		std::cout << "æ‰‹æœºé€šè®¯å½•" << std::endl;
 	}
 };
 
-//ÊÖ»úÆ·ÅÆ
+//æ‰‹æœºå“ç‰Œ
 class HandsetBrand
 {
 protected:
@@ -44,7 +44,7 @@ public:
 	virtual void Run() = 0;
 };
 
-//MÆ·ÅÆ
+//Må“ç‰Œ
 class HandsetBrandM : public HandsetBrand
 {
 public:
@@ -54,7 +54,7 @@ public:
 	}
 };
 
-//NÆ·ÅÆ
+//Nå“ç‰Œ
 class HandsetBrandN : public HandsetBrand
 {
 public:
@@ -88,7 +88,7 @@ private:
 	AbstractionImp* _imp;
 };
 
-int test_Bridge1(); // ¿Í»§¶Ë
+int test_Bridge1(); // å®¢æˆ·ç«¯
 int test_Bridge2();
 
 #endif // FBC_MESSY_TEST_BRIDGE_HPP_

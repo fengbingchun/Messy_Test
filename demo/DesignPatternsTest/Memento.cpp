@@ -98,9 +98,9 @@ int test_Memento1()
 	on->Show();
 
 	/*result
-		״̬on
-		״̬off
-		״̬on
+		状态on
+		状态off
+		状态on
 	*/
 
 	return 0;
@@ -109,13 +109,13 @@ int test_Memento1()
 int test_Memento2()
 {
 	Originator_2* o = new Originator_2();
-	o->SetState("old");//����ǰ״̬
+	o->SetState("old");//备忘前状态
 	o->PrintState();
 
-	Memento* m = o->CreateMemento();//��״̬����
-	o->SetState("new");//�޸�״̬
+	Memento* m = o->CreateMemento();//将状态备忘
+	o->SetState("new");//修改状态
 	o->PrintState();
-	o->RestoreToMemento(m);//�ָ��޸�ǰ״̬
+	o->RestoreToMemento(m);//恢复修改前状态
 	o->PrintState();
 
 	/*result

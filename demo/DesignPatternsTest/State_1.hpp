@@ -1,7 +1,7 @@
 #ifndef FBC_MESSY_TEST_STATE1_HPP_
 #define FBC_MESSY_TEST_STATE_HPP_
 
-class Context_3;//Ç°ÖÃÉùÃ÷
+class Context_3;//å‰ç½®å£°æ˜
 
 class State_3
 {

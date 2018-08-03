@@ -48,8 +48,8 @@ int test_Flyweight1()
 	ws2->Use();
 
 	/*result
-		网站分类:测试
-		网站分类:测试
+		缃戠珯鍒嗙被:娴嬭瘯
+		缃戠珯鍒嗙被:娴嬭瘯
 	*/
 
 	return 0;

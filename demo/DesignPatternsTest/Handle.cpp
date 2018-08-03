@@ -49,10 +49,10 @@ ConcreteHandleA::~ConcreteHandleA()
 void ConcreteHandleA::HandleRequest()
 {
 	if (this->GetSuccessor() != 0) {
-		std::cout << "ConcreteHandleA ÎÒ°Ñ´¦ÀíÈ¨¸øºó¼Ì½Úµã ..." << std::endl;
+		std::cout << "ConcreteHandleA æˆ‘æŠŠå¤„ç†æƒç»™åŽç»§èŠ‚ç‚¹ ..." << std::endl;
 		this->GetSuccessor()->HandleRequest();
 	} else
-		std::cout << "ConcreteHandleA Ã»ÓÐºó¼ÌÁË£¬ ÎÒ±ØÐë×Ô¼º´¦Àí ..." << std::endl;
+		std::cout << "ConcreteHandleA æ²¡æœ‰åŽç»§äº†ï¼Œ æˆ‘å¿…é¡»è‡ªå·±å¤„ç† ..." << std::endl;
 }
 
 ConcreteHandleB::ConcreteHandleB()
@@ -73,8 +73,8 @@ ConcreteHandleB::~ConcreteHandleB()
 void ConcreteHandleB::HandleRequest()
 {
 	if (this->GetSuccessor() != 0) {
-		std::cout << "ConcreteHandleB ÎÒ°Ñ´¦ÀíÈ¨¸øºó¼Ì½Úµã ..." << std::endl;
+		std::cout << "ConcreteHandleB æˆ‘æŠŠå¤„ç†æƒç»™åŽç»§èŠ‚ç‚¹ ..." << std::endl;
 		this->GetSuccessor()->HandleRequest();
 	} else
-		std::cout << "ConcreteHandleB Ã»ÓÐºó¼ÌÁË£¬ÎÒ±ØÐë×Ô¼º´¦Àí ..." << std::endl;
+		std::cout << "ConcreteHandleB æ²¡æœ‰åŽç»§äº†ï¼Œæˆ‘å¿…é¡»è‡ªå·±å¤„ç† ..." << std::endl;
 }

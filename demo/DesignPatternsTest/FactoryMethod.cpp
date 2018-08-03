@@ -14,7 +14,7 @@ int test_FactoryMethod1()
 	delete sf;
 
 	/*result:
-	À×·æÉ¨µØ
+	é›·é”‹æ‰«åœ°
 	*/
 
 	return 0;

@@ -5,14 +5,14 @@
 #include <string>
 #include <iostream>
 
-//³éÏóµÄÍøÕ¾
+//æŠ½è±¡çš„ç½‘ç«™
 class WebSite
 {
 public:
 	virtual void Use() = 0;
 };
 
-//¾ßÌåµÄ¹²ÏíÍøÕ¾
+//å…·ä½“çš„å…±äº«ç½‘ç«™
 class ConcreteWebSite : public WebSite
 {
 private:
@@ -25,11 +25,11 @@ public:
 
 	virtual void Use()
 	{
-		std::cout << "ÍøÕ¾·ÖÀà:" << name << std::endl;
+		std::cout << "ç½‘ç«™åˆ†ç±»:" << name << std::endl;
 	}
 };
 
-//²»¹²ÏíµÄÍøÕ¾
+//ä¸å…±äº«çš„ç½‘ç«™
 class UnShareWebSite : public WebSite
 {
 private:
@@ -42,11 +42,11 @@ public:
 
 	virtual void Use()
 	{
-		std::cout << "²»¹²ÏíµÄÍøÕ¾:" << name << std::endl;
+		std::cout << "ä¸å…±äº«çš„ç½‘ç«™:" << name << std::endl;
 	}
 };
 
-//ÍøÕ¾¹¤³§Àà£¬ÓÃÓÚ´æ·Å¹²ÏíµÄWebSite¶ÔÏó
+//ç½‘ç«™å·¥å‚ç±»ï¼Œç”¨äºå­˜æ”¾å…±äº«çš„WebSiteå¯¹è±¡
 class WebFactory
 {
 private:
@@ -60,7 +60,7 @@ public:
 
 	WebFactory()
 	{
-		websites.push_back(new ConcreteWebSite("²âÊÔ"));
+		websites.push_back(new ConcreteWebSite("æµ‹è¯•"));
 	}
 };
 

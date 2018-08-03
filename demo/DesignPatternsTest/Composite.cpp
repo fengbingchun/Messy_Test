@@ -39,22 +39,22 @@ Component_1* Composite_1::GetChild(int index)
 
 int test_Composite1()
 {
-	Composite* p = new Composite("С��");
-	p->Add(new Leaf("С��"));
-	p->Add(new Leaf("С��"));
+	Composite* p = new Composite("小王");
+	p->Add(new Leaf("小李"));
+	p->Add(new Leaf("小赵"));
 
-	Composite* p1 = new Composite("СС��");
-	p1->Add(new Leaf("����"));
+	Composite* p1 = new Composite("小小五");
+	p1->Add(new Leaf("大三"));
 
 	p->Add(p1);
 	p->Display(1);
 
 	/*result
-		-С��
-		---С��
-		---С��
-		---СС��
-		-----����
+		-小王
+		---小李
+		---小赵
+		---小小五
+		-----大三
 	*/
 
 	return 0;
@@ -62,14 +62,14 @@ int test_Composite1()
 
 int test_Composite2()
 {
-	ConcreteCompany* p = new ConcreteCompany("�廪��ѧ");
-	p->Add(new HrDepartment("�廪��ѧ�˲Ų�"));
+	ConcreteCompany* p = new ConcreteCompany("清华大学");
+	p->Add(new HrDepartment("清华大学人才部"));
 
-	ConcreteCompany* p1 = new ConcreteCompany("��ѧϵ");;
-	p1->Add(new HrDepartment("��ѧϵ�˲Ų�"));
+	ConcreteCompany* p1 = new ConcreteCompany("数学系");;
+	p1->Add(new HrDepartment("数学系人才部"));
 
-	ConcreteCompany* p2 = new ConcreteCompany("����ϵ");
-	p2->Add(new HrDepartment("����ϵ�˲Ų�"));
+	ConcreteCompany* p2 = new ConcreteCompany("物理系");
+	p2->Add(new HrDepartment("物理系人才部"));
 
 	p->Add(p1);
 	p->Add(p2);
@@ -78,15 +78,15 @@ int test_Composite2()
 	p->LineOfDuty();
 
 	/*result
-		-�廪��ѧ
-		--�廪��ѧ�˲Ų�
-		--��ѧϵ
-		---��ѧϵ�˲Ų�
-		--����ϵ
-		---����ϵ�˲Ų�
-		�廪��ѧ�˲Ų�����Ƹ�˲�
-		��ѧϵ�˲Ų�����Ƹ�˲�
-		����ϵ�˲Ų�����Ƹ�˲�
+		-清华大学
+		--清华大学人才部
+		--数学系
+		---数学系人才部
+		--物理系
+		---物理系人才部
+		清华大学人才部：招聘人才
+		数学系人才部：招聘人才
+		物理系人才部：招聘人才
 	*/
 
 	return 0;

@@ -54,7 +54,7 @@ int test_Proxy1()
 	test->Request();
 
 	/*result
-		ÕæÊµµÄÇëÇó
+		çœŸå®çš„è¯·æ±‚
 	*/
 
 	return 0;

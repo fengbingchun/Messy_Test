@@ -3,24 +3,24 @@
 
 #include <iostream>
 
-//¶¨Òå½Ó¿Ú
+//å®šä¹‰æ¥å£
 class Interface
 {
 public:
 	virtual void Request() = 0;
 };
 
-//ÕæÊµÀà
+//çœŸå®ç±»
 class RealClass : public Interface
 {
 public:
 	virtual void Request()
 	{
-		std::cout << "ÕæÊµµÄÇëÇó" << std::endl;
+		std::cout << "çœŸå®çš„è¯·æ±‚" << std::endl;
 	}
 };
 
-//´úÀíÀà
+//ä»£ç†ç±»
 class ProxyClass : public Interface
 {
 private:

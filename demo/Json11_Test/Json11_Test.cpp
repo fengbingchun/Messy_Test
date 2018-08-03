@@ -155,12 +155,12 @@ int test4()
 int test1()
 {
 	json11::Json my_json = json11::Json::object{
-			{ "中国", "北京" },
+			{ "涓浗", "鍖椾含" },
 			{ "key2", false },
 			{ "key3", json11::Json::array { 1, 2, 3 } },
 	};
 	std::string json_str = my_json.dump();
-	std::string key_1 = my_json["中国"].string_value();
+	std::string key_1 = my_json["涓浗"].string_value();
 
 	std::cout << json_str << std::endl;
 	std::cout << key_1 << std::endl;

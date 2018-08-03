@@ -37,8 +37,8 @@ int test_Bridge1()
 	brand->SetHandsetSoft(new HandSetAddressList());
 	brand->Run();
 	/* result:
-		ÔËĞĞÊÖ»úÓÎÏ·
-		ÊÖ»úÍ¨Ñ¶Â¼
+		è¿è¡Œæ‰‹æœºæ¸¸æˆ
+		æ‰‹æœºé€šè®¯å½•
 	*/
 
 	return 0;

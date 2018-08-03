@@ -9,7 +9,7 @@
 
 class Secretary;
 
-//¿´¹ÉÆ±µÄÍ¬ÊÂÀà(¹Û²ì¶ÔÏó£¬¹Û²ìÕß)
+//çœ‹è‚¡ç¥¨çš„åŒäº‹ç±»(è§‚å¯Ÿå¯¹è±¡ï¼Œè§‚å¯Ÿè€…)
 class StockObserver
 {
 private:
@@ -25,7 +25,7 @@ public:
 	void Update();
 };
 
-//ÃØÊéÀà(Ö÷Ìâ¶ÔÏó£¬Í¨ÖªÕß)
+//ç§˜ä¹¦ç±»(ä¸»é¢˜å¯¹è±¡ï¼Œé€šçŸ¥è€…)
 class Secretary
 {
 private:
@@ -52,7 +52,7 @@ public:
 // ===========================================================
 class SecretaryBase;
 
-//³éÏó¹Û²ìÕß
+//æŠ½è±¡è§‚å¯Ÿè€…
 class CObserverBase
 {
 protected:
@@ -68,7 +68,7 @@ public:
 	virtual void Update() = 0;
 };
 
-//¾ßÌåµÄ¹Û²ìÕß£¬¿´¹ÉÆ±µÄ
+//å…·ä½“çš„è§‚å¯Ÿè€…ï¼Œçœ‹è‚¡ç¥¨çš„
 class StockObserver_1 : public CObserverBase
 {
 public:
@@ -80,7 +80,7 @@ public:
 	virtual void Update();
 };
 
-//¾ßÌå¹Û²ìÕß£¬¿´NBAµÄ
+//å…·ä½“è§‚å¯Ÿè€…ï¼Œçœ‹NBAçš„
 class NBAObserver : public CObserverBase
 {
 public:
@@ -92,7 +92,7 @@ public:
 	virtual void Update();
 };
 
-//³éÏóÍ¨ÖªÕß
+//æŠ½è±¡é€šçŸ¥è€…
 class SecretaryBase
 {
 public:
@@ -103,7 +103,7 @@ public:
 	virtual void Notify() = 0;
 };
 
-//¾ßÌåÍ¨ÖªÕß
+//å…·ä½“é€šçŸ¥è€…
 class Secretary_1 : public SecretaryBase
 {
 public:
@@ -144,7 +144,7 @@ public:
 	ConcreteObserverA(Subject* sub);
 	virtual ~ConcreteObserverA();
 
-	//´«ÈëSubject×÷Îª²ÎÊı£¬ÕâÑù¿ÉÒÔÈÃÒ»¸öViewÊôÓÚ¶à¸öµÄSubject
+	//ä¼ å…¥Subjectä½œä¸ºå‚æ•°ï¼Œè¿™æ ·å¯ä»¥è®©ä¸€ä¸ªViewå±äºå¤šä¸ªçš„Subject
 	void Update(Subject* sub);
 	void PrintInfo();
 protected:
@@ -158,7 +158,7 @@ public:
 	virtual Subject* GetSubject();
 	ConcreteObserverB(Subject* sub);
 	virtual ~ConcreteObserverB();
-	//´«ÈëSubject×÷Îª²ÎÊı£¬ÕâÑù¿ÉÒÔÈÃÒ»¸öViewÊôÓÚ¶à¸öµÄSubject
+	//ä¼ å…¥Subjectä½œä¸ºå‚æ•°ï¼Œè¿™æ ·å¯ä»¥è®©ä¸€ä¸ªViewå±äºå¤šä¸ªçš„Subject
 	void Update(Subject* sub);
 	void PrintInfo();
 protected:

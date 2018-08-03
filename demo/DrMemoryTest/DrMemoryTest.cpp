@@ -2,10 +2,10 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/51626705
 
-void test1(); // ÄÚ´æĞ¹Â¶
-void test2(); // ·Ç·¨·ÃÎÊ
-void test3(); // Î´³õÊ¼»¯¶Á
-void test4(); // Heap ²Ù×÷²ÎÊı´íÎó(Invalid Heap Argument)
+void test1(); // å†…å­˜æ³„éœ²
+void test2(); // éæ³•è®¿é—®
+void test3(); // æœªåˆå§‹åŒ–è¯»
+void test4(); // Heap æ“ä½œå‚æ•°é”™è¯¯(Invalid Heap Argument)
 
 int main()
 {
@@ -45,7 +45,7 @@ void test3()
 	char x;
 	a.a = 'a';
 	a.b = 'b';
-	b.a = x; // error C4700:Ê¹ÓÃÁËÎ´³õÊ¼»¯µÄ¾Ö²¿±äÁ¿x,ÈôÊ¹vs2013ÄÜ¹»Õı³£±àÒë£¬Ğè½«ÅäÖÃÊôĞÔÖĞµÄC/C++ SDL¼ì²é¹Ø±Õ
+	b.a = x; // error C4700:ä½¿ç”¨äº†æœªåˆå§‹åŒ–çš„å±€éƒ¨å˜é‡x,è‹¥ä½¿vs2013èƒ½å¤Ÿæ­£å¸¸ç¼–è¯‘ï¼Œéœ€å°†é…ç½®å±æ€§ä¸­çš„C/C++ SDLæ£€æŸ¥å…³é—­
 	if (b.a == 10)
 		memcpy(&b, &a, sizeof(T));
 }

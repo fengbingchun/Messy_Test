@@ -13,7 +13,7 @@ public:
 	void OperationChangeState();
 protected:
 private:
-	friend class State_3;//表明在State类中可以访问Context类的private字段
+	friend class State_3;//琛ㄦ槑鍦⊿tate绫讳腑鍙互璁块棶Context绫荤殑private瀛楁
 	bool ChangeState(State_3* state);
 private:
 	State_3* _state;

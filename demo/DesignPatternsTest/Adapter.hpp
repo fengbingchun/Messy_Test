@@ -10,7 +10,7 @@ class Target_
 public:
 	virtual void Request()
 	{
-		std::cout << "ÆÕÍ¨µÄÇëÇó" << std::endl;
+		std::cout << "æ™®é€šçš„è¯·æ±‚" << std::endl;
 	}
 };
 
@@ -19,7 +19,7 @@ class Adaptee_
 public:
 	void SpecificalRequest()
 	{
-		std::cout << "ÌØÊâµÄÇëÇó" << std::endl;
+		std::cout << "ç‰¹æ®Šçš„è¯·æ±‚" << std::endl;
 	}
 };
 
@@ -63,12 +63,12 @@ public:
 public:
 	virtual void Attack()
 	{
-		std::cout << name << "Ç°·æ½ø¹¥" << std::endl;
+		std::cout << name << "å‰é”‹è¿›æ”»" << std::endl;
 	}
 
 	virtual void Defense()
 	{
-		std::cout << name << "Ç°·æ·ÀÊØ" << std::endl;
+		std::cout << name << "å‰é”‹é˜²å®ˆ" << std::endl;
 	}
 };
 
@@ -79,16 +79,16 @@ public:
 public:
 	virtual void Attack()
 	{
-		std::cout << name << "ÖÐ³¡½ø¹¥" << std::endl;
+		std::cout << name << "ä¸­åœºè¿›æ”»" << std::endl;
 	}
 
 	virtual void Defense()
 	{
-		std::cout << name << "ÖÐ³¡·ÀÊØ" << std::endl;
+		std::cout << name << "ä¸­åœºé˜²å®ˆ" << std::endl;
 	}
 };
 
-//ÎªÖÐ³¡·­Òë
+//ä¸ºä¸­åœºç¿»è¯‘
 class TransLater : public Player
 {
 private:
@@ -175,8 +175,8 @@ private:
 	Adaptee4* _ade;
 };
 
-int test_Adapter1(); // ¿Í»§¶Ë
-int test_Adapter2(); // ¿Í»§¶Ë
+int test_Adapter1(); // å®¢æˆ·ç«¯
+int test_Adapter2(); // å®¢æˆ·ç«¯
 int test_Adapter3();
 int test_Adapter4();
 

@@ -53,11 +53,11 @@ int test_Builder1()
 	Builder* b1 = new ConCreteBuilder1();
 	Builder* b2 = new ConcreteBuilder2();
 
-	p->Construct(b1);//µ÷ÓÃµÚÒ»ÖÖ·½Ê½
+	p->Construct(b1);//è°ƒç”¨ç¬¬ä¸€ç§æ–¹å¼
 	Product* pb1 = b1->GetResult();
 	pb1->Show();
 
-	p->Construct(b2);//µ÷ÓÃµÚ¶þÖÖ·½Ê½
+	p->Construct(b2);//è°ƒç”¨ç¬¬äºŒç§æ–¹å¼
 	Product* pb2 = b2->GetResult();
 	pb2->Show();
 

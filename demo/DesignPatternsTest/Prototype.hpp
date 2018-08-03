@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 
-class Prototype//抽象基类
+class Prototype//鎶借薄鍩虹被
 {
 private:
 	std::string m_strName;
@@ -28,7 +28,7 @@ public:
 	virtual Prototype* Clone()
 	{
 		ConcretePrototype1* p = new ConcretePrototype1();
-		*p = *this;//复制对象
+		*p = *this;//澶嶅埗瀵硅薄
 		return p;
 	}
 };
@@ -43,7 +43,7 @@ public:
 	virtual Prototype* Clone()
 	{
 		ConcretePrototype2* p = new ConcretePrototype2();
-		*p = *this;//复制对象
+		*p = *this;//澶嶅埗瀵硅薄
 
 		return p;
 	}

@@ -4,17 +4,17 @@
 
 void StockObserver::Update()
 {
-	std::cout << name << ":" << sub->action << "£¬²»ÒªÍæ¹ÉÆ±ÁË£¬Òª¿ªÊ¼¹¤×÷ÁË" << std::endl;
+	std::cout << name << ":" << sub->action << "ï¼Œä¸è¦çŽ©è‚¡ç¥¨äº†ï¼Œè¦å¼€å§‹å·¥ä½œäº†" << std::endl;
 }
 
 void StockObserver_1::Update()
 {
-	std::cout << name << ":" << sub->action << "²»ÒªÍæ¹ÉÆ±ÁË£¬Òª¿ªÊ¼¹¤×÷ÁË" << std::endl;
+	std::cout << name << ":" << sub->action << "ä¸è¦çŽ©è‚¡ç¥¨äº†ï¼Œè¦å¼€å§‹å·¥ä½œäº†" << std::endl;
 }
 
 void NBAObserver::Update()
 {
-	std::cout << name << ":" << sub->action << "²»Òª¿´NBAÁË£¬ÀÏ°åÀ´ÁË" << std::endl;
+	std::cout << name << ":" << sub->action << "ä¸è¦çœ‹NBAäº†ï¼Œè€æ¿æ¥äº†" << std::endl;
 }
 
 Observer::Observer()
@@ -90,25 +90,25 @@ void ConcreteObserverB::Update(Subject* sub)
 
 int test_Observer1()
 {
-	Secretary* p = new Secretary();//´´½¨Í¨ÖªÕß
+	Secretary* p = new Secretary();//åˆ›å»ºé€šçŸ¥è€…
 
-	//¹Û²ìÕß
-	StockObserver* s1 = new StockObserver("Ð¡Àî", p);
-	StockObserver* s2 = new StockObserver("Ð¡ÕÔ", p);
+	//è§‚å¯Ÿè€…
+	StockObserver* s1 = new StockObserver("å°æŽ", p);
+	StockObserver* s2 = new StockObserver("å°èµµ", p);
 
-	//¼ÓÈëÍ¨Öª¶ÓÁÐ
+	//åŠ å…¥é€šçŸ¥é˜Ÿåˆ—
 	p->Add(*s1);
 	p->Add(*s2);
 
-	//ÊÂ¼þ
-	p->action = "ÀÏ°åÀ´ÁË";
+	//äº‹ä»¶
+	p->action = "è€æ¿æ¥äº†";
 
-	//Í¨Öª
+	//é€šçŸ¥
 	p->Notify();
 
 	/*result
-		Ð¡Àî£ºÀÏ°åÀ´ÁË£¬²»ÒªÍæ¹ÉÆ±ÁË£¬Òª¿ªÊ¼¹¤×÷ÁË
-		Ð¡ÕÔ£ºÀÏ°åÀ´ÁË£¬²»ÒªÍæ¹ÉÆ±ÁË£¬Òª¿ªÊ¼¹¤×÷ÁË
+		å°æŽï¼šè€æ¿æ¥äº†ï¼Œä¸è¦çŽ©è‚¡ç¥¨äº†ï¼Œè¦å¼€å§‹å·¥ä½œäº†
+		å°èµµï¼šè€æ¿æ¥äº†ï¼Œä¸è¦çŽ©è‚¡ç¥¨äº†ï¼Œè¦å¼€å§‹å·¥ä½œäº†
 	*/
 
 	return 0;
@@ -116,22 +116,22 @@ int test_Observer1()
 
 int test_Observer2()
 {
-	SecretaryBase* p = new Secretary_1();//´´½¨¹Û²ìÕß
+	SecretaryBase* p = new Secretary_1();//åˆ›å»ºè§‚å¯Ÿè€…
 
-	//±»¹Û²ìµÄ¶ÔÏó
-	CObserverBase* s1 = new NBAObserver("Ð¡Àî", p);
-	CObserverBase* s2 = new StockObserver_1("Ð¡ÕÔ", p);
-	//¼ÓÈë¹Û²ì¶ÓÁÐ
+	//è¢«è§‚å¯Ÿçš„å¯¹è±¡
+	CObserverBase* s1 = new NBAObserver("å°æŽ", p);
+	CObserverBase* s2 = new StockObserver_1("å°èµµ", p);
+	//åŠ å…¥è§‚å¯Ÿé˜Ÿåˆ—
 	p->Attach(s1);
 	p->Attach(s2);
-	//ÊÂ¼þ
-	p->action = "ÀÏ°åÀ´ÁË";
-	//Í¨Öª
+	//äº‹ä»¶
+	p->action = "è€æ¿æ¥äº†";
+	//é€šçŸ¥
 	p->Notify();
 
 	/*result
-		Ð¡Àî£ºÀÏ°åÀ´ÁË²»Òª¿´NBAÁË£¬ÀÏ°åÀ´ÁË
-		Ð¡ÕÔ£ºÀÏ°åÀ´ÁË²»ÒªÍæ¹ÉÆ±ÁË£¬Òª¿ªÊ¼¹¤×÷ÁË
+		å°æŽï¼šè€æ¿æ¥äº†ä¸è¦çœ‹NBAäº†ï¼Œè€æ¿æ¥äº†
+		å°èµµï¼šè€æ¿æ¥äº†ä¸è¦çŽ©è‚¡ç¥¨äº†ï¼Œè¦å¼€å§‹å·¥ä½œäº†
 	*/
 
 	return 0;
@@ -144,7 +144,7 @@ int test_Observer3()
 	Observer* o2 = new ConcreteObserverB(sub);
 	sub->SetState("old");
 	sub->Notify();
-	sub->SetState("new");//Ò²¿ÉÒÔÓÉObserverµ÷ÓÃ
+	sub->SetState("new");//ä¹Ÿå¯ä»¥ç”±Observerè°ƒç”¨
 	sub->Notify();
 
 	/*result

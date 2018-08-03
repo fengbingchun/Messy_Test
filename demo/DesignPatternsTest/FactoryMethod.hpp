@@ -3,37 +3,37 @@
 
 #include <iostream>
 
-//ÊµÀı»ùÀà£¬Ïàµ±ÓÚProduct£¨ÎªÁË·½±ã£¬Ã»ÓÃ³éÏó£©
+//å®ä¾‹åŸºç±»ï¼Œç›¸å½“äºProductï¼ˆä¸ºäº†æ–¹ä¾¿ï¼Œæ²¡ç”¨æŠ½è±¡ï¼‰
 class LeiFeng
 {
 public:
 	virtual void Sweep()
 	{
-		std::cout << "À×·æÉ¨µØ" << std::endl;
+		std::cout << "é›·é”‹æ‰«åœ°" << std::endl;
 	}
 };
 
-//Ñ§À×·æµÄ´óÑ§ÉúÏàµ±ÓÚConcreteProduct
+//å­¦é›·é”‹çš„å¤§å­¦ç”Ÿç›¸å½“äºConcreteProduct
 class Student : public LeiFeng
 {
 public:
 	virtual void Sweep()
 	{
-		std::cout << "´óÑ§ÉúÉ¨µØ" << std::endl;
+		std::cout << "å¤§å­¦ç”Ÿæ‰«åœ°" << std::endl;
 	}
 };
 
-//Ñ§À×·æµÄÖ¾Ô¸Õß£¬Ïàµ±ÓÚConcreteProduct
+//å­¦é›·é”‹çš„å¿—æ„¿è€…ï¼Œç›¸å½“äºConcreteProduct
 class Volenter : public LeiFeng
 {
 public:
 	virtual void Sweep()
 	{
-		std::cout << "Ö¾Ô¸ÕßÉ¨µØ" << std::endl;
+		std::cout << "å¿—æ„¿è€…æ‰«åœ°" << std::endl;
 	}
 };
 
-//¹¤³§»ùÀà Creator
+//å·¥å‚åŸºç±» Creator
 class LeiFangFactory
 {
 public:
@@ -43,7 +43,7 @@ public:
 	}
 };
 
-//¹¤³§¾ßÌåÀà
+//å·¥å‚å…·ä½“ç±»
 class StudentFactory : public LeiFangFactory
 {
 public:

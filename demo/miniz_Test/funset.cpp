@@ -12,7 +12,7 @@ typedef unsigned int uint;
 
 #define BUF_SIZE (1024 * 1024)
 
-// Demonstrates miniz.c's compress() and uncompress() functions (same as zlib's)£¬
+// Demonstrates miniz.c's compress() and uncompress() functions (same as zlib's)ï¼Œ
 // also a crude decompressor fuzzy test.
 int test_miniz_1()
 {

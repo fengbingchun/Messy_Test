@@ -6,14 +6,14 @@
 
 class Colleague;
 
-//ÖĞ½éÕßÀà
+//ä¸­ä»‹è€…ç±»
 class Mediator
 {
 public:
 	virtual void Send(std::string message, Colleague* col) = 0;
 };
 
-//³éÏóÍ¬ÊÂÀà
+//æŠ½è±¡åŒäº‹ç±»
 class Colleague
 {
 protected:
@@ -25,7 +25,7 @@ public:
 	}
 };
 
-//Í¬ÊÂÒ»
+//åŒäº‹ä¸€
 class Colleague1 : public Colleague
 {
 public:
@@ -38,11 +38,11 @@ public:
 
 	void Notify(std::string strMessage)
 	{
-		std::cout << "Í¬ÊÂÒ»»ñµÃÁËÏûÏ¢" << strMessage << std::endl;
+		std::cout << "åŒäº‹ä¸€è·å¾—äº†æ¶ˆæ¯" << strMessage << std::endl;
 	}
 };
 
-//Í¬ÊÂ¶ş
+//åŒäº‹äºŒ
 class Colleague2 : public Colleague
 {
 public:
@@ -55,11 +55,11 @@ public:
 
 	void Notify(std::string strMessage)
 	{
-		std::cout << "Í¬ÊÂ¶ş»ñµÃÁËÏûÏ¢" << strMessage << std::endl;
+		std::cout << "åŒäº‹äºŒè·å¾—äº†æ¶ˆæ¯" << strMessage << std::endl;
 	}
 };
 
-//¾ßÌåÖĞ½éÕßÀà
+//å…·ä½“ä¸­ä»‹è€…ç±»
 class ConcreteMediator : public Mediator
 {
 public:

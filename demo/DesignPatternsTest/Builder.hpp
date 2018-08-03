@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 
-//×îÖÕµÄ²úÆ·Àà
+//æœ€ç»ˆçš„äº§å“ç±»
 class Product
 {
 private:
@@ -27,7 +27,7 @@ public:
 	}
 };
 
-//½¨ÔìÕß»ùÀà
+//å»ºé€ è€…åŸºç±»
 class Builder
 {
 public:
@@ -36,7 +36,7 @@ public:
 	virtual Product* GetResult() = 0;
 };
 
-//µÚÒ»ÖÖ½¨Ôì·½Ê½
+//ç¬¬ä¸€ç§å»ºé€ æ–¹å¼
 class ConCreteBuilder1 : public Builder
 {
 private:
@@ -63,7 +63,7 @@ public:
 	}
 };
 
-//µÚ¶şÖÖ½¨Ôì·½Ê½
+//ç¬¬äºŒç§å»ºé€ æ–¹å¼
 class ConcreteBuilder2 : public Builder
 {
 private:
@@ -90,7 +90,7 @@ public:
 	}
 };
 
-//Ö¸»ÓÕßÀà
+//æŒ‡æŒ¥è€…ç±»
 class Direct
 {
 public:
@@ -159,7 +159,7 @@ public:
 	}
 };
 
-//Ö¸»ÓÕßÀà
+//æŒ‡æŒ¥è€…ç±»
 class Direct_
 {
 private:
@@ -207,8 +207,8 @@ private:
 };
 
 
-int test_Builder1(); // ¿Í»§¶Ë
-int test_Builder2(); // ¿Í»§¶Ë´úÂë
+int test_Builder1(); // å®¢æˆ·ç«¯
+int test_Builder2(); // å®¢æˆ·ç«¯ä»£ç 
 int test_Builder3();
 
 

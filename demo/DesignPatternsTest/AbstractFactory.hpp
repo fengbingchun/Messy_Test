@@ -4,7 +4,7 @@
 #include <iostream>
 
 // =======================================
-//ÓÃ»§³éÏó½Ó¿Ú
+//ç”¨æˆ·æŠ½è±¡æ¥å£
 class IUser
 {
 public:
@@ -12,7 +12,7 @@ public:
 	virtual void InsertUser() = 0;
 };
 
-//²¿ÃÅ³éÏó½Ó¿Ú
+//éƒ¨é—¨æŠ½è±¡æ¥å£
 class IDepartment
 {
 public:
@@ -20,7 +20,7 @@ public:
 	virtual void InsertDepartment() = 0;
 };
 
-//ACCESS ÓÃ»§
+//ACCESS ç”¨æˆ·
 class CAccessUser : public IUser
 {
 public:
@@ -35,7 +35,7 @@ public:
 	}
 };
 
-//ACCESS ²¿ÃÅ
+//ACCESS éƒ¨é—¨
 class CAccessDepartment : public IDepartment
 {
 public:
@@ -50,7 +50,7 @@ public:
 	}
 };
 
-//SQL ÓÃ»§
+//SQL ç”¨æˆ·
 class CSqlUser : public IUser
 {
 public:
@@ -65,7 +65,7 @@ public:
 	}
 };
 
-//SQL ²¿ÃÅ
+//SQL éƒ¨é—¨
 class CSqlDepartment : public IDepartment
 {
 public:
@@ -80,7 +80,7 @@ public:
 	}
 };
 
-//³éÏó¹¤³§
+//æŠ½è±¡å·¥å‚
 class IFactory
 {
 public:
@@ -88,7 +88,7 @@ public:
 	virtual IDepartment* CreateDepartment() = 0;
 };
 
-//ACCESS ¹¤³§
+//ACCESS å·¥å‚
 class AccessFactory : public IFactory
 {
 public:
@@ -103,7 +103,7 @@ public:
 	}
 };
 
-//SQL ¹¤³§
+//SQL å·¥å‚
 class SqlFactory : public IFactory
 {
 public:
@@ -160,7 +160,7 @@ private:
 };
 
 
-int test_AbstractFactory1(); // ¿Í»§¶Ë
+int test_AbstractFactory1(); // å®¢æˆ·ç«¯
 int test_AbstractFactory2();
 
 #endif // FBC_MESSY_TEST_ABSTRACT_FACTORY_HPP_

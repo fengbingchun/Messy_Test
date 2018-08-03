@@ -8,7 +8,7 @@ typedef std::string state;
 
 Subject::Subject()
 {
-	//ÔÚÄ£°åµÄÊ¹ÓÃÖ®Ç°Ò»¶¨Òªnew£¬´´½¨
+	//åœ¨æ¨¡æ¿çš„ä½¿ç”¨ä¹‹å‰ä¸€å®šè¦newï¼Œåˆ›å»º
 	_obvs = new std::list<Observer*>;
 }
 
@@ -35,7 +35,7 @@ void Subject::Notify()
 	it = _obvs->begin();
 
 	for (; it != _obvs->end(); it ++) 
-		//¹ØÓÚÄ£°åºÍiteratorµÄÓÃ·¨
+		//å…³äºæ¨¡æ¿å’Œiteratorçš„ç”¨æ³•
 		(*it)->Update(this);
 }
 

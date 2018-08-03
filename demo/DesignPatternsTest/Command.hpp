@@ -4,22 +4,22 @@
 #include <iostream>
 #include <vector>
 
-//¿¾ÈâÊ¦¸µ
+//çƒ¤è‚‰å¸ˆå‚…
 class Barbucer
 {
 public:
 	void MakeMutton()
 	{
-		std::cout << "¿¾ÑòÈâ" << std::endl;
+		std::cout << "çƒ¤ç¾Šè‚‰" << std::endl;
 	}
 
 	void MakeChickenWing()
 	{
-		std::cout << "¿¾¼¦³á°ò" << std::endl;
+		std::cout << "çƒ¤é¸¡ç¿…è†€" << std::endl;
 	}
 };
 
-//³éÏóÃüÁîÀà
+//æŠ½è±¡å‘½ä»¤ç±»
 class Command {
 protected:
 	Barbucer* receiver;
@@ -32,7 +32,7 @@ public:
 	virtual void ExecuteCmd() = 0;
 };
 
-//¿¾ÑòÈâÃüÁî
+//çƒ¤ç¾Šè‚‰å‘½ä»¤
 class BakeMuttonCmd : public Command
 {
 public:
@@ -43,7 +43,7 @@ public:
 	}
 };
 
-//¿¾¼¦³á
+//çƒ¤é¸¡ç¿…
 class ChickenWingCmd : public Command
 {
 public:
@@ -55,7 +55,7 @@ public:
 	}
 };
 
-//·þÎñÔ±Àà
+//æœåŠ¡å‘˜ç±»
 class Waiter
 {
 protected:
@@ -64,10 +64,10 @@ public:
 	void SetCmd(Command* temp)
 	{
 		m_commandList.push_back(temp);
-		std::cout << "Ôö¼Ó¶¨µ¥" << std::endl;
+		std::cout << "å¢žåŠ å®šå•" << std::endl;
 	}
 
-	//Í¨ÖªÖ´ÐÐ
+	//é€šçŸ¥æ‰§è¡Œ
 	void Notify()
 	{
 		std::vector<Command*>::iterator p = m_commandList.begin();

@@ -67,8 +67,8 @@ int test_TemplateMethod1()
 	man2->Show();
 
 	/*result
-		���ǻ�Ӱʷ����˧������Ŀ----һ������naruto
-		���������޶����Ĵ���----·��
+		我是火影史上最帅的六代目----一鸣惊人naruto
+		我是我是无恶不作的大海贼----路飞
 	*/
 
 	return 0;

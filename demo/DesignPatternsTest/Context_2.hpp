@@ -3,9 +3,9 @@
 
 class Strategy_4;
 /*
-�������Strategyģʽ�Ĺؼ���Ҳ��Strategyģʽ��Templateģʽ�ĸ����������ڡ�
-Strategyͨ��"���"(ί��)��ʽʵ���㷨(ʵ��)���칹����Templateģʽ���ȡ���Ǽ̳еķ�ʽ��
-������ģʽ������Ҳ�Ǽ̳к��������ʵ�ֽӿ����õķ�ʽ������
+这个类是Strategy模式的关键，也是Strategy模式和Template模式的根本区别所在。
+Strategy通过"组合"(委托)方式实现算法(实现)的异构，而Template模式则采取的是继承的方式。
+这两个模式的区别也是继承和组合两种实现接口重用的方式的区别
 */
 
 class Context_4

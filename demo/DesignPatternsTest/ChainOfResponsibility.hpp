@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-//ÇëÇó
+//è¯·æ±‚
 class Request
 {
 public:
@@ -12,7 +12,7 @@ public:
 	int m_nNumber;
 };
 
-//¹ÜÀíÕß
+//ç®¡ç†è€…
 class Manager
 {
 protected:
@@ -32,7 +32,7 @@ public:
 	virtual void GetRequest(Request* request) = 0;
 };
 
-//¾­Àí
+//ç»ç†
 class CommonManager : public Manager
 {
 public:
@@ -41,13 +41,13 @@ public:
 	virtual void GetRequest(Request* request)
 	{
 		if (request->m_nNumber >= 0 && request->m_nNumber < 10)
-			std::cout << name << "´¦ÀíÁË" << request->m_nNumber << "¸öÇëÇó" << std::endl;
+			std::cout << name << "å¤„ç†äº†" << request->m_nNumber << "ä¸ªè¯·æ±‚" << std::endl;
 		else
 			manager->GetRequest(request);
 	}
 };
 
-//×Ü¼à
+//æ€»ç›‘
 class MajorDomo : public Manager
 {
 public:
@@ -56,7 +56,7 @@ public:
 	virtual void GetRequest(Request* request)
 	{
 		if (request->m_nNumber >= 10)
-			std::cout << name << "´¦ÀíÁË" << request->m_nNumber << "¸öÇëÇó" << std::endl;
+			std::cout << name << "å¤„ç†äº†" << request->m_nNumber << "ä¸ªè¯·æ±‚" << std::endl;
 	}
 };
 

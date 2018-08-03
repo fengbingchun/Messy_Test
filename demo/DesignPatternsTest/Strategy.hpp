@@ -1,7 +1,7 @@
 #ifndef FBC_MESSY_TEST_STRATEGY_HPP_
 #define FBC_MESSY_TEST_STRATEGY_HPP_
 
-//²ßÂÔ»ùÀà
+//ç­–ç•¥åŸºç±»
 class COperation_2
 {
 public:
@@ -14,7 +14,7 @@ public:
 	}
 };
 
-//²ßÂÔ¾ßÌåÀà----¼Ó·¨Àà
+//ç­–ç•¥å…·ä½“ç±»----åŠ æ³•ç±»
 class AddOperation : public COperation_2
 {
 public:
@@ -47,8 +47,8 @@ public:
 };
 
 // ============================================
-// ²ßÂÔÓë¹¤³§½áºÏ£º¿Í»§¶ËÖ»Ğè·ÃÎÊContextÀà£¬¶ø²»ÓÃÖªµÀÆäËüÈÎºÎÀàĞÅÏ¢£¬ÊµÏÖÁËµÍñîºÏ¡£
-//²ßÂÔ»ùÀà
+// ç­–ç•¥ä¸å·¥å‚ç»“åˆï¼šå®¢æˆ·ç«¯åªéœ€è®¿é—®Contextç±»ï¼Œè€Œä¸ç”¨çŸ¥é“å…¶å®ƒä»»ä½•ç±»ä¿¡æ¯ï¼Œå®ç°äº†ä½è€¦åˆã€‚
+//ç­–ç•¥åŸºç±»
 class COperation_3
 {
 public:
@@ -61,7 +61,7 @@ public:
 	}
 };
 
-//²ßÂÔ¾ßÌåÀà----¼Ó·¨Àà
+//ç­–ç•¥å…·ä½“ç±»----åŠ æ³•ç±»
 class AddOperation_3 : public COperation_3
 {
 public:

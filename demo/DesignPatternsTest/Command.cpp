@@ -37,24 +37,24 @@ void ConcreteCommand::Excute()
 
 int test_Command1()
 {
-	//µêÀïÌí¼Ó¿¾ÈâÊ¦¸µ¡¢²Ëµ¥¡¢·þÎñÔ±µÈ¹Ë¿Í
+	//åº—é‡Œæ·»åŠ çƒ¤è‚‰å¸ˆå‚…ã€èœå•ã€æœåŠ¡å‘˜ç­‰é¡¾å®¢
 	Barbucer* barbucer = new Barbucer();
 	Command* cmd = new BakeMuttonCmd(barbucer);
 	Command* cmd2 = new ChickenWingCmd(barbucer);
 	Waiter* girl = new Waiter();
 
-	//µã²Ë
+	//ç‚¹èœ
 	girl->SetCmd(cmd);
 	girl->SetCmd(cmd2);
 
-	//·þÎñÔ±Í¨Öª
+	//æœåŠ¡å‘˜é€šçŸ¥
 	girl->Notify();
 
 	/*result
-		Ôö¼Ó¶¨µ¥
-		Ôö¼Ó¶¨µ¥
-		¿¾ÑòÈâ
-		¿¾¼¦³á°ò
+		å¢žåŠ å®šå•
+		å¢žåŠ å®šå•
+		çƒ¤ç¾Šè‚‰
+		çƒ¤é¸¡ç¿…è†€
 	*/
 
 	return 0;

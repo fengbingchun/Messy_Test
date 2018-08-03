@@ -9,7 +9,7 @@ class AbstractClass
 public:
 	void Show()
 	{
-		std::cout << "ÎÒÊÇ" << GetName() << std::endl;
+		std::cout << "æˆ‘æ˜¯" << GetName() << std::endl;
 	}
 protected:
 	virtual std::string GetName() = 0;
@@ -20,7 +20,7 @@ class Naruto : public AbstractClass
 protected:
 	virtual std::string GetName()
 	{
-		return "»ðÓ°Ê·ÉÏ×îË§µÄÁù´úÄ¿----Ò»Ãù¾ªÈËnaruto";
+		return "ç«å½±å²ä¸Šæœ€å¸…çš„å…­ä»£ç›®----ä¸€é¸£æƒŠäººnaruto";
 	}
 };
 
@@ -29,7 +29,7 @@ class OnePice : public AbstractClass
 protected:
 	virtual std::string GetName()
 	{
-		return "ÎÒÊÇÎÞ¶ñ²»×÷µÄ´óº£Ôô----Â··É";
+		return "æˆ‘æ˜¯æ— æ¶ä¸ä½œçš„å¤§æµ·è´¼----è·¯é£ž";
 	}
 };
 

@@ -5,8 +5,8 @@
 
 int test_ChainOfResponsibility1()
 {
-	Manager* common = new CommonManager("ÕÅ¾­Àí");
-	Manager* major = new MajorDomo("Àî×Ü¼à");
+	Manager* common = new CommonManager("å¼ ç»ç†");
+	Manager* major = new MajorDomo("ææ€»ç›‘");
 
 	common->SetSuccessor(major);
 
@@ -18,8 +18,8 @@ int test_ChainOfResponsibility1()
 	common->GetRequest(req);
 
 	/*result
-		Àî×Ü¼à´¦ÀíÁË33¸öÇëÇó
-		ÕÅ¾­Àí´¦ÀíÁË3¸öÇëÇó
+		ææ€»ç›‘å¤„ç†äº†33ä¸ªè¯·æ±‚
+		å¼ ç»ç†å¤„ç†äº†3ä¸ªè¯·æ±‚
 	*/
 
 	return 0;
@@ -34,8 +34,8 @@ int test_ChainOfResponsibility2()
 	h1->HandleRequest();
 
 	/*result
-		ConcreteHandleA ÎÒ°Ñ´¦ÀíÈ¨¸øºó¼Ì½Úµã ...
-		ConcreteHandleB Ã»ÓĞºó¼ÌÁË£¬ÎÒ±ØĞë×Ô¼º´¦Àí ...
+		ConcreteHandleA æˆ‘æŠŠå¤„ç†æƒç»™åç»§èŠ‚ç‚¹ ...
+		ConcreteHandleB æ²¡æœ‰åç»§äº†ï¼Œæˆ‘å¿…é¡»è‡ªå·±å¤„ç† ...
 	*/
 
 	return 0;

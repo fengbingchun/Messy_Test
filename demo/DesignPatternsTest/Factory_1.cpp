@@ -2,7 +2,7 @@
 
 #include "Factory_1.hpp"
 
-//»ùÀà
+//åŸºç±»
 COperation_1::COperation_1()
 {
 	m_numA = 0.0;
@@ -15,7 +15,7 @@ COperation_1::~COperation_1()
 	std::cout<<"COperation destructor"<<std::endl;
 }
 
-//¼Ó·¨
+//åŠ æ³•
 CAddOperation_1::CAddOperation_1(double a, double b)
 {
 	std::cout<<"CAddOperation constructor"<<std::endl;
@@ -33,7 +33,7 @@ double CAddOperation_1::GetResult()
 	return (m_numA + m_numB);
 }
 
-//¼õ·¨
+//å‡æ³•
 CSubOperation_1::CSubOperation_1(double a, double b)
 {
 	std::cout<<"CSubOperation constructor"<<std::endl;
@@ -51,7 +51,7 @@ double CSubOperation_1::GetResult()
 	return (m_numA - m_numB);
 }
 
-//³Ë·¨
+//ä¹˜æ³•
 CMulOperation_1::CMulOperation_1(double a, double b)
 {
 	std::cout<<"CMulOperation constructor"<<std::endl;
@@ -69,7 +69,7 @@ double CMulOperation_1::GetResult()
 	return (m_numA * m_numB);
 }
 
-//³ý·¨
+//é™¤æ³•
 CDivOperation_1::CDivOperation_1(double a, double b)
 {
 	std::cout<<"CDivOperation constructor"<<std::endl;
@@ -88,7 +88,7 @@ double CDivOperation_1::GetResult()
 }
 
 
-//¹¤³§Àà
+//å·¥åŽ‚ç±»
 COperation_1* CCalculatorFactory_1::CreateOperation(PRODUCTTYPE_1 type, double a, double b)
 {
 	switch (type)
