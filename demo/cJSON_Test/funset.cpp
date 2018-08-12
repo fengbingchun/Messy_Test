@@ -19,7 +19,7 @@ void utf8_to_gbk(const char* utf8, char* gbk)
 #else // linux
 void utf8_to_gbk(const char* utf8, char* gbk)
 {
-	gbk = utf8;
+	strcpy(gbk, utf8);
 }
 #endif
 
@@ -55,7 +55,11 @@ int read_file(const char* filename, char** content)
 
 int test_cjson_1()
 {
+#ifdef __linux__
+	const char* filename = "testdata/cjson_test7";
+#else
 	const char* filename = "E:/GitCode/Messy_Test/testdata/cjson_test7";
+#endif
 	char *json = NULL;
 	if (read_file(filename, &json) != 0) return -1;;
 	if ((json == NULL) || (json[0] == '\0') || (json[1] == '\0')) {
@@ -112,7 +116,11 @@ int test_cjson_1()
 
 int test_cjson_2()
 {
+#ifdef __linux__
+	const char* filename = "testdata/json.data";
+#else
 	const char* filename = "E:/GitCode/Messy_Test/testdata/json.data";
+#endif
 	char *json = NULL;
 	if (read_file(filename, &json) != 0) return -1;;
 	if ((json == NULL) || (json[0] == '\0') || (json[1] == '\0')) {

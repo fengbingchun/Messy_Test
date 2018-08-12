@@ -1,0 +1,24 @@
+PROJECT(cJSON_Test)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+
+MESSAGE(STATUS "project source dir: ${PROJECT_SOURCE_DIR}")
+SET(PATH_TEST_FILES ${PROJECT_SOURCE_DIR}/./../../demo/cJSON_Test)
+SET(PATH_SRC_FILES ${PROJECT_SOURCE_DIR}/./../../src/cJSON)
+MESSAGE(STATUS "path src files: ${PATH_SRC_FILES}")
+
+# 指定头文件的搜索路径
+INCLUDE_DIRECTORIES(
+	${PATH_TEST_FILES}
+	${PATH_SRC_FILES}
+)
+
+# 递归查询所有匹配的文件:*.cpp
+FILE(GLOB_RECURSE TEST_CPP_LIST ${PATH_TEST_FILES}/*.cpp)
+SET(SRC_C_LIST ${PATH_SRC_FILES}/cJSON.c)
+MESSAGE(STATUS "src files: ${SRC_C_LIST}")
+
+# 编译可执行程序
+ADD_EXECUTABLE(cJSON_Test ${TEST_CPP_LIST} ${SRC_C_LIST})
+# 用来为target添加需要链接的共享库，指定工程所用的依赖库，包括动态库和静态库
+TARGET_LINK_LIBRARIES(cJSON_Test pthread)
+

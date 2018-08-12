@@ -22,6 +22,7 @@
 	- Json11_Test support cmake build(file position: prj/linux_cmake_Json11_Test/)
 	- miniz_Test support cmake build(file position: prj/linux_cmake_miniz_Test/)
 	- spdlog_Test support cmake build(file position: prj/linux_cmake_spdlog_Test/)
+	- cJSON_Test support cmake build(file position: prj/linux_cmake_cJSON_Test/)
 
 **Screenshot:**  
 ![](https://github.com/fengbingchun/Messy_Test/blob/master/prj/x86_x64_vc12/Screenshot.png)
