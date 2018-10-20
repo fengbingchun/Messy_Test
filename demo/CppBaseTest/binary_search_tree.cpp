@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <string.h>
+#include <algorithm>
 
 namespace binary_search_tree_ {
 
