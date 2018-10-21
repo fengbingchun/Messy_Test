@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <string.h>
+#include <algorithm>
 
 namespace binary_search_tree_ {
 
@@ -153,7 +154,7 @@ void BinarySearchTree::PreorderTraversal(const node* ptr) const
 {
 	if (ptr) {
 		fprintf(stdout, "Info: id: %d, name: %s, age: %d, addr: %s\n",
-			ptr->data.id, ptr->data.name, ptr->data.age, ptr->data.addr);
+			ptr->data.id, ptr->data.name.c_str(), ptr->data.age, ptr->data.addr.c_str());
 		PreorderTraversal(ptr->left);
 		PreorderTraversal(ptr->right);
 	} 
@@ -164,7 +165,7 @@ void BinarySearchTree::InorderTraversal(const node* ptr) const
 	if (ptr) {
 		InorderTraversal(ptr->left);
 		fprintf(stdout, "Info: id: %d, name: %s, age: %d, addr: %s\n",
-			ptr->data.id, ptr->data.name, ptr->data.age, ptr->data.addr);
+			ptr->data.id, ptr->data.name.c_str(), ptr->data.age, ptr->data.addr.c_str());
 		InorderTraversal(ptr->right);
 	} 
 }
@@ -175,7 +176,7 @@ void BinarySearchTree::PostorderTraversal(const node* ptr) const
 		PostorderTraversal(ptr->left);
 		PostorderTraversal(ptr->right);
 		fprintf(stdout, "Info: id: %d, name: %s, age: %d, addr: %s\n",
-			ptr->data.id, ptr->data.name, ptr->data.age, ptr->data.addr);
+			ptr->data.id, ptr->data.name.c_str(), ptr->data.age, ptr->data.addr.c_str());
 	} 
 }
 
@@ -193,7 +194,7 @@ void BinarySearchTree::LevelTraversal(const node* ptr, int level) const
 
 	if (level == 1)
 		fprintf(stdout, "Info: id: %d, name: %s, age: %d, addr: %s\n",
-			ptr->data.id, ptr->data.name, ptr->data.age, ptr->data.addr);
+			ptr->data.id, ptr->data.name.c_str(), ptr->data.age, ptr->data.addr.c_str());
 	else if (level > 1) {
 		LevelTraversal(ptr->left, level-1);
 		LevelTraversal(ptr->right, level-1);
@@ -363,7 +364,7 @@ int BinarySearchTree::SaveTree(const char* name) const
 	int nodes_count = GetNodesCount(root);
 	//fprintf(stdout, "max_depth: %d, max nodes: %d\n", max_depth, max_nodes);
 	file<<nodes_count<<","<<max_depth<<std::endl;
-	std::vector<row> vec(max_nodes, std::make_tuple(-1, -1, (char*)" ", -1, (char*)" "));
+	std::vector<row> vec(max_nodes, std::make_tuple(-1, -1, " ", -1, " "));
 	root = tree;
 	NodeToRow(root, vec, 0);	
 
@@ -420,12 +421,8 @@ int BinarySearchTree::LoadTree(const char* name)
 			return -1;
 		}
 
-		char* cstr1 = new char[strs[2].length()+1]; strcpy(cstr1, strs[2].c_str());
-		char* cstr2 = new char[strs[4].length()+1]; strcpy(cstr2, strs[4].c_str());
-		row tmp = std::make_tuple(std::stoi(strs[0]), std::stoi(strs[1]), cstr1, std::stoi(strs[3]), cstr2);
-		rows.emplace_back(tmp);	
-		delete [] cstr1;
-		delete [] cstr2;
+		row tmp = std::make_tuple(std::stoi(strs[0]), std::stoi(strs[1]), strs[2], std::stoi(strs[3]), strs[4]);
+		rows.emplace_back(tmp);
 	}
 
 	if (rows.size() != max_nodes || std::get<0>(rows[0]) == -1) {
@@ -438,7 +435,6 @@ int BinarySearchTree::LoadTree(const char* name)
 	root->left = nullptr;
 	root->right = nullptr;
 	tree = root;
-	fprintf(stdout, "#### %d, %d, %s, %d, %s\n", root->data.id, root->data.name, root->data.age, root->data.addr);
 
 	RowToNode(root, rows, max_nodes, 0);
 
@@ -504,7 +500,7 @@ int test_binary_search_tree()
 		info ret;
 		bool flag = bstree.Search(id, ret);
 		if (flag)
-			fprintf(stdout, "found: info: %d, %s, %d, %s\n", ret.id, ret.name, ret.age, ret.addr);
+			fprintf(stdout, "found: info: %d, %s, %d, %s\n", ret.id, ret.name.c_str(), ret.age, ret.addr.c_str());
 		else
 			fprintf(stdout, "no find: no id info: %d\n", id);
 	}

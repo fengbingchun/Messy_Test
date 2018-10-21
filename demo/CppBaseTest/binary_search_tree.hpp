@@ -1,16 +1,19 @@
 #ifndef FBC_CPPBASE_TEST_BINARY_SEARCH_TREE_HPP_
 #define FBC_CPPBASE_TEST_BINARY_SEARCH_TREE_HPP_
 
+// Blog: https://blog.csdn.net/fengbingchun/article/details/83239268
+
 #include <vector>
 #include <fstream>
+#include <string>
 
 namespace binary_search_tree_ {
 
 typedef struct info {
 	int id; // suppose id is unique
-	char* name;
+	std::string name;
 	int age;
-	char* addr;	
+	std::string addr;
 } info;
 
 typedef struct node {
@@ -24,7 +27,7 @@ public:
 	BinarySearchTree() = default;
 	~BinarySearchTree() { DeleteTree(tree); }
 
-	typedef std::tuple<int, int, char*, int, char*> row; // flag(-1: no node, 0: have a node), id, name, age, addr
+	typedef std::tuple<int, int, std::string, int, std::string> row; // flag(-1: no node, 0: have a node), id, name, age, addr
 
 	int Init(const std::vector<info>& infos); // create binary search tree
 	bool Search(int id, info& data) const;
