@@ -12,6 +12,7 @@
 - Google Test(gtest)'s usage [google/googletest](https://github.com/google/googletest)
 - spdlog's usage [gabime/spdlog](https://github.com/gabime/spdlog)
 - cJSON's usage [DaveGamble/cJSON](https://github.com/DaveGamble/cJSON)
+- "Efficient C++ Performance Programming Techniques" test code
 
 **The project support platform:**
 - windows7/10 64 bits: It can be directly build with VS2013 in windows7/10 64bits.

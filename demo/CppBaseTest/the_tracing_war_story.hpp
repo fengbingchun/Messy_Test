@@ -5,8 +5,7 @@
 
 namespace tracing_war_story_ {
 
-	int test_tracing_war_story_1();
-	int test_tracing_war_story_2();
+	int test_tracing_war_story();
 
 } // namespace tracing_war_story_
 
