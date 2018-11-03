@@ -11,14 +11,18 @@
 #include <chrono>
 #include <iomanip>
 #include <ctime>
+#include <algorithm>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/73393229
+
+namespace thread_ {
+
+std::atomic<int> global_counter(0);
 
 #ifdef _MSC_VER
 
 ///////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/thread/thread/thread/
-std::atomic<int> global_counter(0);
 
 static void increase_global(int n) { for (int i = 0; i<n; ++i) ++global_counter; }
 
@@ -459,3 +463,104 @@ int test_thread_hardware_concurrency()
 }
 
 #endif
+
+//////////////////////////////////////////////////////////////////
+// reference: https://thispointer.com/c-11-multithreading-part-1-three-different-ways-to-create-threads/
+
+// creating a thread using function objects
+class DisplayThread {
+public:
+	void operator()()     
+    	{
+        	for (int i = 0; i < 10; ++i)
+            		std::cout<<"Display Thread Executing"<<std::endl;
+	}
+};
+
+int test_thread_1()
+{
+	std::thread threadObj((DisplayThread()));
+    	for (int i = 0; i < 10; ++i)
+        	std::cout<<"Display From Main Thread "<<std::endl;
+    	std::cout<<"Waiting For Thread to complete"<<std::endl;
+    	threadObj.join();
+    	std::cout<<"Exiting from Main Thread"<<std::endl;
+
+	return 0;
+}
+
+////////////////////////////////////////////////////////////////////////
+// reference: https://thispointer.com/c-11-multithreading-part-1-three-different-ways-to-create-threads/
+
+// creating a thread using lambda functions
+int test_thread_2()
+{
+	int x = 9;
+    	std::thread threadObj([]{
+            	for(int i = 0; i < 10; i++)
+                	std::cout<<"Display Thread Executing"<<std::endl;
+            	});
+            
+    	for(int i = 0; i < 10; i++)
+        	std::cout<<"Display From Main Thread"<<std::endl;
+        
+    	threadObj.join();
+    	std::cout<<"Exiting from Main Thread"<<std::endl;
+
+	return 0;
+}
+
+////////////////////////////////////////////////////////////////
+// reference: https://stackoverflow.com/questions/10673585/start-thread-with-member-function
+
+// start thread with member function
+class bar {
+public:
+  	void foo() {
+    		std::cout << "hello from member function" << std::endl;
+  	}
+};
+
+int test_thread_3()
+{
+	std::thread t(&bar::foo, bar());
+  	t.join();
+
+	return 0;
+}
+
+////////////////////////////////////////////////////////////////
+std::mutex mtx;
+int count;
+
+void print_xxx()
+{
+	std::lock_guard<std::mutex> lock(mtx);
+	fprintf(stdout, "print xxx, count: %d\n", count);
+	++count;
+}
+
+void print_yyy()
+{
+	std::lock_guard<std::mutex> lock(mtx);
+	if (count % 5 == 0) {
+		fprintf(stdout, "print yyy, count: %d\n", count);
+	}
+}
+
+int test_thread_4()
+{
+	count = 0;
+	for (int i = 0; i < 100; ++i) {
+		std::vector<std::thread> threads;
+		threads.emplace_back(std::thread(print_xxx));
+		threads.emplace_back(std::thread(print_yyy));
+		std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
+	}
+
+
+	return 0;
+}
+
+
+} // namespace::thread_
