@@ -530,34 +530,40 @@ int test_thread_3()
 }
 
 ////////////////////////////////////////////////////////////////
-std::mutex mtx;
-int count;
+bool flag1 = true, flag2 = true;
 
 void print_xxx()
 {
-	std::lock_guard<std::mutex> lock(mtx);
-	fprintf(stdout, "print xxx, count: %d\n", count);
-	++count;
+	while (1) {
+		if (!flag1) break;
+
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		fprintf(stdout, "print xxx\n");
+	}
 }
 
 void print_yyy()
 {
-	std::lock_guard<std::mutex> lock(mtx);
-	if (count % 5 == 0) {
-		fprintf(stdout, "print yyy, count: %d\n", count);
+	while (1) {
+		if (!flag2) break;
+
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		fprintf(stdout, "print yyy\n");
 	}
 }
 
 int test_thread_4()
 {
-	count = 0;
-	for (int i = 0; i < 100; ++i) {
-		std::vector<std::thread> threads;
-		threads.emplace_back(std::thread(print_xxx));
-		threads.emplace_back(std::thread(print_yyy));
-		std::for_each(threads.begin(), threads.end(), std::mem_fn(&std::thread::join));
-	}
+	std::thread th1(print_xxx);
+	std::thread th2(print_yyy);
 
+	std::this_thread::sleep_for(std::chrono::minutes(2));
+
+	flag1 = false;
+	flag2 = false;
+
+	th1.join();
+	th2.join();
 
 	return 0;
 }

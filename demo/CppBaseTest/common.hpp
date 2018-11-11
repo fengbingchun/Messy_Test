@@ -113,5 +113,6 @@
 #include "memory_alignment.hpp"
 #include "the_tracing_war_story.hpp"
 #include "binary_search_tree.hpp"
+#include "constructors_and_destructors.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
