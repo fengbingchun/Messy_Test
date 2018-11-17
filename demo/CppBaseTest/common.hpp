@@ -114,5 +114,6 @@
 #include "the_tracing_war_story.hpp"
 #include "binary_search_tree.hpp"
 #include "constructors_and_destructors.hpp"
+#include "return_value_optimization.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
