@@ -115,5 +115,6 @@
 #include "binary_search_tree.hpp"
 #include "constructors_and_destructors.hpp"
 #include "return_value_optimization.hpp"
+#include "temporary_object.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
