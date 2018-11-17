@@ -116,7 +116,7 @@ int test_return_value_optimization_1()
 		c = Complex_Add3(a, b);
 	}
 	time_end = high_resolution_clock::now();
-	std::cout<<"计算性构造函数 add time spent: "<<(duration_cast<duration<double>>(time_end - time_start)).count()<<" seconds\n";
+	std::cout<<"Computational Constructors add time spent: "<<(duration_cast<duration<double>>(time_end - time_start)).count()<<" seconds\n";
 
 }
 

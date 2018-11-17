@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\cmath.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\const_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\c_head.c" />
@@ -181,6 +182,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\ratio.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reference.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\regex.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\return_value_optimization.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reverse.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\runtime_error.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\rvalue_references.cpp" />
@@ -236,6 +238,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\cmath.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\common.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\const_pointer.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\c_head.h" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
@@ -300,6 +303,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\ratio.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reference.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\regex.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\return_value_optimization.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reverse.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\runtime_error.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\rvalue_references.hpp" />
