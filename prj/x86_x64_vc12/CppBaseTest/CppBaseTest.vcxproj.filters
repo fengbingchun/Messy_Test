@@ -366,6 +366,9 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\return_value_optimization.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\temporary_object.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp">
@@ -726,6 +729,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\demo\CppBaseTest\return_value_optimization.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\temporary_object.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
