@@ -116,5 +116,13 @@
 #include "constructors_and_destructors.hpp"
 #include "return_value_optimization.hpp"
 #include "temporary_object.hpp"
+#include "single_threaded_memory_pool.hpp"
+#include "multi_threaded_memory_pool.hpp"
+#include "inline.hpp"
+#include "standard_template_library.hpp"
+#include "reference_counting.hpp"
+#include "coding_optimizations.hpp"
+#include "design_optimizations.hpp"
+#include "scalability.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
