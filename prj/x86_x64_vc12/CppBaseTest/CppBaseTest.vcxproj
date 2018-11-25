@@ -117,6 +117,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\chrono.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\cmath.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\coding_optimizations.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\const_pointer.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\default.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\delete.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\deque.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\design_optimizations.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\emplace.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\encapsulation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\enum.cpp" />
@@ -151,6 +153,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\inheritance.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\initializer_list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\init_list.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\inline.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\iostream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\istream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\iterator.cpp" />
@@ -164,6 +167,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\memory_alignment.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\move.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\multi_threaded_memory_pool.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\mutex.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\namespace.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nested_class.cpp" />
@@ -181,17 +185,21 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\queue.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\ratio.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reference.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\reference_counting.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\regex.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\return_value_optimization.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reverse.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\runtime_error.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\rvalue_references.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\scalability.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\set.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\shared_ptr.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\single_threaded_memory_pool.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sort.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sort1.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sstream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\stack.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\standard_template_library.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_assert.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\static_cast.cpp" />
@@ -237,6 +245,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\chrono.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\cmath.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\coding_optimizations.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\common.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.hpp" />
@@ -247,6 +256,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\default.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\delete.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\deque.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\design_optimizations.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\emplace.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\encapsulation.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\enum.hpp" />
@@ -272,6 +282,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\inheritance.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\initializer_list.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\init_list.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\inline.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\iostream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\istream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\iterator.hpp" />
@@ -285,6 +296,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\memory_alignment.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\move.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\multi_threaded_memory_pool.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\mutex.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\namespace.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nested_class.hpp" />
@@ -303,17 +315,21 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\queue.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\ratio.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reference.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\reference_counting.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\regex.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\return_value_optimization.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reverse.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\runtime_error.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\rvalue_references.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\scalability.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\set.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\shared_ptr.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\single_threaded_memory_pool.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sort.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sort1.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sstream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\stack.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\standard_template_library.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_assert.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\static_cast.hpp" />
