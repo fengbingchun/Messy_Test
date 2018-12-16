@@ -18,4 +18,6 @@
 /prj/linux_cmake_spdlog_Test/build/
 /prj/linux_cmake_cJSON_Test/testdata
 /prj/linux_cmake_cJSON_Test/build/
+/prj/linux_cmake_CppBaseTest/kcov_report/
+
 
