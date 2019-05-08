@@ -30,6 +30,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Library", "Library\Library.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cJSON_Test", "cJSON_Test\cJSON_Test.vcxproj", "{3F7A0690-AB7B-489D-A96C-A441E9DF465E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Messy_Test", "Messy_Test\Messy_Test.vcxproj", "{B72A7CBA-05B9-41B3-9431-C295587F52B2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libyaml-cpp", "libyaml-cpp\libyaml-cpp.vcxproj", "{D951FCA4-29F9-4093-9A66-910C422DADD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -80,6 +84,11 @@ Global
 		{24D2C797-868A-4F25-A629-F7F84ED020F6}.Release|x64.Build.0 = Release|x64
 		{3F7A0690-AB7B-489D-A96C-A441E9DF465E}.Debug|x64.ActiveCfg = Debug|x64
 		{3F7A0690-AB7B-489D-A96C-A441E9DF465E}.Release|x64.ActiveCfg = Release|x64
+		{B72A7CBA-05B9-41B3-9431-C295587F52B2}.Debug|x64.ActiveCfg = Debug|x64
+		{B72A7CBA-05B9-41B3-9431-C295587F52B2}.Debug|x64.Build.0 = Debug|x64
+		{B72A7CBA-05B9-41B3-9431-C295587F52B2}.Release|x64.ActiveCfg = Release|x64
+		{D951FCA4-29F9-4093-9A66-910C422DADD3}.Debug|x64.ActiveCfg = Debug|x64
+		{D951FCA4-29F9-4093-9A66-910C422DADD3}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

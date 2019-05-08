@@ -19,5 +19,8 @@
 /prj/linux_cmake_cJSON_Test/testdata
 /prj/linux_cmake_cJSON_Test/build/
 /prj/linux_cmake_CppBaseTest/kcov_report/
-
+/prj/linux_cmake_Messy_Test/testdata
+/prj/linux_cmake_Messy_Test/build/
+/src/yaml-cpp/build/
+/src/yaml-cpp/.vscode/
 

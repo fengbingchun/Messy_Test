@@ -1,0 +1,47 @@
+# config file
+---
+
+blog:
+  name: csdn
+  id: fengbingchun
+  url: https://blog.csdn.net/fengbingchun
+
+commands:
+  version:
+  - g++ --version
+  - cmake --version
+  - git --version
+
+value1: true
+value2: false
+value3: ~
+
+number1: 123
+number2: !!str 123
+number3: "123"
+number4: !!float 123
+
+github: 
+  - https://github.com/fengbingchun
+  - NN_Test Face_Test OpenCV_Test
+    Messy_Test CUDA_Test
+
+data1: |
+  There once
+  was a
+     short man
+
+data2: >
+  There once
+  was a
+     short man
+
+date1: 2019-03-03
+
+step: &id001   # defines anchor label &id001
+  instrument:  Lasik 2000
+  pulseEnergy: 5.4
+
+step2: *id001   # refers to the first step (with anchor &id001)
+
+...

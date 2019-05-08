@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\node">
+      <UniqueIdentifier>{8a1d27b2-68ff-427c-8652-df09e3c66be3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\contrib">
+      <UniqueIdentifier>{3d71b1bf-7858-4e6e-9da0-0600790efdf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\node\detail">
+      <UniqueIdentifier>{6d9bb1e4-27d1-480f-9990-df18abcf6f38}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\anchor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\binary.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\dll.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\emitfromevents.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\emitter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\emitterdef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\emittermanip.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\emitterstyle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\eventhandler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\exceptions.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\mark.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\noncopyable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\null.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\ostream_wrapper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\stlemitter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\traits.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\yaml.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\contrib\anchordict.h">
+      <Filter>头文件\contrib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
+      <Filter>头文件\contrib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\convert.h">
+      <Filter>头文件\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\emit.h">
+      <Filter>头文件\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\impl.h">
+      <Filter>头文件\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\iterator.h">
+      <Filter>头文件\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\node.h">
+      <Filter>头文件\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\parse.h">
+      <Filter>头文件\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\ptr.h">
+      <Filter>头文件\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\type.h">
+      <Filter>头文件\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\detail\bool_type.h">
+      <Filter>头文件\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\detail\impl.h">
+      <Filter>头文件\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\detail\iterator.h">
+      <Filter>头文件\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\detail\iterator_fwd.h">
+      <Filter>头文件\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\detail\memory.h">
+      <Filter>头文件\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\detail\node.h">
+      <Filter>头文件\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\detail\node_data.h">
+      <Filter>头文件\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\detail\node_iterator.h">
+      <Filter>头文件\node\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\yaml-cpp\include\yaml-cpp\node\detail\node_ref.h">
+      <Filter>头文件\node\detail</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\binary.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\convert.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\directives.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\emit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\emitfromevents.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\emitter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\emitterstate.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\emitterutils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\exceptions.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\exp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\memory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\node.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\node_data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\nodebuilder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\nodeevents.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\null.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\ostream_wrapper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\parse.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\parser.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\regex_yaml.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\scanner.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\scanscalar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\scantag.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\scantoken.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\simplekey.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\singledocparser.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\stream.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\tag.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\contrib\graphbuilder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\contrib\graphbuilderadapter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,12 +1,40 @@
-1. googletest: release-1.8.0
+1. googletest:
+	version: 1.8.0
 	commit: ec44c6c
 	date: 2016.08.22
 	url: https://github.com/google/googletest/releases/tag/release-1.8.0
-2. spdlog: Version 0.14.0
+2. spdlog:
+	version: 0.14.0
 	commit: 4fba14c
 	date: 2017.08.20
 	url: https://github.com/gabime/spdlog/releases
-3. cJSON: Version 1.7.7
+3. cJSON:
+	version: 1.7.7
 	commit: 86234db
 	date: 2018.05.22
 	url: https://github.com/DaveGamble/cJSON/releases
+4. yaml-cpp:
+	version: 0.6.2
+	commint: 562aefc
+	date: 2018.03.06
+	url: https://github.com/jbeder/yaml-cpp/releases
+5. json11:
+	commit: 05b5514
+	date: 2016.05.05
+	url: https://github.com/dropbox/json11
+6. drmemory:
+	version: 1.10.1
+	commit: 19baf9e
+	date: 2016.04.11
+	url: https://github.com/DynamoRIO/drmemory/releases?after=cronbuild-1.11.17596C
+7. vld(Visual Leak Detector):
+	version: v2.4rc
+	commit: a14ae76
+	date: 2014.03.27
+	url: https://github.com/KindDragon/vld/releases
+8. miniz:
+	version: v114
+	commit: 48605fb
+	date: 2013.10.14
+	url: https://github.com/richgel999/miniz/releases?after=2.0.0
+
