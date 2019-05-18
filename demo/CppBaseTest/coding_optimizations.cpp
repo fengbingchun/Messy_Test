@@ -46,7 +46,7 @@ int test_coding_optimizations_1()
 	initLookupTable();
 
 	std::chrono::high_resolution_clock::time_point time_start, time_end;
-	const int count{100000000000}, count2{100000};
+	const int count{10000}, count2{100000};
 	const char* header{"afaIELQEadsfjl943082jdfaadfajqwppreijfadfadfaoueheufiekasdLdamsaldfadfawweevKKA"};
 	int length = strlen(header);
 	char ch;
