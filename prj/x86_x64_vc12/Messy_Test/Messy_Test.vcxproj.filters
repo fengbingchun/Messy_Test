@@ -18,12 +18,18 @@
     <ClInclude Include="..\..\..\demo\Messy_Test\funset.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\demo\Messy_Test\common.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\demo\Messy_Test\Messy_Test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\demo\Messy_Test\test_yaml-cpp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_rapidjson.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

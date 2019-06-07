@@ -37,4 +37,9 @@
 	commit: 48605fb
 	date: 2013.10.14
 	url: https://github.com/richgel999/miniz/releases?after=2.0.0
+9. RapidJSON:
+	version: v1.1.0
+	commint: f54b0e4
+	date: 2016.08.25
+	url: https://github.com/Tencent/rapidjson/releases
 

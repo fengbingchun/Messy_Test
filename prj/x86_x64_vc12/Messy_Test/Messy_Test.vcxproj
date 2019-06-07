@@ -60,7 +60,7 @@
       <AssemblerListingLocation>.\../../../obj/dbg/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -86,7 +86,7 @@
       <AssemblerListingLocation>.\../../../obj/rel/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -102,10 +102,12 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\demo\Messy_Test\common.hpp" />
     <ClInclude Include="..\..\..\demo\Messy_Test\funset.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\demo\Messy_Test\Messy_Test.cpp" />
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_rapidjson.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_yaml-cpp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

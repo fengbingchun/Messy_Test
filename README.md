@@ -14,6 +14,7 @@
 - cJSON's usage [DaveGamble/cJSON](https://github.com/DaveGamble/cJSON)
 - "Efficient C++ Performance Programming Techniques" test code
 - yaml-cpp's usage [jbeder/yaml-cpp](https://github.com/jbeder/yaml-cpp)
+- RapidJSON's usage [Tencent/rapidjson](https://github.com/Tencent/rapidjson/)
 
 **The project support platform:**
 - windows7/10 64 bits: It can be directly build with VS2013 in windows7/10 64bits.
@@ -25,7 +26,7 @@
 	- miniz_Test support cmake build(file position: prj/linux_cmake_miniz_Test/)
 	- spdlog_Test support cmake build(file position: prj/linux_cmake_spdlog_Test/)
 	- cJSON_Test support cmake build(file position: prj/linux_cmake_cJSON_Test/)
-	- Messy_Test support cmake build(include test code: yaml-cpp; file position: prj/linux_cmake_Messy_Test/)
+	- Messy_Test support cmake build(test code include: yaml-cpp, RapidJSON; file position: prj/linux_cmake_Messy_Test/)
 
 **Windows VS Screenshot:**  
 ![](https://github.com/fengbingchun/Messy_Test/blob/master/prj/x86_x64_vc12/Screenshot.png)
