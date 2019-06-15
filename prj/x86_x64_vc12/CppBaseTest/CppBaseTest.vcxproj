@@ -194,6 +194,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\scalability.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\set.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\shared_ptr.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\signal.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\single_threaded_memory_pool.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sort.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sort1.cpp" />
@@ -324,6 +325,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\scalability.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\set.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\shared_ptr.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\signal.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\single_threaded_memory_pool.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sort.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sort1.hpp" />

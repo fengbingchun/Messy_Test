@@ -393,6 +393,9 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\standard_template_library.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\signal.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp">
@@ -780,6 +783,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\demo\CppBaseTest\standard_template_library.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\signal.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -124,5 +124,6 @@
 #include "coding_optimizations.hpp"
 #include "design_optimizations.hpp"
 #include "scalability.hpp"
+#include "signal.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
