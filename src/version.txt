@@ -42,4 +42,7 @@
 	commint: f54b0e4
 	date: 2016.08.25
 	url: https://github.com/Tencent/rapidjson/releases
-
+10. libuuid:
+	version: 1.0.3
+	date: 2013.04.27
+	url: https://sourceforge.net/projects/libuuid/

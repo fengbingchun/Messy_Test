@@ -11,6 +11,7 @@ MESSAGE(STATUS "project source dir: ${PROJECT_SOURCE_DIR}")
 SET(PATH_TEST_FILES ${PROJECT_SOURCE_DIR}/./../../demo/Messy_Test)
 SET(PATH_YAML_CPP_FILES ${PROJECT_SOURCE_DIR}/./../../src/yaml-cpp)
 SET(PATH_RAPIDJSON_FILES ${PROJECT_SOURCE_DIR}/./../../src/rapidjson)
+SET(PATH_LIBUUID_FILES ${PROJECT_SOURCE_DIR}/./../../src/libuuid)
 
 
 # head files search path
@@ -18,6 +19,7 @@ INCLUDE_DIRECTORIES(
 	${PATH_TEST_FILES}
 	${PATH_YAML_CPP_FILES}/include
 	${PATH_RAPIDJSON_FILES}/include
+	${PATH_LIBUUID_FILES}
 )
 
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/build)
@@ -28,5 +30,5 @@ FILE(GLOB_RECURSE CPP_TEST_LIST ${PATH_TEST_FILES}/*.cpp)
 # build executable program
 ADD_EXECUTABLE(Messy_Test ${CPP_TEST_LIST})
 # add dependent library: static and dynamic
-TARGET_LINK_LIBRARIES(Messy_Test yaml-cpp pthread)
+TARGET_LINK_LIBRARIES(Messy_Test yaml-cpp uuid pthread)
 

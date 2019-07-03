@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\demo\Messy_Test\Messy_Test.cpp" />
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_libuuid.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_rapidjson.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_yaml-cpp.cpp" />
   </ItemGroup>

@@ -17,16 +17,34 @@ new_dir_name=${dir_name}/build
 mkdir -p ${new_dir_name}
 
 # build yaml-cpp
-echo "########## start build yaml-cpp ##########"
+echo "========== start build yaml-cpp =========="
 yaml_cpp_path=${dir_name}/../../src/yaml-cpp
 mkdir -p ${yaml_cpp_path}/build
 cd ${yaml_cpp_path}/build
 cmake ..
 make
-echo "########## finish build yaml-cpp ##########"
+echo "========== finish build yaml-cpp =========="
 
 cd -
 cp -a ${yaml_cpp_path}/build/libyaml-cpp.a ${new_dir_name}
+
+# build libuuid
+echo "========== start build libuuid =========="
+libuuid_path=${dir_name}/../../src/libuuid
+mkdir -p ${libuuid_path}/build
+cd ${libuuid_path}/build
+./../configure
+make
+echo "========== finish build libuuid =========="
+
+cd -
+cp -a ${libuuid_path}/build/.libs/libuuid.a ${new_dir_name}
+
+rc=$?
+if [[ ${rc} != 0 ]]; then
+	echo "##### Error: some of thess commands have errors above, please check"
+	exit ${rc}
+fi
 
 cd ${new_dir_name}
 cmake ..

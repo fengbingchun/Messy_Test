@@ -23,4 +23,5 @@
 /prj/linux_cmake_Messy_Test/build/
 /src/yaml-cpp/build/
 /src/yaml-cpp/.vscode/
+/src/libuuid/build/
 

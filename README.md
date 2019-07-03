@@ -15,6 +15,9 @@
 - "Efficient C++ Performance Programming Techniques" test code
 - yaml-cpp's usage [jbeder/yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - RapidJSON's usage [Tencent/rapidjson](https://github.com/Tencent/rapidjson/)
+- libuuid's usage [sourceforge](https://sourceforge.net/projects/libuuid/)
+
+**The version of each open source library see:** [version.txt](https://github.com/fengbingchun/Messy_Test/blob/master/src/version.txt)
 
 **The project support platform:**
 - windows7/10 64 bits: It can be directly build with VS2013 in windows7/10 64bits.
@@ -26,7 +29,7 @@
 	- miniz_Test support cmake build(file position: prj/linux_cmake_miniz_Test/)
 	- spdlog_Test support cmake build(file position: prj/linux_cmake_spdlog_Test/)
 	- cJSON_Test support cmake build(file position: prj/linux_cmake_cJSON_Test/)
-	- Messy_Test support cmake build(test code include: yaml-cpp, RapidJSON; file position: prj/linux_cmake_Messy_Test/)
+	- Messy_Test support cmake build(test code include: yaml-cpp, RapidJSON, libuuid; file position: prj/linux_cmake_Messy_Test/)
 
 **Windows VS Screenshot:**  
 ![](https://github.com/fengbingchun/Messy_Test/blob/master/prj/x86_x64_vc12/Screenshot.png)

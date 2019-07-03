@@ -32,5 +32,8 @@
     <ClCompile Include="..\..\..\demo\Messy_Test\test_rapidjson.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_libuuid.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
