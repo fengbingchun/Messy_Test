@@ -12,7 +12,7 @@ SET(PATH_TEST_FILES ${PROJECT_SOURCE_DIR}/./../../demo/Messy_Test)
 SET(PATH_YAML_CPP_FILES ${PROJECT_SOURCE_DIR}/./../../src/yaml-cpp)
 SET(PATH_RAPIDJSON_FILES ${PROJECT_SOURCE_DIR}/./../../src/rapidjson)
 SET(PATH_LIBUUID_FILES ${PROJECT_SOURCE_DIR}/./../../src/libuuid)
-
+SET(PATH_TINYXML2_FILES ${PROJECT_SOURCE_DIR}/./../../src/tinyxml2)
 
 # head files search path
 INCLUDE_DIRECTORIES(
@@ -20,15 +20,17 @@ INCLUDE_DIRECTORIES(
 	${PATH_YAML_CPP_FILES}/include
 	${PATH_RAPIDJSON_FILES}/include
 	${PATH_LIBUUID_FILES}
+	${PATH_TINYXML2_FILES}
 )
 
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/build)
 
 # recursive query match files :*.cpp
 FILE(GLOB_RECURSE CPP_TEST_LIST ${PATH_TEST_FILES}/*.cpp)
+SET(CPP_TINYXML2_SRC ${PROJECT_SOURCE_DIR}/./../../src/tinyxml2/tinyxml2.cpp)
 
 # build executable program
-ADD_EXECUTABLE(Messy_Test ${CPP_TEST_LIST})
+ADD_EXECUTABLE(Messy_Test ${CPP_TEST_LIST} ${CPP_TINYXML2_SRC})
 # add dependent library: static and dynamic
 TARGET_LINK_LIBRARIES(Messy_Test yaml-cpp uuid pthread)
 

@@ -60,7 +60,7 @@
       <AssemblerListingLocation>.\../../../obj/dbg/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;E:\GitCode\Messy_Test\src\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -86,7 +86,7 @@
       <AssemblerListingLocation>.\../../../obj/rel/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;E:\GitCode\Messy_Test\src\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,7 +109,9 @@
     <ClCompile Include="..\..\..\demo\Messy_Test\Messy_Test.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_libuuid.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_rapidjson.cpp" />
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_tinyxml2.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_yaml-cpp.cpp" />
+    <ClCompile Include="..\..\..\src\tinyxml2\tinyxml2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

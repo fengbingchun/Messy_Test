@@ -1,6 +1,10 @@
 #ifndef FBC_MESSY_TEST_FUNSET_HPP_
 #define FBC_MESSY_TEST_FUNSET_HPP_
 
+// tinyxml2
+int test_tinyxml2_create();
+int test_tinyxml2_parse();
+
 // libuuid
 int test_libuuid(); // generate uuid
 

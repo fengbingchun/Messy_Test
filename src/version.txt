@@ -46,3 +46,8 @@
 	version: 1.0.3
 	date: 2013.04.27
 	url: https://sourceforge.net/projects/libuuid/
+11. TinyXML2:
+	version: 7.1.0
+	commit: 9c740e8
+	date: 2019.08.11
+	url: https://github.com/leethomason/tinyxml2/releases

@@ -16,6 +16,7 @@
 - yaml-cpp's usage [jbeder/yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - RapidJSON's usage [Tencent/rapidjson](https://github.com/Tencent/rapidjson/)
 - libuuid's usage [sourceforge](https://sourceforge.net/projects/libuuid/)
+- TinyXML2's usage [leethomason/tinyxml2](https://github.com/leethomason/tinyxml2)
 
 **The version of each open source library see:** [version.txt](https://github.com/fengbingchun/Messy_Test/blob/master/src/version.txt)
 
@@ -29,7 +30,7 @@
 	- miniz_Test support cmake build(file position: prj/linux_cmake_miniz_Test/)
 	- spdlog_Test support cmake build(file position: prj/linux_cmake_spdlog_Test/)
 	- cJSON_Test support cmake build(file position: prj/linux_cmake_cJSON_Test/)
-	- Messy_Test support cmake build(test code include: yaml-cpp, RapidJSON, libuuid; file position: prj/linux_cmake_Messy_Test/)
+	- Messy_Test support cmake build(test code include: yaml-cpp, RapidJSON, libuuid, TinyXML2; file position: prj/linux_cmake_Messy_Test/)
 
 **Windows VS Screenshot:**  
 ![](https://github.com/fengbingchun/Messy_Test/blob/master/prj/x86_x64_vc12/Screenshot.png)

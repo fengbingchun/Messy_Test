@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--this is a xml test file-->
+<Root>
+    <User Name="fengbingchun">
+        <Blog>CSDN</Blog>
+        <Code>GitHub</Code>
+    </User>
+    <Blog Name="CSDN">
+        <Address>https://blog.csdn.net/fengbingchun</Address>
+        <ID>fengbingchun</ID>
+    </Blog>
+    <Code Name="GitHub">
+        <Address>https://github.com//fengbingchun</Address>
+        <Repositories>27</Repositories>
+    </Code>
+</Root>

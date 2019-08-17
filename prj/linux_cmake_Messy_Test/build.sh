@@ -33,8 +33,10 @@ echo "========== start build libuuid =========="
 libuuid_path=${dir_name}/../../src/libuuid
 mkdir -p ${libuuid_path}/build
 cd ${libuuid_path}/build
-./../configure
-make
+if [[ ! -f .libs/libuuid.a ]]; then
+	./../configure
+	make
+fi
 echo "========== finish build libuuid =========="
 
 cd -
