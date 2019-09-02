@@ -104,6 +104,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\demo\CppBaseTest\abstract_class.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\access.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\addressof.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\algorithm.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\allocator.cpp" />
@@ -233,6 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\abstract_class.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\access.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\addressof.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\algorithm.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\allocator.hpp" />
