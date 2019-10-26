@@ -126,5 +126,6 @@
 #include "scalability.hpp"
 #include "signal.hpp"
 #include "access.hpp"
+#include "effective_cplusplus.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = access_::test_access_1();
+	int ret = effective_cplusplus_::test_item_49();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\delete.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\deque.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\design_optimizations.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\effective_cplusplus.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\emplace.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\encapsulation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\enum.cpp" />
@@ -260,6 +261,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\delete.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\deque.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\design_optimizations.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\effective_cplusplus.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\emplace.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\encapsulation.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\enum.hpp" />
