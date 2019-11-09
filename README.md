@@ -18,6 +18,7 @@
 - libuuid's usage [sourceforge](https://sourceforge.net/projects/libuuid/)
 - TinyXML2's usage [leethomason/tinyxml2](https://github.com/leethomason/tinyxml2)
 - "Effective C++ (third edition)" test code
+- "More Effective C++" test code
 
 **The version of each open source library see:** [version.txt](https://github.com/fengbingchun/Messy_Test/blob/master/src/version.txt)
 

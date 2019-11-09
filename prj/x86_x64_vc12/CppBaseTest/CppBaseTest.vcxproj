@@ -168,6 +168,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\lvalue_rvalue.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\memory_alignment.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\more_effective_cplusplus.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\move.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\multi_threaded_memory_pool.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\mutex.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\lvalue_rvalue.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\memory_alignment.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\more_effective_cplusplus.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\move.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\multi_threaded_memory_pool.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\mutex.hpp" />

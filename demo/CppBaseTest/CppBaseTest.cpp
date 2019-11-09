@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = effective_cplusplus_::test_item_49();
+	int ret = more_effective_cplusplus_::test_item_30();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
