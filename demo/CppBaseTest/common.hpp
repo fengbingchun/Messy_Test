@@ -128,5 +128,6 @@
 #include "access.hpp"
 #include "effective_cplusplus.hpp"
 #include "more_effective_cplusplus.hpp"
+#include "effective_stl.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

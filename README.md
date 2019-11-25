@@ -12,13 +12,15 @@
 - Google Test(gtest)'s usage [google/googletest](https://github.com/google/googletest)
 - spdlog's usage [gabime/spdlog](https://github.com/gabime/spdlog)
 - cJSON's usage [DaveGamble/cJSON](https://github.com/DaveGamble/cJSON)
-- "Efficient C++ Performance Programming Techniques" test code
 - yaml-cpp's usage [jbeder/yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - RapidJSON's usage [Tencent/rapidjson](https://github.com/Tencent/rapidjson/)
 - libuuid's usage [sourceforge](https://sourceforge.net/projects/libuuid/)
 - TinyXML2's usage [leethomason/tinyxml2](https://github.com/leethomason/tinyxml2)
-- "Effective C++ (third edition)" test code
-- "More Effective C++" test code
+- test code in the technical book
+	- "Efficient C++ Performance Programming Techniques"
+	- "Effective C++ (third edition)"
+	- "More Effective C++"
+	- "Effective STL"
 
 **The version of each open source library see:** [version.txt](https://github.com/fengbingchun/Messy_Test/blob/master/src/version.txt)
 
