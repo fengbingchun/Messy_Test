@@ -1,4 +1,4 @@
-#include "ChainOfResponsibility.hpp"
+﻿#include "ChainOfResponsibility.hpp"
 #include "Handle.hpp"
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/37111697

@@ -24,7 +24,9 @@ int test_array_3()
 		std::cout << " " << *it;
 	std::cout << std::endl;
 
-#ifdef _MSC_VER
+//#ifdef _MSC_VER // vs2017 don't support
+// reference: https://docs.microsoft.com/en-us/cpp/preprocessor/predefined-macros?view=vs-2017
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
 	Myarray c1;
 	c1.assign(4);
 

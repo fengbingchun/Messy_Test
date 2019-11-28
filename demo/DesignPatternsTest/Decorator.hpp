@@ -1,4 +1,4 @@
-#ifndef FBC_MESSY_TEST_DECORATOR_HPP_
+﻿#ifndef FBC_MESSY_TEST_DECORATOR_HPP_
 #define FBC_MESSY_TEST_DECORATOR_HPP_
 
 #include <string>

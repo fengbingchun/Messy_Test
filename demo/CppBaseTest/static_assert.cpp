@@ -11,7 +11,8 @@ void test_static_assert1()
 
 void test_static_assert2()
 {
-#ifdef _MSC_VER
+//#ifdef _MSC_VER
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
 	basic_string<char> bs;
 #endif
 }

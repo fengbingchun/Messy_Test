@@ -3,6 +3,8 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/52142844
 
+namespace abstract_class_ {
+
 ///////////////////////////////////////////////////
 // reference: https://msdn.microsoft.com/zh-cn/library/c8whxhf1.aspx
 // Declare an abstract base class with a pure virtual destructor.
@@ -304,3 +306,5 @@ int test_abstract_class6()
 
 	return 0;
 }
+
+} // namespace abstract_class_

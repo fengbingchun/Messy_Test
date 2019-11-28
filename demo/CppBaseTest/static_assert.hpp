@@ -13,7 +13,8 @@
 
 // static_assert 声明具有类范围。 static_assert 验证模板参数是否为纯旧数据 (POD) 类型。
 // 编译器将在声明 static_assert 声明时检查该声明，但不计算 constant-expression 参数，直到在 main() 中实例化 basic_string 类模板
-#ifdef _MSC_VER
+//#ifdef _MSC_VER // vs2017 don't support
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
 template <class CharT, class Traits = std::char_traits<CharT> >
 class basic_string {
 	static_assert(std::tr1::is_pod<CharT>::value, "Template argument CharT must be a POD type in class template basic_string");

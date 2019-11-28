@@ -1,4 +1,4 @@
-#include "Mediator.hpp"
+﻿#include "Mediator.hpp"
 #include "Colleague.hpp"
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/35815763
