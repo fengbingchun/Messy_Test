@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -132,6 +132,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\deque.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\design_optimizations.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\effective_cplusplus.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\effective_modern_cplusplus.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\effective_stl.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\emplace.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\encapsulation.cpp" />
@@ -265,6 +266,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\deque.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\design_optimizations.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\effective_cplusplus.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\effective_modern_cplusplus.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\effective_stl.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\emplace.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\encapsulation.hpp" />

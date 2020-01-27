@@ -129,5 +129,6 @@
 #include "effective_cplusplus.hpp"
 #include "more_effective_cplusplus.hpp"
 #include "effective_stl.hpp"
+#include "effective_modern_cplusplus.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

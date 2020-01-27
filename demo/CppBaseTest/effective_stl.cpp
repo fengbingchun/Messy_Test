@@ -1,4 +1,4 @@
-﻿#include "effective_stl.hpp"
+#include "effective_stl.hpp"
 #include <cctype>
 #include <vector>
 #include <algorithm>
@@ -14,6 +14,8 @@
 #include <utility>
 #include <string.h>
 #include <numeric>
+
+// Blog: https://blog.csdn.net/fengbingchun/article/details/103223914
 
 // reference: 《Effective STL》
 

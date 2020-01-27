@@ -1,7 +1,7 @@
-#ifndef FBC_CPPBASETEST_EFFECTIVE_CPLUSPLUS_HPP_
-#define FBC_CPPBASETEST_EFFECTIVE_CPLUSPLUS_HPP_
+#ifndef FBC_CPPBASETEST_EFFECTIVE_MODERN_CPLUSPLUS_HPP_
+#define FBC_CPPBASETEST_EFFECTIVE_MODERN_CPLUSPLUS_HPP_
 
-namespace effective_cplusplus_ {
+namespace effective_modern_cplusplus_ {
 
 int test_item_1();
 int test_item_2();
@@ -45,20 +45,8 @@ int test_item_39();
 int test_item_40();
 int test_item_41();
 int test_item_42();
-int test_item_43();
-int test_item_44();
-int test_item_45();
-int test_item_46();
-int test_item_47();
-int test_item_48();
-int test_item_49();
-int test_item_50();
-int test_item_51();
-int test_item_52();
-int test_item_53();
-int test_item_54();
-int test_item_55();
 
-} // namespace effective_cplusplus_
+} // namespace effective_modern_cplusplus_
 
-#endif // FBC_CPPBASETEST_EFFECTIVE_CPLUSPLUS_HPP_
+
+#endif // FBC_CPPBASETEST_EFFECTIVE_MODERN_CPLUSPLUS_HPP_

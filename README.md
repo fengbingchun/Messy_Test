@@ -21,6 +21,7 @@
 	- "Effective C++ (third edition)"
 	- "More Effective C++"
 	- "Effective STL"
+	- "Effective Modern C++"
 
 **The version of each open source library see:** [version.txt](https://github.com/fengbingchun/Messy_Test/blob/master/src/version.txt)
 

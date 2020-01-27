@@ -24,4 +24,4 @@
 /src/yaml-cpp/build/
 /src/yaml-cpp/.vscode/
 /src/libuuid/build/
-
+/prj/x86_x64_vc12/.vs/
