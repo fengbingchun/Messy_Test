@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = effective_modern_cplusplus_::test_item_25();
+	int ret = volatile_mutable_::test_mutable_4();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

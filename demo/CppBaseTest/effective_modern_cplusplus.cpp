@@ -174,7 +174,6 @@ decltype(auto) ff3_1()
 	//return (x); // decltype((x))是int&,所以ff3_1返回的是int&
 }
 
-
 int test_item_3()
 {
 	const int i = 0; // decltype(i) is const int
@@ -290,7 +289,7 @@ int test_item_7()
 
 	std::vector<int> v{1, 3, 5}; // v's initial content is 1, 3, 5
 
-	std::atomic<int> ai1{0}; ; // fine
+	std::atomic<int> ai1{0}; // fine
 	std::atomic<int> ai2(0); // fine
 	//std::atomic<int> ai3 = 0; // error
 
@@ -541,11 +540,13 @@ int test_item_13()
 	auto it = std::find(values.cbegin(), values.cend(), 1983); // use cbegin and cend
 	values.insert(it, 1998);
 
-	//auto it2 = std::find(std::cbegin(values), std::cend(values), 1983); // C++14,非成员函数版本的cbegin, cend
-	//values.insert(it2, 1998);
-	
-	auto it2 = std::find(cbegin_(values), cend_(values), 1983);
+#ifdef _MSC_VER
+	auto it2 = std::find(std::cbegin(values), std::cend(values), 1983); // C++14,非成员函数版本的cbegin, cend, gcc 4.9.4 don't support
 	values.insert(it2, 1998);
+#endif
+
+	auto it3 = std::find(cbegin_(values), cend_(values), 1983);
+	values.insert(it3, 1998);
 
 	return 0;
 }
@@ -554,7 +555,7 @@ int test_item_13()
 int f14_1(int x) throw() { return 1; } // f14_1不会发射异常: C++98风格
 int f14_2(int x) noexcept { return 2; } // f14_2不会发射异常: C++11风格
 
-//RetType function(params) onexcept; // 最优化
+//RetType function(params) noexcept; // 最优化
 //RetType function(params) throw(); // 优化不够
 //RetType function(params); // 优化不够
 
@@ -1091,12 +1092,12 @@ int test_item_29()
 {
 
 	std::vector<Widget29> vw1;
-	// put data into vw1
+	// ... // put data into vw1
 	// move vw1 into vw2. runs in constant time. only ptrs in vw1 and vw2 are modified
 	auto vw2 = std::move(vw1);
 
 	std::array<Widget29, 10000> aw1;
-	// put data into aw1
+	// ... // put data into aw1
 	// move aw1 into aw2. runs in linear time. all elements in aw1 are moved into aw2
 	auto aw2 = std::move(aw1);
 
@@ -1144,7 +1145,7 @@ int test_item_30()
 	widget30Data.reserve(Widget30::MinVals); // use of MinVals
 
 	f30_2(Widget30::MinVals); // fine, treated as "f30_2(28)"
-	fwd30_2(Widget30::MinVals); // error, shouldn't link, note: windows can link
+	fwd30_2(Widget30::MinVals); // error, shouldn't link, note: windows and linux can link
 
 	IPv4Header h;
 	memset(&h, 0, sizeof(IPv4Header));
