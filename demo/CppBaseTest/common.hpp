@@ -131,5 +131,6 @@
 #include "effective_stl.hpp"
 #include "effective_modern_cplusplus.hpp"
 #include "volatile_mutable.hpp"
+#include "future.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

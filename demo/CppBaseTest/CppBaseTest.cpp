@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = volatile_mutable_::test_mutable_4();
+	int ret = future_::test_future_3();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
