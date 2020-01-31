@@ -21,6 +21,13 @@ int test_promise_3();
 int test_promise_4();
 int test_promise_5();
 
+int test_packaged_task_1();
+int test_packaged_task_2();
+int test_packaged_task_3();
+int test_packaged_task_4();
+int test_packaged_task_5();
+
+
 } // namespace future_
 
 #endif // FBC_MESSY_TEST_FUTURE_HPP_
