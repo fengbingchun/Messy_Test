@@ -4,8 +4,148 @@
 #include <chrono>
 #include <utility>
 #include <thread>
+#include <functional>
+#include <memory>
+#include <exception> 
+#include <numeric>
+#include <vector>
 
 namespace future_ {
+
+// Blog: https://blog.csdn.net/fengbingchun/article/details/104124174
+
+///////////////////////////////////////////////////////////
+// reference: http://www.cplusplus.com/reference/future/promise/
+int test_promise_1()
+{
+
+{ // constructor/get_future/set_value
+		std::promise<int> foo; // create promise
+		std::promise<int> bar = std::promise<int>(std::allocator_arg, std::allocator<int>());
+		std::future<int> fut = bar.get_future(); // engagement with future
+		//std::future<int> fut2 = bar.get_future(); // crash, 每个promise共享状态只能被一个std::future对象检索或关联
+		//std::future<int> fut = foo.get_future();
+		auto print_int = [&fut]() { int x = fut.get(); fprintf(stdout, "value: %d\n", x); };
+		std::thread th1(print_int); // send future to new thread
+		bar.set_value(10); // fulfill promise(synchronizes with getting the future)
+		//bar.set_value(10); // crash, 每个promise的set_value仅能被调用一次
+		//foo.set_value(10);
+		th1.join();
+}
+
+{ // operator =
+	std::promise<int> prom;
+	auto print_promise = [&prom]() {
+		std::future<int> fut = prom.get_future();
+		int x = fut.get();
+		std::cout << "value: " << x << '\n';
+	};
+
+	std::thread th1(print_promise);
+	prom.set_value(10);
+	th1.join();
+
+	prom = std::promise<int>(); // reset, by move-assigning a new promise
+	std::thread th2(print_promise);
+	prom.set_value(20);
+	th2.join();
+}
+
+{ // set_exception
+	std::promise<int> prom;
+	std::future<int> fut = prom.get_future();
+
+	auto get_int = [&prom]() {
+		int x;
+		std::cout << "Please, enter an integer value: ";
+		std::cin.exceptions(std::ios::failbit); // throw on failbit
+		try {
+			std::cin >> x; // sets failbit if input is not int
+			prom.set_value(x);
+		} catch (std::exception&) {
+			prom.set_exception(std::current_exception());
+		}
+	};
+
+	auto print_int = [&fut]() {
+		try {
+			int x = fut.get();
+			std::cout << "value: " << x << '\n';
+		} catch (std::exception& e) {
+			std::cout << "[exception caught: " << e.what() << "]\n";
+		}
+	};
+
+	std::thread th1(print_int);
+	std::thread th2(get_int);
+
+	th1.join();
+	th2.join();
+}
+
+	return 0;
+}
+
+///////////////////////////////////////////////////////////
+// reference: https://en.cppreference.com/w/cpp/thread/promise
+void accumulate(std::vector<int>::iterator first, std::vector<int>::iterator last, std::promise<int> accumulate_promise)
+{
+	int sum = std::accumulate(first, last, 0);
+	accumulate_promise.set_value(sum);  // Notify future
+}
+
+void do_work(std::promise<void> barrier)
+{
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+	barrier.set_value();
+}
+
+int test_promise_2()
+{
+	// Demonstrate using promise<int> to transmit a result between threads.
+	std::vector<int> numbers = { 1, 2, 3, 4, 5, 6 };
+	std::promise<int> accumulate_promise;
+	std::future<int> accumulate_future = accumulate_promise.get_future();
+	std::thread work_thread(accumulate, numbers.begin(), numbers.end(), std::move(accumulate_promise));
+
+	// future::get() will wait until the future has a valid result and retrieves it.
+	// Calling wait() before get() is not needed
+	//accumulate_future.wait();  // wait for result
+	std::cout << "result=" << accumulate_future.get() << '\n';
+	work_thread.join();  // wait for thread completion
+
+	// Demonstrate using promise<void> to signal state between threads.
+	std::promise<void> barrier;
+	std::future<void> barrier_future = barrier.get_future();
+	std::thread new_work_thread(do_work, std::move(barrier));
+	barrier_future.wait();
+	new_work_thread.join();
+
+	return 0;
+}
+
+///////////////////////////////////////////////////////////
+// reference: https://en.cppreference.com/w/cpp/thread/promise/set_value_at_thread_exit
+int test_promise_3()
+{
+#ifdef _MSC_VER
+	// set_value_at_thread_exit
+	using namespace std::chrono_literals;
+	std::promise<int> p;
+	std::future<int> f = p.get_future();
+	std::thread([&p] {
+		std::this_thread::sleep_for(1s);
+		p.set_value_at_thread_exit(9); // gcc 4.9 don't support this function
+	}).detach();
+
+	std::cout << "Waiting..." << std::flush;
+	f.wait();
+	std::cout << "Done!\nResult is: " << f.get() << '\n';
+#endif
+
+	return 0;
+}
+
 
 // Blog: https://blog.csdn.net/fengbingchun/article/details/104118831
 
