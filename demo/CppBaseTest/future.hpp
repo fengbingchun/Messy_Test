@@ -27,6 +27,12 @@ int test_packaged_task_3();
 int test_packaged_task_4();
 int test_packaged_task_5();
 
+int test_async_1();
+int test_async_2();
+int test_async_3();
+int test_async_4();
+int test_async_5();
+
 
 } // namespace future_
 
