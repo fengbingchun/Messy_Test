@@ -24,6 +24,8 @@
 #include <future>
 #include <regex>
 
+// Blog: https://blog.csdn.net/fengbingchun/article/details/104136592
+
 // reference: 《Effective Modern C++》
 
 namespace effective_modern_cplusplus_ {
