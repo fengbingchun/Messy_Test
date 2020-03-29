@@ -6,8 +6,8 @@
         #define FBC_API __declspec(dllexport)
     #else
         #define FBC_API
-    #endif // _MSC_VER
-#else
+    #endif
+#else // Linux
     #ifdef DLL_EXPORTS
         #define FBC_API __attribute__((visibility("default")))
     #else

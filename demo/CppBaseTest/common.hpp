@@ -132,5 +132,6 @@
 #include "effective_modern_cplusplus.hpp"
 #include "volatile_mutable.hpp"
 #include "future.hpp"
+#include "cplusplus_api_design.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

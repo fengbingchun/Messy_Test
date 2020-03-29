@@ -123,6 +123,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\const_pointer.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\cplusplus_api_design.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\c_head.c" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\data_type_convert.cpp" />
@@ -260,6 +261,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\const_pointer.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\cplusplus_api_design.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\c_head.h" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\decltype.hpp" />
