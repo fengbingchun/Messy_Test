@@ -24,6 +24,7 @@
 	- "Effective STL"
 	- "Effective Modern C++"
 	- "C++ API Design"
+	- "Secure Coding in C and C++(Second Edition)"	
 
 **The version of each open source library see:** [version.txt](https://github.com/fengbingchun/Messy_Test/blob/master/src/version.txt)
 
