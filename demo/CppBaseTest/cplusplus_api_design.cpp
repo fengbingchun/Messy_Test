@@ -8,7 +8,7 @@
 
 // Blog: https://blog.csdn.net/fengbingchun/article/details/105178753
 
-// reference: ¡¶C++ APIÉè¼Æ¡·
+// reference: ã€ŠC++ APIè®¾è®¡ã€‹
 
 namespace cplusplus_api_design_ {
 
@@ -135,14 +135,14 @@ IRenderer* RendererFactory2::CreateRenderer(const std::string& type)
 {
 	callback_map_::iterator it = renderers_.find(type);
 	if (it != renderers_.end()) {
-		// µ÷ÓÃ»Øµ÷ÒÔ¹¹Ôì´ËÅÉÉúÀàµÄ¶ÔÏó
+		// è°ƒç”¨å›è°ƒä»¥æ„é€ æ­¤æ´¾ç”Ÿç±»çš„å¯¹è±¡
 		return (it->second)();
 	}
 
 	return nullptr;
 }
 
-// APIÓÃ»§ÏÖÔÚ¿ÉÒÔÔÚÏµÍ³ÖĞ×¢²á(ÒÔ¼°×¢Ïú)ĞÂµÄäÖÈ¾Æ÷
+// APIç”¨æˆ·ç°åœ¨å¯ä»¥åœ¨ç³»ç»Ÿä¸­æ³¨å†Œ(ä»¥åŠæ³¨é”€)æ–°çš„æ¸²æŸ“å™¨
 class UserRenderer : public IRenderer {
 public:
 	UserRenderer() { fprintf(stdout, "constructor UserRenderer\n"); }
@@ -153,9 +153,9 @@ public:
 
 int test_api_design_3_factory_expand()
 {
-	// ×¢²áÒ»¸öĞÂµÄäÖÈ¾Æ÷
+	// æ³¨å†Œä¸€ä¸ªæ–°çš„æ¸²æŸ“å™¨
 	RendererFactory2::RegisterRenderer("user", UserRenderer::Create);
-	// ÎªĞÂµÄäÖÈ¾Æ÷´´½¨Ò»¸öÊµÀı
+	// ä¸ºæ–°çš„æ¸²æŸ“å™¨åˆ›å»ºä¸€ä¸ªå®ä¾‹
 	IRenderer* r = RendererFactory2::CreateRenderer("user");
 	if (r) {
 		r->Render();

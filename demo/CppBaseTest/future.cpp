@@ -55,7 +55,7 @@ int test_async_2()
 	std::future<void> foo = std::async(std::launch::async, print_ten, '*', 100);
 	std::future<void> bar = std::async(std::launch::async, print_ten, '@', 200);
 	// async "get" (wait for foo and bar to be ready):
-	foo.get(); // ×¢£º×¢ÊÍµô´Ë¾ä£¬Ò²»áÊä³ö'*'
+	foo.get(); // æ³¨ï¼šæ³¨é‡Šæ‰æ­¤å¥ï¼Œä¹Ÿä¼šè¾“å‡º'*'
 	bar.get();
 	std::cout << "\n\n";
 
@@ -63,7 +63,7 @@ int test_async_2()
 	foo = std::async(std::launch::deferred, print_ten, '*', 100);
 	bar = std::async(std::launch::deferred, print_ten, '@', 200);
 	// deferred "get" (perform the actual calls):
-	foo.get(); // ×¢£º×¢ÊÍµô´Ë¾ä£¬Ôò²»»áÊä³ö'**********'
+	foo.get(); // æ³¨ï¼šæ³¨é‡Šæ‰æ­¤å¥ï¼Œåˆ™ä¸ä¼šè¾“å‡º'**********'
 	bar.get();
 	std::cout << '\n';
 
@@ -342,12 +342,12 @@ int test_promise_1()
 		std::promise<int> foo; // create promise
 		std::promise<int> bar = std::promise<int>(std::allocator_arg, std::allocator<int>());
 		std::future<int> fut = bar.get_future(); // engagement with future
-		//std::future<int> fut2 = bar.get_future(); // crash, Ã¿¸öpromise¹²Ïí×´Ì¬Ö»ÄÜ±»Ò»¸östd::future¶ÔÏó¼ìË÷»ò¹ØÁª
+		//std::future<int> fut2 = bar.get_future(); // crash, æ¯ä¸ªpromiseå…±äº«çŠ¶æ€åªèƒ½è¢«ä¸€ä¸ªstd::futureå¯¹è±¡æ£€ç´¢æˆ–å…³è”
 		//std::future<int> fut = foo.get_future();
 		auto print_int = [&fut]() { int x = fut.get(); fprintf(stdout, "value: %d\n", x); };
 		std::thread th1(print_int); // send future to new thread
 		bar.set_value(10); // fulfill promise(synchronizes with getting the future)
-		//bar.set_value(10); // crash, Ã¿¸öpromiseµÄset_value½öÄÜ±»µ÷ÓÃÒ»´Î
+		//bar.set_value(10); // crash, æ¯ä¸ªpromiseçš„set_valueä»…èƒ½è¢«è°ƒç”¨ä¸€æ¬¡
 		//foo.set_value(10);
 		th1.join();
 }
@@ -473,7 +473,7 @@ int test_promise_3()
 int test_shared_future_1()
 {
 	std::promise<void> ready_promise, t1_ready_promise, t2_ready_promise;
-	// Í¨¹ıstd::futureÒÆ¶¯¹¹Ôìstd::shared_future¶ÔÏó,t1_ready_promiseºÍt2_ready_promise¾ù»áÓÃµ½ready_future
+	// é€šè¿‡std::futureç§»åŠ¨æ„é€ std::shared_futureå¯¹è±¡,t1_ready_promiseå’Œt2_ready_promiseå‡ä¼šç”¨åˆ°ready_future
 	std::shared_future<void> ready_future(ready_promise.get_future());
 
 	std::chrono::time_point<std::chrono::high_resolution_clock> start;
@@ -522,7 +522,7 @@ int fib(int n)
 
 int test_shared_future_2()
 {
-	// ½«std::shared_future<int>µ÷ÕûÎªstd::future<int>Ò²ÊÇÕıÈ·µÄ
+	// å°†std::shared_future<int>è°ƒæ•´ä¸ºstd::future<int>ä¹Ÿæ˜¯æ­£ç¡®çš„
 	std::shared_future<int> f1 = std::async(std::launch::async, []() { return fib(20); });
 	std::shared_future<int> f2 = std::async(std::launch::async, []() { return fib(25); });
 
@@ -540,7 +540,7 @@ int test_shared_future_2()
 // reference: https://en.cppreference.com/w/cpp/thread/shared_future/wait_for
 int test_shared_future_3()
 {
-	// ½«std::shared_future<int>µ÷ÕûÎªstd::future<int>Ò²ÊÇÕıÈ·µÄ
+	// å°†std::shared_future<int>è°ƒæ•´ä¸ºstd::future<int>ä¹Ÿæ˜¯æ­£ç¡®çš„
 	std::shared_future<int> future = std::async(std::launch::async, [](){ 
         std::this_thread::sleep_for(std::chrono::seconds(3));
         return 8;  
@@ -579,7 +579,7 @@ int test_future_1()
 	int x = bar.get();
 	std::cout << "value: " << x << '\n'; // 10
 
-	//int x2 = bar.get(); // crash, ¶ÔÓÚÃ¿¸öfutureµÄ¹²Ïí×´Ì¬£¬getº¯Êı×î¶à½ö±»µ÷ÓÃÒ»´Î
+	//int x2 = bar.get(); // crash, å¯¹äºæ¯ä¸ªfutureçš„å…±äº«çŠ¶æ€ï¼Œgetå‡½æ•°æœ€å¤šä»…è¢«è°ƒç”¨ä¸€æ¬¡
 	//std::cout << "value: " << x2 << '\n';
 
 	std::future<int> foo2(std::async(get_value));
@@ -590,12 +590,12 @@ int test_future_1()
 	std::future<int> fut = std::async([]() { return 10; });
 	std::shared_future<int> shfut = fut.share();
 
-	//std::cout << "value: " << fut.get() << '\n'; // crash, Ö´ĞĞÍêfut.share()ºó£¬fut¶ÔÏó½«±äµÃÎŞĞ§
+	//std::cout << "value: " << fut.get() << '\n'; // crash, æ‰§è¡Œå®Œfut.share()åï¼Œfutå¯¹è±¡å°†å˜å¾—æ— æ•ˆ
 	std::cout << "fut valid: " << fut.valid() << '\n';// 0
 
 	// shared futures can be accessed multiple times:
 	std::cout << "value: " << shfut.get() << '\n'; // 10
-	std::cout << "its double: " << shfut.get() * 2 << '\n'; // 20, ¶ÔÓÚstd::shared_future¶ÔÏó£¬getº¯Êı¿ÉÒÔ±»¶à´Î·ÃÎÊ
+	std::cout << "its double: " << shfut.get() * 2 << '\n'; // 20, å¯¹äºstd::shared_futureå¯¹è±¡ï¼Œgetå‡½æ•°å¯ä»¥è¢«å¤šæ¬¡è®¿é—®
 }
 
 { // valid
@@ -641,7 +641,7 @@ int test_future_1()
 	// do something while waiting for function to set future:
 	std::cout << "checking, please wait";
 	std::chrono::milliseconds span(100);
-	while (fut.wait_for(span) == std::future_status::timeout) // ¿ÉÄÜ¶à´Îµ÷ÓÃstd::future::wait_forº¯Êı
+	while (fut.wait_for(span) == std::future_status::timeout) // å¯èƒ½å¤šæ¬¡è°ƒç”¨std::future::wait_forå‡½æ•°
 		std::cout << '.';
 
 	bool x = fut.get(); // retrieve return value

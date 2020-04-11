@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = cplusplus_secure_coding_::test_secure_coding_2();
+	int ret = cplusplus_secure_coding_::test_secure_coding_3();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

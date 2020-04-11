@@ -5,11 +5,13 @@
 #include <string.h>
 #include <wchar.h>
 #include <stdlib.h>
+#include <setjmp.h>
 #include <string>
 #include <memory>
 #include <iostream>
+#include <exception>
 
-// reference: ¡¶CºÍC++°²È«±àÂë(Ô­ÊéµÚ2°æ)¡·
+// reference: ã€ŠCå’ŒC++å®‰å…¨ç¼–ç (åŸä¹¦ç¬¬2ç‰ˆ)ã€‹
 
 namespace cplusplus_secure_coding_ {
 
@@ -23,9 +25,9 @@ void calculate_array_size(int arr1[], char arr3[])
 	int arr2[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
 	fprintf(stdout, "arr2 element count: %d\n", sizeof(arr2) / sizeof(arr2[0])); // 8
 
-	// ´Ë´¦arr1ÊÇÒ»¸ö²ÎÊı£¬ËùÒÔËüµÄÀàĞÍÊÇÖ¸Õë£¬ÔÚx64ÖĞ£¬sizeof(int*)=8£¬ÔÚx86ÖĞ,sizeof(int*)=4
-	// Êı×éÃû×÷Îªº¯Êı²ÎÊı»á±»CÓïÑÔ×ª»»ÎªÖ¸Õë£¬¶ø²»ÊÇsizeofµÄ"²ÎÊı"£¬ÒòÎªsizeof²»ÊÇº¯Êı¶øÊÇÔËËã·û
-	// sizeofÔËËã·ûÔÚÓ¦ÓÃÓÚÉùÃ÷ÎªÊı×é»òº¯ÊıÀàĞÍµÄ²ÎÊıÊ±£¬Ëü²úÉúµ÷ÕûºóµÄ(¼´Ö¸Õë)ÀàĞÍ´óĞ¡
+	// æ­¤å¤„arr1æ˜¯ä¸€ä¸ªå‚æ•°ï¼Œæ‰€ä»¥å®ƒçš„ç±»å‹æ˜¯æŒ‡é’ˆï¼Œåœ¨x64ä¸­ï¼Œsizeof(int*)=8ï¼Œåœ¨x86ä¸­,sizeof(int*)=4
+	// æ•°ç»„åä½œä¸ºå‡½æ•°å‚æ•°ä¼šè¢«Cè¯­è¨€è½¬æ¢ä¸ºæŒ‡é’ˆï¼Œè€Œä¸æ˜¯sizeofçš„"å‚æ•°"ï¼Œå› ä¸ºsizeofä¸æ˜¯å‡½æ•°è€Œæ˜¯è¿ç®—ç¬¦
+	// sizeofè¿ç®—ç¬¦åœ¨åº”ç”¨äºå£°æ˜ä¸ºæ•°ç»„æˆ–å‡½æ•°ç±»å‹çš„å‚æ•°æ—¶ï¼Œå®ƒäº§ç”Ÿè°ƒæ•´åçš„(å³æŒ‡é’ˆ)ç±»å‹å¤§å°
 	fprintf(stdout, "arr1 element count: %d\n", sizeof(arr1) / sizeof(arr1[0])); // 2, error
 	fprintf(stdout, "sizeof(int*): %d\n", sizeof(int*)); // 8 // note: x64, not x86
 
@@ -34,15 +36,15 @@ void calculate_array_size(int arr1[], char arr3[])
 
 void string_literal()
 {
-	const char s1[4] = "abc"; // ²»ÍÆ¼ö,ÈÎºÎËæºó½«Êı×é×÷ÎªÒ»¸ö¿Õ×Ö½Ú½áÎ²µÄ×Ö·û´®µÄÊ¹ÓÃ¶¼»áµ¼ÖÂÂ©¶´£¬ÒòÎªs1Ã»ÓĞÕıÈ·µØÒÔ¿Õ×Ö·û½áÎ²
-	const char s2[] = "abc";  // ÍÆ¼ö,¶ÔÓÚÒ»¸öÓÃ×Ö·û´®×ÖÃæÖµ³õÊ¼»¯µÄ×Ö·û´®£¬²»Ö¸¶¨ËüµÄ½çÏŞ,ÒòÎª±àÒëÆ÷»á×Ô¶¯ÎªÕû¸ö×Ö·û´®×ÖÃæÖµ·ÖÅä×ã¹»µÄ¿Õ¼ä£¬°üÀ¨ÖÕÖ¹µÄ¿Õ×Ö·û
+	const char s1[4] = "abc"; // ä¸æ¨è,ä»»ä½•éšåå°†æ•°ç»„ä½œä¸ºä¸€ä¸ªç©ºå­—èŠ‚ç»“å°¾çš„å­—ç¬¦ä¸²çš„ä½¿ç”¨éƒ½ä¼šå¯¼è‡´æ¼æ´ï¼Œå› ä¸ºs1æ²¡æœ‰æ­£ç¡®åœ°ä»¥ç©ºå­—ç¬¦ç»“å°¾
+	const char s2[] = "abc";  // æ¨è,å¯¹äºä¸€ä¸ªç”¨å­—ç¬¦ä¸²å­—é¢å€¼åˆå§‹åŒ–çš„å­—ç¬¦ä¸²ï¼Œä¸æŒ‡å®šå®ƒçš„ç•Œé™,å› ä¸ºç¼–è¯‘å™¨ä¼šè‡ªåŠ¨ä¸ºæ•´ä¸ªå­—ç¬¦ä¸²å­—é¢å€¼åˆ†é…è¶³å¤Ÿçš„ç©ºé—´ï¼ŒåŒ…æ‹¬ç»ˆæ­¢çš„ç©ºå­—ç¬¦
 	fprintf(stdout, "s1 length: %d, s2 length: %d\n", strlen(s1), strlen(s2)); // 3, 3
 }
 
 void string_size()
 {
 	wchar_t wide_str1[] = L"0123456789";
-	// ¼ÆËãÈİÄÉ¿í×Ö·û´®µÄÒ»¸ö¸±±¾ËùĞèµÄ×Ö½ÚÊı(°üÀ¨ÖÕÖ¹×Ö·û)
+	// è®¡ç®—å®¹çº³å®½å­—ç¬¦ä¸²çš„ä¸€ä¸ªå‰¯æœ¬æ‰€éœ€çš„å­—èŠ‚æ•°(åŒ…æ‹¬ç»ˆæ­¢å­—ç¬¦)
 	wchar_t* wide_str2 = (wchar_t*)malloc((wcslen(wide_str1) + 1) * sizeof(wchar_t));
 	free(wide_str2);
 }
@@ -66,10 +68,10 @@ int test_secure_coding_2_1()
 void test_unbounded_string_copy()
 {
 	char buf[12];
-	std::cin >> buf; // Èç¹ûÓÃ»§ÊäÈë¶àÓÚ11¸ö×Ö·û£¬»áµ¼ÖÂĞ´Ô½½ç
+	std::cin >> buf; // å¦‚æœç”¨æˆ·è¾“å…¥å¤šäº11ä¸ªå­—ç¬¦ï¼Œä¼šå¯¼è‡´å†™è¶Šç•Œ
 	std::cout << "echo: " << buf << std::endl;
 
-	std::cin.width(12); // Í¨¹ı½«Óò¿í³ÉÔ±ÉèÖÃÎª×Ö·ûÊı×éµÄ³¤¶ÈÏû³ıÁËÒç³ö
+	std::cin.width(12); // é€šè¿‡å°†åŸŸå®½æˆå‘˜è®¾ç½®ä¸ºå­—ç¬¦æ•°ç»„çš„é•¿åº¦æ¶ˆé™¤äº†æº¢å‡º
 	std::cin >> buf;
 	std::cout << "echo: " << buf << std::endl;
 }
@@ -105,15 +107,15 @@ void test_null_termination_error()
 	char a[16], b[16], c[16];
 	// No null-character is implicitly appended at the end of destination if source is longer than num.
 	// Thus, in this case, destination shall not be considered a null terminated C string (reading it as such would overflow)
-	//strncpy(a, "0123456789abcdef", sizeof(a)); // error, a²¢Î´ÒÔ¿Õ×Ö·û½áÎ²
-	//fprintf(stdout, "a: %s\n", a); // a²¢Î´ÒÔ¿Õ×Ö·û½áÎ²,µ¼ÖÂÎŞ·¨Õı³£´òÓ¡a
+	//strncpy(a, "0123456789abcdef", sizeof(a)); // error, aå¹¶æœªä»¥ç©ºå­—ç¬¦ç»“å°¾
+	//fprintf(stdout, "a: %s\n", a); // aå¹¶æœªä»¥ç©ºå­—ç¬¦ç»“å°¾,å¯¼è‡´æ— æ³•æ­£å¸¸æ‰“å°a
 	strncpy(a, "0123456789abcde", sizeof(a));
-	//strncpy(b, "0123456789abcdef", sizeof(b)); // error, b²¢Î´ÒÔ¿Õ×Ö·û½áÎ²
-	//fprintf(stdout, "b: %s\n", b); // b²¢Î´ÒÔ¿Õ×Ö·û½áÎ²,µ¼ÖÂÎŞ·¨Õı³£´òÓ¡b
+	//strncpy(b, "0123456789abcdef", sizeof(b)); // error, bå¹¶æœªä»¥ç©ºå­—ç¬¦ç»“å°¾
+	//fprintf(stdout, "b: %s\n", b); // bå¹¶æœªä»¥ç©ºå­—ç¬¦ç»“å°¾,å¯¼è‡´æ— æ³•æ­£å¸¸æ‰“å°b
 	strncpy(b, "0123456789abcde", sizeof(b));
 	// To avoid overflows, the size of the array pointed by destination shall be long enough to contain the 
 	// same C string as source (including the terminating null character)
-	strcpy(c, a); // Èôa²¢Î´ÒÔ¿Õ×Ö·û½áÎ²,ÄÇÃ´cÒ²Î´ÒÔ¿Õ×Ö·û½áÎ²£¬¶øÇÒc¿ÉÄÜĞ´µÃÔ¶Ô¶³¬³öÁËÊı×é½çÏŞ£¬µ¼ÖÂÎŞ·¨Õı³£´òÓ¡c
+	strcpy(c, a); // è‹¥aå¹¶æœªä»¥ç©ºå­—ç¬¦ç»“å°¾,é‚£ä¹ˆcä¹Ÿæœªä»¥ç©ºå­—ç¬¦ç»“å°¾ï¼Œè€Œä¸”cå¯èƒ½å†™å¾—è¿œè¿œè¶…å‡ºäº†æ•°ç»„ç•Œé™ï¼Œå¯¼è‡´æ— æ³•æ­£å¸¸æ‰“å°c
 	fprintf(stdout, "a: %s, b: %s, c: %s\n", a, b, c);
 
 	char d[16];
@@ -137,7 +139,7 @@ void test_basic_string()
 	std::cin >> str;
 	std::cout << "str: " << str << std::endl;
 
-	// Ê¹ÓÃµü´úÆ÷±àÒëÒ»¸ö×Ö·û´®µÄÄÚÈİ
+	// ä½¿ç”¨è¿­ä»£å™¨ç¼–è¯‘ä¸€ä¸ªå­—ç¬¦ä¸²çš„å†…å®¹
 	for (std::string::const_iterator it = str.cbegin(); it != str.cend(); ++it) {
 		std::cout << *it;
 	}
@@ -151,10 +153,10 @@ void test_string_reference_invalid()
 	std::string::iterator loc = email.begin();
 	for (int i = 0; i < strlen(input); ++i) {
 		if (input[i] != ';') {
-			//email.insert(loc++, input[i]); // ·Ç·¨µü´úÆ÷
+			//email.insert(loc++, input[i]); // éæ³•è¿­ä»£å™¨
 			loc = email.insert(loc, input[i]);
 		} else {
-			//email.insert(loc++, ' '); // ·Ç·¨µü´úÆ÷
+			//email.insert(loc++, ' '); // éæ³•è¿­ä»£å™¨
 			loc = email.insert(loc, ' ');
 		}
 		++loc;
@@ -175,16 +177,16 @@ void test_fgets()
 	char buf[10];
 
 	if (fgets(buf, sizeof(buf), stdin)) {
-		// fgets³É¹¦£¬É¨Ãè²éÕÒ»»ĞĞ·û
+		// fgetsæˆåŠŸï¼Œæ‰«ææŸ¥æ‰¾æ¢è¡Œç¬¦
 		char* p = strchr(buf, '\n');
 		if (p) {
 			*p = '\0';
 		} else {
-			// Î´ÕÒµ½»»ĞĞ·û,Ë¢ĞÂstdinµ½ĞĞÎ²
+			// æœªæ‰¾åˆ°æ¢è¡Œç¬¦,åˆ·æ–°stdinåˆ°è¡Œå°¾
 			int ch;
 			while (((ch = getchar()) != '\n') && !feof(stdin) && !ferror(stdin));
 		}
-	} else { // fgetsÊ§°Ü
+	} else { // fgetså¤±è´¥
 		fprintf(stderr, "fail to fgets\n");
 	}
 
@@ -206,11 +208,11 @@ void test_getchar()
 		++chars_read;
 	}
 
-	buf[index] = '\0'; // ¿ÕÖÕ½á·û
+	buf[index] = '\0'; // ç©ºç»ˆç»“ç¬¦
 
-	if (feof(stdin)) { fprintf(stderr, "EOF\n"); } // ´¦ÀíEOF
-	if (ferror(stdin)) { fprintf(stderr, "ERROR\n"); } // ´¦Àí´íÎó
-	if (chars_read > index) { fprintf(stderr, "truncated\n"); } // ´¦Àí½Ø¶Ï
+	if (feof(stdin)) { fprintf(stderr, "EOF\n"); } // å¤„ç†EOF
+	if (ferror(stdin)) { fprintf(stderr, "ERROR\n"); } // å¤„ç†é”™è¯¯
+	if (chars_read > index) { fprintf(stderr, "truncated\n"); } // å¤„ç†æˆªæ–­
 
 	fprintf(stdout, "buf: %s\n", buf);
 }
@@ -219,7 +221,7 @@ void test_gets_s()
 {
 #ifdef _MSC_VER
 	char buf[10];
-	if (gets_s(buf, sizeof(buf)) == NULL) { // ´¦Àí´íÎó
+	if (gets_s(buf, sizeof(buf)) == NULL) { // å¤„ç†é”™è¯¯
 		fprintf(stderr, "fail to gets_s\n");
 	}
 
@@ -250,7 +252,7 @@ void test_strncpy_s()
 	fprintf(stdout, "dst1: %s, r1: %d\n", dst1, r1); // hello\0
 	r2 = strncpy_s(dst2, sizeof(dst2), src2, 4);
 	fprintf(stdout, "dst2: %s, r2: %d\n", dst2, r2); // good\0
-	//r3 = strncpy_s(dst3, sizeof(dst3), src1, sizeof(src1)); // crash, r3²¢Ã»ÓĞ·µ»Ø·ÇÁãÖµ£¬Ô­ÒòÓ¦¸ÃÊÇÃ»ÓĞ¿ªÆôÔËĞĞÊ±Ô¼Êø
+	//r3 = strncpy_s(dst3, sizeof(dst3), src1, sizeof(src1)); // crash, r3å¹¶æ²¡æœ‰è¿”å›éé›¶å€¼ï¼ŒåŸå› åº”è¯¥æ˜¯æ²¡æœ‰å¼€å¯è¿è¡Œæ—¶çº¦æŸ
 	//fprintf(stdout, "dst3: %s, r3: %d\n", dst3, r3);
 #endif
 }
@@ -277,9 +279,132 @@ int test_secure_coding_2()
 }
 
 ///////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/105458861
+
+namespace {
+
+static int GLOBAL_INIT = 1; // æ•°æ®æ®µï¼Œå…¨å±€
+static int global_uninit; // BSSæ®µï¼Œå…¨å±€
+int test_secure_coding_3_1() // æ ˆï¼Œå±€éƒ¨
+{
+	int local_init = 1; // æ ˆï¼Œå±€éƒ¨
+	int local_uninit; // æ ˆï¼Œå±€éƒ¨
+	static int local_static_init = 1; // æ•°æ®æ®µï¼Œå±€éƒ¨
+	static int local_static_uninit; // BSSæ®µï¼Œå±€éƒ¨
+	// buff_ptrçš„å­˜å‚¨ç©ºé—´æ˜¯æ ˆï¼Œå±€éƒ¨ï¼›åˆ†é…çš„å†…å­˜æ˜¯å †ï¼Œå±€éƒ¨
+	int* buff_ptr = (int*)malloc(32);
+	free(buff_ptr);
+
+	return 0;
+}
+
+void good_function(const char* str) {} // æ ˆ
+// ä¸€ä¸ªæœ‰æ¼æ´çš„ç¨‹åºï¼Œå…¶BSSæ®µä¸­çš„å‡½æ•°æŒ‡é’ˆå¯ä»¥è¢«è¦†å†™
+void test_secure_coding_3_2(int argc, char* argv[]) // æ ˆ
+{
+	const int BUFFSIZE = 10; // æ ˆ
+	static char buff[BUFFSIZE]; // BSSæ®µ
+	static void(*funPtr)(const char* str); // BSSæ®µ
+	funPtr = &good_function;
+	// å½“argv[1]çš„é•¿åº¦å¤§äºBUFFSIZEçš„æ—¶å€™ï¼Œå°±ä¼šå‘ç”Ÿç¼“å†²åŒºæº¢å‡º,è¿™ä¸ªç¼“å†²åŒºæº¢å‡ºæ¼æ´
+	// å¯ä»¥è¢«åˆ©ç”¨æ¥å°†å‡½æ•°æŒ‡é’ˆå€¼è¦†å†™ä¸ºå¤–å£³ä»£ç çš„åœ°å€ï¼Œä»è€Œå°†ç¨‹åºçš„æ§åˆ¶æƒè½¬ç§»åˆ°ä»»æ„çš„ä»£ç 
+	// å½“æ‰§è¡Œç”±funPtræ ‡è¯†çš„å‡½æ•°æ—¶ï¼Œå¤–å£³ä»£ç å°†ä¼šå–ä»£good_function()å¾—ä»¥æ‰§è¡Œ
+	strncpy(buff, argv[1], strlen(argv[1])); 
+	(void)(*funPtr)(argv[2]);
+}
+
+// ä¸€ä¸ªæœ‰æ¼æ´çš„ç¨‹åºï¼Œå¯ä»¥è¢«åˆ©ç”¨æ¥å®ç°ä»»æ„å†…å­˜å†™,ä¿®æ”¹å¯¹è±¡æŒ‡é’ˆ
+void test_secure_coding_3_3(void* arg, size_t len)
+{
+	char buff[100];
+	long val = 1;
+	long* ptr = &val;
+	// ä¸€ä¸ªæ— ç•Œå†…å­˜å¤åˆ¶ï¼Œåœ¨æº¢å‡ºç¼“å†²åŒºåï¼Œæ”»å‡»è€…å¯ä»¥è¦†å†™ptrå’Œval
+	// å½“æ‰§è¡Œ*ptr=valæ—¶ï¼Œå°±ä¼šå‘ç”Ÿä»»æ„å†…å­˜å†™
+	memcpy(buff, arg, len);
+	*ptr = val;
+}
+
+#ifndef _MSC_VER
+static void create(void) ; //__attribute__((constructor)); // æµ‹è¯•test_secure_coding_3_6()æ—¶å†æ‰“å¼€
+static void destroy(void); // __attribute__((destructor));
+
+static void create(void)
+{
+	fprintf(stdout, "create called.\n");
+}
+
+static void destroy(void)
+{
+	fprintf(stdout, "destructor called.\n");
+}
+#endif
+
+void test_secure_coding_3_6()
+{
+#ifndef _MSC_VER
+	fprintf(stdout, "create: %p.\n", create);
+	fprintf(stdout, "destroy: %p.\n", destroy);
+	exit(0);
+#endif
+}
+
+char* glob;
+
+void test(void)
+{
+	fprintf(stdout, "%s", glob);
+}
+
+int test_secure_coding_3_8()
+{
+	atexit(test);
+	glob = "Exiting.\n";
+
+	return 0;
+}
+
+int test_secure_coding_3_9()
+{
+	jmp_buf env;
+	int val;
+
+	val = setjmp(env);
+
+	fprintf(stdout, "val is %d\n", val);
+
+	if (!val) longjmp(env, 1);
+
+	return 0;
+}
+
+int test_secure_coding_3_10()
+{
+	try {
+		//throw 10;
+		throw "overflow";
+	}
+	catch(int x) {
+		fprintf(stderr, "exception value: %d\n", x);
+	}
+	catch (const char* str) {
+		fprintf(stderr, "exception value: %s\n", str);
+	}
+
+	return 0;
+}
+
+} // namespace
+
+
 int test_secure_coding_3()
 {
-	return 0;
+	//return test_secure_coding_3_1();
+	//test_secure_coding_3_6(); return 0;
+	//return test_secure_coding_3_8();
+	//return test_secure_coding_3_9();
+	return test_secure_coding_3_10();
+
 }
 
 ///////////////////////////////////////////////////////////
