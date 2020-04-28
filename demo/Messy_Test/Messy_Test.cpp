@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_tinyxml2_parse();
+	int ret = test_rapidjson_write();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

@@ -1,6 +1,7 @@
 ﻿#include "funset.hpp"
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
+#include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 #include <iostream>
 #include <fstream>
@@ -121,7 +122,18 @@ int test_rapidjson_parse()
 int test_rapidjson_write()
 {
 	rapidjson::StringBuffer buf;
-	rapidjson::Writer<rapidjson::StringBuffer> writer(buf);
+	//rapidjson::Writer<rapidjson::StringBuffer> writer(buf);
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buf); // it can word wrap
+
+	writer.StartObject();
+
+	writer.Key("name"); writer.String("spring");
+	writer.Key("address"); writer.String("北京");
+	writer.Key("age"); writer.Int(30);
+
+	writer.Key("value1");
+	writer.StartArray();
+	writer.StartArray();
 
 	writer.StartObject();
 

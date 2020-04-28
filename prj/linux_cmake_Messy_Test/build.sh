@@ -35,7 +35,7 @@ mkdir -p ${libuuid_path}/build
 cd ${libuuid_path}/build
 if [[ ! -f .libs/libuuid.a ]]; then
 	./../configure
-	make
+	make AUTOCONF=: AUTOHEADER=: AUTOMAKE=: ACLOCAL=:
 fi
 echo "========== finish build libuuid =========="
 
