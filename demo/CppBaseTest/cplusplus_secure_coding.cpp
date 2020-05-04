@@ -6,10 +6,13 @@
 #include <wchar.h>
 #include <stdlib.h>
 #include <setjmp.h>
+#include <cstddef>
 #include <string>
 #include <memory>
 #include <iostream>
 #include <exception>
+#include <algorithm>
+#include <climits>
 
 // reference: 《C和C++安全编码(原书第2版)》
 
@@ -408,9 +411,283 @@ int test_secure_coding_3()
 }
 
 ///////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/105921174
+
+namespace {
+void test_aligned_alloc()
+{
+	const int arr_size = 11;
+	// 分配16字节对齐的数据
+#ifdef _MSC_VER
+	float* array = (float*)_aligned_malloc(16, arr_size * sizeof(float));
+#else
+	float* array = (float*)aligned_alloc(16, arr_size * sizeof(float));
+#endif
+	auto addr = std::addressof(array);
+	fprintf(stdout, "pointer addr: %p\n", addr);
+
+	fprintf(stdout, "char alignment: %d, float alignment: %d, max_align_t alignment: %d\n",
+		alignof(char), alignof(float), alignof(max_align_t));
+}
+
+int test_secure_coding_4_1()
+{
+	test_aligned_alloc();
+	return 0;
+}
+
+// 读取未初始化的内存
+void test_memory_init_error()
+{
+	// 初始化大的内存块可能会降低性能并且不总是必要的.
+	// C标准委员会决定不需要malloc来初始化这个内存,而把这个决定留给程序员
+	int n = 5;
+	int* y = static_cast<int*>(malloc(n * sizeof(int)));
+	int A[] = {1, 2, 3, 4, 5};
+
+	for (int i = 0; i < n; ++i) {
+		y[i] += A[i];
+	}
+
+	std::for_each(y, y+n, [](int v) { fprintf(stdout, "value: %d\n", v); });
+	free(y);
+}
+
+// 检查malloc的返回值
+int* test_memory_return_value()
+{
+	// 如果不能分配请求的空间，那么C内存分配函数将返回一个空指针
+	int n = 5;
+	int* ptr = static_cast<int*>(malloc(sizeof(int) * n));
+	if (ptr != nullptr) {
+		memset(ptr, 0, sizeof(int) * n);
+	} else {
+		fprintf(stderr, "fail to malloc\n");
+		return nullptr;
+	}
+
+	return ptr;
+}
+
+// 引用已释放内存
+void test_memory_reference_free()
+{
+	int* x = static_cast<int*>(malloc(sizeof(int)));
+	*x = 100;
+	free(x);
+	// 从已被释放的内存读取是未定义的行为
+	fprintf(stderr, "x: %d\n", *x);
+	// 写入已经被释放的内存位置，也不大可能导致内存故障，但可能会导致一些严重的问题
+	*x = -100;
+	fprintf(stderr, "x: %d\n", *x);
+}
+
+// 多次释放内存
+void test_memory_multi_free()
+{
+	int* x = static_cast<int*>(malloc(sizeof(int)));
+	free(x);
+	// 多次释放相同的内存会导致可以利用的漏洞
+	free(x);
+}
+
+// 零长度分配：不要执行零长度分配
+void test_memory_0_byte_malloc()
+{
+	char* p1 = static_cast<char*>(malloc(0));
+	fprintf(stderr, "p1 pointer: %p\n", std::addressof(p1)); // 是不确定的
+	free(p1);
+
+	p1 = nullptr;
+	char* p2 = static_cast<char*>(realloc(p1, 0));
+	fprintf(stderr, "p2 pointer: %p\n", std::addressof(p2)); // 是不确定的
+	free(p2);
+	
+	int nsize = 10;
+	char* p3 = static_cast<char*>(malloc(nsize));
+	char* p4 = nullptr;
+	// 永远不要分配0个字节
+	if ((nsize == 0) || (p4 = static_cast<char*>(realloc(p3, nsize))) == nullptr) {
+		free(p3);
+		p3 = nullptr;
+		return;
+	}
+
+	p3 = p4;
+	free(p3);
+}
+
+int test_secure_coding_4_2()
+{
+	//test_memory_init_error();
+	//free(test_memory_return_value());
+	//test_memory_reference_free();
+	//test_memory_multi_free();
+	test_memory_0_byte_malloc();
+	return 0;
+}
+
+void test_memory_new_init()
+{
+	// 包括所有的内置类型
+	int* i1 = new int(); // 已初始化
+	int* i2 = new int; // 未初始化
+	fprintf(stdout, "i1: %d, i2: %d\n", *i1, *i2);
+
+	// 就地new没有实际分配内存，所以该内存不应该被释放
+	int* i3 = new (i1) int;
+	fprintf(stdout, "i3: %d\n", *i3);
+
+	delete i1;
+	delete i2;
+
+	// 通常情况下，分配函数无法分配存储时抛出一个异常表示失败
+	int* p1 = nullptr;
+	try {
+		p1 = new int;
+	} catch (std::bad_alloc) {
+		fprintf(stderr, "fail to new\n");
+		return;
+	}
+	delete p1;
+
+	// 用std::nothrow参数调用new，当分配失败时，分配函数不会抛出一个异常，它将返回一个空指针
+	int* p2 = new(std::nothrow) int;
+	if (p2 == nullptr) {
+		fprintf(stderr, "fail to new\n");
+		return;
+	}
+	delete p2;
+}
+
+class intHandle {
+public:
+	explicit intHandle(int* anInt) : i_(anInt) {} // 获取资源
+	~intHandle() { delete i_; } // 释放资源
+
+	intHandle& operator=(const int i)
+	{
+		*i_ = i;
+		return *this;
+	}
+
+	int* get() { return i_; } // 访问资源
+
+private:
+	intHandle(const intHandle&) = delete;
+	intHandle& operator=(const intHandle&) = delete;
+	int* i_;
+};
+
+// 资源获取初始化(Resource Acquisition Is Initialization, RAII)
+void test_memory_arii()
+{
+	intHandle ih(new int);
+	ih = 5;
+	fprintf(stdout, "value: %d\n", *ih.get());
+
+	// 使用std::unique_ptr能完成同样的事情，而且更简单
+	std::unique_ptr<int> ip(new int);
+	*ip = 5;
+	fprintf(stdout, "value: %d\n", *ip.get());
+}
+
+// 抛出std::bad_array_new_length的三种情况
+void test_memory_bad_array_new_length()
+{
+	try {
+		int negative = -1;
+		new int[negative]; // 大小为负
+	} catch(const std::bad_array_new_length& e) {
+		fprintf(stderr, "1: %s\n", e.what());
+	}
+
+	try {
+		int small = 1;
+		new int[small]{1, 2, 3}; // 过多的初始化值设定
+	} catch(const std::bad_array_new_length& e) {
+		fprintf(stderr, "2: %s\n", e.what());
+	}
+
+	try {
+		int large = INT_MAX;
+		new int[large][1000000]; // 过大
+	} catch(const std::bad_alloc& e) {
+		fprintf(stderr, "3: %s\n", e.what());
+	}
+}
+
+int test_secure_coding_4_3()
+{
+	//test_memory_new_init();
+	//test_memory_arii();
+	test_memory_bad_array_new_length();
+	return 0;
+}
+
+// 未能正确检查分配失败
+void test_memory_new_wrong_usage()
+{
+	// new表达式，要么成功，要么抛出一个异常
+	// 意味着，if条件永远为真，而else子句永远不会被执行
+	int* ip = new int;
+	if (ip) { // 条件总是为真
+		
+	} else {
+		// 将永远不执行
+	}
+	delete ip;
+
+	// new操作符的nothrow形式在失败时返回一个空指针，而不是抛出一个异常
+	int* p2 = new(std::nothrow)int;
+	if (p2) {
+		delete p2;
+	} else {
+		fprintf(stderr, "fail to new\n");
+	}
+}
+
+class Widget {};
+
+// 不正确配对的内存管理函数
+void test_memory_new_delete_unpaired()
+{
+	int* ip = new int(12);
+	free(ip); // 错误，应使用delete ip
+
+	int* ip2 = static_cast<int*>(malloc(sizeof(int)));
+	*ip2 = 12;
+	delete ip2; // 错误，应使用free(ip2)
+
+	// new和delete操作符用于分配和释放单个对象
+	Widget* w = new Widget();
+	delete w;
+
+	// new[]和delete[]操作符用于分配和释放数组
+	Widget* w2 = new Widget[10];
+	delete [] w2;
+
+	// operator new()分配原始内存，但不调用构造函数
+	std::string* sp = static_cast<std::string*>(operator new(sizeof(std::string)));
+	//delete sp; // 错误
+	operator delete (sp); // 正确
+}
+
+int test_secure_coding_4_4()
+{
+	//test_memory_new_wrong_usage();
+	test_memory_new_delete_unpaired();
+	return 0;
+}
+
+} // namespace
+
 int test_secure_coding_4()
 {
-	return 0;
+	//return test_secure_coding_4_1();
+	//return test_secure_coding_4_2();
+	//return test_secure_coding_4_3();
+	return test_secure_coding_4_4();
 }
 
 ///////////////////////////////////////////////////////////
