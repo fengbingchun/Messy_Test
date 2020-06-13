@@ -8,6 +8,8 @@
 #include <setjmp.h>
 #include <limits.h>
 #include <fenv.h>
+#include <stdarg.h>
+#include <signal.h>
 #include <cstddef>
 #include <cmath>
 #include <string>
@@ -16,6 +18,8 @@
 #include <exception>
 #include <algorithm>
 #include <climits>
+#include <thread>
+#include <chrono>
 
 // reference: 《C和C++安全编码(原书第2版)》
 
@@ -1350,15 +1354,206 @@ int test_secure_coding_5()
 }
 
 ///////////////////////////////////////////////////////////
-int test_secure_coding_6()
+// Blog: https://blog.csdn.net/fengbingchun/article/details/106728792
+
+namespace {
+
+int average(int first, ...)
 {
+	va_list marker;
+	// 在使用变量marker之前，首先必须调用va_start()对参数列表进行初始化
+	// 定参first允许vs_start()决定第一个变参的位置
+	va_start(marker, first);
+
+	int count = 0, sum = 0, i = first;
+	while (i != -1) {
+		sum += i;
+		count++;
+		// va_arg()需要一个已初始化的va_list和下一个参数的类型.
+		// 这个宏可以根据类型的大小返回下一个参数,并且相应地递增参数指针
+		i = va_arg(marker, int);
+	}
+
+	// 在函数返回之前，调用va_end()来执行任何必要的清理工作
+	// 若在返回前未调用va_end()宏，则行为是未定义的
+	va_end(marker);
+	return (sum ? (sum / count) : 0);
+}
+
+void test_format_output_variable_parameter_function()
+{
+	int ret = average(3, 5, 8, -1);
+	fprintf(stdout, "average: %d\n", ret);
+}
+
+int test_secure_coding_6_1()
+{
+	test_format_output_variable_parameter_function();
 	return 0;
 }
 
+void test_format_output_buffer_overflow()
+{
+{
+	char* user = "abcd"; // 用户提供的字符串(可能是恶意的数据)
+	char buffer[512];
+	// 用户提供的字符串写入一个固定长度的缓冲区
+	// 任何长度大于495字节的字符串都会导致越界写(512字节-16个字符字节-1个空字节)
+	sprintf(buffer, "Wrong command: %s\n", user);
+	fprintf(stdout, "buffer: %s\n", buffer);
+}
+
+{
+	char* user = "%497d\x3c\xd3\xff\xbf<nops><shellcode>";
+	fprintf(stdout, "user: %s\n", user);
+	char outbuf[512], buffer[512];
+
+	sprintf(buffer, "ERR Wrong command: %.400s", user);
+	fprintf(stdout, "buffer: %s\n", buffer);
+	// 格式规范%497d指示函数sprintf()从栈中读出一个假的参数并向缓冲区中写入497个字符，包括格式字符串中的普通字符
+	// 在内，现在写入的字符总数已经超过了outbuf的长度4个字节
+	// 用户输入可被操纵用于覆写返回地址，也就是拿恶意格式字符串参数中提供的利用代码的地址(0xbfffd33c)去覆写该
+	// 地址.在当前函数退出时，控制权将以与栈溢出攻击相同的方式转移给漏洞利用代码
+	sprintf(outbuf, buffer);
+	fprintf(stdout, "outbuf: %s\n", outbuf);
+}
+}
+
+void test_format_output_overwrite_memory()
+{
+{ // 向各种类型和大小的整数变量写入输出的字符数
+	char c;
+	short s;
+	int i;
+	long l;
+	long long ll;
+
+	// 最初转换指示符%n是用来帮助排列格式化输出字符串的. 它将字符数目成功地输出到以参数的形式
+	// 提供的整数地址中
+	printf("hello %hhn.", &c);
+	printf("hello %hn.", &s);
+	printf("hello %n.", &i);
+	printf("hello %ln.", &l);
+	printf("hello %lln.", &ll);
+	fprintf(stdout, "c: %d, s: %d, i: %d, l: %ld, ll: %lld\n", c, s, i, l, ll); // 6
+}
+
+{
+	// 格式化输出函数写入的字符个数是由格式字符串决定的.如果攻击者能够控制格式字符串,那么他就能通过使用
+	// 具有具体的宽度或精度的转换规范来控制写入的字符个数
+	// 每一个格式字符串都耗用两个参数，第一个参数是转换指示符%u所使用的整数值，输出的字符个数(一个整数值)
+	// 则被写入由第二个参数指定的地址中
+	int i;
+	printf("%10u%n", 1, &i); fprintf(stdout, "i: %d\n", i); // 10
+	printf("%100u%n", 1, &i); fprintf(stdout, "i: %d\n", i); // 100
+}
+
+{
+	// 在对格式化输出函数的单次调用中，还可以执行多次写
+	int i, j, m, n;
+	// 第一个%16u%n字符序列向指定地址中写入的值是16，但第二个%16u%n则写32字节，因为计数器没有被重置
+	printf("%16u%n%16u%n%32u%n%64u%n", 1, &i, 1, &j, 1, &m, 1, &n);
+	fprintf(stdout, "i: %d, j: %d, m: %d, n: %d\n", i, j, m, n); // 16, 32, 64, 128
+}
+}
+
+int test_secure_coding_6_3()
+{
+	//test_format_output_buffer_overflow();
+	test_format_output_overwrite_memory();
+	return 0;
+}
+
+void test_format_output_direct_parameter_access()
+{
+	// 在包含%n$形式的转换规范的格式字符串中,参数列表中的数字式参数可视需要被从格式字符串中引用多次, 其中n是一个
+	// 1～{NL_ARGMAX}范围内的十进制整数，它指定了参数的位置
+	// 展示了%n$形式的规范转换是如果被用于格式字符串漏洞利用的
+	int i, j, k;
+	// 第一个转换规范%4$5u获得第四个参数(即常量5)，并将输出格式为无符号的十进制整数，宽度为5.第二个转换规范%3$n,
+	// 将当前输出计数器的值(5)写到第三个参数(&i)所指定的地址
+	printf("%4$5u%3$n%5$5u%2$n%6$5u%1$n\n", &k, &j, &i, 5, 6, 7);
+	fprintf(stdout, "i = %d, j = %d, k = %d\n", i, j, k); // i=5, j=10, k=15
+}
+
+int test_secure_coding_6_4()
+{
+	test_format_output_direct_parameter_access();
+	return 0;
+}
+
+void test_format_output_dynamic_format_string()
+{
+	int x = 2, y = 3;
+	static char format[256] = "%d * %d = ";
+
+	strcat(format, "%d\n");
+	printf(format, x, y, x * y); // 2 * 3 = 6
+}
+
+void test_format_output_limit_bytes_number()
+{
+	char buffer[512];
+	char* user = "abc";
+	sprintf(buffer, "Wrong command: %s\n", user); // 不推荐
+	// 精度域指定了针对%s转换所要写入的最大字节数
+	sprintf(buffer, "Wrong command: %.495s\n", user); // 推荐
+}
+
+int test_secure_coding_6_5()
+{
+	//test_format_output_dynamic_format_string();
+	test_format_output_limit_bytes_number();
+	return 0;
+}
+
+} // namespace
+
+int test_secure_coding_6()
+{
+	//return test_secure_coding_6_1();
+	//return test_secure_coding_6_3();
+	//return test_secure_coding_6_4();
+	return test_secure_coding_6_5();
+}
+
 ///////////////////////////////////////////////////////////
+namespace {
+
+char* err_msg;
+#define MAX_MSG_SIZE 24
+
+void handler(int signum)
+{
+	strcpy(err_msg, "SIGINT encountered.");
+}
+
+int test_secure_coding_7_1()
+{
+	// 即使是单线程程序也可能有并发问题
+	// 虽然此程序只使用了一个线程，但它采用了两个控制流:一个使用test_secure_coding_7_1函数，另一个使用handler函数
+	// 如果在调用malloc()的过程中调用信号处理程序，该程序可能奔溃,如在程序执行5秒内，按Ctrl+C键
+	// 在信号处理函数中只调用异步安全的函数
+	signal(SIGINT, handler);
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	err_msg = (char*)malloc(MAX_MSG_SIZE);
+	if (err_msg == nullptr) { // 处理错误条件
+		fprintf(stderr, "fail to malloc\n");
+		return -1;
+	}
+
+	strcpy(err_msg, "No errors yet.");
+	// 主代码循环
+	fprintf(stdout, "err_msg: %s\n", err_msg);
+	return 0;
+}
+
+} // namespace
+
+
 int test_secure_coding_7()
 {
-	return 0;
+	return test_secure_coding_7_1();
 }
 
 ///////////////////////////////////////////////////////////
