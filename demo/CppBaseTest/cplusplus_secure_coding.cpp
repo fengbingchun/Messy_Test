@@ -20,6 +20,8 @@
 #include <climits>
 #include <thread>
 #include <chrono>
+#include <mutex>
+#include <atomic>
 
 // reference: 《C和C++安全编码(原书第2版)》
 
@@ -1361,7 +1363,7 @@ namespace {
 int average(int first, ...)
 {
 	va_list marker;
-	// 在使用变量marker之前，首先必须调用va_start()对参数列表进行初始化
+	// 在使用变量marker之前,首先必须调用va_start()对参数列表进行初始化
 	// 定参first允许vs_start()决定第一个变参的位置
 	va_start(marker, first);
 
@@ -1374,8 +1376,8 @@ int average(int first, ...)
 		i = va_arg(marker, int);
 	}
 
-	// 在函数返回之前，调用va_end()来执行任何必要的清理工作
-	// 若在返回前未调用va_end()宏，则行为是未定义的
+	// 在函数返回之前,调用va_end()来执行任何必要的清理工作
+	// 若在返回前未调用va_end()宏,则行为是未定义的
 	va_end(marker);
 	return (sum ? (sum / count) : 0);
 }
@@ -1410,10 +1412,10 @@ void test_format_output_buffer_overflow()
 
 	sprintf(buffer, "ERR Wrong command: %.400s", user);
 	fprintf(stdout, "buffer: %s\n", buffer);
-	// 格式规范%497d指示函数sprintf()从栈中读出一个假的参数并向缓冲区中写入497个字符，包括格式字符串中的普通字符
-	// 在内，现在写入的字符总数已经超过了outbuf的长度4个字节
-	// 用户输入可被操纵用于覆写返回地址，也就是拿恶意格式字符串参数中提供的利用代码的地址(0xbfffd33c)去覆写该
-	// 地址.在当前函数退出时，控制权将以与栈溢出攻击相同的方式转移给漏洞利用代码
+	// 格式规范%497d指示函数sprintf()从栈中读出一个假的参数并向缓冲区中写入497个字符,包括格式字符串中的普通字符
+	// 在内,现在写入的字符总数已经超过了outbuf的长度4个字节
+	// 用户输入可被操纵用于覆写返回地址,也就是拿恶意格式字符串参数中提供的利用代码的地址(0xbfffd33c)去覆写该
+	// 地址.在当前函数退出时,控制权将以与栈溢出攻击相同的方式转移给漏洞利用代码
 	sprintf(outbuf, buffer);
 	fprintf(stdout, "outbuf: %s\n", outbuf);
 }
@@ -1441,7 +1443,7 @@ void test_format_output_overwrite_memory()
 {
 	// 格式化输出函数写入的字符个数是由格式字符串决定的.如果攻击者能够控制格式字符串,那么他就能通过使用
 	// 具有具体的宽度或精度的转换规范来控制写入的字符个数
-	// 每一个格式字符串都耗用两个参数，第一个参数是转换指示符%u所使用的整数值，输出的字符个数(一个整数值)
+	// 每一个格式字符串都耗用两个参数,第一个参数是转换指示符%u所使用的整数值,输出的字符个数(一个整数值)
 	// 则被写入由第二个参数指定的地址中
 	int i;
 	printf("%10u%n", 1, &i); fprintf(stdout, "i: %d\n", i); // 10
@@ -1449,9 +1451,9 @@ void test_format_output_overwrite_memory()
 }
 
 {
-	// 在对格式化输出函数的单次调用中，还可以执行多次写
+	// 在对格式化输出函数的单次调用中,还可以执行多次写
 	int i, j, m, n;
-	// 第一个%16u%n字符序列向指定地址中写入的值是16，但第二个%16u%n则写32字节，因为计数器没有被重置
+	// 第一个%16u%n字符序列向指定地址中写入的值是16,但第二个%16u%n则写32字节,因为计数器没有被重置
 	printf("%16u%n%16u%n%32u%n%64u%n", 1, &i, 1, &j, 1, &m, 1, &n);
 	fprintf(stdout, "i: %d, j: %d, m: %d, n: %d\n", i, j, m, n); // 16, 32, 64, 128
 }
@@ -1467,10 +1469,10 @@ int test_secure_coding_6_3()
 void test_format_output_direct_parameter_access()
 {
 	// 在包含%n$形式的转换规范的格式字符串中,参数列表中的数字式参数可视需要被从格式字符串中引用多次, 其中n是一个
-	// 1～{NL_ARGMAX}范围内的十进制整数，它指定了参数的位置
+	// 1～{NL_ARGMAX}范围内的十进制整数,它指定了参数的位置
 	// 展示了%n$形式的规范转换是如果被用于格式字符串漏洞利用的
 	int i, j, k;
-	// 第一个转换规范%4$5u获得第四个参数(即常量5)，并将输出格式为无符号的十进制整数，宽度为5.第二个转换规范%3$n,
+	// 第一个转换规范%4$5u获得第四个参数(即常量5),并将输出格式为无符号的十进制整数,宽度为5.第二个转换规范%3$n,
 	// 将当前输出计数器的值(5)写到第三个参数(&i)所指定的地址
 	printf("%4$5u%3$n%5$5u%2$n%6$5u%1$n\n", &k, &j, &i, 5, 6, 7);
 	fprintf(stdout, "i = %d, j = %d, k = %d\n", i, j, k); // i=5, j=10, k=15
@@ -1531,8 +1533,8 @@ void handler(int signum)
 int test_secure_coding_7_1()
 {
 	// 即使是单线程程序也可能有并发问题
-	// 虽然此程序只使用了一个线程，但它采用了两个控制流:一个使用test_secure_coding_7_1函数，另一个使用handler函数
-	// 如果在调用malloc()的过程中调用信号处理程序，该程序可能奔溃,如在程序执行5秒内，按Ctrl+C键
+	// 虽然此程序只使用了一个线程,但它采用了两个控制流:一个使用test_secure_coding_7_1函数,另一个使用handler函数
+	// 如果在调用malloc()的过程中调用信号处理程序,该程序可能奔溃,如在程序执行5秒内,按Ctrl+C键
 	// 在信号处理函数中只调用异步安全的函数
 	signal(SIGINT, handler);
 	std::this_thread::sleep_for(std::chrono::seconds(5));
@@ -1548,12 +1550,267 @@ int test_secure_coding_7_1()
 	return 0;
 }
 
-} // namespace
+volatile sig_atomic_t interrupted; // 应声明为volatile
 
+void sigint_handler(int signum)
+{
+	interrupted = 1; // 赋值可能是在test_secure_coding_7_4不可见的
+	fprintf(stdout, "interrupted'value is changed\n");
+}
+
+int test_secure_coding_7_4()
+{
+	signal(SIGINT, sigint_handler);
+
+	// 执行后可同时按下ctrl+c键停止
+	while (!interrupted) { // interrupted若不声明为volatile的,循环可能永远不会终止
+		// do something
+	}
+
+	return 0;
+}
+
+std::mutex shared_lock;
+int shared_data = 0;
+void thread_function(int id)
+{
+	// 当对已经锁定的互斥量执行lock操作时,该函数会被阻塞直到当前持有该锁的线程释放它
+	shared_lock.lock();
+	shared_data = id; // shared_data的竞争窗口开始
+	fprintf(stdout, "thread: %d, set shared value to: %d\n", id, shared_data);
+	std::this_thread::sleep_for(std::chrono::milliseconds(id) * 100);
+	fprintf(stdout, "thread: %d, has shared value to: %d\n", id, shared_data); // shared_data的竞争窗口结束	
+	shared_lock.unlock();
+}
+
+void test_concurrency_mutex()
+{
+	const size_t thread_size = 10;
+	std::thread threads[thread_size];
+
+	for (size_t i = 0; i < thread_size; ++i)
+	      threads[i] = std::thread(thread_function, i);
+
+	for (size_t i = 0; i < thread_size; ++i)
+	      threads[i].join();
+
+	// test_concurrency_mutex()继续之前,等待直到线程完成
+	fprintf(stdout, "Done\n");
+}
+
+std::mutex shared_lock2;
+int shared_data2 = 0;
+void thread_function2(int id)
+{
+	std::lock_guard<std::mutex> lg(shared_lock2);
+	shared_data2 = id; // shared_data2的竞争窗口开始
+	fprintf(stdout, "thread: %d, set shared value to: %d\n", id, shared_data2);
+	std::this_thread::sleep_for(std::chrono::milliseconds(id) * 100);
+	fprintf(stdout, "thread: %d, has shared value to: %d\n", id, shared_data2); // shared_data2的竞争窗口结束	
+	// lg被销毁,且互斥量在这里被隐式地解锁
+}
+
+void test_concurrency_mutex_guard()
+{
+	const size_t thread_size = 10;
+	std::thread threads[thread_size];
+
+	for (size_t i = 0; i < thread_size; ++i)
+	      threads[i] = std::thread(thread_function2, i);
+
+	for (size_t i = 0; i < thread_size; ++i)
+	      threads[i].join();
+
+	// test_concurrency_mutex_guard()继续之前,等待直到线程完成
+	fprintf(stdout, "Done\n");
+}
+
+volatile std::atomic_flag shared_lock3;
+int shared_data3 = 0;
+void thread_function3(int id)
+{
+	// 只有当标志在之前未设置时,atomic_flag对象的test_and_set方法才会设置标志.当标志设置成功时,test_and_set
+	// 方法返回false,当标志已经设置时,它返回true.只有当整数锁以前是0时,这才与设置整数锁为1效果相同.但是,
+	// 因为test_and_set方法是原子的,它缺乏这样的竞争窗口,即该窗口中的其它地方可以篡改标志.因此共享锁可以防止
+	// 多个线程进入临界区,所以代码是线程安全的
+	while (shared_lock3.test_and_set()) std::this_thread::sleep_for(std::chrono::seconds(1));
+	shared_data3 = id; // shared_data3的竞争窗口开始
+	fprintf(stdout, "thread: %d, set shared value to: %d\n", id, shared_data3);
+	std::this_thread::sleep_for(std::chrono::milliseconds(id) * 100);
+	fprintf(stdout, "thread: %d, has shared value to: %d\n", id, shared_data3); // shared_data3的竞争窗口结束	
+	shared_lock3.clear();
+}
+
+void test_concurrency_atomic()
+{
+	const size_t thread_size = 10;
+	std::thread threads[thread_size];
+
+	for (size_t i = 0; i < thread_size; ++i)
+	      threads[i] = std::thread(thread_function3, i);
+
+	for (size_t i = 0; i < thread_size; ++i)
+	      threads[i].join();
+
+	// test_concurrency_atomic()继续之前,等待直到线程完成
+	fprintf(stdout, "Done\n");
+}
+
+std::atomic<int> shared_lock4;
+int shared_data4 = 0;
+void thread_function4(int id)
+{
+	// 锁定对象是一个可赋值为数值的原子整数.atomic_compare_exchange_weak函数安全地将锁设置为1,此函数允许意外失败.
+	// 也就是说,即使当原子整数的预期值为0,它也可能没有设置为1. 出于这个原因,必须始终在一个循环内调用此函数,
+	// 以便它在遇到意外失败时可以重试
+	int zero = 0;
+	while (!std::atomic_compare_exchange_weak(&shared_lock4, &zero, 1))
+	      std::this_thread::sleep_for(std::chrono::seconds(1));
+	shared_data4 = id; // shared_data4的竞争窗口开始
+	fprintf(stdout, "thread: %d, set shared value to: %d\n", id, shared_data4);
+	std::this_thread::sleep_for(std::chrono::milliseconds(id) * 100);
+	fprintf(stdout, "thread: %d, has shared value to: %d\n", id, shared_data4); // shared_data4的竞争窗口结束	
+	shared_lock4 = 0;
+}
+
+void test_concurrency_atomic2()
+{
+	const size_t thread_size = 10;
+	std::thread threads[thread_size];
+
+	for (size_t i = 0; i < thread_size; ++i)
+	      threads[i] = std::thread(thread_function4, i);
+
+	for (size_t i = 0; i < thread_size; ++i)
+	      threads[i].join();
+
+	// test_concurrency_atomic2()继续之前,等待直到线程完成
+	fprintf(stdout, "Done\n");
+}
+
+int test_secure_coding_7_5()
+{
+	//test_concurrency_mutex();
+	//test_concurrency_mutex_guard();
+	//test_concurrency_atomic();
+	test_concurrency_atomic2();
+	return 0;
+}
+
+int shared_data5 = 0;
+std::mutex* locks5 = nullptr;
+int thread_size5;
+void thread_function5(int id)
+{
+	if (0) { // 产生死锁
+		// 此代码将产生一个固定数量的线程,每个线程都修改一个值,然后读取它.虽然通常一个锁就足够了,但是每个
+		// 线程(thread_size5)都用一个锁守卫共享数据值.每个线程都必须获得两个锁,然后才能再访问该值.如果
+		// 一个线程首先获得锁0,第二个线程获得锁1,那么程序将会出现死锁
+		if (id % 2)
+			for (int i = 0; i < thread_size5; ++i)
+				locks5[i].lock();
+		else
+			for (int i = thread_size5; i >= 0; --i)
+				locks5[i].lock();
+
+		shared_data5 = id;
+		fprintf(stdout, "thread: %d, set shared value to: %d\n", id, shared_data5);
+
+		if (id % 2)
+			for (int i = thread_size5; i >= 0; --i)
+				locks5[i].unlock();
+		else
+			for (int i = 0; i < thread_size5; ++i)
+				locks5[i].unlock();
+	}
+	else { // 不会产生死锁
+		// 每个线程都以同一顺序获取锁,可以消除潜在的死锁.下面的程序无论创建多少线程都不会出现死锁
+		for (int i = 0; i < thread_size5; ++i)
+			locks5[i].lock();
+
+		shared_data5 = id;
+		fprintf(stdout, "thread: %d, set shared value to: %d\n", id, shared_data5);
+
+		for (int i = 0; i < thread_size5; ++i)
+			locks5[i].unlock();
+	}
+}
+
+void test_concurrency_deadlock()
+{
+	thread_size5 = 5;
+	std::thread* threads = new std::thread[thread_size5];
+	locks5 = new std::mutex[thread_size5];
+
+	for (size_t i = 0; i < thread_size5; ++i)
+		threads[i] = std::thread(thread_function5, i);
+
+	for (size_t i = 0; i < thread_size5; ++i)
+		threads[i].join();
+
+	// test_concurrency_deadlock()继续之前,等待直到线程完成
+	delete[] locks5;
+	delete[] threads;
+	fprintf(stdout, "Done\n");
+}
+
+std::mutex shared_lock6;
+int shared_data6 = 0;
+void thread_function6(int id)
+{
+	// 每个线程都把一个共享变量设置为它的线程编号,然后打印出共享变量的值.为了防止数据竞争,每个线程都
+	// 锁定一个互斥量,以使变量被正确地设置
+	if (0) { // 过早地释放锁
+		// 当共享变量的每一个写操作都由互斥量所保护时,随后的读取是不受保护的
+		shared_lock6.lock();
+		shared_data6 = id;
+		fprintf(stdout, "thread: %d, set shared value to: %d\n", id, shared_data6);
+		shared_lock6.unlock();
+		std::this_thread::sleep_for(std::chrono::milliseconds(id) * 100);
+		fprintf(stdout, "thread: %d, has shared value to: %d\n", id, shared_data6);
+	}
+	else {
+		// 读取和写入共享数据都必须受到保护,以确保每一个线程读取到它写入的相同的值.将临界区扩展为包括读取值,此代码就呈现为线程安全的
+		// 需要注意的是,线程的顺序仍然可以有所不同,但每个线程都正确地打印出线程编号
+		shared_lock6.lock();
+		shared_data6 = id;
+		fprintf(stdout, "thread: %d, set shared value to: %d\n", id, shared_data6);
+		std::this_thread::sleep_for(std::chrono::milliseconds(id) * 100);
+		fprintf(stdout, "thread: %d, has shared value to: %d\n", id, shared_data6);
+		shared_lock6.unlock();
+	}
+}
+
+void test_concurrency_prematurely_release_lock()
+{
+	const size_t thread_size = 10;
+	std::thread threads[thread_size];
+
+	for (size_t i = 0; i < thread_size; ++i)
+		threads[i] = std::thread(thread_function6, i);
+
+	for (size_t i = 0; i < thread_size; ++i)
+		threads[i].join();
+
+	// test_concurrency_prematurely_release_lock()继续之前,等待直到线程完成
+	fprintf(stdout, "Done\n");
+}
+
+int test_secure_coding_7_6()
+{
+	//test_concurrency_deadlock();
+	test_concurrency_prematurely_release_lock();
+	return 0;
+}
+
+} // namespace
 
 int test_secure_coding_7()
 {
-	return test_secure_coding_7_1();
+	//return test_secure_coding_7_1();
+	//return test_secure_coding_7_4();
+	//return test_secure_coding_7_5();
+	return test_secure_coding_7_6();
 }
 
 ///////////////////////////////////////////////////////////
