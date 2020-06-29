@@ -22,6 +22,7 @@
 #include <chrono>
 #include <mutex>
 #include <atomic>
+#include <fstream>
 
 // reference: 《C和C++安全编码(原书第2版)》
 
@@ -1520,6 +1521,7 @@ int test_secure_coding_6()
 }
 
 ///////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/106962487
 namespace {
 
 char* err_msg;
@@ -1814,9 +1816,39 @@ int test_secure_coding_7()
 }
 
 ///////////////////////////////////////////////////////////
+// Blog:
+namespace {
+
+int test_secure_coding_8_2()
+{
+	// 从一个文件list.txt中读取字符数据，并将其写入到标准输出
+#ifdef  _MSC_VER
+	const char* name = "E:/GitCode/Messy_Test/testdata/list.txt";
+#else
+	const char* name = "testdata/list.txt";
+#endif
+
+	std::ifstream infile;
+	infile.open(name, std::ifstream::in);
+	if (!infile.is_open()) {
+		fprintf(stderr, "fail to open file: %s\n", name);
+		return -1;
+	}
+
+	char c;
+	while (infile >> c)
+		fprintf(stdout, "%c", c);
+	fprintf(stdout, "\n");
+
+	infile.close();
+	return 0;
+}
+
+} // namespace
+
 int test_secure_coding_8()
 {
-	return 0;
+	return test_secure_coding_8_2();
 }
 
 ///////////////////////////////////////////////////////////

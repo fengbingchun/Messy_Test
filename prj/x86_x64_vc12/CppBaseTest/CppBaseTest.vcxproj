@@ -226,6 +226,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\the_tracing_war_story.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\this_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\thread2.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\time.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\transform.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\try_catch.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\tuple.cpp" />
@@ -366,6 +367,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\this_pointer.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\thread.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\thread2.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\time.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\transform.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\try_catch.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\tuple.hpp" />
