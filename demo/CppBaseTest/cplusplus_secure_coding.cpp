@@ -1,5 +1,10 @@
 ﻿#define __STDC_WANT_LIB_EXT1__ 1
 #include "cplusplus_secure_coding.hpp"
+#ifdef _MSC_VER
+#include <windows.h>
+#else
+#include <sys/stat.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -605,6 +610,9 @@ void test_memory_arii()
 // 抛出std::bad_array_new_length的三种情况
 void test_memory_bad_array_new_length()
 {
+#ifdef _MSC_VER
+#undef small
+#endif
 	try {
 		int negative = -1;
 		new int[negative]; // 大小为负
@@ -1816,7 +1824,7 @@ int test_secure_coding_7()
 }
 
 ///////////////////////////////////////////////////////////
-// Blog:
+// Blog: https://blog.csdn.net/fengbingchun/article/details/107138261
 namespace {
 
 int test_secure_coding_8_2()
@@ -1831,17 +1839,59 @@ int test_secure_coding_8_2()
 	std::ifstream infile;
 	infile.open(name, std::ifstream::in);
 	if (!infile.is_open()) {
-		fprintf(stderr, "fail to open file: %s\n", name);
+		std::cerr << "fail to open file: " << name << std::endl; //fprintf(stderr, "fail to open file: %s\n", name);
 		return -1;
 	}
 
 	char c;
 	while (infile >> c)
-		fprintf(stdout, "%c", c);
-	fprintf(stdout, "\n");
+		std::cout << c; //fprintf(stdout, "%c", c);
+	std::cout << std::endl; //fprintf(stdout, "\n");
 
 	infile.close();
 	return 0;
+}
+
+int test_file_io_getfiletype()
+{
+#ifdef _MSC_VER
+	const char* file_name = "E:/GitCode/Messy_Test/README.md";
+	HANDLE handle = CreateFile(file_name, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
+	if (handle == INVALID_HANDLE_VALUE) {
+		fprintf(stderr, "fail to CreateFile: %s\n", file_name);
+		return -1;
+	}
+
+	if (GetFileType(handle) != FILE_TYPE_DISK) {
+		fprintf(stderr, "it's not a disk file: %s\n", file_name);
+	}
+
+	CloseHandle(handle);
+#endif
+	return 0;
+}
+
+int test_file_io_stat()
+{
+#ifdef _MSC_VER
+	const char* file_name = "E:/GitCode/Messy_Test/testdata/list.txt";
+#else
+	const char* file_name = "testdata/list.txt";
+#endif
+	struct stat st;
+	if (stat(file_name, &st) == -1) {
+		fprintf(stderr, "fail to stat:\n");
+		return -1;
+	}
+
+	return 0;
+}
+
+
+int test_secure_coding_8_4()
+{
+	//return test_file_io_getfiletype();
+	return test_file_io_stat();
 }
 
 } // namespace
@@ -1849,6 +1899,7 @@ int test_secure_coding_8_2()
 int test_secure_coding_8()
 {
 	return test_secure_coding_8_2();
+	//return test_secure_coding_8_4();
 }
 
 ///////////////////////////////////////////////////////////
