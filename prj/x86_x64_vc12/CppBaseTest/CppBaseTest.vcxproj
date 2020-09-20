@@ -226,6 +226,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\the_tracing_war_story.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\this_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\thread2.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\thread_local.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\time.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\transform.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\try_catch.cpp" />
@@ -297,6 +298,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\function.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\functional.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\function_pointers.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\funset.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\future.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\inheritance.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\initializer_list.hpp" />

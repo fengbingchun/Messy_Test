@@ -135,5 +135,6 @@
 #include "cplusplus_api_design.hpp"
 #include "cplusplus_secure_coding.hpp"
 #include "time.hpp"
+#include "funset.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
