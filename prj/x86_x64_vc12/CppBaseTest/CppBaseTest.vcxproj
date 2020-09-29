@@ -157,6 +157,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\function.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\functional.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\function_pointers.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\funset.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\future.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\inheritance.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\initializer_list.cpp" />
