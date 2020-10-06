@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = get_mac_and_cpuid();
+	int ret = test_process_programming_1();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

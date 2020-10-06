@@ -4,6 +4,7 @@
 #include <vector>
 #include <array>
 #include <memory>
+#include <string>
 #ifdef _MSC_VER
 #include <intrin.h>
 #include <Windows.h>
@@ -17,6 +18,79 @@
 #include <netinet/in.h>
 #endif
 
+namespace {
+
+#ifdef _MSC_VER
+// Blog: https://blog.csdn.net/fengbingchun/article/details/108940548
+int process_programming_windows()
+{
+	char filename[MAX_PATH];
+	auto size = GetModuleFileName(nullptr, filename, MAX_PATH);
+	if (size == 0) {
+		fprintf(stderr, "fail to GetModuleFileName\n");
+		return -1;
+	}
+
+	// reference: https://docs.microsoft.com/en-us/windows/win32/procthread/creating-processes
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
+	char argument[512];
+	//sprintf(argument, "\"%s\" C:\\windows\\system32\\cmd.exe", filename);
+	sprintf(argument, "C:\\windows\\system32\\cmd.exe");
+
+	// Start the child process
+	if (!CreateProcess(nullptr,
+		argument,						// Command line
+		nullptr,						// Process handle not inheritable
+		nullptr,						// Thread handle not inheritable
+		false,							// Set handle inheritance to FALSE
+		0,								// No creation flags
+		nullptr,						// Use parent's environment block
+		nullptr,						// Use parent's starting directory 
+		&si,							// Pointer to STARTUPINFO structure
+		&pi)							// Pointer to PROCESS_INFORMATION structure
+		) {
+		fprintf(stderr, "fail to CreateProcess: %d\n", GetLastError());
+		return -1;
+	}
+
+	fprintf(stdout, "##### success to create child process #####\n");
+	// Wait until child process exits
+	WaitForSingleObject(pi.hProcess, INFINITE);
+	fprintf(stdout, "##### child process exit #####\n");
+
+	// Close process and thread handles
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+
+	return 0;
+}
+#endif
+
+#ifdef __linux__
+int process_programming_linux()
+{
+	return 0;
+}
+#endif
+
+} // namespace
+
+int test_process_programming_1()
+{
+#ifdef _MSC_VER
+	return process_programming_windows();
+#else
+	return process_programming_linux();
+#endif
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/108874436
 namespace {
 
