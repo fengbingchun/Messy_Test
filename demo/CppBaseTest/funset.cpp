@@ -1,4 +1,4 @@
-#include "funset.hpp"
+﻿#include "funset.hpp"
 #include <string.h>
 #include <iostream>
 #include <vector>
@@ -73,8 +73,38 @@ int process_programming_windows()
 #endif
 
 #ifdef __linux__
+// Blog: https://blog.csdn.net/fengbingchun/article/details/108949575
+void test_fork_1()
+{
+	// reference: https://www.geeksforgeeks.org/fork-system-call/
+	fork();
+	fork();
+	fork();
+	// "hello"的打印次数等于创建的进程数,进程总数为2^n,其中n是fork调用的数目
+	fprintf(stdout, "hello\n"); // 注:总共会输出8次hello
+}
+
+void test_fork_2()
+{
+	// reference: https://www.geeksforgeeks.org/fork-system-call/
+	pid_t f = fork();
+
+	// child process because return value zero
+	if (f == 0) {
+		fprintf(stdout, "hello from child: parent pid: %d, my(child) pid: %d\n", getppid(), getpid());
+	}
+	// parent process because return value non-zero
+	else if (f > 0) {
+		fprintf(stdout,	"hello from parent: my(parent) pid: %d\n", getpid());
+	} else {
+		fprintf(stderr, "unable to create child process\n");
+	}
+}
+
 int process_programming_linux()
 {
+	//test_fork_1();
+	test_fork_2();
 	return 0;
 }
 #endif
