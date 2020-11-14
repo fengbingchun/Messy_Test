@@ -13,6 +13,7 @@ SET(PATH_YAML_CPP_FILES ${PROJECT_SOURCE_DIR}/./../../src/yaml-cpp)
 SET(PATH_RAPIDJSON_FILES ${PROJECT_SOURCE_DIR}/./../../src/rapidjson)
 SET(PATH_LIBUUID_FILES ${PROJECT_SOURCE_DIR}/./../../src/libuuid)
 SET(PATH_TINYXML2_FILES ${PROJECT_SOURCE_DIR}/./../../src/tinyxml2)
+SET(PATH_JEMALLOC_FILES ${PROJECT_SOURCE_DIR}/./../../src/jemalloc)
 
 # head files search path
 INCLUDE_DIRECTORIES(
@@ -21,6 +22,7 @@ INCLUDE_DIRECTORIES(
 	${PATH_RAPIDJSON_FILES}/include
 	${PATH_LIBUUID_FILES}
 	${PATH_TINYXML2_FILES}
+	${PATH_JEMALLOC_FILES}/build/include
 )
 
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/build)
@@ -32,5 +34,5 @@ SET(CPP_TINYXML2_SRC ${PROJECT_SOURCE_DIR}/./../../src/tinyxml2/tinyxml2.cpp)
 # build executable program
 ADD_EXECUTABLE(Messy_Test ${CPP_TEST_LIST} ${CPP_TINYXML2_SRC})
 # add dependent library: static and dynamic
-TARGET_LINK_LIBRARIES(Messy_Test yaml-cpp uuid pthread)
+TARGET_LINK_LIBRARIES(Messy_Test yaml-cpp uuid jemalloc pthread)
 

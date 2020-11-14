@@ -17,6 +17,7 @@
 - libuuid's usage [sourceforge](https://sourceforge.net/projects/libuuid/)
 - TinyXML2's usage [leethomason/tinyxml2](https://github.com/leethomason/tinyxml2)
 - C++ plugin's usage
+- jemalloc's usage [jemalloc/jemalloc](https://github.com/jemalloc/jemalloc)
 - test code in the technical book
 	- "Efficient C++ Performance Programming Techniques"
 	- "Effective C++ (third edition)"
@@ -38,7 +39,7 @@
 	- miniz_Test support cmake build(file position: prj/linux_cmake_miniz_Test/)
 	- spdlog_Test support cmake build(file position: prj/linux_cmake_spdlog_Test/)
 	- cJSON_Test support cmake build(file position: prj/linux_cmake_cJSON_Test/)
-	- Messy_Test support cmake build(test code include: yaml-cpp, RapidJSON, libuuid, TinyXML2; file position: prj/linux_cmake_Messy_Test/)
+	- Messy_Test support cmake build(test code include: yaml-cpp, RapidJSON, libuuid, TinyXML2, jemalloc; file position: prj/linux_cmake_Messy_Test/)
 	- Plugin_Test support cmake build(file position: prj/cmake_Plugin_Test, it supports both windows and linux)
 
 **Windows VS Screenshot:**  

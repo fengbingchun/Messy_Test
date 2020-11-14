@@ -24,6 +24,7 @@
 /src/yaml-cpp/build/
 /src/yaml-cpp/.vscode/
 /src/libuuid/build/
+/src/jemalloc/build/
 /prj/x86_x64_vc12/.vs/
 /.vscode/
 /prj/cmake_Plugin_Test/demo1/build/

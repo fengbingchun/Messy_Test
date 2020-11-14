@@ -42,6 +42,21 @@ echo "========== finish build libuuid =========="
 cd -
 cp -a ${libuuid_path}/build/.libs/libuuid.a ${new_dir_name}
 
+#build jemalloc
+echo "========== start build jemalloc =========="
+jemalloc_path=${dir_name}/../../src/jemalloc
+mkdir -p ${jemalloc_path}/build
+cd ${jemalloc_path}/build
+if [[ ! -f lib/libjemalloc.a ]]; then
+	./../configure --with-jemalloc-prefix=je_
+	make
+fi
+echo "========== finish build jemalloc =========="
+
+cd -
+cp -a ${jemalloc_path}/build/lib/libjemalloc.a ${new_dir_name}
+
+
 rc=$?
 if [[ ${rc} != 0 ]]; then
 	echo "##### Error: some of thess commands have errors above, please check"
