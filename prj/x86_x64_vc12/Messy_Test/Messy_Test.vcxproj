@@ -61,14 +61,14 @@
       <AssemblerListingLocation>.\../../../obj/dbg/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;E:\GitCode\Messy_Test\src\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;E:\GitCode\Messy_Test\src\tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>../../../lib/dbg/x64_vc12/Messy_Test.exe</OutputFile>
       <AdditionalLibraryDirectories>E:\GitCode\Messy_Test\lib\dbg\x64_vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libyaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libyaml-cpp.lib;jemalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <OutputFile>.\../../../obj/dbg/x64_vc12/Messy_Test\Messy_Test.bsc</OutputFile>
@@ -87,7 +87,7 @@
       <AssemblerListingLocation>.\../../../obj/rel/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;E:\GitCode\Messy_Test\src\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;E:\GitCode\Messy_Test\src\tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -96,7 +96,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>../../../lib/rel/x64_vc12/Messy_Test.exe</OutputFile>
       <AdditionalLibraryDirectories>E:\GitCode\Messy_Test\lib\rel\x64_vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libyaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libyaml-cpp.lib;jemalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <OutputFile>.\../../../obj/rel/x64_vc12/Messy_Test\Messy_Test.bsc</OutputFile>
@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\demo\Messy_Test\Messy_Test.cpp" />
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_jemalloc.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_libuuid.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_rapidjson.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_tinyxml2.cpp" />

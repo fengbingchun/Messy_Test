@@ -41,5 +41,8 @@
     <ClCompile Include="..\..\..\src\tinyxml2\tinyxml2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_jemalloc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

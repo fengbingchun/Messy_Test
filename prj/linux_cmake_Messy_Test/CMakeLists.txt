@@ -34,5 +34,5 @@ SET(CPP_TINYXML2_SRC ${PROJECT_SOURCE_DIR}/./../../src/tinyxml2/tinyxml2.cpp)
 # build executable program
 ADD_EXECUTABLE(Messy_Test ${CPP_TEST_LIST} ${CPP_TINYXML2_SRC})
 # add dependent library: static and dynamic
-TARGET_LINK_LIBRARIES(Messy_Test yaml-cpp uuid jemalloc pthread)
+TARGET_LINK_LIBRARIES(Messy_Test yaml-cpp uuid jemalloc dl pthread)
 
