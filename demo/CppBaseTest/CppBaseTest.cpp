@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_process_programming_1();
+	int ret = time_::test_date_timestamp();
 
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");

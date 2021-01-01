@@ -4,6 +4,7 @@
 namespace time_ {
 
 int test_gmtime_localtime();
+int test_date_timestamp();
 
 } // namespace time_
 
