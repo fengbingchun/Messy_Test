@@ -234,6 +234,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\tuple.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\typedef.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\typeid.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\type_traits.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\union.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\unique_lock.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\unique_ptr.cpp" />
@@ -376,6 +377,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\tuple.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\typedef.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\typeid.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\type_traits.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\union.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_lock.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unique_ptr.hpp" />

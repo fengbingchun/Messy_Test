@@ -3,8 +3,7 @@
 
 int main()
 {
-	int ret = time_::test_date_timestamp();
-
+	int ret = type_traits_::test_type_traits_type_transformations();
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
 
