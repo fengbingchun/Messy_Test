@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = type_traits_::test_type_traits_type_transformations();
+	int ret = class_::test_class3();
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
 
