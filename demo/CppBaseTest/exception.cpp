@@ -7,13 +7,6 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/78303734
 
-// Fix: error C3646: 'noexcept' : unknown override specifier
-#ifndef _MSC_VER
-#define NOEXCEPT noexcept
-#else
-#define NOEXCEPT
-#endif
-
 namespace exception_ {
 /////////////////////////////////////////////////////////////
 // reference: http://www.cplusplus.com/reference/exception/exception/
@@ -34,7 +27,7 @@ int test_exception_1()
 }
 
 struct ooops : std::exception {
-	const char* what()  const NOEXCEPT /*noexcept*/ override{ return "Ooops!\n"; }
+	const char* what()  const noexcept override{ return "Ooops!\n"; }
 };
 
 int test_exception_2()
@@ -67,10 +60,10 @@ public:
 		text_ = new char[std::strlen(e.text_) + 1];
 		std::strcpy(text_, e.text_);
 	}
-	~text_exception() NOEXCEPT /*throw()*/ {
+	~text_exception() noexcept /*throw()*/ {
 		delete[] text_;
 	}
-	const char* what() const NOEXCEPT /*noexcept*/ override { return text_; }
+	const char* what() const noexcept override { return text_; }
 
 private:
 	char* text_;
