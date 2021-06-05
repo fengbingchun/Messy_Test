@@ -1,10 +1,12 @@
-﻿#include "funset.hpp"
+#include "funset.hpp"
+#include <stdio.h>
 #include <string.h>
 #include <iostream>
 #include <vector>
 #include <array>
 #include <memory>
 #include <string>
+#include <cstdint>
 #ifdef _MSC_VER
 #include <intrin.h>
 #include <Windows.h>
@@ -17,6 +19,50 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #endif
+
+// Blog: https://blog.csdn.net/fengbingchun/article/details/117591214
+int test_load_big_file()
+{
+	fprintf(stdout, "int32_t: %d, uint32_t: %d\n", sizeof(int32_t), sizeof(uint32_t));
+	fprintf(stdout, "int64_t: %d, uint64_t: %d\n", sizeof(int64_t), sizeof(uint64_t));
+	fprintf(stdout, "int: %d\n", sizeof(int));
+	fprintf(stdout, "long: %d, long long: %d, size_t: %d\n", sizeof(long), sizeof(long long), sizeof(size_t));
+
+#ifdef _MSC_VER
+	const char* name = "E:/GitCode/Messy_Test/testdata/test.tar";
+#else
+	const char* name = "testdata/test.tar";
+#endif
+
+	FILE* file = fopen(name, "rb");
+	if (!file) {
+		fprintf(stderr, "fail to open file: %s\n", name);
+		return -1;
+	}
+
+#ifdef _MSC_VER
+	auto ret = _fseeki64(file, 0, SEEK_END);
+	if (ret != 0) {
+		fprintf(stderr, "fail to _fseeki64: %d\n", ret);
+		return -1;
+	}
+
+	auto length = _ftelli64(file);
+	fprintf(stdout, "file length: %lld\n", length);
+#else
+	auto ret = fseek(file, 0, SEEK_END);
+	if (ret != 0) {
+		fprintf(stderr, "fail to _fseeki64: %d\n", ret);
+		return -1;
+	}
+
+	auto length = ftell(file);
+	fprintf(stdout, "file length: %lld\n", length);
+#endif
+
+	fclose(file);
+	return 0;
+}
 
 namespace {
 
