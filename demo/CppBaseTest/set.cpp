@@ -7,6 +7,7 @@
 #include <functional>
 #include <iomanip>
 #include <algorithm>
+#include <cmath>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/63268962
 

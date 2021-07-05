@@ -1,6 +1,8 @@
 #include "effective_modern_cplusplus.hpp"
 #include <cstddef>
 #include <cstdint>
+#include <cmath>
+#include <functional>
 #include <iostream>
 #include <array>
 #include <vector>
