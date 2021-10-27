@@ -1,4 +1,4 @@
-#include "static.hpp"
+﻿#include "static.hpp"
 #include <iostream>
 
 // Blog: https://blog.csdn.net/fengbingchun/article/details/80874852

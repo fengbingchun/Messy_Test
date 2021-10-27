@@ -1,4 +1,4 @@
-#include "thread2.hpp"
+﻿#include "thread2.hpp"
 #include <iostream>
 #include <vector>
 #include <functional>

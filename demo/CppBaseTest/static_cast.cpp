@@ -1,4 +1,4 @@
-#include "static_cast.hpp"
+﻿#include "static_cast.hpp"
 #include <iostream>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/51235498

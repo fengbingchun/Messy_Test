@@ -1,4 +1,4 @@
-#include "virtual_function_table.hpp"
+﻿#include "virtual_function_table.hpp"
 #include <iostream>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/79592347

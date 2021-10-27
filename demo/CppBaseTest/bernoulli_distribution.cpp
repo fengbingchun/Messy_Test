@@ -1,4 +1,4 @@
-#include "bernoulli_distribution.hpp"
+﻿#include "bernoulli_distribution.hpp"
 #include <iostream>
 #include <random>
 #include <string>

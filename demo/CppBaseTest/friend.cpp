@@ -1,4 +1,4 @@
-#include "friend.hpp"
+﻿#include "friend.hpp"
 
 #include <sstream>
 #include <iostream>

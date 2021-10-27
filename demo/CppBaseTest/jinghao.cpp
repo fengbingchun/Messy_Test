@@ -1,4 +1,4 @@
-#include "jinghao.hpp"
+﻿#include "jinghao.hpp"
 #include <iostream>
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/44133701
