@@ -137,5 +137,6 @@
 #include "time.hpp"
 #include "funset.hpp"
 #include "type_traits.hpp"
+#include "memory.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
