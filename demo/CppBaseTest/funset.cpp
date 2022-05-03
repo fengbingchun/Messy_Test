@@ -1,4 +1,4 @@
-﻿#include "funset.hpp"
+#include "funset.hpp"
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
@@ -19,6 +19,34 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #endif
+
+/////////////////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/124559175
+namespace common {
+
+namespace internal {
+	char* name() { return "spring"; }
+	const char* city = "BeiJing";
+} // namespace internal
+
+namespace detail {
+	class Addr {
+	public:
+		static char* csdn() { return "https://blog.csdn.net/fengbingchun"; }
+		static char* github() { return "https://github.com/fengbingchun"; }
+
+		Addr() = delete;
+	}; // class Addr
+} // namespace detail
+
+} // namesapce common
+
+int test_namespace_detail_internal()
+{
+	fprintf(stdout, "name: %s, city: %s\n", common::internal::name(), common::internal::city);
+	fprintf(stdout, "csdn addr: %s\ngithub addr: %s\n", common::detail::Addr::csdn(), common::detail::Addr::github());
+	return 0;
+}
 
 // Blog: https://blog.csdn.net/fengbingchun/article/details/117591214
 int test_load_big_file()
