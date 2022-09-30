@@ -1149,7 +1149,7 @@ int test_item_30()
 	widget30Data.reserve(Widget30::MinVals); // use of MinVals
 
 	f30_2(Widget30::MinVals); // fine, treated as "f30_2(28)"
-	fwd30_2(Widget30::MinVals); // error, shouldn't link, note: windows and linux can link
+	//fwd30_2(Widget30::MinVals); // error, shouldn't link, note: windows can link
 
 	IPv4Header h;
 	memset(&h, 0, sizeof(IPv4Header));

@@ -969,7 +969,7 @@ int test_string_ifstream_to_string()
 #ifdef __linux__
 	std::ifstream file("testdata/regex.txt");
 #else
-	std::ifstream file("E:/GitCode/Messy_Test/testdata/regex.txt");
+	std::ifstream file("../../../testdata/regex.txt");
 #endif
 	if (!file) {
 		fprintf(stderr, "read file failed!\n");

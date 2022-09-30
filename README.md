@@ -1,6 +1,6 @@
 # Messy_Test
 **The main role of the project:**
-- C++/C++11's usage
+- C++/C++11/C++14's usage
 - Design Pattern's usage
 - Dr. Memory's usage [DynamoRIO/drmemory](https://github.com/DynamoRIO/drmemory)
 - Json11's usage [dropbox/json11](https://github.com/dropbox/json11)
@@ -30,8 +30,8 @@
 **The version of each open source library see:** [version.txt](https://github.com/fengbingchun/Messy_Test/blob/master/src/version.txt)
 
 **The project support platform:**
-- windows7/10 64 bits: It can be directly build with VS2017 in windows7/10 64bits.
-- Linux: 
+- Windows 10 64-bit: It can be directly build with VS2022 in windows 10 64-bit.
+- Linux(ubuntu 22.04, gcc 11.2.0):
 	- CppBaseTest supports cmake build(file position: prj/linux_cmake_CppBaseTest/)
 	- DesignPatternsTest supports cmake build(file position: prj/linux_cmake_DesignPatternsTest/)
 	- gtest_Test support cmake build(file position: prj/linux_cmake_gtest_Test/)

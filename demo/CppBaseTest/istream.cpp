@@ -5,17 +5,17 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/51287210
 
-void test_istream()
+int test_istream()
 {
 	//std::istringstream
 	std::filebuf in;
 #ifdef __linux__
 	if (!in.open("testdata/istream.data", std::ios::in)) {
 #else
-	if (!in.open("E:/GitCode/Messy_Test/testdata/istream.data", std::ios::in)) {
+	if (!in.open("../../../testdata/istream.data", std::ios::in)) {
 #endif
 		std::cout << "fail to open file" << std::endl;
-		return;
+		return 0;
 	}
 
 	std::istream iss(&in);
@@ -83,5 +83,6 @@ void test_istream()
 	}
 
 	in.close();
+	return 0;
 }
 

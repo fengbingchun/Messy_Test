@@ -19,7 +19,7 @@ int test_file_size()
 #ifdef __linux__	
 	std::ifstream in("testdata/fstream_data.bin", std::ios::binary);
 #else
-	std::ifstream in("E:/GitCode/Messy_Test/testdata/fstream_data.bin", std::ios::binary);
+	std::ifstream in("../../../testdata/fstream_data.bin", std::ios::binary);
 #endif
 	if (!in.is_open()) {
 		std::cout << "fail to open file\n";
@@ -47,7 +47,7 @@ int test_fstream1()
 #ifdef __linux_
 	outfile.open("testdata/fstream.dat");
 #else
-	outfile.open("E:/GitCode/Messy_Test/testdata/fstream.dat");
+	outfile.open("../../../testdata/fstream.dat");
 #endif
 	if (!outfile.is_open()) {
 		std::cout << "fail to open file to write\n";
@@ -76,7 +76,7 @@ int test_fstream1()
 #ifdef __linux__
 	infile.open("testdata/fstream.dat");
 #else
-	infile.open("E:/GitCode/Messy_Test/testdata/fstream.dat");
+	infile.open("../../../testdata/fstream.dat");
 #endif
 	if (!infile.is_open()) {
 		std::cout << "fail to open file to read\n";
@@ -105,7 +105,7 @@ int test_fstream2()
 #ifdef __linux__
 	std::string filename = "testdata/test.txt";
 #else
-	std::string filename = "E:/GitCode/Messy_Test/testdata/test.txt";
+	std::string filename = "../../../testdata/test.txt";
 #endif
 	// Write to File
 	std::ofstream fout(filename.c_str());  // default mode is ios::out | ios::trunc
@@ -138,7 +138,7 @@ int test_fstream3()
 #ifdef __linux__
 	std::string filename = "testdata/test.bin";
 #else
-	std::string filename = "E:/GitCode/Messy_Test/testdata/test.bin";
+	std::string filename = "../../../testdata/test.bin";
 #endif
 
 	// Write to File
@@ -180,7 +180,7 @@ int test_fstream4()
 #ifdef __linux__
 	std::ofstream ofs("testdata/theNames.txt");
 #else
-	std::ofstream ofs("E:/GitCode/Messy_Test/testdata/theNames.txt");
+	std::ofstream ofs("../../../testdata/theNames.txt");
 #endif
 	if (!ofs)	{
 		std::cout << "Error opening file for output" << std::endl;
@@ -196,7 +196,7 @@ int test_fstream4()
 #ifdef __linux__
 	std::ifstream reader("testdata/theNames.txt");
 #else
-	std::ifstream reader("E:/GitCode/Messy_Test/testdata/theNames.txt");
+	std::ifstream reader("../../../testdata/theNames.txt");
 #endif
 
 	if (!reader) {
@@ -226,7 +226,7 @@ int test_init_database()
 #ifdef __linux__
 	_file.open("testdata/data.bin");
 #else
-	_file.open("E:/GitCode/Messy_Test/testdata/data.bin");
+	_file.open("../../../testdata/data.bin");
 #endif
 	if (!_file.is_open()) {
 		fprintf(stderr, "open file fail\n");
@@ -264,7 +264,7 @@ int test_fstream5()
 #ifdef __linux__
 	std::ifstream file("testdata/data.bin");
 #else
-	std::ifstream file("E:/GitCode/Messy_Test/testdata/data.bin");
+	std::ifstream file("../../../testdata/data.bin");
 #endif
 	if (!file.is_open()) {
 		fprintf(stderr, "open file fail\n");
@@ -303,7 +303,7 @@ int test_fstream6()
 #ifdef __linux__
 	std::string name{ "testdata/list.txt" };
 #else
-	std::string name{ "E:/GitCode/Messy_Test/testdata/list.txt" };
+	std::string name{ "../../../testdata/list.txt" };
 #endif
 	std::ifstream in(name.c_str(), std::ios::in);
 	if (!in.is_open()) {
@@ -339,7 +339,7 @@ int test_fstream7()
 #ifdef __linux__
 	std::string name{ "testdata/list.txt" };
 #else
-	std::string name{ "E:/GitCode/Messy_Test/testdata/list.txt" };
+	std::string name{ "../../../testdata/list.txt" };
 #endif
 	std::ifstream in(name.c_str(), std::ios::in);
 	if (!in.is_open()) {

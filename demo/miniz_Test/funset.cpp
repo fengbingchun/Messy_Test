@@ -129,7 +129,7 @@ int test_miniz_2()
 #ifdef __linux__
 	static const char *s_Test_archive_filename = "testdata/miniz2.zip";
 #else
-	static const char *s_Test_archive_filename = "E:/GitCode/Messy_Test/testdata/miniz2.zip";
+	static const char *s_Test_archive_filename = "../../../testdata/miniz2.zip";
 #endif
 
 	assert((strlen(s_pTest_str) + 64) < sizeof(data));
@@ -261,8 +261,8 @@ int test_miniz_3()
 	char* argv[5] {"", "-l5", "c", "testdata/infile.zip", "testdata/outfile_compress.zip"};
 	//char* argv[5] {"", "-l5", "d", "testdata/outfile_compress.zip", "testdata/outfile_decompress.zip"};
 #else
-	char* argv[5] {"", "-l5", "c", "E:/GitCode/Messy_Test/testdata/infile.zip", "E:/GitCode/Messy_Test/testdata/outfile_compress.zip"};
-	//char* argv[5] {"", "-l5", "d", "E:/GitCode/Messy_Test/testdata/outfile_compress.zip", "E:/GitCode/Messy_Test/testdata/outfile_decompress.zip"};
+	char* argv[5] {"", "-l5", "c", "../../../testdata/infile.zip", "../../../testdata/outfile_compress.zip"};
+	//char* argv[5] {"", "-l5", "d", "../../../testdata/outfile_compress.zip", "../../../testdata/outfile_decompress.zip"};
 #endif
 
 	if (argc < 4) {

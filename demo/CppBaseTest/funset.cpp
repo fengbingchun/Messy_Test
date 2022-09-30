@@ -57,7 +57,7 @@ int test_load_big_file()
 	fprintf(stdout, "long: %d, long long: %d, size_t: %d\n", sizeof(long), sizeof(long long), sizeof(size_t));
 
 #ifdef _MSC_VER
-	const char* name = "E:/GitCode/Messy_Test/testdata/test.tar";
+	const char* name = "../../../testdata/test.tar";
 #else
 	const char* name = "testdata/test.tar";
 #endif

@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 #ifdef __linux__
 		"--gtest_output=xml:testdata/info.xml" // 结果输出到指定的xml文件
 #else
-		"--gtest_output=xml:E:/GitCode/Messy_Test/testdata/info.xml" // 结果输出到指定的xml文件
+		"--gtest_output=xml:../../../testdata/info.xml" // 结果输出到指定的xml文件
 #endif
 	};
 	int argc_ = argv_.size();

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppBaseTest", "CppBaseTest\CppBaseTest.vcxproj", "{2C8891F8-B071-4230-BA86-BCF64E1DA1B7}"
 	ProjectSection(ProjectDependencies) = postProject

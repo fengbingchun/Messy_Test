@@ -3,7 +3,7 @@
 
 #ifdef _MSC_VER
 
-#include <library.hpp>
+#include "../Library/library.hpp"
 
 namespace test_library_ {
 

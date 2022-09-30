@@ -66,7 +66,7 @@ int test_tinyxml2_create()
 	code2->InsertEndChild(repositories);
 
 #ifdef _MSC_VER
-	const char* file_name = "E:/GitCode/Messy_Test/testdata/test.xml"; 
+	const char* file_name = "../../../testdata/test.xml"; 
 #else
 	const char* file_name = "testdata/test.xml";
 #endif
@@ -83,7 +83,7 @@ int test_tinyxml2_create()
 int test_tinyxml2_parse()
 {
 #ifdef _MSC_VER
-	const char* file_name = "E:/GitCode/Messy_Test/testdata/test_tinyxml2.xml"; 
+	const char* file_name = "../../../testdata/test_tinyxml2.xml"; 
 #else
 	const char* file_name = "testdata/test_tinyxml2.xml";
 #endif

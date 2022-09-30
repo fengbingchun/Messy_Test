@@ -39,11 +39,12 @@ typedef DWORD pthread_attr_t;
 #define pthread_mutex_destroy(pobject) CloseHandle(*pobject)
 
 /* Windows doesn't have this, so declare it ourselves. */
-typedef struct timespec {
-	/* long long in windows is the same as long in unix for 64bit */
-	long long tv_sec;
-	long long tv_nsec;
-} timespec;
+// vs2022 has this struct
+//typedef struct timespec {
+//	/* long long in windows is the same as long in unix for 64bit */
+//	long long tv_sec;
+//	long long tv_nsec;
+//} timespec;
 
 typedef struct {
 	int waiters_count_;

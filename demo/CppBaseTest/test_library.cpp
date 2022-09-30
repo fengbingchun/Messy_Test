@@ -3,9 +3,6 @@
 #include <string>
 
 #ifdef _MSC_VER
-
-#include <library.hpp>
-
 namespace test_library_ {
 
 int test_library_1()

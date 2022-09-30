@@ -537,7 +537,7 @@ int test_binary_search_tree()
 
 	fprintf(stdout, "\nsave tree operation:\n");
 #ifdef _MSC_VER
-	char* name = "E:/GitCode/Messy_Test/testdata/binary_search_tree.model";
+	char* name = "../../../testdata/binary_search_tree.model";
 #else
 	char* name = "testdata/binary_search_tree.model";
 #endif

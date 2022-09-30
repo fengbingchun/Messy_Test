@@ -19,8 +19,8 @@
 	date: 2018.03.06
 	url: https://github.com/jbeder/yaml-cpp/releases
 5. json11:
-	commit: 05b5514
-	date: 2016.05.05
+	commit: 2df9473
+	date: 2020.03.26
 	url: https://github.com/dropbox/json11
 6. drmemory:
 	version: 1.10.1

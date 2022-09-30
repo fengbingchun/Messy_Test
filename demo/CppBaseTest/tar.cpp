@@ -141,7 +141,7 @@ int test_tar()
 #ifdef __linux__
 	const std::string tar_file_path{ "testdata/test.tar" };
 #else
-	const std::string tar_file_path{ "E:/GitCode/Messy_Test/testdata/test.tar" };
+	const std::string tar_file_path{ "../../../testdata/test.tar" };
 #endif
 	TarFile tarfile(tar_file_path.c_str());
 

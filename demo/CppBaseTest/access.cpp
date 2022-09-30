@@ -15,7 +15,7 @@ namespace access_ {
 int test_access_1()
 {
 #ifdef _MSC_VER
-	const std::string path{ "E:/GitCode/Messy_Test/" };
+	const std::string path{ "../../../" };
 	const std::vector<std::string> names {"testdata", ".gitignore", "src", "invalid"};
 
 	for (auto& name : names) {

@@ -39,4 +39,4 @@ JSON values can have their values queried and inspected:
     Json json = Json::array { Json::object { { "k", "v" } } };
     std::string str = json[0]["k"].string_value();
 
-More documentation is still to come. For now, see json11.hpp.
+For more documentation see json11.hpp.

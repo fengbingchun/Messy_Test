@@ -14,7 +14,7 @@ int test_parse_cvs_1()
 #ifdef __linux__
 	std::ifstream file("testdata/test_csv.csv");
 #else
-	std::ifstream file("E:/GitCode/Messy_Test/testdata/test_csv.csv");
+	std::ifstream file("../../../testdata/test_csv.csv");
 #endif
 
 	std::vector<std::vector<std::string>> data;

@@ -13,7 +13,7 @@
 int test_rapidjson_parse()
 {
 #ifdef _MSC_VER
-	const char* file_name = "E:/GitCode/Messy_Test/testdata/json.data";
+	const char* file_name = "../../../testdata/json.data";
 #else
 	const char* file_name = "testdata/json.data";
 #endif
@@ -184,7 +184,7 @@ int test_rapidjson_write()
 	fprintf(stdout, "json content: %s\n", json_content);
 
 #ifdef _MSC_VER
-	const char* file_name = "E:/GitCode/Messy_Test/testdata/out.json";
+	const char* file_name = "../../../testdata/out.json";
 #else
 	const char* file_name = "testdata/out.json";
 #endif

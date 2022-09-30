@@ -1831,7 +1831,7 @@ int test_secure_coding_8_2()
 {
 	// 从一个文件list.txt中读取字符数据，并将其写入到标准输出
 #ifdef  _MSC_VER
-	const char* name = "E:/GitCode/Messy_Test/testdata/list.txt";
+	const char* name = "../../../testdata/list.txt";
 #else
 	const char* name = "testdata/list.txt";
 #endif
@@ -1855,7 +1855,7 @@ int test_secure_coding_8_2()
 int test_file_io_getfiletype()
 {
 #ifdef _MSC_VER
-	const char* file_name = "E:/GitCode/Messy_Test/README.md";
+	const char* file_name = "../../../README.md";
 	HANDLE handle = CreateFile(file_name, 0, 0, nullptr, OPEN_EXISTING, 0, nullptr);
 	if (handle == INVALID_HANDLE_VALUE) {
 		fprintf(stderr, "fail to CreateFile: %s\n", file_name);
@@ -1874,7 +1874,7 @@ int test_file_io_getfiletype()
 int test_file_io_stat()
 {
 #ifdef _MSC_VER
-	const char* file_name = "E:/GitCode/Messy_Test/testdata/list.txt";
+	const char* file_name = "../../../testdata/list.txt";
 #else
 	const char* file_name = "testdata/list.txt";
 #endif

@@ -8,7 +8,7 @@
 int test_parse_yaml_file()
 {
 #ifdef _MSC_VER
-	YAML::Node config = YAML::LoadFile("E:/GitCode/Messy_Test/testdata/test_yaml-cpp.yml");
+	YAML::Node config = YAML::LoadFile("../../../testdata/test_yaml-cpp.yml");
 #else
 	YAML::Node config = YAML::LoadFile("testdata/test_yaml-cpp.yml");
 #endif
@@ -88,7 +88,7 @@ int test_generate_yaml_file()
 	node["platform"]["windows"].push_back("x86_64");
 
 #ifdef _MSC_VER
-	std::ofstream fout("E:/GitCode/Messy_Test/testdata/tmp.yml");
+	std::ofstream fout("../../../testdata/tmp.yml");
 #else
 	std::ofstream fout("testdata/tmp.yaml");
 #endif

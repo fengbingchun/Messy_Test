@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -48,7 +48,7 @@ int test4()
 #ifdef __linux__
 	if (!in.open("testdata/json.data", std::ios::in)) {
 #else
-	if (!in.open("E:/GitCode/Messy_Test/testdata/json.data", std::ios::in)) {
+	if (!in.open("../../../testdata/json.data", std::ios::in)) {
 #endif
 		std::cout << "fail to open file" << std::endl;
 		return -1;

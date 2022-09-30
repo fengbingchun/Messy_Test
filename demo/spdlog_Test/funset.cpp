@@ -33,7 +33,7 @@ int test_spdlog_console()
 #ifdef __linux__
 		auto my_logger = spd::basic_logger_mt("basic_logger", "testdata/basic_log");
 #else
-		auto my_logger = spd::basic_logger_mt("basic_logger", "E:/GitCode/Messy_Test/testdata/basic_log");
+		auto my_logger = spd::basic_logger_mt("basic_logger", "../../../testdata/basic_log");
 #endif
 		my_logger->info("Some log message");
 
@@ -41,7 +41,7 @@ int test_spdlog_console()
 #ifdef __linux__
 		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "testdata/mylogfile_log", 1048576 * 5, 3);
 #else
-		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "E:/GitCode/Messy_Test/testdata/mylogfile_log", 1048576 * 5, 3);
+		auto rotating_logger = spd::rotating_logger_mt("some_logger_name", "../../../testdata/mylogfile_log", 1048576 * 5, 3);
 #endif
 		for (int i = 0; i < 10; ++i)
 			rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
@@ -50,7 +50,7 @@ int test_spdlog_console()
 #ifdef __linux__
 		auto daily_logger = spd::daily_logger_mt("daily_logger", "testdata/daily_log", 2, 30);
 #else
-		auto daily_logger = spd::daily_logger_mt("daily_logger", "E:/GitCode/Messy_Test/testdata/daily_log", 2, 30);
+		auto daily_logger = spd::daily_logger_mt("daily_logger", "../../../testdata/daily_log", 2, 30);
 #endif
 		// trigger flush if the log severity is error or higher
 		daily_logger->flush_on(spd::level::err);
@@ -96,7 +96,7 @@ int test_spdlog_async()
 #ifdef __linux__
 	auto async_file = spd::daily_logger_st("async_file_logger", "testdata/async_log");
 #else
-	auto async_file = spd::daily_logger_st("async_file_logger", "E:/GitCode/Messy_Test/testdata/async_log");
+	auto async_file = spd::daily_logger_st("async_file_logger", "../../../testdata/async_log");
 #endif
 
 	for (int i = 0; i < 100; ++i)

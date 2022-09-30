@@ -14,19 +14,19 @@
     <ProjectGuid>{B72A7CBA-05B9-41B3-9431-C295587F52B2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Messy_Test</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -61,13 +61,13 @@
       <AssemblerListingLocation>.\../../../obj/dbg/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;E:\GitCode\Messy_Test\src\tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;../../../src/rapidjson/include;../../../src/tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>../../../lib/dbg/x64_vc12/Messy_Test.exe</OutputFile>
-      <AdditionalLibraryDirectories>E:\GitCode\Messy_Test\lib\dbg\x64_vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../lib/dbg/x64_vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libyaml-cpp.lib;jemalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
@@ -87,7 +87,7 @@
       <AssemblerListingLocation>.\../../../obj/rel/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>E:\GitCode\Messy_Test\src\yaml-cpp\include;E:\GitCode\Messy_Test\src\rapidjson\include;E:\GitCode\Messy_Test\src\tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;../../../src/rapidjson/include;../../../src/tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -95,7 +95,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>../../../lib/rel/x64_vc12/Messy_Test.exe</OutputFile>
-      <AdditionalLibraryDirectories>E:\GitCode\Messy_Test\lib\rel\x64_vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../lib/rel/x64_vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libyaml-cpp.lib;jemalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
