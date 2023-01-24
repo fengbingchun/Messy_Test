@@ -7,6 +7,11 @@
 #include <memory>
 #include <string>
 #include <cstdint>
+#include <chrono>
+#include <thread>
+#include <condition_variable>
+#include <mutex>
+#include <atomic>
 #ifdef _MSC_VER
 #include <intrin.h>
 #include <Windows.h>
@@ -341,5 +346,186 @@ int get_mac_and_cpuid()
 	printf("vendor serialnumber: %08X%08X\n", edx, eax);
 #endif
 
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////////
+namespace {
+
+std::atomic<bool> ready_write1_(false), ready_write2_(false);
+std::mutex mtx1_, mtx2_;
+std::condition_variable cv_;
+const char *start1_ = nullptr, *start2_ = nullptr;
+size_t length1_ = 0, length2_ = 0;
+FILE* file_ = nullptr;
+bool exit_ = false;
+
+void run()
+{
+	while (1) {
+		if (ready_write1_) {
+			std::unique_lock<std::mutex> lock(mtx1_);
+			fwrite(start1_, 1, length1_, file_);
+			ready_write1_ = false;
+			cv_.notify_all();
+		}
+
+		if (ready_write2_) {
+			std::unique_lock<std::mutex> lock(mtx1_);
+			fwrite(start2_, 1, length2_, file_);
+			ready_write2_ = false;
+			cv_.notify_all();
+		}
+
+		if (exit_) break;
+	}
+}
+
+void test_read()
+{
+	FILE* file = fopen("../../../testdata/test.data", "rb");
+	if (!file) {
+		fprintf(stderr, "fail to open file\n");
+		return;
+	}
+
+	auto flag = fseek(file, 0, SEEK_END);
+	if (flag != 0) {
+		fprintf(stderr, "fail to fseek\n");
+		return;
+	}
+
+	auto length = ftell(file);
+	rewind(file);
+	std::unique_ptr<char[]> data(new char[length]);
+	fread(data.get(), 1, length, file);
+
+	fclose(file);
+}
+
+void test_time()
+{
+	using namespace std::chrono;
+
+	char arr[1024] = {0};
+	std::unique_ptr<char[]> tmp(new char[1024 * 10]);
+
+	steady_clock::time_point t1 = steady_clock::now();
+	for (int i = 0; i < 10; ++i) {
+		memcpy(tmp.get() + i * 1024, arr, 1024);
+	}
+	steady_clock::time_point t2 = steady_clock::now();
+	duration<double> time_span1 = duration_cast<duration<double>>(t2 - t1);
+	fprintf(stdout, "memcpy time: %fs\n", time_span1.count());
+
+	FILE* f = fopen("../../../testdata/tmp.data", "wb");
+	steady_clock::time_point t3 = steady_clock::now();
+	for (int i = 0; i < 10; ++i) {
+		fwrite(arr, 1, 1024, f);
+	}
+	steady_clock::time_point t4 = steady_clock::now();
+	duration<double> time_span2 = duration_cast<duration<double>>(t4 - t3);
+	fprintf(stdout, "fwrite time: %fs\n", time_span2.count());
+	fclose(f);
+}
+
+} // namespace
+
+int test_two_threads_write_file()
+{
+	//test_read();
+	//return -1;
+
+	test_time();
+	return -1;
+
+	file_ = fopen("../../../testdata/test.data", "wb");
+	if (!file_) {
+		fprintf(stderr, "fail to open file\n");
+		return -1;
+	}
+
+	const size_t size = 16;// 1024 * 1024 * 128;
+	std::unique_ptr<char[]> data(new char[size * 2]);
+	const char *p1 = data.get(), *p2 = data.get() + size;
+	start1_ = p1;
+	start2_ = p2;
+
+	const size_t length = 5;
+	unsigned char arr[length] = { 1,2,3,4,5 };
+
+	std::thread th(run);
+
+	size_t index = 0;
+	do { // another function(arr, length)
+		static size_t add1 = 0, add2 = 0;
+		static bool flag1 = true, flag2 = false;
+		char* p = nullptr;
+
+		if (flag1) {
+			p = const_cast<char*>(p1) + add1;
+
+			if (add1 + length <= size) {
+				std::unique_lock<std::mutex> lock(mtx2_);
+				while (ready_write1_) {
+					cv_.wait(lock);
+				}
+
+				memcpy(p, arr, length);
+				add1 += length;
+			} else {
+				flag1 = false;
+				flag2 = true;
+				length1_ = add1;
+				add1 = 0;
+
+				ready_write1_ = true;
+			}
+		}
+
+		if (flag2) {
+			p = const_cast<char*>(p2) + add2;
+
+			if (add2 + length <= size) {
+				std::unique_lock<std::mutex> lock(mtx2_);
+				while (ready_write2_) {
+					cv_.wait(lock);
+				}
+
+				memcpy(p, arr, length);
+				add2 += length;
+			} else {
+				flag1 = true;
+				flag2 = false;
+				length2_ = add2;
+				add2 = 0;
+
+				ready_write2_ = true;
+
+				if (add1 + length <= size) {
+					p = const_cast<char*>(p1) + add1;
+
+					std::unique_lock<std::mutex> lock(mtx2_);
+					while (ready_write1_) {
+						cv_.wait(lock);
+					}
+
+					memcpy(p, arr, length);
+					add1 += length;
+				} else {
+					fprintf(stderr, "out of scope\n");
+					return -1;
+				}
+			}
+		}
+
+		std::this_thread::sleep_for(std::chrono::microseconds(1));
+		++index;
+		//fprintf(stdout, "index: %d\n", index);
+	} while (index < 10000);
+
+	exit_ = true;
+	th.join();
+	fclose(file_);
 	return 0;
 }

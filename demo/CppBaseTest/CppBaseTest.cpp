@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = lazy_evaluation_::test_evaluation_2();
+	int ret = test_two_threads_write_file();
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
 
