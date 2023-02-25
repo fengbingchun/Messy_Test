@@ -57,7 +57,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../src/googletest/googletest/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../src/googletest/googletest/include;../../../src/googletest/googletest;../../../src/googletest/googlemock/include;../../../src/googletest/googlemock;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile>.\../../../obj/dbg/x64_vc12/gtest_Test\gtest_Test.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../../../obj/dbg/x64_vc12/gtest_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x64_vc12/gtest_Test\</ObjectFileName>
@@ -67,8 +67,8 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>../../../lib/dbg/x64_vc12/gtest_Test.exe</OutputFile>
-      <AdditionalLibraryDirectories>../../../lib/dbg/x64_vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <OutputFile>.\../../../obj/dbg/x64_vc12/gtest_Test\gtest_Test.bsc</OutputFile>
@@ -87,7 +87,7 @@
       <AssemblerListingLocation>.\../../../obj/rel/x64_vc12/gtest_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/rel/x64_vc12/gtest_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/gtest_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>../../../src/googletest/googletest/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../src/googletest/googletest/include;../../../src/googletest/googletest;../../../src/googletest/googlemock;../../../src/googletest/googlemock/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -95,8 +95,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>../../../lib/rel/x64_vc12/gtest_Test.exe</OutputFile>
-      <AdditionalLibraryDirectories>../../../lib/rel/x64_vc12;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <OutputFile>.\../../../obj/rel/x64_vc12/gtest_Test\gtest_Test.bsc</OutputFile>
@@ -105,8 +105,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\demo\gtest_Test\funset.cpp" />
     <ClCompile Include="..\..\..\demo\gtest_Test\gtest_Test.cpp" />
+    <ClCompile Include="..\..\..\demo\gtest_Test\test_gmock.cpp" />
     <ClCompile Include="..\..\..\demo\gtest_Test\test_TEST.cpp" />
     <ClCompile Include="..\..\..\demo\gtest_Test\test_TEST_F.cpp" />
+    <ClCompile Include="..\..\..\src\googletest\googlemock\src\gmock-all.cc" />
+    <ClCompile Include="..\..\..\src\googletest\googletest\src\gtest-all.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\gtest_Test\funset.hpp" />

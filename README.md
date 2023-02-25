@@ -18,7 +18,7 @@
 - TinyXML2's usage [leethomason/tinyxml2](https://github.com/leethomason/tinyxml2)
 - C++ plugin's usage
 - jemalloc's usage [jemalloc/jemalloc](https://github.com/jemalloc/jemalloc)
-- ThreadPool's usage[EterfreeA/ThreadPool](https://github.com/EterfreeA/ThreadPool)
+- ThreadPool's usage [EterfreeA/ThreadPool](https://github.com/EterfreeA/ThreadPool)
 - test code in the technical book
 	- "Efficient C++ Performance Programming Techniques"
 	- "Effective C++ (third edition)"

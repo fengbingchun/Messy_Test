@@ -1,8 +1,8 @@
 1. googletest:
-	version: 1.8.0
-	commit: ec44c6c
-	date: 2016.08.22
-	url: https://github.com/google/googletest/releases/tag/release-1.8.0
+	version: 1.13.0
+	commit: b796f7d
+	date: 2023.01.18
+	url: https://github.com/google/googletest/releases/tag/v1.13.0
 2. spdlog:
 	version: 0.14.0
 	commit: 4fba14c

@@ -27,6 +27,15 @@
     <ClCompile Include="..\..\..\demo\gtest_Test\test_TEST_F.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\googletest\googletest\src\gtest-all.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\googletest\googlemock\src\gmock-all.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\demo\gtest_Test\test_gmock.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\gtest_Test\funset.hpp">
