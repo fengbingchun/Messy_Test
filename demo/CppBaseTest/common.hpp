@@ -139,5 +139,6 @@
 #include "type_traits.hpp"
 #include "memory.hpp"
 #include "lazy_evaluation.hpp"
+#include "variable_template.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

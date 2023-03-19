@@ -63,6 +63,7 @@
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/CppBaseTest\</ProgramDataBaseFileName>
       <AdditionalIncludeDirectories>../../../demo/CppBaseTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -89,6 +90,7 @@
       <ObjectFileName>.\../../../obj/rel/x64_vc12/CppBaseTest\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/CppBaseTest\</ProgramDataBaseFileName>
       <AdditionalIncludeDirectories>../../../demo/CppBaseTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -242,6 +244,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\unique_ptr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\unordered_map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\variable_arguments.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\variable_template.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\vector.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\virtual_function_table.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\volatile_mutable.cpp" />
@@ -388,6 +391,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\universal.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\unordered_map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\variable_arguments.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\variable_template.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\vector.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\virtual_function_table.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\volatile_mutable.hpp" />

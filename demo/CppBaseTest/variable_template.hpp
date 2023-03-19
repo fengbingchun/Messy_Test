@@ -1,0 +1,6 @@
+#ifndef FBC_CPPBASE_VARIABLE_TEMPLATE_HPP_
+#define FBC_CPPBASE_VARIABLE_TEMPLATE_HPP_
+
+int test_variable_template();
+
+#endif // FBC_CPPBASE_VARIABLE_TEMPLATE_HPP_
