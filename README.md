@@ -28,7 +28,7 @@
 	- "C++ API Design"
 	- "Secure Coding in C and C++(Second Edition)"	
 
-**The version of each open source library see:** [version.txt](https://github.com/fengbingchun/Messy_Test/blob/master/src/version.txt)
+**The version of each open source library see:** [version.txt](src/version.txt)
 
 **The project support platform:**
 - Windows 10 64-bit: It can be directly build with VS2022 in windows 10 64-bit.
@@ -44,6 +44,6 @@
 	- Plugin_Test support cmake build(file position: prj/cmake_Plugin_Test, it supports both windows and linux)
 
 **Windows VS Screenshot:**  
-![](https://github.com/fengbingchun/Messy_Test/blob/master/prj/x86_x64_vc12/Screenshot.png)
+![](prj/x86_x64_vc12/Screenshot.png)
 
 **Blog:** [fengbingchun](http://blog.csdn.net/fengbingchun/article/category/725584)

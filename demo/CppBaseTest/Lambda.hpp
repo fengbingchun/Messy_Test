@@ -1,6 +1,9 @@
 #ifndef FBC_MESSY_TEST_LAMBDA_HPP_
 #define FBC_MESSY_TEST_LAMBDA_HPP_
 
+int test_lambda_14_1();
+int test_lambda_14_2();
+
 int test_lambda1();
 int test_lambda2();
 int test_lambda3();

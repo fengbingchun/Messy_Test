@@ -169,7 +169,9 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\istream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\iterator.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\jinghao.cpp" />
-    <ClCompile Include="..\..\..\demo\CppBaseTest\Lambda.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\Lambda.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp14</LanguageStandard>
+    </ClCompile>
     <ClCompile Include="..\..\..\demo\CppBaseTest\lazy_evaluation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\linked_list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\list.cpp" />

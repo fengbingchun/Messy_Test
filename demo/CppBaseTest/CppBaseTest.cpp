@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_variable_template();
+	int ret = test_lambda_14_2();
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
 
