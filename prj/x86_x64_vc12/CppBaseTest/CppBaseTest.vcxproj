@@ -123,6 +123,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\cmath.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\coding_optimizations.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\constexpr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\const_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\cplusplus_api_design.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\coding_optimizations.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\common.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\constexpr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\const_pointer.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\cplusplus_api_design.hpp" />
