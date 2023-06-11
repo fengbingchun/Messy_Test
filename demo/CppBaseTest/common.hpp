@@ -141,5 +141,6 @@
 #include "lazy_evaluation.hpp"
 #include "variable_template.hpp"
 #include "constexpr.hpp"
+#include "literal.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

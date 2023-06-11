@@ -176,6 +176,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\lazy_evaluation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\linked_list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\list.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\literal.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\local_class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\lock_guard.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\lvalue_rvalue.cpp" />
@@ -323,6 +324,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\lazy_evaluation.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\linked_list.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\list.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\literal.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\local_class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\lock_guard.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\lvalue_rvalue.hpp" />
