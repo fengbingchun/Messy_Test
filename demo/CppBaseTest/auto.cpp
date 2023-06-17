@@ -8,6 +8,50 @@
 #include <deque>
 #include <vector>
 
+// Blog: https://blog.csdn.net/fengbingchun/article/details/131264728
+
+namespace {
+
+int xx = 1;
+auto f() { return xx; } // return type is int
+const auto& f3() { return xx; } // return type is const int&
+
+auto multiply(int a, int b) { return (a * b); }
+auto& increase(int& a) { a++; return a; }
+
+template <typename T>
+auto& f2(T& t) { return t; }
+
+} // namespace
+
+int test_auto_14_1()
+{
+	int a = 4, b = 5;
+	auto v1 = multiply(a, b);
+	std::cout << "v1:" << v1 << "\n"; // v1:20
+
+	auto& v2 = increase(a);
+	std::cout << "v2:" << v2 << "\n"; // v2:5
+	v2 = 10;
+	std::cout << "a:" << a << "\n"; // a:10
+
+	return 0;
+}
+
+int test_auto_14_2()
+{
+	// returns a reference to a deduced type
+	auto g = [](auto& x) -> auto& { return f2(x); };
+	int y = 123;
+	int& z = g(y); // reference to y
+	std::cout << "z:" << z << "\n"; // z:123
+	z = 456;
+	std::cout << "y:" << y << "\n"; // y:456
+
+	return 0;
+}
+
+
 // Blog: http://blog.csdn.net/fengbingchun/article/details/51834927
 
 //////////////////////////////////////////////////

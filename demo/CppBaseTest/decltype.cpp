@@ -1,8 +1,83 @@
-#include "decltype.hpp"
+﻿#include "decltype.hpp"
 #include <iostream>
 #include <string>
 #include <utility>
 #include <iomanip>
+#include <typeinfo>
+
+// Blog: https://blog.csdn.net/fengbingchun/article/details/131264728
+
+namespace {
+
+decltype(auto) increase(int& a) { a++; return a; }
+
+int xxx = 123;
+auto f(const int& i) { return i; } // return type is "int"
+static_assert(std::is_same<const int&, decltype(f(xxx))>::value == 0);
+static_assert(std::is_same<int, decltype(f(xxx))>::value == 1);
+
+decltype(auto) g(const int& i) { return i; } // return type is "const int&"
+static_assert(std::is_same<const int&, decltype(g(xxx))>::value == 1);
+
+int xx = 1;
+decltype(auto) f2() { return xx; }  // return type is int, same as decltype(x)
+static_assert(std::is_same<int, decltype(f2())>::value == 1);
+decltype(auto) f3() { return(xx); } // return type is int&, same as decltype((x))
+static_assert(std::is_same<int&, decltype(f3())>::value == 1);
+//const decltype(auto)& f4(const int) { return xx; } // "const decltype(auto)&" is an error, decltype(auto) must be used on its own
+												     // error:“decltype(auto)”不能与任何其他类型说明符组合
+
+//auto f5(bool flag) {
+//	if (flag) return 1;
+//	else return 1.0; // error: 所有返回表达式必须推导为相同类型: 以前为“int”
+//}
+
+//class AA {
+//	virtual auto g() { return 1; } // error: 虚成员函数不应具有含“auto”的返回类型
+//};
+
+} // namespace
+
+int test_decltype_14_1()
+{
+	int a = 4;
+	auto& v2 = increase(a);
+	std::cout << "v2:" << v2 << "\n"; // v2:5
+	v2 = 10;
+	std::cout << "a:" << a << "\n"; // a:10
+
+	return 0;
+}
+
+int test_decltype_14_2()
+{
+	const int x = 0;
+	//x = 2; // error C3892: “x”: 不能给常量赋值
+	auto x1 = x; // int
+	x1 = 2;
+	decltype(auto) x2 = x; // const int
+	//x2 = 3; // error C3892: “x2”: 不能给常量赋值
+
+	int y = 2;
+	int& y1 = y;
+	auto y2 = y1; // int
+	y2 = 5;
+	std::cout << "y:" << y << "\n"; // y:2
+	decltype(auto) y3 = y1; // int&
+	y3 = 10;
+	std::cout << "y:" << y << "\n"; // y:10
+
+	int&& z = 2;
+	auto z1 = std::move(z); // int
+	z1 = 5;
+	std::cout << "z:" << z << "\n"; // z:2
+	decltype(auto) z2 = std::move(z); // int&&
+	z2 = 10;
+	std::cout << "z:" << z << "\n"; // z:10
+
+	return 0;
+}
+
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/52504519
 

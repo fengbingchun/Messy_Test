@@ -1,6 +1,9 @@
 #ifndef FBC_MESSY_TEST_AUTO_HPP_
 #define FBC_MESSY_TEST_AUTO_HPP_
 
+int test_auto_14_1();
+int test_auto_14_2();
+
 int test_auto1();
 int test_auto2();
 int test_auto3();
