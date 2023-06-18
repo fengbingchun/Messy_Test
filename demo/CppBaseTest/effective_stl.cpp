@@ -382,12 +382,12 @@ int test_item_19()
 }
 
 /////////////////////////////////////////////////
-struct StringPtrLess : public std::binary_function<const std::string*, const std::string*, bool> { // std::binary_function在C++11中已被废弃
-	bool operator()(const std::string* ps1, const std::string* ps2) const
-	{
-		return *ps1 < *ps2;
-	}
-};
+//struct StringPtrLess : public std::binary_function<const std::string*, const std::string*, bool> { // std::binary_function在C++11中已被废弃 // removed in C++17
+//	bool operator()(const std::string* ps1, const std::string* ps2) const
+//	{
+//		return *ps1 < *ps2;
+//	}
+//};
 
 struct DereferenceLess {
 	template<typename PtrType>
@@ -644,7 +644,7 @@ int test_item_33()
 	for (int i = 0; i < 5; ++i) v.push_back(new Widget33);
 
 	// 删除那些指向未被验证过的Widget33对象的指针，会资源泄露
-	v.erase(std::remove_if(v.begin(), v.end(), std::not1(std::mem_fun(&Widget33::isCertified))), v.end());
+	//v.erase(std::remove_if(v.begin(), v.end(), std::not1(std::mem_fun(&Widget33::isCertified))), v.end()); // std::mem_fun: removed in C++17
 
 	// 一种可以消除资源泄露的做法
 	// 将所有指向未被验证的Widget33对象的指针删除并置成空
@@ -682,7 +682,9 @@ int ciCharCompare(char c1, char c2)
 int ciStringCompareImpl(const std::string& s1, const std::string& s2)
 {
 	typedef std::pair<std::string::const_iterator, std::string::const_iterator> PSCI;
-	PSCI p = std::mismatch(s1.begin(), s1.end(), s2.begin(), std::not2(std::ptr_fun(ciCharCompare)));
+	//PSCI p = std::mismatch(s1.begin(), s1.end(), s2.begin(), std::not2(std::ptr_fun(ciCharCompare))); // std::ptr_fun: removed in C++17
+	//PSCI p = std::mismatch(s1.begin(), s1.end(), s2.begin(), std::not2(std::function<int(char, char)>(ciCharCompare))); // std::not1(), std::not2(), std::unary_negate, and std::binary_negate are deprecated in C++17
+	PSCI p = std::mismatch(s1.begin(), s1.end(), s2.begin(), ciCharCompare);
 
 	if (p.first == s1.end()) { // 如果为true,要么s1和s2相等，或者s1比s2短
 		if (p.second == s2.end()) return 0;
@@ -749,11 +751,13 @@ std::string::size_type stringLengthSum(std::string::size_type sumSoFar, const st
 }
 
 struct Point {
+	Point() = default;
 	Point(double initX, double initY) : x(initX), y(initY) {}
 	double x, y;
 };
 
-class PointAverage : public std::unary_function<Point, void> {
+//class PointAverage : public std::unary_function<Point, void> { // std::unary_function: removed in C++17
+class PointAverage : public Point {
 public:
 	PointAverage() : xSum(0), ySum(0), numPoints(0) {}
 
@@ -805,7 +809,8 @@ class Widget38 {};
 template<typename T> class BPFC;
 
 template<typename T>
-class BPFCImpl : public std::unary_function<T, void> {
+//class BPFCImpl : public std::unary_function<T, void> { // std::unary_function: removed in C++17
+class BPFCImpl {
 private:
 	Widget38 w; // 原来BPFC中所有数据现在都放在这里
 	int x;
@@ -816,7 +821,8 @@ private:
 };
 
 template<typename T>
-class BPFC : public std::unary_function<T, void> { // 新的BPFC类:短小、单态
+//class BPFC : public std::unary_function<T, void> { // 新的BPFC类:短小、单态 // // std::unary_function: removed in C++17
+class BPFC {
 private:
 	BPFCImpl<T>* pImpl; // BPFC唯一的数据成员
 public:
@@ -844,7 +850,8 @@ int test_item_40()
 {
 	std::list<std::string*> strs{ new std::string("xxx"), new std::string("yyy"), new std::string("zzz") };
 	std::list<std::string*>::iterator it = std::find_if(strs.begin(), strs.end(), isInteresting);
-	std::list<std::string*>::iterator it2 = std::find_if(strs.begin(), strs.end(), std::not1(std::ptr_fun(isInteresting)));
+	//std::list<std::string*>::iterator it2 = std::find_if(strs.begin(), strs.end(), std::not1(std::ptr_fun(isInteresting))); // std::ptr_fun: removed in C++17
+	std::list<std::string*>::iterator it2 = std::find_if(strs.begin(), strs.end(), isInteresting);
 
 	return 0;
 }
@@ -862,11 +869,11 @@ int test_item_41()
 	std::vector<Widget41> vw;
 
 	std::for_each(vw.begin(), vw.end(), test);
-	std::for_each(vw.begin(), vw.end(), std::ptr_fun(test));
-	std::for_each(vw.begin(), vw.end(), std::mem_fun_ref(&Widget41::test));
+	//std::for_each(vw.begin(), vw.end(), std::ptr_fun(test)); // std::ptr_fun: removed in C++17
+	//std::for_each(vw.begin(), vw.end(), std::mem_fun_ref(&Widget41::test)); // std::mem_fun_ref: removed in C++17
 
 	std::list<Widget41*> lpw;
-	std::for_each(lpw.begin(), lpw.end(), std::mem_fun(&Widget41::test));
+	//std::for_each(lpw.begin(), lpw.end(), std::mem_fun(&Widget41::test)); // std::mem_fun: removed in C++17
 
 	return 0;
 }
@@ -896,7 +903,8 @@ int test_item_45()
 }
 
 /////////////////////////////////////////////////
-struct StringSize : public std::unary_function<std::string, std::string::size_type> {
+//struct StringSize : public std::unary_function<std::string, std::string::size_type> { // std::unary_function: removed in C++17
+struct StringSize {
 	std::string::size_type operator()(const std::string& s) const
 	{
 		return s.size();
@@ -906,7 +914,7 @@ struct StringSize : public std::unary_function<std::string, std::string::size_ty
 int test_item_46()
 {
 	std::set<std::string> s{ "abc", "cde", "xyzw" };
-	std::transform(s.begin(), s.end(), std::ostream_iterator<std::string::size_type>(std::cout, "\n"), std::mem_fun_ref(&std::string::size)); // 3 3 4，普通函数
+	//std::transform(s.begin(), s.end(), std::ostream_iterator<std::string::size_type>(std::cout, "\n"), std::mem_fun_ref(&std::string::size)); // 3 3 4，普通函数 // std::mem_fun_ref: removed in C++17
 
 	std::transform(s.begin(), s.end(), std::ostream_iterator<std::string::size_type>(std::cout, "\n"), StringSize()); // 3 3 4, 函数对象
 

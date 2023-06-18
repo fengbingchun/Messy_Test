@@ -60,7 +60,7 @@ int test_unique_ptr2()
 	std::unique_ptr<int> u5(new int, std::default_delete<int>());
 	std::unique_ptr<int> u6(std::move(u5));
 	std::unique_ptr<int> u7(std::move(u6));
-	std::unique_ptr<int> u8(std::auto_ptr<int>(new int));
+	///std::unique_ptr<int> u8(std::auto_ptr<int>(new int)); // std::auto_ptr removed in C++17
 
 	std::cout << "u1: " << (u1 ? "not null" : "null") << '\n';
 	std::cout << "u2: " << (u2 ? "not null" : "null") << '\n';
@@ -69,7 +69,7 @@ int test_unique_ptr2()
 	std::cout << "u5: " << (u5 ? "not null" : "null") << '\n';
 	std::cout << "u6: " << (u6 ? "not null" : "null") << '\n';
 	std::cout << "u7: " << (u7 ? "not null" : "null") << '\n';
-	std::cout << "u8: " << (u8 ? "not null" : "null") << '\n';
+	//std::cout << "u8: " << (u8 ? "not null" : "null") << '\n';
 
 	return 0;
 }

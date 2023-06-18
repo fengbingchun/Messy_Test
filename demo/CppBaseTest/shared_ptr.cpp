@@ -326,13 +326,13 @@ int test_shared_ptr_unique()
 
 	std::cout << "foo unique?\n" << std::boolalpha;
 
-	std::cout << "1: " << foo.unique() << '\n';  // false (empty)
+	//std::cout << "1: " << foo.unique() << '\n';  // false (empty) // std::shared_ptr::unique() is deprecated in C++17
 
-	foo = bar;
-	std::cout << "2: " << foo.unique() << '\n';  // false (shared with bar)
+	//foo = bar;
+	//std::cout << "2: " << foo.unique() << '\n';  // false (shared with bar)
 
-	bar = nullptr;
-	std::cout << "3: " << foo.unique() << '\n';  // true
+	//bar = nullptr;
+	//std::cout << "3: " << foo.unique() << '\n';  // true
 
 	return 0;
 }

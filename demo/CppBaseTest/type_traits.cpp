@@ -187,9 +187,9 @@ int test_type_traits_type_traits()
 	static_assert(std::is_empty<H>::value == false, "");
 
 	// std::is_literal_type: T是不是literal类型，可视为constexpr类型，标量、引用、certain 类，以及这些类型的数组都是literal类型
-	static_assert(std::is_literal_type<A>::value == true, "");
-	static_assert(std::is_literal_type<D>::value == true, "");
-	static_assert(std::is_literal_type<J>::value == false, "");
+	//static_assert(std::is_literal_type<A>::value == true, ""); // std::is_literal_type and std::is_literal_type_v are deprecated in C++17
+	//static_assert(std::is_literal_type<D>::value == true, "");
+	//static_assert(std::is_literal_type<J>::value == false, "");
 
 	// std::is_pod: T是不是POD(Plain Old Data)类型，C语言支持的数据类型，若是类，它需要是trial(普通的)和standard-layout
 	static_assert(std::is_pod<A>::value == true, "");

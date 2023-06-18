@@ -800,7 +800,7 @@ int test_algorithm_sort()
 	// set some values:
 	for (int i = 1; i<10; i++) myvector.push_back(i);   // 1 2 3 4 5 6 7 8 9
 
-	std::random_shuffle(myvector.begin(), myvector.end());
+	//std::random_shuffle(myvector.begin(), myvector.end()); // removed in C++17
 
 	// using default comparison (operator <):
 	std::nth_element(myvector.begin(), myvector.begin() + 5, myvector.end());
@@ -1123,10 +1123,10 @@ int test_algorithm_shuffle()
 	for (int i = 1; i<10; ++i) myvector.push_back(i); // 1 2 3 4 5 6 7 8 9
 
 	// using built-in random generator:
-	std::random_shuffle(myvector.begin(), myvector.end());
+	//std::random_shuffle(myvector.begin(), myvector.end()); // removed in C++17
 
 	// using myrandom:
-	std::random_shuffle(myvector.begin(), myvector.end(), myrandom);
+	//std::random_shuffle(myvector.begin(), myvector.end(), myrandom); // removed in C++17
 
 	// print out content:
 	std::cout << "myvector contains:";

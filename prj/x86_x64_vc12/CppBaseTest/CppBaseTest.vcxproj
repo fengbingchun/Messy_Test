@@ -63,7 +63,7 @@
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/CppBaseTest\</ProgramDataBaseFileName>
       <AdditionalIncludeDirectories>../../../demo/CppBaseTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,7 +90,7 @@
       <ObjectFileName>.\../../../obj/rel/x64_vc12/CppBaseTest\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/CppBaseTest\</ProgramDataBaseFileName>
       <AdditionalIncludeDirectories>../../../demo/CppBaseTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

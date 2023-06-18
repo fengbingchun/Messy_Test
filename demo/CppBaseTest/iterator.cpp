@@ -12,7 +12,8 @@
 
 namespace iterator_ {
 ///////////////////////////////////////////////////
-class MyIterator : public std::iterator<std::input_iterator_tag, int>
+//class MyIterator : public std::iterator<std::input_iterator_tag, int> // The std::iterator class template (used as a base class to provide typedefs) is deprecated in C++17
+class MyIterator
 {
 public:
 	MyIterator(int* x) :p(x) {}

@@ -1,6 +1,6 @@
 # Messy_Test
 **The main role of the project:**
-- C++/C++11/C++14's usage
+- C++/C++11/C++14/C++17's usage
 - Design Pattern's usage
 - Dr. Memory's usage [DynamoRIO/drmemory](https://github.com/DynamoRIO/drmemory)
 - Json11's usage [dropbox/json11](https://github.com/dropbox/json11)

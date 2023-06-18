@@ -17,9 +17,10 @@ int test_allocator_1()
 	auto const p = alloc.allocate(n); // 分配n个未初始化的string
 
 	auto q = p; // q指向最后构造的元素之后的位置
-	alloc.construct(q++); // *q为空字符串
-	alloc.construct(q++, 10, 'c'); // *q为cccccccccc
-	alloc.construct(q++, "hi"); // *q为hi
+	// Various members of std::allocator are deprecated in C++17
+	//alloc.construct(q++); // *q为空字符串
+	//alloc.construct(q++, 10, 'c'); // *q为cccccccccc
+	//alloc.construct(q++, "hi"); // *q为hi
 
 	std::cout << *p << std::endl; // 正确：使用string的输出运算符
 	//std::cout << *q << std::endl; // 灾难：q指向未构造的内存
@@ -27,9 +28,9 @@ int test_allocator_1()
 	std::cout << p[1] << std::endl;
 	std::cout << p[2] << std::endl;
 
-	while (q != p) {
-		alloc.destroy(--q); // 释放我们真正构造的string
-	}
+	//while (q != p) {
+	//	alloc.destroy(--q); // 释放我们真正构造的string // Various members of std::allocator are deprecated in C++17
+	//}
 
 	alloc.deallocate(p, n);
 
@@ -65,7 +66,7 @@ int test_allocator_3()
 
 	std::allocator<int> intAlloc;
 
-	std::cout << "intAlloc.max_size(): " << intAlloc.max_size() << std::endl;
+	//std::cout << "intAlloc.max_size(): " << intAlloc.max_size() << std::endl; // Various members of std::allocator are deprecated in C++17
 	int* intArray = intAlloc.allocate(100);
 
 	std::cout << "intArray[4]: " << intArray[4] << std::endl;
@@ -79,24 +80,24 @@ int test_allocator_3()
 	std::cout << std::endl;
 
 	std::allocator<double> doubleAlloc;
-	std::cout << "doubleAlloc.max_size(): " << doubleAlloc.max_size() << std::endl;
+	//std::cout << "doubleAlloc.max_size(): " << doubleAlloc.max_size() << std::endl; // Various members of std::allocator are deprecated in C++17
 
 	std::cout << std::endl;
 
 	std::allocator<std::string> stringAlloc;
-	std::cout << "stringAlloc.max_size(): " << stringAlloc.max_size() << std::endl;
+	//std::cout << "stringAlloc.max_size(): " << stringAlloc.max_size() << std::endl; // Various members of std::allocator are deprecated in C++17
 
 	std::string* myString = stringAlloc.allocate(3);
 
-	stringAlloc.construct(myString, "Hello");
-	stringAlloc.construct(myString + 1, "World");
-	stringAlloc.construct(myString + 2, "!");
+	//stringAlloc.construct(myString, "Hello"); // Various members of std::allocator are deprecated in C++17
+	//stringAlloc.construct(myString + 1, "World"); // Various members of std::allocator are deprecated in C++17
+	//stringAlloc.construct(myString + 2, "!"); // Various members of std::allocator are deprecated in C++17
 
 	std::cout << myString[0] << " " << myString[1] << " " << myString[2] << std::endl;
 
-	stringAlloc.destroy(myString);
-	stringAlloc.destroy(myString + 1);
-	stringAlloc.destroy(myString + 2);
+	//stringAlloc.destroy(myString); // Various members of std::allocator are deprecated in C++17
+	//stringAlloc.destroy(myString + 1); // Various members of std::allocator are deprecated in C++17
+	//stringAlloc.destroy(myString + 2); // Various members of std::allocator are deprecated in C++17
 	stringAlloc.deallocate(myString, 3);
 
 	std::cout << std::endl;
@@ -110,7 +111,7 @@ int test_allocator_4()
 {
 	std::allocator<int> a1;   // default allocator for ints
 	int* a = a1.allocate(1);  // space for one int
-	a1.construct(a, 7);       // construct the int
+	//a1.construct(a, 7);       // construct the int // Various members of std::allocator are deprecated in C++17
 	std::cout << a[0] << '\n';
 	a1.deallocate(a, 1);      // deallocate space for one int
 
@@ -118,20 +119,20 @@ int test_allocator_4()
 	std::allocator<std::string> a2;
 
 	// same, but obtained by rebinding from the type of a1
-	decltype(a1)::rebind<std::string>::other a2_1;
+	//decltype(a1)::rebind<std::string>::other a2_1; // Various members of std::allocator are deprecated in C++17
 
 	// same, but obtained by rebinding from the type of a1 via allocator_traits
 	std::allocator_traits<decltype(a1)>::rebind_alloc<std::string> a2_2;
 
 	std::string* s = a2.allocate(2); // space for 2 strings
 
-	a2.construct(s, "foo");
-	a2.construct(s + 1, "bar");
+	//a2.construct(s, "foo"); // Various members of std::allocator are deprecated in C++17
+	//a2.construct(s + 1, "bar"); // Various members of std::allocator are deprecated in C++17
 
 	std::cout << s[0] << ' ' << s[1] << '\n';
 
-	a2.destroy(s);
-	a2.destroy(s + 1);
+	//a2.destroy(s); // Various members of std::allocator are deprecated in C++17
+	//a2.destroy(s + 1); // Various members of std::allocator are deprecated in C++17
 	a2.deallocate(s, 2);
 
 	return 0;

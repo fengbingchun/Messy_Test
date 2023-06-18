@@ -334,14 +334,14 @@ int test_deque_1()
 	p = mydeque.get_allocator().allocate(5);
 
 	// construct values in-place on the array:
-	for (i = 0; i < 5; i++) mydeque.get_allocator().construct(&p[i], i);
+	//for (i = 0; i < 5; i++) mydeque.get_allocator().construct(&p[i], i); // Various members of std::allocator are deprecated in C++17
 
 	std::cout << "The allocated array contains:";
 	for (i = 0; i < 5; i++) std::cout << ' ' << p[i];
 	std::cout << '\n';
 
 	// destroy and deallocate:
-	for (i = 0; i < 5; i++) mydeque.get_allocator().destroy(&p[i]);
+	//for (i = 0; i < 5; i++) mydeque.get_allocator().destroy(&p[i]); // Various members of std::allocator are deprecated in C++17
 	mydeque.get_allocator().deallocate(p, 5);
 }
 

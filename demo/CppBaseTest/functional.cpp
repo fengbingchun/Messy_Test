@@ -108,7 +108,8 @@ struct IsOdd {
 int test_functional_not1()
 {
 	int values[] = { 1, 2, 3, 4, 5 };
-	int cx = std::count_if(values, values + 5, std::not1(IsOdd()));
+	//int cx = std::count_if(values, values + 5, std::not1(IsOdd())); // std::not1: deprecated in C++17, removed in C++17
+	int cx = std::count_if(values, values + 5, IsOdd());
 	std::cout << "There are " << cx << " elements with even values.\n"; // 2
 
 	return 0;
@@ -121,29 +122,29 @@ int test_functional_not2()
 	int bar[] = { 0, 15, 30, 45, 60 };
 	std::pair<int*, int*> firstmatch, firstmismatch;
 	firstmismatch = std::mismatch(foo, foo + 5, bar, std::equal_to<int>());
-	firstmatch = std::mismatch(foo, foo + 5, bar, std::not2(std::equal_to<int>()));
+	//firstmatch = std::mismatch(foo, foo + 5, bar, std::not2(std::equal_to<int>()));
 	std::cout << "First mismatch in bar is " << *firstmismatch.second << '\n'; // 0
-	std::cout << "First match in bar is " << *firstmatch.second << '\n'; // 30
+	//std::cout << "First match in bar is " << *firstmatch.second << '\n'; // 30
 
 	return 0;
 }
 
 //////////////////////////////////////////
-int test_functional_binary_negate()
-{
-	std::equal_to<int> equality;
-	std::binary_negate < std::equal_to<int> > nonequality(equality);
-	int foo[] = { 10, 20, 30, 40, 50 };
-	int bar[] = { 0, 15, 30, 45, 60 };
-
-	std::pair<int*, int*> firstmatch, firstmismatch;
-	firstmismatch = std::mismatch(foo, foo + 5, bar, equality);
-	firstmatch = std::mismatch(foo, foo + 5, bar, nonequality);
-	std::cout << "First mismatch in bar is " << *firstmismatch.second << "\n"; // 0
-	std::cout << "First match in bar is " << *firstmatch.second << "\n"; // 30
-
-	return 0;
-}
+//int test_functional_binary_negate() // std::binary_negate: deprecated in C++17, removed in C++20
+//{
+//	std::equal_to<int> equality;
+//	std::binary_negate < std::equal_to<int> > nonequality(equality);
+//	int foo[] = { 10, 20, 30, 40, 50 };
+//	int bar[] = { 0, 15, 30, 45, 60 };
+//
+//	std::pair<int*, int*> firstmatch, firstmismatch;
+//	firstmismatch = std::mismatch(foo, foo + 5, bar, equality);
+//	firstmatch = std::mismatch(foo, foo + 5, bar, nonequality);
+//	std::cout << "First mismatch in bar is " << *firstmismatch.second << "\n"; // 0
+//	std::cout << "First match in bar is " << *firstmatch.second << "\n"; // 30
+//
+//	return 0;
+//}
 
 ////////////////////////////////////////////////////
 struct IsOdd_class {
@@ -151,16 +152,16 @@ struct IsOdd_class {
 	typedef int argument_type;
 } IsOdd_object;
 
-int test_functional_unary_negate()
-{
-	std::unary_negate<IsOdd_class> IsEven_object(IsOdd_object);
-	int values[] = { 1, 2, 3, 4, 5 };
-	int cx;
-	cx = std::count_if(values, values + 5, IsEven_object);
-	std::cout << "There are " << cx << " elements with even values.\n"; // 2
-
-	return 0;
-}
+//int test_functional_unary_negate() // std::unary_negate: deprecated in C++17, removed in C++20
+//{
+//	std::unary_negate<IsOdd_class> IsEven_object(IsOdd_object);
+//	int values[] = { 1, 2, 3, 4, 5 };
+//	int cx;
+//	cx = std::count_if(values, values + 5, IsEven_object);
+//	std::cout << "There are " << cx << " elements with even values.\n"; // 2
+//
+//	return 0;
+//}
 
 ////////////////////////////////////////////
 // a function:
@@ -288,13 +289,13 @@ int test_functional_arithmetic()
 	std::cout << '\n';
 }
 
-{
-	int numbers[] = { 1, 2, 3, 4, 5 };
-	int remainders[5];
-	std::transform(numbers, numbers + 5, remainders, std::bind2nd(std::modulus<int>(), 2));
-	for (int i = 0; i < 5; i++)
-		std::cout << numbers[i] << " is " << (remainders[i] == 0 ? "even" : "odd") << '\n';
-}
+//{
+//	int numbers[] = { 1, 2, 3, 4, 5 };
+//	int remainders[5];
+//	std::transform(numbers, numbers + 5, remainders, std::bind2nd(std::modulus<int>(), 2)); // std::bind2nd: deprecated in C++11, removed in C++17
+//	for (int i = 0; i < 5; i++)
+//		std::cout << numbers[i] << " is " << (remainders[i] == 0 ? "even" : "odd") << '\n';
+//}
 
 {
 	int numbers[] = { 10, -20, 30, -40, 50 };
@@ -342,17 +343,17 @@ int test_functional_compare()
 		std::cout << "foo includes bar.\n"; // foo includes bar
 }
 
-{
-	int numbers[] = { 20, -30, 10, -40, 0 };
-	int cx = std::count_if(numbers, numbers + 5, std::bind2nd(std::greater_equal<int>(), 0));
-	std::cout << "There are " << cx << " non-negative elements.\n"; // 3
-}
+//{
+//	int numbers[] = { 20, -30, 10, -40, 0 };
+//	int cx = std::count_if(numbers, numbers + 5, std::bind2nd(std::greater_equal<int>(), 0)); // std::bind2nd: deprecated in C++11, removed in C++17
+//	std::cout << "There are " << cx << " non-negative elements.\n"; // 3
+//}
 
-{
-	int numbers[] = { 25, 50, 75, 100, 125 };
-	int cx = std::count_if(numbers, numbers + 5, std::bind2nd(std::less_equal<int>(), 100));
-	std::cout << "There are " << cx << " elements lower than or equal to 100.\n"; // 4
-}
+//{
+//	int numbers[] = { 25, 50, 75, 100, 125 };
+//	int cx = std::count_if(numbers, numbers + 5, std::bind2nd(std::less_equal<int>(), 100)); // std::bind2nd: deprecated in C++11, removed in C++17
+//	std::cout << "There are " << cx << " elements lower than or equal to 100.\n"; // 4
+//}
 
 	return 0;
 }

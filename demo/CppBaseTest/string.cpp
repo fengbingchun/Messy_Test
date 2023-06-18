@@ -679,7 +679,8 @@ int test_string_func()
 
 		std::ifstream file("test.txt", std::ios::in | std::ios::ate);
 		if (file) {
-			std::ifstream::streampos filesize = file.tellg();
+			//std::ifstream::streampos filesize = file.tellg();
+			auto filesize = file.tellg();
 			str.reserve(filesize);
 
 			file.seekg(0);
