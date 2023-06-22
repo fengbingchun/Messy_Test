@@ -2,6 +2,47 @@
 #include <iostream>
 #include <typeinfo>
 
+// Blog: https://blog.csdn.net/fengbingchun/article/details/131340606
+
+int test_literal_17_1()
+{
+	char c1 = u8'A'; // C++17
+	char c2[2] = u8"A";
+
+	char u1 = 'A';          // 'A'
+	char u2 = '\101';       // octal, 'A'
+	char u3 = '\x41';       // hexadecimal, 'A'
+	char u4 = '\u0041';     // \u UCN 'A'
+	char u5 = '\U00000041'; // \U UCN 'A'
+
+	return 0;
+}
+
+int test_literal_2()
+{
+	char c = 'a'; // 字符字面值
+	char str[] = "hello world"; // 字符串字面值
+
+	std::cout << "csdn address: "
+		"https://blog.csdn.net/fengbingchun/;	"
+		"github address: "
+		"https://github.com/fengbingchun"<< std::endl;
+
+	std::cout << "\12" << "\0" << "\115" << "\40" << "\x4d" << "\n";
+	std::cout << "Hi \x4dO\115!\n"; // Hi MOM!
+	std::cout << "\1154\n"; // M4
+	//std::cout << "\x1234\n"; // error C2022: “4660”: 对字符来说太大
+
+	auto x1 = L'a'; // 宽字符型字面值,类型是wchar_t
+	auto x2 = u8"Hi"; // utf-8字符串字面值(utf-8用8位编码一个Unicode字符)
+	auto x3 = U"Bei";
+	std::cout << "x1 type:" << typeid(x1).name()
+			  << ", x2 type:" << typeid(x2).name()
+			  << ", x3 type:" << typeid(x3).name() << "\n"; // x1 type:wchar_t, x2 type:char const * __ptr64, x3 type:char32_t const * __ptr64
+
+	return 0;
+}
+
 // Blog: https://blog.csdn.net/fengbingchun/article/details/131152441
 
 int test_literal_14_1()

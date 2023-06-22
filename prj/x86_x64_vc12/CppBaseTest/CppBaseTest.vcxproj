@@ -171,12 +171,12 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\iterator.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\jinghao.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\Lambda.cpp">
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp14</LanguageStandard>
     </ClCompile>
     <ClCompile Include="..\..\..\demo\CppBaseTest\lazy_evaluation.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\linked_list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\list.cpp" />
-    <ClCompile Include="..\..\..\demo\CppBaseTest\literal.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\literal.cpp">
+    </ClCompile>
     <ClCompile Include="..\..\..\demo\CppBaseTest\local_class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\lock_guard.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\lvalue_rvalue.cpp" />

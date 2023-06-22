@@ -1,6 +1,9 @@
 #ifndef FBC_MESSY_TEST_LITERAL_HPP_
 #define FBC_MESSY_TEST_LITERAL_HPP_
 
+int test_literal_17_1();
+int test_literal_2();
+
 int test_literal_14_1();
 int test_literal_1();
 
