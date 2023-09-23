@@ -36,7 +36,7 @@
 #include "for_each.hpp"
 #include "override.hpp"
 #include "final.hpp"
-#include "Lambda.hpp"
+#include "lambda.hpp"
 #include "default.hpp"
 #include "delete.hpp"
 #include "decltype.hpp"
@@ -142,5 +142,6 @@
 #include "variable_template.hpp"
 #include "constexpr.hpp"
 #include "literal.hpp"
+#include "filesystem.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

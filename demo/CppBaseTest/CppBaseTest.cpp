@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_literal_17_1();
+	int ret = test_filesystem_path();
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
 
