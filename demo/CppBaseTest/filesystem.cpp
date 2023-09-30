@@ -4,12 +4,57 @@
 #include <string>
 #include <chrono>
 #include <sstream>
+#include <vector>
+
+
+/////////////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/133437356
+int test_filesystem_recursive_directory_iterator()
+{
+	namespace fs = std::filesystem;
+
+#ifdef _MSC_VER
+	const std::string path{ "../../../src/cJSON" };
+#else
+	const std::string path{ "../../src/cJSON" };
+#endif
+
+	std::vector<fs::path> files, directories;
+	for (auto const& dir_entry : fs::recursive_directory_iterator(path)) {
+		if (dir_entry.is_directory())
+			directories.emplace_back(dir_entry.path());
+		else if (dir_entry.is_regular_file())
+			files.emplace_back(dir_entry.path());
+		else
+			std::cout << "other:" << dir_entry.path() << std::endl;
+	}
+
+	std::cout << "recursive_directory_iterator result:" << std::endl;
+	std::cout << "directories:" << std::endl;
+	for (const auto& dir : directories)
+		std::cout << "\t" << dir << std::endl;
+
+	std::cout << "\n\nregular files:" << std::endl;
+	for (const auto& file : files)
+		std::cout << "\t" << file << std::endl;
+
+	// depth
+	std::cout << "\n\ndepth:" << std::endl;
+	for (auto it = fs::recursive_directory_iterator(path); it != fs::recursive_directory_iterator(); ++it)
+		std::cout << *it << ": " << it.depth() << std::endl;
+
+	return 0;
+}
 
 int test_filesystem_directory_iterator()
 {
 	namespace fs = std::filesystem;
 
+#ifdef _MSC_VER
 	const std::string path{ "../../../src/cJSON" };
+#else
+	const std::string path{ "../../src/cJSON" };
+#endif
 	
 	std::cout << "directory_iterator result:" << std::endl;
 	for (auto const& dir_entry : fs::directory_iterator(path))
