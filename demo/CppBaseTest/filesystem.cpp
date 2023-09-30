@@ -2,7 +2,171 @@
 #include <filesystem>
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <sstream>
 
+int test_filesystem_directory_iterator()
+{
+	namespace fs = std::filesystem;
+
+	const std::string path{ "../../../src/cJSON" };
+	
+	std::cout << "directory_iterator result:" << std::endl;
+	for (auto const& dir_entry : fs::directory_iterator(path))
+		std::cout << dir_entry.path() << std::endl;
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/133430293
+namespace {
+
+float get_file_size(std::uintmax_t size, std::string& suffix)
+{
+	float s1 = size / 1024. / 1024 / 1024;
+	float s2 = size / 1024. / 1024;
+	float s3 = size / 1024.;
+
+	if (s1 > 1) {
+		suffix = " GB";
+		return s1;
+	}
+	if (s2 > 1) {
+		suffix = " MB";
+		return s2;
+	}
+	if (s3 > 1) {
+		suffix = " KB";
+		return s3;
+	}
+	suffix = " Bytes";
+	return size;
+}
+
+std::string to_time_t(std::filesystem::file_time_type tp)
+{
+	using namespace std::chrono;
+	auto sctp = time_point_cast<system_clock::duration>(tp - std::filesystem::file_time_type::clock::now() + system_clock::now());
+	auto tt = system_clock::to_time_t(sctp);
+
+	std::tm* gmt = std::localtime(&tt); // UTC: std::gmtime(&tt);
+	std::stringstream buffer;
+	buffer << std::put_time(gmt, "%Y-%m-%d %H:%M:%S");
+	return buffer.str();
+}
+
+} // namespace
+
+int test_filesystem_directory_entry()
+{
+	namespace fs = std::filesystem;
+
+	// 1. construct,operator=,assign
+	fs::directory_entry d1{ fs::current_path() };
+	fs::directory_entry d2 = d1;
+	fs::directory_entry d3;
+	d3.assign(fs::current_path());
+	if ((d1 == d2) && (d1 == d3))
+		std::cout << "they are equal" << std::endl; // they are equal
+	// windows: d1:"E:\\GitCode\\Messy_Test\\prj\\x86_x64_vc12\\CppBaseTest"
+	// linux: d1:"/home/spring/GitCode/Messy_Test/prj/linux_cmake_CppBaseTest"
+	std::cout << "d1:" << d1 << std::endl;
+
+	// 2. replace_filename
+	d1.replace_filename("C++17Test");
+	// windows: d1:"E:\\GitCode\\Messy_Test\\prj\\x86_x64_vc12\\C++17Test"
+	// linux: d1:"/home/spring/GitCode/Messy_Test/prj/C++17Test"
+	std::cout << "d1:" << d1 << std::endl;
+
+	// 3. path
+	fs::path p1 = d1.path();
+	// windows: p1:"E:\\GitCode\\Messy_Test\\prj\\x86_x64_vc12\\C++17Test"
+	// linux: p1:"/home/spring/GitCode/Messy_Test/prj/C++17Test"
+	std::cout << "p1:" << p1 << std::endl;
+
+	// 4. exists
+	for (const auto& str : { "C:\\Program Files (x86)", "/usr/local" , "E:\\GitCode\\xxx", "/usr/xxx"}) {
+		fs::directory_entry entry{ str };
+		/* windows:
+			directory entry: "C:\\Program Files (x86)":exists
+			directory entry: "/usr/local":does not exist
+			directory entry: "E:\\GitCode\\xxx":does not exist
+			directory entry: "/usr/xxx":does not exist */
+		/* linux:
+			directory entry: "C:\\Program Files (x86)":does not exist
+			directory entry: "/usr/local":exists
+			directory entry: "E:\\GitCode\\xxx":does not exist
+			directory entry: "/usr/xxx":does not exist
+		*/
+		std::cout << "directory entry: " << entry << (entry.exists() ? ":exists\n" : ":does not exist\n");
+	}
+
+	// 5. is_block_file,is_character_file,is_directory,is_fifo,is_other,is_regular_file,is_socket,is_symlink
+	for (const auto& str : { "/dev/null", "C:\\Program Files (x86)", "/usr/include/time.h", "C:\\MinGW\\bin\\c++filt.exe",
+		"/usr/bin/g++", "/dev/block/11:0"}) {
+		fs::directory_entry entry{ str };
+		/* windows:
+			"C:\\Program Files (x86)" is a directory
+			"C:\\MinGW\\bin\\c++filt.exe" is a regular_file */
+		/* linux:
+			"/dev/null" is a character device
+			"/dev/null" is an other file
+			"/usr/include/time.h" is a regular_file
+			"/usr/bin/g++" is a regular_file
+			"/usr/bin/g++" is a symlink
+			"/dev/block/11:0" is a block device
+			"/dev/block/11:0" is an other file
+			"/dev/block/11:0" is a symlink */
+		if (entry.is_block_file())
+			std::cout << entry << " is a block device" << std::endl;
+		if (entry.is_character_file())
+			std::cout << entry << " is a character device" << std::endl;
+		if (entry.is_directory())
+			std::cout << entry << " is a directory" << std::endl;
+		if (entry.is_fifo())
+			std::cout << entry << " is a FIFO" << std::endl;
+		if (entry.is_other())
+			std::cout << entry << " is an other file" << std::endl;
+		if (entry.is_regular_file())
+			std::cout << entry << " is a regular_file" << std::endl;
+		if (entry.is_socket())
+			std::cout << entry << " is a named socket" << std::endl;
+		if (entry.is_symlink())
+			std::cout << entry << " is a symlink" << std::endl;
+	}
+
+	// 6. file_size, last_write_time
+	for (const auto& str : { "/usr/bin/g++", "D:\\FSCapture.exe", "D:\\DownLoad\\tmp.txt", "/usr/bin/cmake", "E:\\yulong.mp4"}) {
+		fs::directory_entry entry{ str };
+		/* windows:
+			"D:\\FSCapture.exe" size: 2.82 MB
+			"D:\\FSCapture.exe" last write time: 2016-03-29 09:26:26
+			"D:\\DownLoad\\tmp.txt" size: 10 Bytes
+			"D:\\DownLoad\\tmp.txt" last write time: 2023-09-26 09:00:35
+			"E:\\yulong.mp4" size: 1.35 GB
+			"E:\\yulong.mp4" last write time: 2023-08-19 22:42:56 */
+		/* linux:
+			"/usr/bin/g++" size: 910.82 KB
+			"/usr/bin/g++" last write time: 2023-05-13 15:52:47
+			"/usr/bin/cmake" size: 6.43 MB
+			"/usr/bin/cmake" last write time: 2022-08-17 18:44:05 */
+		if (entry.is_regular_file()) {
+			std::string suffix;
+			auto value = get_file_size(entry.file_size(), suffix);
+			if (suffix == " Bytes")
+				std::cout << entry << " size: " << static_cast<int>(value) << suffix << std::endl;
+			else
+				std::cout << entry << " size: " << std::fixed << std::setprecision(2) << value << suffix << std::endl;
+
+			std::cout << entry << " last write time: " << to_time_t(entry.last_write_time()) << std::endl;
+		}
+	}
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/133217504
 int test_filesystem_path()
 {
@@ -195,13 +359,6 @@ int test_filesystem_path()
 	  D937A950FC185671 : E:\x86_x64_vc12 */
 	for (const auto& s : { "../../images", "/usr/local", "E:\\x86_x64_vc12" })
 		std::cout << std::hex << std::uppercase << std::setw(16) << std::hash<fs::path>{}(fs::path(s)) << " : " << s << '\n';
-
-	return 0;
-}
-
-int test_filesystem_directory_entry()
-{
-	
 
 	return 0;
 }
