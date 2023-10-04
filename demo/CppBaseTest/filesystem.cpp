@@ -1,18 +1,331 @@
-#include "filesystem.hpp"
+﻿#include "filesystem.hpp"
 #include <filesystem>
 #include <iostream>
 #include <string>
 #include <chrono>
 #include <sstream>
 #include <vector>
+#include <cstdio>
 
+namespace fs = std::filesystem;
+
+/////////////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/133552753
+namespace {
+
+void demo_status(const fs::path& p, fs::file_status s)
+{
+	std::cout << p;
+	switch (s.type()) {
+	case fs::file_type::none:
+		std::cout << " has `not-evaluated-yet` type";
+		break;
+	case fs::file_type::not_found:
+		std::cout << " does not exist";
+		break;
+	case fs::file_type::regular:
+		std::cout << " is a regular file";
+		break;
+	case fs::file_type::directory:
+		std::cout << " is a directory";
+		break;
+	case fs::file_type::symlink:
+		std::cout << " is a symlink";
+		break;
+	case fs::file_type::block:
+		std::cout << " is a block device";
+		break;
+	case fs::file_type::character:
+		std::cout << " is a character device";
+		break;
+	case fs::file_type::fifo:
+		std::cout << " is a named IPC pipe";
+		break;
+	case fs::file_type::socket:
+		std::cout << " is a named IPC socket";
+		break;
+	case fs::file_type::unknown:
+		std::cout << " has `unknown` type";
+		break;
+	default:
+		std::cout << " has `implementation-defined` type";
+		break;
+	}
+	std::cout << '\n';
+}
+
+void demo_status2(const fs::path& p, fs::file_status s)
+{
+	std::cout << p;
+	// alternative: switch(s.type()) { case fs::file_type::regular: ...}
+	if (fs::is_regular_file(s))
+		std::cout << " is a regular file\n";
+	if (fs::is_directory(s))
+		std::cout << " is a directory\n";
+	if (fs::is_block_file(s))
+		std::cout << " is a block device\n";
+	if (fs::is_character_file(s))
+		std::cout << " is a character device\n";
+	if (fs::is_fifo(s))
+		std::cout << " is a named IPC pipe\n";
+	if (fs::is_socket(s))
+		std::cout << " is a named IPC socket\n";
+	if (fs::is_symlink(s))
+		std::cout << " is a symlink\n";
+	if (!fs::exists(s))
+		std::cout << " does not exist\n";
+	//if (fs::is_empty(p))
+	//	std::cout << " is empty\n";
+	if (fs::is_other(s)) // equivalent to exists(s) && !is_regular_file(s) && !is_directory(s) && !is_symlink(s)
+		std::cout << " is other file\n";
+	//if (fs::status_known(s)) // equivalent to s.type() != file_type::none
+	//	std::cout << " is status known\n";
+}
+
+void demo_perms(fs::perms p)
+{
+	using fs::perms;
+	auto show = [=](char op, perms perm) {
+		std::cout << (perms::none == (perm & p) ? '-' : op);
+	};
+
+	show('r', perms::owner_read);
+	show('w', perms::owner_write);
+	show('x', perms::owner_exec);
+	show('r', perms::group_read);
+	show('w', perms::group_write);
+	show('x', perms::group_exec);
+	show('r', perms::others_read);
+	show('w', perms::others_write);
+	show('x', perms::others_exec);
+	std::cout << '\n';
+}
+
+float get_file_size(std::uintmax_t size, std::string& suffix)
+{
+	float s1 = size / 1024. / 1024 / 1024;
+	float s2 = size / 1024. / 1024;
+	float s3 = size / 1024.;
+
+	if (s1 > 1) {
+		suffix = " GB";
+		return s1;
+	}
+	if (s2 > 1) {
+		suffix = " MB";
+		return s2;
+	}
+	if (s3 > 1) {
+		suffix = " KB";
+		return s3;
+	}
+	suffix = " Bytes";
+	return size;
+}
+
+std::string to_time_t(fs::file_time_type tp)
+{
+	using namespace std::chrono;
+	auto sctp = time_point_cast<system_clock::duration>(tp - fs::file_time_type::clock::now() + system_clock::now());
+	auto tt = system_clock::to_time_t(sctp);
+
+	std::tm* gmt = std::localtime(&tt); // UTC: std::gmtime(&tt);
+	std::stringstream buffer;
+	buffer << std::put_time(gmt, "%Y-%m-%d %H:%M:%S");
+	return buffer.str();
+}
+
+} // namespace
+
+int test_filesystem_file_types()
+{
+	demo_status2("/dev/null", fs::status("/dev/null"));
+	demo_status2("/dev/sda", fs::status("/dev/sda"));
+	demo_status2(fs::current_path(), fs::status(fs::current_path()));
+	demo_status2("/xxx/yyy", fs::status("/xxx/yyy"));
+	demo_status2("/usr/bin/g++", fs::status("usr/bin/g++"));
+	demo_status2("../../../testdata/list.txt", fs::status("../../../testdata/list.txt"));
+	demo_status2("../../testdata/list.txt", fs::status("../../testdata/list.txt"));
+	demo_status2("/mnt", fs::status("/mnt"));
+
+	return 0;
+}
+
+int test_filesystem_non_member_functions()
+{
+	const fs::path p1 = "../funset.cpp";
+#ifdef _MSC_VER
+	const fs::path p2{ "../../../testdata/list.txt" }, p3{ "../../../testdata/list_copy.txt" }, p4{ "E:\\yulong.mp4" }, p5{ "../../../testdata/list_new.txt" };
+#else
+	const fs::path p2{ "../../testdata/list.txt" }, p3{ "../../testdata/list_copy.txt" }, p4{ "./build/CppBaseTest" }, p5{"../../testdata/list_new.txt"};
+#endif
+	// windows: current path is "E:\\GitCode\\Messy_Test\\prj\\x86_x64_vc12\\CppBaseTest"
+	// linux: current path is "/home/spring/GitCode/Messy_Test/prj/linux_cmake_CppBaseTest"
+	std::cout << "current path is " << fs::current_path() << '\n';
+	// 1. absolute
+	// windows: absolute path for "../funset.cpp" is "E:\\GitCode\\Messy_Test\\prj\\x86_x64_vc12\\funset.cpp"
+	// linux: absolute path for "../funset.cpp" is "/home/spring/GitCode/Messy_Test/prj/linux_cmake_CppBaseTest/../funset.cpp"
+	std::cout << "absolute path for " << p1 << " is " << fs::absolute(p1) << '\n';
+
+	// 2. canonical, weakly_canonical
+	/* windows:
+		canonical path: "E:\\GitCode\\Messy_Test\\testdata\\list.txt"
+		weakly canonical path: "E:\\GitCode\\Messy_Test\\testdata\\list.txt" */
+	/* linux:
+		canonical path: "/home/spring/GitCode/Messy_Test/testdata/list.txt"
+		weakly canonical path: "/home/spring/GitCode/Messy_Test/testdata/list.txt" */
+	std::cout << "canonical path: " << fs::canonical(p2) << "\n";
+	std::cout << "weakly canonical path: " << fs::weakly_canonical(p2) << "\n";
+
+	// 3. relative, proximate
+	std::cout << "relative path: " << fs::relative("/a/b/c", "/a/b")
+		<< ", proximat path: " << fs::proximate("/a/b/c", "/a/b") << "\n";	// relative path: "c", proximat path: "c"
+
+	// 4. copy, exists, remove
+	if (fs::exists(p3))
+		fs::remove(p3);
+	fs::copy(p2, p3);
+
+	// 5. copy_file
+	if (fs::exists(p3))
+		fs::remove(p3);
+	fs::copy_file(p2, p3);
+
+	// 6. create_directory, create_directories
+	fs::create_directory("./a");
+	fs::create_directories("./b/c/d");
+
+	// 7. equivalent
+	if (fs::equivalent(".", fs::current_path()))
+		std::cout << "they are equal" << "\n";
+
+	// 8. file_size
+	std::string suffix;
+	auto value = get_file_size(static_cast<std::intmax_t>(fs::file_size(p4)), suffix);
+	// windows: size: 1.35 GB; linux: size: 7.61 MB
+	std::cout << "size: " << std::fixed << std::setprecision(2) << value << suffix << "\n";
+
+	// 9. last_write_time
+	// windows: last write time: 2023-08-19 22:42:56
+	// linux: last write time: 2023-10-03 12:32:49
+	std::cout << "last write time: " << to_time_t(last_write_time(p4)) << std::endl;
+
+	// 10. permissions
+	// windows: rwxrwxrwx r-xr-xr-x
+	// linux:   rw-rw-r-- -w-r-----
+	demo_perms(fs::status(p3).permissions());
+#ifdef _MSC_VER
+	fs::permissions(p3, fs::perms::none);
+#else
+	fs::permissions(p3, fs::perms::owner_write | fs::perms::group_read);
+#endif
+	demo_perms(fs::status(p3).permissions());
+
+	// 11. rename
+	if (fs::exists(p5))
+		fs::remove(p5);
+	fs::rename(p3, p5);
+
+	// 12. resize_file
+	// linux: size: 187.00 Bytes  size: 64.00 KB
+	value = get_file_size(static_cast<std::intmax_t>(fs::file_size(p5)), suffix);
+	std::cout << "size: " << std::fixed << std::setprecision(2) << value << suffix << "\n";
+#ifdef __linux__
+	fs::resize_file(p5, 64 * 1024); // resize to 64 KB, windows crash
+	value = get_file_size(static_cast<std::intmax_t>(fs::file_size(p5)), suffix);
+	std::cout << "size: " << std::fixed << std::setprecision(2) << value << suffix << "\n";
+#endif
+
+	// 13. temp_directory_path
+	// windows: temp directory is: "C:\\Users\\f06190\\AppData\\Local\\Temp\\"
+	// linux: temp directory is: "/tmp"
+	std::cout << "temp directory is: " << fs::temp_directory_path() << "\n";
+
+	// std::error_code
+	std::error_code ec;
+	fs::copy_file("xxx", "yyy", ec); // does not throw
+	// windows: error code: 2,系统找不到指定的文件。
+	// linux: error code: 2,No such file or directory
+	std::cout << "error code: " << ec.value() << "," << ec.message() << "\n";
+
+	try {
+		fs::copy_file("xxx", "yyy");
+	} catch (fs::filesystem_error const& ex) {
+		std::cout << "what():  " << ex.what() << '\n'
+			<< "path1(): " << ex.path1() << '\n'
+			<< "path2(): " << ex.path2() << '\n'
+			<< "code().value():    " << ex.code().value() << '\n'
+			<< "code().message():  " << ex.code().message() << '\n'
+			<< "code().category(): " << ex.code().category().name() << '\n';
+	}
+
+	return 0;
+}
+
+int test_filesystem_space_info()
+{
+	fs::space_info info = fs::space(fs::current_path());
+	std::cout << "current path: " << fs::current_path() << "  ";
+	// windows: current path: "E:\\GitCode\\Messy_Test\\prj\\x86_x64_vc12\\CppBaseTest"   size: 311.00 GB   size: 189.23 GB   size: 189.23 GB
+	// linux: current path: "/home/spring/GitCode/Messy_Test/prj/linux_cmake_CppBaseTest"   size: 311.00 GB   size: 189.23 GB   size: 189.23 GB
+	for (auto x : { info.capacity, info.free, info.available }) {
+		std::string suffix;
+		auto value = get_file_size(static_cast<std::intmax_t>(x), suffix);
+		std::cout << " size: " << std::fixed << std::setprecision(2) << value << suffix << "  ";
+	}
+	std::cout << std::endl;
+
+	return 0;
+}
+
+int test_filesystem_file_status()
+{
+#ifdef _MSC_VER
+	const std::string path{ "../../../testdata/list.txt" };
+#else
+	const std::string path{ "../../testdata/list.txt" };
+#endif
+
+	// 1. type
+	// windows: "../../../testdata/list.txt" is a regular file
+	// linux: "../../testdata/list.txt" is a regular file
+	demo_status(path, fs::status(path));
+
+	// 2. permissions
+	demo_perms(fs::status(path).permissions()); // rwxrwxrwx
+
+	return 0;
+}
+
+int test_filesystem_filesystem_error()
+{
+	// path1, path2, whtat
+	// creates a unique filename that does not name a currently existing file
+	const fs::path oldp{ std::tmpnam(nullptr) }, newp{ std::tmpnam(nullptr) };
+
+	/* windows:
+		what():  rename: 系统找不到指定的文件。: "C:\Users\f06190\AppData\Local\Temp\sf2w.0", "C:\Users\f06190\AppData\Local\Temp\sf2w.1"
+		path1(): "C:\\Users\\f06190\\AppData\\Local\\Temp\\sf2w.0"
+		path2(): "C:\\Users\\f06190\\AppData\\Local\\Temp\\sf2w.1" */
+	/* linux
+		what():  filesystem error: cannot rename: No such file or directory [/tmp/filezJrUkO] [/tmp/filey7tqKV]
+		path1(): "/tmp/filezJrUkO"
+		path2(): "/tmp/filey7tqKV" */
+	try {
+		fs::rename(oldp, newp); // throws since oldp does not exist
+	} catch (fs::filesystem_error const& ex) {
+		std::cout << "what():  " << ex.what() << '\n'
+			<< "path1(): " << ex.path1() << '\n'
+			<< "path2(): " << ex.path2() << '\n';
+	}
+
+	return 0;
+}
 
 /////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/133437356
 int test_filesystem_recursive_directory_iterator()
 {
-	namespace fs = std::filesystem;
-
 #ifdef _MSC_VER
 	const std::string path{ "../../../src/cJSON" };
 #else
@@ -48,8 +361,6 @@ int test_filesystem_recursive_directory_iterator()
 
 int test_filesystem_directory_iterator()
 {
-	namespace fs = std::filesystem;
-
 #ifdef _MSC_VER
 	const std::string path{ "../../../src/cJSON" };
 #else
@@ -65,48 +376,8 @@ int test_filesystem_directory_iterator()
 
 /////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/133430293
-namespace {
-
-float get_file_size(std::uintmax_t size, std::string& suffix)
-{
-	float s1 = size / 1024. / 1024 / 1024;
-	float s2 = size / 1024. / 1024;
-	float s3 = size / 1024.;
-
-	if (s1 > 1) {
-		suffix = " GB";
-		return s1;
-	}
-	if (s2 > 1) {
-		suffix = " MB";
-		return s2;
-	}
-	if (s3 > 1) {
-		suffix = " KB";
-		return s3;
-	}
-	suffix = " Bytes";
-	return size;
-}
-
-std::string to_time_t(std::filesystem::file_time_type tp)
-{
-	using namespace std::chrono;
-	auto sctp = time_point_cast<system_clock::duration>(tp - std::filesystem::file_time_type::clock::now() + system_clock::now());
-	auto tt = system_clock::to_time_t(sctp);
-
-	std::tm* gmt = std::localtime(&tt); // UTC: std::gmtime(&tt);
-	std::stringstream buffer;
-	buffer << std::put_time(gmt, "%Y-%m-%d %H:%M:%S");
-	return buffer.str();
-}
-
-} // namespace
-
 int test_filesystem_directory_entry()
 {
-	namespace fs = std::filesystem;
-
 	// 1. construct,operator=,assign
 	fs::directory_entry d1{ fs::current_path() };
 	fs::directory_entry d2 = d1;
@@ -215,8 +486,6 @@ int test_filesystem_directory_entry()
 // Blog: https://blog.csdn.net/fengbingchun/article/details/133217504
 int test_filesystem_path()
 {
-	namespace fs = std::filesystem;
-
 	// 1. constructs a path
 	fs::path p1 = "/usr/lib";
 	fs::path p2 = "C:/Program Files";
