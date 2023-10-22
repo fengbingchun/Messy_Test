@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_filesystem_non_member_functions();
+	int ret = test_string_view_functions();
 	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
 	else fprintf(stderr, "########## test fail ##########\n");
 

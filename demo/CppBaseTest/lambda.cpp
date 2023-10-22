@@ -1,4 +1,4 @@
-#include "Lambda.hpp"
+#include "lambda.hpp"
 #include <iostream>
 #include <algorithm>
 #include <functional>
