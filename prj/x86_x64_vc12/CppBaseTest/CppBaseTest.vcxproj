@@ -111,6 +111,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\addressof.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\algorithm.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\allocator.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\any.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\array.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\atomic.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\auto.cpp" />
@@ -261,6 +262,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\addressof.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\algorithm.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\allocator.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\any.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\array.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\atomic.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\auto.hpp" />

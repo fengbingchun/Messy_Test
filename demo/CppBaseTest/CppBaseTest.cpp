@@ -3,9 +3,9 @@
 
 int main()
 {
-	int ret = test_string_view_functions();
-	if (ret == 0) fprintf(stdout, "========== test success ==========\n");
-	else fprintf(stderr, "########## test fail ##########\n");
+	int ret = test_any_init();
+	if (ret == 0) std::cout << "========== test success ==========\n";
+	else std::cerr << "########## test fail ##########\n";
 
 	return 0;
 }
