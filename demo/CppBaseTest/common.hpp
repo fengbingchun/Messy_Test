@@ -146,5 +146,6 @@
 #include "string_view.hpp"
 #include "any.hpp"
 #include "optional.hpp"
+#include "variant.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
