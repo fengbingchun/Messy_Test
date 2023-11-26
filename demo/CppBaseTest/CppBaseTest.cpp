@@ -3,7 +3,7 @@
 
 int main()
 {
-	int ret = test_variant_functions();
+	int ret = test_byte();
 	if (ret == 0) std::cout << "========== test success ==========\n";
 	else std::cerr << "########## test fail ##########\n";
 

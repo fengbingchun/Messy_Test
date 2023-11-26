@@ -147,5 +147,6 @@
 #include "any.hpp"
 #include "optional.hpp"
 #include "variant.hpp"
+#include "byte.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
