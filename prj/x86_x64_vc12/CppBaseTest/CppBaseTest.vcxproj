@@ -229,6 +229,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\string.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\string_view.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\struct.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\structured_binding.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\tar.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template_impl.cpp" />
@@ -384,6 +385,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\string.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\string_view.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\struct.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\structured_binding.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\tar.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\template.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\temporary_object.hpp" />
