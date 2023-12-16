@@ -4,7 +4,6 @@
 namespace inline_ {
 
 int test_inline_1();
-int test_inline_2();
 
 } // namespace inline_
 
