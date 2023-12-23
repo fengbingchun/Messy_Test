@@ -186,6 +186,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\map.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\memory.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\memory_alignment.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\memory_locking.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\more_effective_cplusplus.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\move.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\multi_threaded_memory_pool.cpp" />
@@ -342,6 +343,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\map.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\memory.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\memory_alignment.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\memory_locking.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\more_effective_cplusplus.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\move.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\multi_threaded_memory_pool.hpp" />

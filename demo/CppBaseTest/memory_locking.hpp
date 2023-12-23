@@ -1,0 +1,6 @@
+#ifndef FBC_MESSY_TEST_MEMORY_LOCKING_HPP_
+#define FBC_MESSY_TEST_MEMORY_LOCKING_HPP_
+
+int test_memory_locking();
+
+#endif // FBC_MESSY_TEST_MEMORY_LOCKING_HPP_
