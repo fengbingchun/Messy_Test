@@ -5,10 +5,20 @@
 #include <random>
 #include <cmath>
 
-// Blog: https://blog.csdn.net/fengbingchun/article/details/85030305
-
 namespace inline_ {
 
+// Blog: https://blog.csdn.net/fengbingchun/article/details/135324238
+int test_inline_variable_1()
+{
+	std::cout << "var: " << InlineVariable::var << "\n";
+	std::cout << "csdn addr: " << inline_variable.csdn_addr << "\n";
+	std::cout << "num: " << InlineVariable::num << "\n";
+
+	return 0;
+}
+
+
+// Blog: https://blog.csdn.net/fengbingchun/article/details/85030305
 // reference: 《提高C++性能的编程技术》：第八、九、十章：内联
 //////////////////////////////////////////////////////////////
 void generator_random_number(double* data, int length, double a, double b)

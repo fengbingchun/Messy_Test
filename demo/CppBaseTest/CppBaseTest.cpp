@@ -3,7 +3,7 @@
 
 int main()
 {
-	if (auto ret = test_memory_locking(); ret == 0)
+	if (auto ret = inline_::test_inline_variable_1(); ret == 0)
 		std::cout << "========== test success ==========\n";
 	else
 		std::cerr << "########## test fail ##########\n";
