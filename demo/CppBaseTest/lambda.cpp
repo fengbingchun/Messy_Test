@@ -1,11 +1,186 @@
-#include "lambda.hpp"
+﻿#include "lambda.hpp"
 #include <iostream>
 #include <algorithm>
 #include <functional>
 #include <vector>
 #include <string>
 #include <memory>
+#include <array>
+#include <thread>
 
+// Blog: https://blog.csdn.net/fengbingchun/article/details/135888509
+namespace {
+
+class S {
+public:
+	void f()
+	{
+		int i{ 0 };
+
+		auto l1 = [=] { use(i, x); }; // captures a copy of i and a copy of the this pointer
+		i = 1; x = 1; l1();           // calls use(0, 1), as if i by copy and x by reference
+
+		auto l2 = [i, this] { use(i, x); }; // same as above, made explicit
+		i = 2; x = 2; l2();					// calls use(1, 2), as if i by copy and x by reference
+
+		auto l3 = [&] { use(i, x); }; // captures i by reference and a copy of the this pointer
+		i = 3; x = 2; l3();           // calls use(3, 2), as if i and x are both by reference
+
+		auto l4 = [i, *this] { use(i, x); }; // makes a copy of *this, including a copy of x
+		i = 4; x = 4; l4();					 // calls use(3, 2), as if i and x are both by copy
+	}
+
+private:
+	int x{ 0 };
+
+	void use(int i, int x) const { std::cout << "i = " << i << ", x = " << x << "\n"; }
+};
+
+struct MyObj {
+	int value{ 123 };
+
+	auto getValueCopy() {
+		return [*this] { return value; }; // C++17
+	}
+
+	auto getValueRef() {
+		return [this] { return value; }; // C++11
+	}
+};
+
+class Data {
+private:
+	std::string name;
+
+public:
+	Data(const std::string& s) : name(s) { }
+
+	auto startThreadWithCopyOfThis() const {
+		// 开启并返回新线程,新线程将在3秒后使用this:
+		std::thread t([*this] {
+			using namespace std::literals;
+			std::this_thread::sleep_for(3s);
+			std::cout << "name: " << name << "\n";
+		});
+
+		return t;
+	}
+};
+
+
+constexpr int addOne(int n) { return [n] { return n + 1; }(); } // reference: https://stackoverflow.com/questions/12662688/parentheses-at-the-end-of-a-c11-lambda-expression
+constexpr auto addOne2(int n) { return [n] { return n + 1; }; } // 注:上下两条语句的区别
+constexpr auto addOne3 = [](int n) { return n + 1; };
+
+auto squared = [](auto val) { // 自从C++17起隐式constexpr
+	constexpr int x{ 10 };
+	return val * x;
+};
+
+// 为了确定一个lambda是否能用于编译期,你可以将它声明为constexpr
+auto squared3 = [](auto val) constexpr { return val * val; }; // 自从C++17起
+auto squared3i = [](int val) constexpr -> int { return val * val; };
+
+// 自从C++17起,如果lambda被显式或隐式地定义为constexpr,那么生成的函数调用运算符将自动是constexpr
+auto squared1 = [](auto val) constexpr { return val * val; }; // 编译期lambda调用
+constexpr auto squared2 = [](auto val) { return val * val; }; // 编译期初始化squared2
+constexpr auto squared4 = [](auto val) constexpr { return val * val; };
+
+} // namespace
+
+int test_lambda_17_constexpr()
+{
+	// 如果函数调用operator(或generic lambda的特化)为constexpr,则此函数为constexpr
+	auto Fwd = [](int(*fp)(int), auto a) { return fp(a); };
+	auto C = [](auto a) { return a; };
+	static_assert(Fwd(C, 3) == 3);
+
+
+	// reference: https://github.com/AnthonyCalandra/modern-cpp-features#constexpr-lambda
+	auto identity = [](int n) constexpr { return n; };
+	static_assert(identity(123) == 123);
+
+	constexpr auto add = [](int x, int y) {
+		auto L = [=] { return x; };
+		auto R = [=] { return y; };
+		return [=] { return L() + R(); };
+	};
+	static_assert(add(1, 2)() == 3);
+
+
+	static_assert(addOne(1) == 2);
+	static_assert(addOne2(1)() == 2);
+	std::cout << "addOne:" << addOne(1) << ", addOne2: " << addOne2(1)() << "\n"; // addOne:2, addOne2: 2
+	static_assert(addOne3(1) == 2);
+
+	int v = [](int x, int y) { return x + y; }(5, 4);
+	std::cout << "v: " << v << "\n"; // v: 9
+
+	// 将一个lambda表达式嵌套在另一个lambda表达式中
+	int v2 = [](int x) { return [](int y) { return y * 2; }(x)+3; }(5);
+	std::cout << "v2: " << v2 << "\n"; // v2: 13
+
+
+	// reference: https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170
+	// 当函数对象需要去修改通过副本传入的变量时,表达式必须用mutable修饰
+	int m = 0, n = 0;
+	[&, n](int a) mutable { m = ++n + a; }(4);
+	std::cout << "m:" << m << ", n:" << n << "\n"; // m:5, n:0
+
+
+	// 如果lambda的结果满足constexpr函数的要求,则它是隐式constexpr
+	auto answer = [](int n) {
+		return 32 + n;
+	};
+
+	constexpr int response = answer(10);
+	static_assert(response == 42);
+
+	// reference: https://github.com/MeouSker77/Cpp17/blob/master/markdown/src/ch06.md
+	std::array<int, squared(5)> arr;  // 自从C++17起 => std::array<int, 50>
+
+
+	// 如果lambda隐式或显式为constexpr,则转换为函数指针会生成constexpr函数
+	auto Increment = [](int n) {
+		return n + 1;
+	};
+
+	constexpr int(*inc)(int) = Increment;
+
+	return 0;
+}
+
+int test_lambda_17_this()
+{
+	//reference: https://en.cppreference.com/w/cpp/language/lambda
+	S s;
+	s.f();
+
+
+	// reference: https://github.com/AnthonyCalandra/modern-cpp-features#lambda-capture-this-by-value
+	MyObj mo;
+	auto valueCopy = mo.getValueCopy();
+	auto valueRef = mo.getValueRef();
+	std::cout << "valueCopy: " << valueCopy() << ", valueRef: " << valueRef() << "\n"; // valueCopy: 123, valueRef: 123
+
+	mo.value = 321;
+	valueCopy();
+	valueRef();
+	std::cout << "valueCopy: " << valueCopy() << ", valueRef: " << valueRef() << "\n"; // valueCopy: 123, valueRef: 321
+
+
+	std::thread t;
+	{
+		Data d{ "c1" };
+		t = d.startThreadWithCopyOfThis();
+	}   // d不再有效
+	t.join();
+
+	return 0;
+}
+
+
+/////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/130659435
 namespace {
 
