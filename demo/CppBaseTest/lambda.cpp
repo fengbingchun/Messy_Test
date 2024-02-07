@@ -8,6 +8,48 @@
 #include <array>
 #include <thread>
 
+// Blog: https://blog.csdn.net/fengbingchun/article/details/136067536
+namespace {
+
+std::function<void(void)> closureWrapper1()
+{
+	int x = 10;
+	return [&x]() { std::cout << "Value in the closure: " << x++ << std::endl; };
+	// return [x]() mutable { std::cout << "Value in the closure: " << x++ << std::endl; };
+}
+
+} // namespace
+
+int test_closure()
+{
+	// reference: https://pranayaggarwal25.medium.com/lambdas-closures-c-d5f16211de9a
+	int fudgeFactor{ 6 };
+
+	// "="右侧的表达式是lambda表达式,该表达式创建的运行时对象是闭包
+	// f本身不是闭包,它是闭包的副本
+	// 将闭包复制到f的过程可以优化为移动(move),但这并不能改变f本身不是闭包的事实
+	auto f = [&](int x, int y) { return fudgeFactor * (x + y); };
+
+	// 实际的闭包对象是一个临时对象,通常会在语句末尾被销毁,除非将其绑定到转发引用(forwarding reference)(也称为通用引用(universal reference))
+	// 或左值引用到常量(lvalue-reference-to-const)
+	auto&& rrefToClosure = [&](int x, int y) { return fudgeFactor * (x + y); };
+	const auto& lrefToConstToClosure = [&](int x, int y) { return fudgeFactor * (x + y); };
+
+
+	int x = 10;
+	auto func0 = [&x]() { x += 1; std::cout << "Value in the closure: " << x << std::endl; };
+
+	// func0是由其后编写的lambda表达式创建的闭包的副本
+	func0();  // Value in the closure: 11
+
+	// func1不是闭包而是一个包装闭包的std::function包装对象
+	std::function<void(void)> func1 = closureWrapper1();
+	func1();  // Value in the closure: 32758 // prints garbage value + 1 =~ garbage value
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/135888509
 namespace {
 
