@@ -1,4 +1,4 @@
-#include "funset.hpp"
+﻿#include "funset.hpp"
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
@@ -24,6 +24,52 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #endif
+
+/////////////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/136154655
+int test_variables_init()
+{
+	int val; // no initializer(default initialization): 在大多数情况下,默认初始化不执行初始化,并且使变量具有不确定的值
+
+
+	// 1.using "="
+	int val1 = 1; // copy initialization: 这种初始化形式是从C继承的
+	std::cout << "val1:" << val1 << "\n"; // val1:1
+
+
+	// 2.constructor initialization: parentheses
+	int val2(2); // direct initialization
+	std::cout << "val2:" << val2 << "\n"; // val2:2
+
+	int val3 = (3);
+	std::cout << "val3:" << val3 << "\n"; // val3:3
+
+	// 构造函数初始化和旧的普通初始化方式(=)的区别在于,它总是返回括号中的最后一个值,无论它的大小或符号是什么
+	int val4 = (4, 5, 6, 7, -8);
+	std::cout << "val4:" << val4 << "\n"; // val4:-8
+
+
+	// 3.uniform initialization: curly braces
+	int val5{ 9 }; // direct list initialization
+	std::cout << "val5:" << val5 << "\n"; // val5:9
+
+	int val6 = { 10 }; // copy list initialization
+	std::cout << "val6:" << val6 << "\n"; // val6:10
+
+	// 与构造函数初始化不同,统一初始化方法只能采用大括号中的一个值,提供多个值将返回编译错误
+	//int val7 = { 11, 12 }; // error C2440: "初始化": 无法从"initializer list"转换为"int"
+
+	int val8{}; // value initialization
+	int val12{ 0 }; // explicit initialization to value 0
+	std::cout << "val8:" << val8 << "\n"; // val8:0
+
+	// 列表初始化中的"缩小转换(narrowing conversions)"格式不正确
+	//int val9{ 4.5 }; // error C2397: 从"double"转换到"int"需要收缩转换
+	int val10 = 4.5; // warning C4244: "初始化": 从"double"转换到"int",可能丢失数据
+	int val11(4.5); // warning C4244: "初始化": 从"double"转换到"int",可能丢失数据
+
+	return 0;
+}
 
 /////////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/124559175
