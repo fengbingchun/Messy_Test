@@ -9,6 +9,7 @@ namespace internal {
 
 } // namesapce common
 
+int test_attributes();
 int test_variables_init();
 int test_namespace_detail_internal();
 int test_load_big_file();

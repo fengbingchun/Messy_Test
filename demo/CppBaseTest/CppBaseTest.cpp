@@ -3,7 +3,7 @@
 
 int main()
 {
-	if (auto ret = test_variables_init(); ret == 0)
+	if (auto ret = test_attributes(); ret == 0)
 		std::cout << "========== test success ==========\n";
 	else
 		std::cerr << "########## test fail ##########\n";

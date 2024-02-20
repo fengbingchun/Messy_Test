@@ -26,6 +26,62 @@
 #endif
 
 /////////////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/136191874
+namespace {
+
+[[noreturn]] void fun1() { throw 1; }
+
+[[deprecated("Susceptible to buffer overflow")]] void set_addr(char* addr) { std::cout << "addr:" << addr << "\n"; }
+//[[deprecated]] void set_addr(char* addr) { std::cout << "addr:" << addr << "\n"; }
+
+[[nodiscard]] int fun2() { return 0; }
+
+// the attributes will work on their respective
+[[msvc::deprecated]] [[gnu::deprecated]] void set_name(char* name) { } // warning C5030: 未识别属性"msvc::deprecated"
+																	   // warning C5030: 未识别属性"gnu::deprecated"
+
+} // namespace
+
+int test_attributes()
+{
+	// standard attributes
+	// 1.noreturn: 指示函数在完成后不会将控制流返回给调用函数
+	try {
+		fun1();
+	} catch (int i) {
+		std::cout << "value:" << i << "\n";
+	}
+
+	// 2.deprecated: 表示使用此属性声明的名称或实体已被弃用,由于某种原因不鼓励使用
+	//set_addr("https://blog.csdn.net/fengbingchun/"); // error C4996: 'anonymous-namespace'::set_addr': Susceptible to buffer overflow
+
+	// 3.nodiscard: 鼓励编译器在返回值被丢弃时发出警告
+	fun2(); // warning C4834: 放弃具有 "nodiscard" 属性的函数的返回值
+
+	// 4.maybe_unused: 抑制对未使用的实体发出警告
+	[[maybe_unused]] int var{ 0 }; //
+
+	// 5.fallthrough: 表示switch语句中前一个case标签的失败是故意的(缺少break语句),不应该由警告失败的编译器来诊断
+	int place{ 1 };
+	switch (place) {
+		case 1:
+			std::cout << "very ";
+			[[fallthrough]];
+		case 2:
+			std::cout << "well\n";
+			break;
+		default:
+			std::cout << "OK\n";
+			break;
+	}
+
+	// 在C++11或14中,如果编译器无法识别某个属性,则会产生错误并阻止代码编译.大多数支持C++17的编译器现在都会忽略未定义的属性,并在遇到时生成警告
+	[[zzzzz]] auto str{ "beijing" }; // warning C5030: 未识别属性"zzzzz"
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/136154655
 int test_variables_init()
 {
