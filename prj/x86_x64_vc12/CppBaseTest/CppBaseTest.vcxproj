@@ -131,6 +131,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\cplusplus_api_design.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\cplusplus_secure_coding.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\ctad.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\c_head.c" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\data_type_convert.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\decltype.cpp" />
@@ -288,6 +289,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\const_pointer.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\cplusplus_api_design.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\cplusplus_secure_coding.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\ctad.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\c_head.h" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\data_type_convert.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\decltype.hpp" />

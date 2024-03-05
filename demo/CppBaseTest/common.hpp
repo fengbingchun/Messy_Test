@@ -151,5 +151,6 @@
 #include "structured_binding.hpp"
 #include "if.hpp"
 #include "memory_locking.hpp"
+#include "ctad.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
