@@ -3,7 +3,7 @@
 
 int main()
 {
-	if (auto ret = test_ctad(); ret == 0)
+	if (auto ret = test_template_argument_auto(); ret == 0)
 		std::cout << "========== test success ==========\n";
 	else
 		std::cerr << "########## test fail ##########\n";

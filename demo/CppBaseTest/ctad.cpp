@@ -4,7 +4,110 @@
 #include <vector>
 #include <complex>
 #include <mutex>
+#include <array>
 
+// Blog: https://blog.csdn.net/fengbingchun/article/details/136631451
+namespace {
+
+template<int num> // declare a non-type template parameter of type int named num
+void print() { std::cout << "num: " << num << "\n"; }
+
+// C++17之前
+template <typename Type, Type value>
+constexpr Type constant = value;
+constexpr auto const int_constant_88 = constant<int, 88>;
+constexpr auto const char_constant_y = constant<char, 'Y'>;
+
+// C++17
+template <auto value> // 不再需要明确地拼写类型
+constexpr auto constant2 = value;
+constexpr auto const int_constant2_88 = constant2<88>;
+constexpr auto const char_constant2_y = constant2<'Y'>;
+
+template<auto value>
+void print_value() { std::cout << "value: " << value << "\n"; }
+
+template<const auto* P> // 可以修饰auto, 例如,可以确保参数类型必须是个指针
+struct S {};
+
+// reference: https://github.com/MeouSker77/Cpp17/blob/master/markdown/src/ch13.md
+// 定义一个既可能是字符也可能是字符串的模板参数
+template<auto Sep = ' ', typename First, typename... Args>
+void print(const First& first, const Args&... args)
+{
+	std::cout << first;
+	auto outWithSep = [](const auto& arg) {
+		std::cout << Sep << arg;
+	};
+	(..., outWithSep(args));
+	std::cout << '\n';
+}
+
+// 定义编译期常量
+template<auto v>
+struct constant3
+{
+	static constexpr auto value = v;
+};
+
+using i = constant3<88>;
+using c = constant3<'Y'>;
+using b = constant3<true>;
+
+// 使用auto作为变量模板的参数
+template<typename T, auto N> std::array<T, N> arr;
+
+void print_arr()
+{
+	std::cout << "arr<int, 5>:  ";
+	for (const auto& elem : arr<int, 5>) {
+		std::cout << elem << ' ';
+	}
+
+	std::cout << "\narr<int, 5u>: ";
+	for (const auto& elem : arr<int, 5u>) {
+		std::cout << elem << ' ';
+	}
+	std::cout << '\n';
+}
+
+} // namespace
+
+int test_template_argument_auto()
+{
+	print<88>(); // num: 88
+
+
+	std::cout << "constant: " << int_constant_88 << ", " << char_constant_y << "\n"; // constant: 88, Y
+	std::cout << "constant2: " << int_constant2_88 << ", " << char_constant2_y << "\n"; // constant2: 88, Y
+
+	print_value<88>(); // value: 88
+	print_value<'Y'>(); // value: Y
+
+
+	const std::string s{ "world" };
+	print(7.5, "hello", s); // 7.5 hello world
+
+	print<'-'>(7.5, "hello", s); // 7.5-hello-world
+	print<-11>(7.5, "hello", s); // 7.5-11hello-11world
+
+	static const char sep[] = ", ";
+	print<sep>(7.5, "hello", s); // 7.5, hello, world
+
+	std::cout << "i: " << i::value << ", c: " << c::value << ", b: " << b::value << "\n"; // i: 88, c: Y, b: 1
+
+
+	arr<int, 5>[0] = 17;
+	arr<int, 5>[3] = 42;
+	arr<int, 5u>[1] = 11;
+	arr<int, 5u>[3] = 33;
+	print_arr(); // arr<int, 5>:  17 0 0 42 0
+				 // arr<int, 5u>: 0 11 0 33 0
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/136484544
 namespace {
 
