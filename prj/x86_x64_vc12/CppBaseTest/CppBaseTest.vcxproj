@@ -120,6 +120,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\bind.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\byte.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\call_once.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\charconv.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\chrono.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\cmath.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\bind.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\byte.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\call_once.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\charconv.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\chrono.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\class.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\cmath.hpp" />
