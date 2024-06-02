@@ -367,7 +367,7 @@ void test_secure_coding_3_6()
 #endif
 }
 
-char* glob;
+char* glob = nullptr;
 
 void test(void)
 {
@@ -377,7 +377,7 @@ void test(void)
 int test_secure_coding_3_8()
 {
 	atexit(test);
-	glob = "Exiting.\n";
+	glob = (char*)"Exiting.\n";
 
 	return 0;
 }
@@ -1190,7 +1190,7 @@ void test_integer_security_wrap_around2()
 {
 { // 展示了一个无符号整数回绕导致的实际漏洞的例子
 	size_t len = 1;
-	char* src = "comment";
+	const char* src = "comment";
 
 	size_t size;
 	size = len - 2;
@@ -1244,7 +1244,7 @@ void test_integer_security_conversion_truncation()
 }
 
 { // 由整数截断错误导致的缓冲区溢出漏洞
-	char* argv[3] = {"", "abc", "123"};
+	const char* argv[3] = {"", "abc", "123"};
 	unsigned short int total;
 	// 攻击者可能会提供两个总长度无法用unsigned short整数total表示的字符做参数,这样,总长度值将会用比结果
 	// 类型所能表示的最大值大1的数取模截断,函数strlen返回一个无符号整数类型size_t的结果,对于大多数实现而言,
@@ -1284,7 +1284,7 @@ int test_secure_coding_5_5()
 
 void test_integer_security_type_selection()
 {
-	char* argv = "";
+	const char* argv = "";
 	// 次优的:首先,大小不会是负值,因此,没有必要使用一个有符号整数类型;其次,short整数类型对于可能的对象
 	// 大小可能不具有足够的范围
 	short total1 = strlen(argv) + 1;
@@ -1406,7 +1406,7 @@ int test_secure_coding_6_1()
 void test_format_output_buffer_overflow()
 {
 {
-	char* user = "abcd"; // 用户提供的字符串(可能是恶意的数据)
+	const char* user = "abcd"; // 用户提供的字符串(可能是恶意的数据)
 	char buffer[512];
 	// 用户提供的字符串写入一个固定长度的缓冲区
 	// 任何长度大于495字节的字符串都会导致越界写(512字节-16个字符字节-1个空字节)
@@ -1415,7 +1415,7 @@ void test_format_output_buffer_overflow()
 }
 
 {
-	char* user = "%497d\x3c\xd3\xff\xbf<nops><shellcode>";
+	const char* user = "%497d\x3c\xd3\xff\xbf<nops><shellcode>";
 	fprintf(stdout, "user: %s\n", user);
 	char outbuf[512], buffer[512];
 
@@ -1505,7 +1505,7 @@ void test_format_output_dynamic_format_string()
 void test_format_output_limit_bytes_number()
 {
 	char buffer[512];
-	char* user = "abc";
+	const char* user = "abc";
 	sprintf(buffer, "Wrong command: %s\n", user); // 不推荐
 	// 精度域指定了针对%s转换所要写入的最大字节数
 	sprintf(buffer, "Wrong command: %.495s\n", user); // 推荐

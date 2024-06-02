@@ -434,7 +434,7 @@ int test_string_func()
 		int length;
 
 		std::string str = "Test string";
-		char* cstr = "Test string";
+		const char* cstr = "Test string";
 
 		if (str.length() == std::strlen(cstr)) {
 			std::cout << "str and cstr have the same length.\n";

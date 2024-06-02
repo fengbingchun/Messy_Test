@@ -25,7 +25,7 @@ class Student1 {
 public:
 	// C++保证在Student1的构造函数体执行之前，所有的成员对象已经创建完成，此处即string型的name对象。
 	// 既然我们没有显示告诉编译器如何构造它，编译器就插入了对string默认构造函数的调用。该调用在Student1的构造函数体执行之前进行。
-	Student1(char* nm) { name = nm; }
+	Student1(const char* nm) { name = nm; }
 private:
 	std::string name;
 };
@@ -34,7 +34,7 @@ class Student2 {
 public:
 	// 通过在Student2的构造函数初始化列表中显示指明string构造函数，可以避免Student1中的无效计算
 	// 由于我们明确告诉编译器使用哪个string构造函数，编译器将不再隐式地调用string默认构造函数。因此我们实现了一步完成string成员对象的构造
-	Student2(char* nm) : name(nm) {}
+	Student2(const char* nm) : name(nm) {}
 private:
 	std::string name;
 };

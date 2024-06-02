@@ -26,7 +26,7 @@ int test_runtime_error_1()
 #ifdef _MSC_VER
 class DivideByZeroException : public std::runtime_error {
 public:
-	DivideByZeroException::DivideByZeroException() : runtime_error("attempted to divide by zero") {}
+	DivideByZeroException() : runtime_error("attempted to divide by zero") {}
 };
 
 static double quotient(int numerator, int denominator)

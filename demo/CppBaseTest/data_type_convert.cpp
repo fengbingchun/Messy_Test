@@ -55,19 +55,19 @@ int test_data_type_convert()
 	std::cout << tmp6 << std::endl;
 
 	// 7--> char* to int
-	char* pch7 = "444";
+	const char* pch7 = "444";
 	int tmp7;
 	tmp7 = atoi(pch7);
 	std::cout << tmp7 << std::endl;
 
 	// 8--> char* to float
-	char* pch8 = "55.5";
+	const char* pch8 = "55.5";
 	float tmp8;
 	tmp8 = (float)atof(pch8);
 	std::cout << tmp8 << std::endl;
 
 	// 9--> char* to double
-	char* pch9 = "66.666";
+	const char* pch9 = "66.666";
 	double tmp9;
 	tmp9 = atof(pch9);
 	std::cout << tmp9 << std::endl;
@@ -93,7 +93,7 @@ int test_data_type_convert()
 	std::cout << arr12 << std::endl;
 
 	// 13--> char* to string
-	char* pch13 = "hello, world";
+	const char* pch13 = "hello, world";
 	std::string str13;
 	str13 = std::string(pch13);
 	std::cout << str13 << std::endl;

@@ -34,7 +34,7 @@ int test_variable_arguments_macro_1()
 #define STD_ERR stderr
 
 #define LOG_MESSAGE(prio, stream, msg, ...) do { \
-	char *str; \
+	const char *str = nullptr; \
 	if (prio == INFO) \
 		str = "INFO"; \
 	else if (prio == ERR) \
@@ -45,7 +45,7 @@ int test_variable_arguments_macro_1()
 
 int test_variable_arguments_macro_2()
 {
-	char *s = "Hello";
+	const char *s = "Hello";
 
 	/* display normal message */
 	LOG_MESSAGE(ERR, STD_ERR, "Failed to open file");
@@ -127,7 +127,7 @@ int test_variable_arguments_function_2()
 
 //////////////////////////////////////////////
 // reference: https://stackoverflow.com/questions/41400/how-to-wrap-a-function-with-variable-length-arguments
-void myprintf(char* fmt, ...)
+void myprintf(const char* fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
@@ -160,7 +160,7 @@ int test_variable_arguments_function_3()
 //  list of arguments. Each argument corresponds to
 //  a format character in the format string to which
 // the szTypes parameter points
-void ShowVar(char* szTypes, ...)
+void ShowVar(const char* szTypes, ...)
 {
 	va_list vl;
 	int i;

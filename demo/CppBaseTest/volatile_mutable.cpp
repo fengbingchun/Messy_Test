@@ -187,7 +187,7 @@ int test_mutable_3()
 
 	class Customer {
 	public:
-		Customer(char* s, char* m, int a, int p)
+		Customer(const char* s, const char* m, int a, int p)
 		{
 			strcpy(name, s);
 			strcpy(placedorder, m);
@@ -195,7 +195,7 @@ int test_mutable_3()
 			bill = p;
 		}
 
-		void changePlacedOrder(char* p) const { strcpy(placedorder, p); }
+		void changePlacedOrder(const char* p) const { strcpy(placedorder, p); }
 		void changeBill(int s) const { bill = s; }
 
 		void display() const

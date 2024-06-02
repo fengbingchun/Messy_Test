@@ -7,7 +7,7 @@
 int test_literal_17_1()
 {
 	char c1 = u8'A'; // C++17
-	char c2[2] = u8"A";
+	const char8_t c2[2] = u8"A";
 
 	char u1 = 'A';          // 'A'
 	char u2 = '\101';       // octal, 'A'

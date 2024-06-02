@@ -93,7 +93,7 @@ bool Trace2::traceIsActive = false; // 默认设置为false关闭跟踪;可以�
 
 int addOne2(int x)
 {
-	char* name = "addOne2";
+	const char* name = "addOne2";
 	Trace2 t(name);
 
 	return x+1;
@@ -140,7 +140,7 @@ bool Trace3::traceIsActive = false; // 默认设置为false关闭跟踪;可以�
 
 int addOne3(int x)
 {
-	char* name = "addOne3";
+	const char* name = "addOne3";
 	Trace3 t(name);
 
 	return x+1;

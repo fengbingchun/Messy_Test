@@ -1323,11 +1323,11 @@ void f36()
 	//std::this_thread::sleep_for(std::chrono::seconds(1)); // C++11
 }
 
-template<typename F, typename... Ts>
-inline std::future<typename std::result_of<F(Ts...)>::type> reallyAsync(F&& f, Ts&&... params) // C++11, return future for asynchronous call to f(params...)
-{
-	return std::async(std::launch::async, std::forward<F>(f), std::forward<Ts>(params)...);
-}
+//template<typename F, typename... Ts> // std::result_of: since C++11, deprecated in C++17, removed in C++20
+//inline std::future<typename std::result_of<F(Ts...)>::type> reallyAsync(F&& f, Ts&&... params) // C++11, return future for asynchronous call to f(params...)
+//{
+//	return std::async(std::launch::async, std::forward<F>(f), std::forward<Ts>(params)...);
+//}
 
 template<typename F, typename... Ts>
 inline auto reallyAsync2(F&& f, Ts&&... params) // C++14
@@ -1355,7 +1355,7 @@ int test_item_36()
 
 	auto fut3 = std::async(std::launch::async, f36); // launch f asynchronously
 
-	auto fut4 = reallyAsync(f36); // 以异步方式运行f，如果std::async会抛出异常reallyAsync也会抛出异常
+	//auto fut4 = reallyAsync(f36); // 以异步方式运行f，如果std::async会抛出异常reallyAsync也会抛出异常
 	auto fut5 = reallyAsync2(f36);
 
 	return 0;

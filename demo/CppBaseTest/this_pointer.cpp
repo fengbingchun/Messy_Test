@@ -3,7 +3,7 @@
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/51228177
 
-Buf::Buf(char* szBuffer, size_t sizeOfBuffer)
+Buf::Buf(const char* szBuffer, size_t sizeOfBuffer)
 {
 	sizeOfBuffer++; // account for a NULL terminator
 

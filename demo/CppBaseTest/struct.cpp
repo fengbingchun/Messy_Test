@@ -132,7 +132,7 @@ int test_struct3()
 // reference: http://www.java2s.com/Code/Cpp/Class/Constructoranddestructorinsideastruct.htm
 struct StringClass
 {
-	StringClass(char *ptr);
+	StringClass(const char *ptr);
 	~StringClass();
 	void show();
 private:
@@ -140,7 +140,7 @@ private:
 	int len;
 };
 
-StringClass::StringClass(char *ptr)
+StringClass::StringClass(const char *ptr)
 {
 	len = strlen(ptr);
 	p = (char *)malloc(len + 1);

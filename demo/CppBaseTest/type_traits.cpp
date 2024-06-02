@@ -192,9 +192,9 @@ int test_type_traits_type_traits()
 	//static_assert(std::is_literal_type<J>::value == false, "");
 
 	// std::is_pod: T是不是POD(Plain Old Data)类型，C语言支持的数据类型，若是类，它需要是trial(普通的)和standard-layout
-	static_assert(std::is_pod<A>::value == true, "");
-	static_assert(std::is_pod<G>::value == false, "");
-	static_assert(std::is_pod<J>::value == false, "");
+	//static_assert(std::is_pod<A>::value == true, ""); // std::is_pod: since C++11,deprecated in C++20
+	//static_assert(std::is_pod<G>::value == false, "");
+	//static_assert(std::is_pod<J>::value == false, "");
 
 	// std::is_polymorphic: T是不是多态类
 	static_assert(std::is_polymorphic<A>::value == false, "");

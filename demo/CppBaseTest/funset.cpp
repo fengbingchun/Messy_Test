@@ -132,15 +132,15 @@ int test_variables_init()
 namespace common {
 
 namespace internal {
-	char* name() { return "spring"; }
+	const char* name() { return "spring"; }
 	const char* city = "BeiJing";
 } // namespace internal
 
 namespace detail {
 	class Addr {
 	public:
-		static char* csdn() { return "https://blog.csdn.net/fengbingchun"; }
-		static char* github() { return "https://github.com/fengbingchun"; }
+		static const char* csdn() { return "https://blog.csdn.net/fengbingchun"; }
+		static const char* github() { return "https://github.com/fengbingchun"; }
 
 		Addr() = delete;
 	}; // class Addr

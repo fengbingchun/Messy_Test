@@ -38,7 +38,7 @@ private:
 // reference: https://msdn.microsoft.com/en-us/library/y0dddwwd.aspx
 class Buf {
 public:
-	Buf(char* szBuffer, size_t sizeOfBuffer);
+	Buf(const char* szBuffer, size_t sizeOfBuffer);
 	Buf& operator=(const Buf &);
 	void Display();
 

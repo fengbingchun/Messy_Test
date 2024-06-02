@@ -537,9 +537,9 @@ int test_binary_search_tree()
 
 	fprintf(stdout, "\nsave tree operation:\n");
 #ifdef _MSC_VER
-	char* name = "../../../testdata/binary_search_tree.model";
+	const char* name = "../../../testdata/binary_search_tree.model";
 #else
-	char* name = "testdata/binary_search_tree.model";
+	const char* name = "testdata/binary_search_tree.model";
 #endif
 	bstree.SaveTree(name);
 

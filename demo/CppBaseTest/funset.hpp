@@ -4,7 +4,7 @@
 namespace common {
 
 namespace internal {
-	char* name();
+	const char* name();
 } // namespace internal
 
 } // namesapce common

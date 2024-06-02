@@ -26,7 +26,7 @@ int test_optional_init()
 	if (var3 > std::nullopt)
 		std::cout << "var3 > std::nullopt\n"; // var3 > std::nullopt
 
-	auto var4 = std::make_optional<std::vector<char*>>({ "China", "Beijing", "Haidian" });
+	auto var4 = std::make_optional<std::vector<const char*>>({ "China", "Beijing", "Haidian" });
 	for (const auto& v : *var4)
 		std::cout << " " << v; //  China Beijing Haidian
 	std::cout << "\n";
