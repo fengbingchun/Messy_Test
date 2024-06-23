@@ -125,6 +125,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\class.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\cmath.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\coding_optimizations.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\comparison.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constexpr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\extern.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\extern2.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\extern_c.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\feature_test_macros.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\filesystem.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\fill.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\final.cpp" />
@@ -286,6 +288,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\cmath.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\coding_optimizations.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\common.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\comparison.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constexpr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.hpp" />
@@ -313,6 +316,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\extern.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\extern2.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\extern_c.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\feature_test_macros.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\filesystem.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\fill.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\final.hpp" />

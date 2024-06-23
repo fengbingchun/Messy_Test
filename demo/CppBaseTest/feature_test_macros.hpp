@@ -1,0 +1,6 @@
+#ifndef FBC_MESSY_TEST_FEATURE_TEST_MACROS_HPP_
+#define FBC_MESSY_TEST_FEATURE_TEST_MACROS_HPP_
+
+int test_feature_test_macros();
+
+#endif // FBC_MESSY_TEST_FEATURE_TEST_MACROS_HPP_
