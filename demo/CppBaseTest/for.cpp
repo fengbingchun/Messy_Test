@@ -1,6 +1,35 @@
 #include "for.hpp"
 #include <iostream>
 #include <vector>
+#include <map>
+
+// Blog: https://blog.csdn.net/fengbingchun/article/details/140225550
+int test_for_20()
+{
+	const std::vector<int> vec{ 1,2,3,4,5 };
+	// C++11
+	for (const auto& i : vec)
+		std::cout << i << ", ";
+	std::cout << std::endl;
+
+	// C++17
+	std::map<int, int> m{ {1,-1}, {2,-2}, {3,-3} };
+	for (const auto& [key, value] : m)
+		std::cout << key << "," << value << "; ";
+	std::cout << std::endl;
+
+	// C++20
+	for (auto n = vec.size(), m = static_cast<size_t>(0); const auto & i : vec)
+		std::cout << --n + i << "," << ++m << "; ";
+	std::cout << std::endl;
+
+	for (const auto vec = std::vector{ -1,-2,-3,-4,-5 }; const auto& i : vec)
+		std::cout << i << ", ";
+	std::cout << std::endl;
+
+
+	return 0;
+}
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/52245142
 

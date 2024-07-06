@@ -156,5 +156,6 @@
 #include "charconv.hpp"
 #include "feature_test_macros.hpp"
 #include "comparison.hpp"
+#include "aggregate_initialization.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
