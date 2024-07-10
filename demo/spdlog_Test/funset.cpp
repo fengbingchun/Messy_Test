@@ -2,6 +2,10 @@
 #include <iostream>
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/basic_file_sink.h"
+#include "spdlog/sinks/rotating_file_sink.h"
+#include "spdlog/sinks/daily_file_sink.h"
 
 // Blog: http://blog.csdn.net/fengbingchun/article/details/78347105
 
@@ -16,7 +20,7 @@ int test_spdlog_console()
 		console->error("Some error message with arg{}..", 1);
 
 		// Conditional logging example
-		console->info_if(true, "Welcome to spdlog conditional logging!");
+		//console->info_if(true, "Welcome to spdlog conditional logging!");
 
 		// Formatting examples
 		console->warn("Easy padding in numbers like {:08d}", 12);
@@ -25,7 +29,7 @@ int test_spdlog_console()
 		console->info("Positional args are {1} {0}..", "too", "supported");
 		console->info("{:<30}", "left aligned");
 
-		SPDLOG_DEBUG_IF(console, true, "This is a debug log");
+		//SPDLOG_DEBUG_IF(console, true, "This is a debug log");
 
 		spd::get("console")->info("loggers can be retrieved from a global registry using the spdlog::get(logger_name) function");
 
@@ -70,7 +74,7 @@ int test_spdlog_console()
 		// define SPDLOG_DEBUG_ON or SPDLOG_TRACE_ON
 		SPDLOG_TRACE(console, "Enabled only #ifdef SPDLOG_TRACE_ON..{} ,{}", 1, 3.23);
 		SPDLOG_DEBUG(console, "Enabled only #ifdef SPDLOG_DEBUG_ON.. {} ,{}", 1, 3.23);
-		SPDLOG_DEBUG_IF(console, true, "This is a debug log");
+		//SPDLOG_DEBUG_IF(console, true, "This is a debug log");
 
 		// Apply a function on all registered loggers
 		spd::apply_all([&](std::shared_ptr<spdlog::logger> l) { l->info("End of example."); });
@@ -92,7 +96,7 @@ int test_spdlog_async()
 	// Asynchronous logging is very fast..
 	// Just call spdlog::set_async_mode(q_size) and all created loggers from now on will be asynchronous..
 	size_t q_size = 4096; //queue size must be power of 2
-	spdlog::set_async_mode(q_size);
+	//spdlog::set_async_mode(q_size);
 #ifdef __linux__
 	auto async_file = spd::daily_logger_st("async_file_logger", "testdata/async_log");
 #else
@@ -119,11 +123,15 @@ int test_spdlog_syslog()
 
 // user defined types logging by implementing operator<<
 struct my_type {
-	int i;
-	template<typename OStream>
-	friend OStream& operator<<(OStream& os, const my_type& c)
-	{
-		return os << "[my_type i=" << c.i << "]";
+	int i = 0;
+	explicit my_type(int i)
+		: i(i) {};
+};
+
+template <>
+struct fmt::formatter<my_type> : fmt::formatter<std::string> {
+	auto format(my_type my, format_context& ctx) -> decltype(ctx.out()) {
+		return fmt::format_to(ctx.out(), "[my_type i={}]", my.i);
 	}
 };
 
@@ -155,5 +163,3 @@ int test_spdlog_err_handler()
 
 	return 0;
 }
-
-

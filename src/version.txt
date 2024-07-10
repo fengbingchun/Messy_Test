@@ -4,9 +4,9 @@
 	date: 2023.01.18
 	url: https://github.com/google/googletest/releases/tag/v1.13.0
 2. spdlog:
-	version: 0.14.0
-	commit: 4fba14c
-	date: 2017.08.20
+	version: 1.14.1
+	commit: 27cb4c7
+	date: 2024.04.30
 	url: https://github.com/gabime/spdlog/releases
 3. cJSON:
 	version: 1.7.7

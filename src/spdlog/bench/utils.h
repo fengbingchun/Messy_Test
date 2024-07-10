@@ -5,16 +5,14 @@
 
 #pragma once
 
-#include <sstream>
 #include <iomanip>
 #include <locale>
+#include <sstream>
 
-namespace utils
-{
+namespace utils {
 
-template<typename T>
-inline std::string format(const T& value)
-{
+template <typename T>
+inline std::string format(const T &value) {
     static std::locale loc("");
     std::stringstream ss;
     ss.imbue(loc);
@@ -22,9 +20,8 @@ inline std::string format(const T& value)
     return ss.str();
 }
 
-template<>
-inline std::string format(const double & value)
-{
+template <>
+inline std::string format(const double &value) {
     static std::locale loc("");
     std::stringstream ss;
     ss.imbue(loc);
@@ -32,4 +29,4 @@ inline std::string format(const double & value)
     return ss.str();
 }
 
-}
+}  // namespace utils
