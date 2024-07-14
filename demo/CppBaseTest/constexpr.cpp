@@ -1,6 +1,80 @@
 ﻿#include "constexpr.hpp"
 #include <stdlib.h>
 #include <iostream>
+#include <string>
+
+// Blog: https://blog.csdn.net/fengbingchun/article/details/140415144
+namespace {
+
+//constexpr int fib(int n) // ok
+consteval int fib(int n)
+{
+	if (n <= 1)
+		return n;
+
+	return fib(n - 1) + fib(n - 2);
+}
+
+consteval int f() { return 42; }
+consteval auto g() { return &f; }
+consteval int h(int (*p)() = g()) { return p(); }
+constexpr int r = h();
+
+} // namespace
+
+int test_consteval()
+{
+	constexpr int v{ 10 }; // note: difference between with constexpr and without constexpr
+	// int v{ 10 }; // constexpr int fib(int n): ok; consteval int fib(int n): error
+	constexpr int result = fib(v);
+	std::cout << "result: " << result << std::endl;
+
+	return 0;
+}
+
+
+/////////////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/140415414
+namespace {
+template <typename T>
+class LuckyNum {
+public:
+	inline static constinit int num{ 66 };
+	//inline static int num{ 66 }; // ok
+	//inline static constexpr int num{ 66 }; // ok
+};
+
+consteval int factorial(int n) {
+//constinit consteval int factorial(int n) { // error C2216: "constinit"不能和"consteval"一起使用
+	return n == 0 ? 1 : n * factorial(n - 1);
+}
+
+constinit int arr1[] = { 1, 2, 3, factorial(4) };
+constexpr int arr2[] = { 1, 2, 3, factorial(4) };
+//constinit constexpr int arr3[] = { 1, 2, 3, factorial(4) }; // error C2216: "constinit"不能和"constexpr"一起使用
+const constinit int arr4[] = { 1, 2, 3, factorial(4) };
+
+const char* gg() { return "dynamic initialization"; }
+constexpr const char* ff(bool p) { return p ? "constant initializer" : gg(); }
+
+constinit const char* c = ff(true); // OK
+//constinit const char* d = ff(false); // ERROR: 'gg' is not constexpr, so 'd' cannot be evaluated at compile-time
+
+} // namespace
+
+int test_constinit()
+{
+	LuckyNum<int> num1;
+	LuckyNum<std::string> num2;
+	std::cout << "num1 value: " << num1.num << std::endl;
+	std::cout << "num2 value: " << num2.num << std::endl;
+
+	std::cout << "arr1[3]: " << arr1[3] << std::endl;
+	std::cout << "arr2[3]: " << arr2[3] << std::endl;
+
+	return 0;
+}
+
 
 ////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/131024200
