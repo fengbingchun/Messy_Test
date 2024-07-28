@@ -131,6 +131,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\constexpr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\const_pointer.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\coroutine.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\cplusplus_api_design.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\cplusplus_secure_coding.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\CppBaseTest.cpp" />
@@ -295,6 +296,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\constexpr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\const_pointer.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\coroutine.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\cplusplus_api_design.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\cplusplus_secure_coding.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\ctad.hpp" />

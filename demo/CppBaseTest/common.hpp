@@ -157,5 +157,6 @@
 #include "feature_test_macros.hpp"
 #include "comparison.hpp"
 #include "aggregate_initialization.hpp"
+#include "coroutine.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
