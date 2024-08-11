@@ -113,6 +113,7 @@
     <ClCompile Include="..\..\..\demo\Messy_Test\test_jemalloc.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_libuuid.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_rapidjson.cpp" />
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_sqlserver_odbc.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_threadpool.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_tinyxml2.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_yaml-cpp.cpp" />
