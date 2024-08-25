@@ -4,8 +4,42 @@
 #include <vector>
 #include <string>
 
-// Blog: https://blog.csdn.net/fengbingchun/article/details/141526951
+// Blog: https://blog.csdn.net/fengbingchun/article/details/141532119
+namespace {
 
+//template<typename T>
+//T get_sum(T a, T b)
+auto get_sum(auto a, auto b) // 不受约束的auto
+{
+    return (a + b);
+}
+
+template <typename T>
+concept C = std::is_integral_v<T> || std::is_floating_point_v<T>;
+
+auto get_sum2(C auto a, C auto b) // 受约束的auto
+{
+    return (a + b);
+}
+
+} // namespace
+
+int test_abbreviated_function_template()
+{
+    std::cout << "sum: " << get_sum(6, 8) << std::endl;
+    std::cout << "sum: " << get_sum(6, 8.8) << std::endl;
+    std::cout << "sum: " << get_sum(std::string("hello"), std::string(", world")) << std::endl;
+
+    std::cout << "sum2: " << get_sum2(6, 8) << std::endl;
+    std::cout << "sum2: " << get_sum2(6, 8.8) << std::endl;
+    //std::cout << "sum2: " << get_sum2(std::string("hello"), std::string(", world")) << std::endl; // // error C2672: "get_sum2":未找到匹配的重载函数
+
+    return 0;
+}
+
+
+/////////////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/141526951
 namespace {
 
 template<typename T>
