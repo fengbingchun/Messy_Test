@@ -129,6 +129,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\comparison.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constexpr.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\constraint_concept.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\const_pointer.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\coroutine.cpp" />
@@ -294,6 +295,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\comparison.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constexpr.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\constraint_concept.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constructors_and_destructors.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\const_pointer.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\coroutine.hpp" />

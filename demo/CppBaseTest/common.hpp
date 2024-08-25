@@ -158,5 +158,6 @@
 #include "comparison.hpp"
 #include "aggregate_initialization.hpp"
 #include "coroutine.hpp"
+#include "constraint_concept.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
