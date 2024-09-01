@@ -8,6 +8,84 @@
 #include <array>
 #include <thread>
 
+// Blog: https://blog.csdn.net/fengbingchun/article/details/141787122
+namespace {
+struct Foo {
+	int x{ 1 };
+
+	void print()
+	{
+		//auto change1 = [=] { // bad
+		auto change1 = [=, this] { // good, this: reference
+			this->x = 11;
+		};
+
+		change1();
+		std::cout << "x: " << x << std::endl; // x: 11
+
+		auto change2 = [=, *this] { // *this: value
+			//this->x = 22; // error C3490: 由于正在通过常量对象访问"x"，因此无法对其进行修改
+			auto m = this->x;
+			std::cout << "x: " << x << std::endl; // x: 11
+		};
+
+		change2();
+	}
+};
+
+template <typename... Args>
+auto func1(Args&&... args)
+{
+	return [...args = std::forward<Args>(args)] { // by value
+		// ...
+	};
+}
+
+template <typename... Args>
+auto func2(Args&&... args) {
+	return [&...args = std::forward<Args>(args)] { // by reference
+		// ...
+	};
+}
+
+} // namesapce
+
+int test_lambda_20_this()
+{
+	Foo foo;
+	std::cout << "x: " << foo.x << std::endl; // x: 1
+	foo.print();
+	std::cout << "x: " << foo.x << std::endl; // x: 11
+
+	return 0;
+}
+
+int test_lambda_20_template()
+{
+	auto func = []<typename T>(const T& x, const T& y) {
+		return (x + y);
+	};
+
+	std::cout << "value: " << func(1, 2) << std::endl; // value: 3
+	std::cout << "value: " << func(std::string{ "hello " }, std::string{ "world" }) << std::endl; // value: hello world
+
+	return 0;
+}
+
+int test_lambda_20_parameter_pack()
+{
+	auto print = [](auto&&... args) {
+		((std::cout << args << ' '), ...);
+		std::cout << std::endl;
+	};
+
+	print(6, 8, "hello, world");
+
+	return 0;
+}
+
+
+/////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/136067536
 namespace {
 

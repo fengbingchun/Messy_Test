@@ -1,6 +1,10 @@
 #ifndef FBC_MESSY_TEST_LAMBDA_HPP_
 #define FBC_MESSY_TEST_LAMBDA_HPP_
 
+int test_lambda_20_this();
+int test_lambda_20_template();
+int test_lambda_20_parameter_pack();
+
 int test_closure();
 
 int test_lambda_17_constexpr();

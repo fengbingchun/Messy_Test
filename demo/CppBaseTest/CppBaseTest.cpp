@@ -3,7 +3,7 @@
 
 int main()
 {
-	if (auto ret = test_abbreviated_function_template(); ret == 0)
+	if (auto ret = test_lambda_20_parameter_pack(); ret == 0)
 		std::cout << "========== test success ==========\n";
 	else
 		std::cerr << "########## test fail ##########\n";
