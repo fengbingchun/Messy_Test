@@ -3,6 +3,10 @@
 
 #include <vector>
 
+int test_template_20();
+
+
+
 // reference: https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF_(C%2B%2B)
 // 函数模板，此函数在编译时会自动产生对应参数类型的代码，而不用显式声明
 template <typename T>

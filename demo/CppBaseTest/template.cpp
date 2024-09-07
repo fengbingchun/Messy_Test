@@ -3,8 +3,56 @@
 #include <stdexcept>
 #include "template.hpp"
 
-// Blog: http://blog.csdn.net/fengbingchun/article/details/51339659
+// Blog: https://blog.csdn.net/fengbingchun/article/details/141994463
+namespace {
+template<int N> // int non-type template parameter
+struct Array {
+	static_assert(N > 0, "N must be greater than 0");
+	int data[N];
+};
 
+template<float v> // c++20
+void print_value()
+{
+	static_assert(v < 0, "v must be less than 0");
+	std::cout << "v: " << v << std::endl;
+}
+
+// literal class type
+struct Foo {
+	constexpr Foo() {}
+	constexpr Foo(int value): has_value(true), value(value) {}
+
+	const int value{};
+	const bool has_value{ false };
+};
+
+template <Foo f> // c++20
+void print_foo() {
+	if constexpr (f.has_value)
+		std::cout << "value: " << f.value << std::endl;
+	else
+		std::cout << "no value" << std::endl;
+}
+
+} // namespace
+
+int test_template_20()
+{
+	Array<5> arr;
+	arr.data[3] = {6};
+	std::cout << "arr[3]: " << arr.data[3] << std::endl;
+
+	print_value<-1.1f>();
+
+	print_foo < Foo{ 66 } > ();
+	print_foo < Foo{} > ();
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////
+// Blog: http://blog.csdn.net/fengbingchun/article/details/51339659
 void test_template1()
 {
 	int a = 3, b = 7;
