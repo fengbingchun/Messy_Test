@@ -119,6 +119,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\bernoulli_distribution.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\binary_search_tree.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\bind.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\bit.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\byte.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\call_once.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\charconv.cpp" />
@@ -284,6 +285,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\bernoulli_distribution.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\binary_search_tree.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\bind.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\bit.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\byte.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\call_once.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\charconv.hpp" />
