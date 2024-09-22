@@ -3,7 +3,7 @@
 
 int main()
 {
-	if (auto ret = test_bit(); ret == 0)
+	if (auto ret = test_compare_classes(); ret == 0)
 		std::cout << "========== test success ==========\n";
 	else
 		std::cerr << "########## test fail ##########\n";
