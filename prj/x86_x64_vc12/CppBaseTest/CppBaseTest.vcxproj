@@ -129,6 +129,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\coding_optimizations.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\compare.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\comparison.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\concepts.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\condition_variable.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constexpr.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\constraint_concept.cpp" />
@@ -297,6 +298,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\common.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\compare.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\comparison.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\concepts.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\condition_variable.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constexpr.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\constraint_concept.hpp" />
