@@ -34,7 +34,7 @@
 
 **The project support platform:**
 - Windows 10 64-bit: It can be directly build with VS2022 in windows 10 64-bit.
-- Linux(ubuntu 22.04, gcc 11.2.0):
+- Linux(ubuntu 22.04, g++ 13.1.0):
 	- CppBaseTest supports cmake build(file position: prj/linux_cmake_CppBaseTest/)
 	- DesignPatternsTest supports cmake build(file position: prj/linux_cmake_DesignPatternsTest/)
 	- gtest_Test support cmake build(file position: prj/linux_cmake_gtest_Test/)

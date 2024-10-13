@@ -253,7 +253,9 @@ int test_item_11()
 	// v所分配的用来容纳其元素的内存将来自共享内存
 	// 而v自己----包括它所有的数据成员----几乎肯定不会位于共享内存中，v只是普通的基于栈(stack)的对象，所以，像所
 	// 有基于栈的对象一样，它将会被运行时系统放在任意可能的位置上。这个位置几乎肯定不是共享内存
+#ifdef _MSC_VER
 	SharedDoubleVec v; // 创建一个vector,其元素位于共享内存中
+
 
 	// 为了把v的内容和v自身都放到共享内存中，需要这样做
 	void* pVectorMemory = mallocShared(sizeof(SharedDoubleVec)); // 为SharedDoubleVec对象分配足够的内存
@@ -261,6 +263,7 @@ int test_item_11()
 	// ... // 使用对象(通过pv)
 	pv->~SharedDoubleVec(); // 析构共享内存中的对象
 	freeShared(pVectorMemory); // 释放最初分配的那一块共享内存
+#endif
 
 	return 0;
 }

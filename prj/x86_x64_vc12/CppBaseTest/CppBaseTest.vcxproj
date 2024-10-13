@@ -165,6 +165,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\fill.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\final.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\for.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\format.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\forward.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\forward_list.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\for_each.cpp" />
@@ -206,6 +207,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\normal_distribution.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nothrow.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\nullptr.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\numbers.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\numeric.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\numeric_limits.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\operator.cpp" />
@@ -217,6 +219,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\polymorphism.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\priority_queue.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\queue.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\ranges.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\ratio.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reference.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\reference_counting.cpp" />
@@ -333,6 +336,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\fill.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\final.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\for.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\format.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\forward.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\forward_declaration.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\forward_list.hpp" />
@@ -374,6 +378,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\normal_distribution.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nothrow.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\nullptr.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\numbers.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\numeric.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\numeric_limits.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\operator.hpp" />
@@ -386,6 +391,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\polymorphism.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\priority_queue.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\queue.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\ranges.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\ratio.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reference.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\reference_counting.hpp" />

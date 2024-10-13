@@ -162,5 +162,8 @@
 #include "bit.hpp"
 #include "compare.hpp"
 #include "concepts.hpp"
+#include "format.hpp"
+#include "numbers.hpp"
+#include "ranges.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

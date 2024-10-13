@@ -1,6 +1,7 @@
 #include <bit>
 #include <iostream>
 #include <bitset>
+#include <cstdint>
 
 // Blog: https://blog.csdn.net/fengbingchun/article/details/142025261
 int test_bit()
