@@ -165,5 +165,8 @@
 #include "format.hpp"
 #include "numbers.hpp"
 #include "ranges.hpp"
+#include "source_location.hpp"
+#include "span.hpp"
+#include "syncstream.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_

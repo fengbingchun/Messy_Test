@@ -519,6 +519,15 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\ranges.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\source_location.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\span.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\demo\CppBaseTest\syncstream.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\demo\CppBaseTest\explicit.hpp">
@@ -1029,6 +1038,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\demo\CppBaseTest\ranges.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\source_location.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\span.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\demo\CppBaseTest\syncstream.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

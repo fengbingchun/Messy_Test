@@ -235,6 +235,8 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\single_threaded_memory_pool.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sort.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sort1.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\source_location.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\span.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\sstream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\stack.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\standard_template_library.cpp" />
@@ -246,6 +248,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\string_view.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\struct.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\structured_binding.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\syncstream.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\tar.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\template_impl.cpp" />
@@ -407,6 +410,8 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\single_threaded_memory_pool.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sort.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sort1.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\source_location.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\span.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\sstream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\stack.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\standard_template_library.hpp" />
@@ -418,6 +423,7 @@
     <ClInclude Include="..\..\..\demo\CppBaseTest\string_view.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\struct.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\structured_binding.hpp" />
+    <ClInclude Include="..\..\..\demo\CppBaseTest\syncstream.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\tar.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\template.hpp" />
     <ClInclude Include="..\..\..\demo\CppBaseTest\temporary_object.hpp" />
