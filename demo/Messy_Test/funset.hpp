@@ -1,6 +1,9 @@
 #ifndef FBC_MESSY_TEST_FUNSET_HPP_
 #define FBC_MESSY_TEST_FUNSET_HPP_
 
+// libpqxx/PostgreSQL
+int test_libpqxx();
+
 // SQL Server ODBC
 int test_sqlserver_odbc();
 

@@ -56,5 +56,8 @@
     <ClCompile Include="..\..\..\demo\Messy_Test\test_sqlserver_odbc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_libpqxx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

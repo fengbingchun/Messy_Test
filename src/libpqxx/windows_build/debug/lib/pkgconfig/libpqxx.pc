@@ -1,0 +1,10 @@
+prefix=E:/GitHub/libpqxx/build/install
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: libpqxx
+Description: C++ client API for the PostgreSQL database management system.
+Version: 7.9.2
+Libs: -L${prefix}/lib -lpqxx
+Cflags: -I${prefix}/include

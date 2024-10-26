@@ -29,6 +29,7 @@
 	- "Secure Coding in C and C++(Second Edition)"
 - database's usage
 	- SQL Server on windows
+	- PostgreSQL(libpqxx) on windows
 
 **The version of each open source library see:** [version.txt](src/version.txt)
 
