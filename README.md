@@ -30,6 +30,7 @@
 - database's usage
 	- SQL Server on windows
 	- PostgreSQL(libpqxx) on windows
+	- SQLite on windows
 
 **The version of each open source library see:** [version.txt](src/version.txt)
 

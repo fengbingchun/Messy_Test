@@ -1,4 +1,5 @@
-﻿#include "funset.hpp"
+﻿#ifdef _MSC_VER
+#include "funset.hpp"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -320,6 +321,7 @@ int test_libpqxx()
 	drop_table("info", "teacher");
 
 	outfile.close();
-	std::cout << "test finish\n";
 	return 0;
 }
+
+#endif // _MSC_VER

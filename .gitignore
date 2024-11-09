@@ -30,3 +30,4 @@
 /prj/cmake_Plugin_Test/demo1/build/
 src/VLD/.vs/
 prj/x86_x64_vc12/CppBaseTest/a/
+prj/x86_x64_vc12/Messy_Test/*.db

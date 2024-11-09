@@ -22,6 +22,45 @@ inline char* utf8_to_gbk(const char* utf8)
 #endif
 }
 
+inline std::string gbk_to_utf8(const std::string& str)
+{
+#ifdef _MSC_VER
+	// gbk to wchar
+	auto len = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, nullptr, 0);
+	std::wstring wstr(len, 0);
+	::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, &wstr[0], len);
+
+	// wchar to utf8
+	len = ::WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+	std::string u8str(len, 0);
+	::WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &u8str[0], len, nullptr, nullptr);
+
+	u8str.pop_back(); // remove '\0'
+	return u8str;
+#else
+	return std::string{"Unimplemented"};
+#endif
+}
+
+inline std::string utf8_to_gbk(const std::string& u8str)
+{
+#ifdef _MSC_VER
+	// utf8 to wchar
+	auto len = ::MultiByteToWideChar(CP_UTF8, 0, u8str.c_str(), -1, nullptr, 0);
+	std::wstring wstr(len, 0);
+	::MultiByteToWideChar(CP_UTF8, 0, u8str.c_str(), -1, &wstr[0], len);
+
+	// wchar to gbk
+	len = ::WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+	std::string str(len, 0);
+	::WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, &str[0], len, nullptr, nullptr);
+
+	str.pop_back(); // remove '\0' 
+	return str;
+#else
+	return std::string{"Unimplemented"};
+#endif
+}
 
 } // namespace
 
