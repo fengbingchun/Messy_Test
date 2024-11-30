@@ -168,5 +168,6 @@
 #include "source_location.hpp"
 #include "span.hpp"
 #include "syncstream.hpp"
+#include "calling_convention.hpp"
 
 #endif // FBC_MESSY_TEST_COMMON_HPP_
