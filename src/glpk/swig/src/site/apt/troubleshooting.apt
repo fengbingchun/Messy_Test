@@ -1,0 +1,38 @@
+ -----
+ Troubleshooting
+ -----
+ Heinrich Schuchardt
+ <xypron.glpk@gmx.de>
+ -----
+ 2017-05-05
+ -----
+
+Troubleshooting
+
+ This chapter discusses errors that may occur due to incorrect usage of
+ the GLPK for Java package.
+
+ If the GLPK for Java class library was built for another version of GLPK
+ than the GLPK for JNI library a java.lang.UnsatisfiedLinkError may
+ occur in class org.gnu.glpk.GLPKJNI, e.g.
+
+----
+Exception in thread "main" java.lang.UnsatisfiedLinkError:
+org.gnu.glpk.GLPKJNI.GLP_BF_LUF_get()I
+at org.gnu.glpk.GLPKJNI.GLP_BF_LUF_get(Native Method)
+at org.gnu.glpk.GLPKConstants.<clinit>(GLPKConstants.java:56) 
+----
+
+ If the GLPK for JNI library was built for another version of GLPK than
+ the currently installed GLPK library an java.lang.UnsatisfiedLinkError
+ may occur during dlopen.
+
+----
+Exception in thread "main" java.lang.UnsatisfiedLinkError:
+/usr/local/lib/jni/libglpk_java.36.dylib:
+dlopen(/usr/local/lib/jni/libglpk_java.36.dylib, 1):
+Library not loaded: /usr/local/opt/glpk/lib/libglpk.35.dylib
+Referenced from: /usr/local/lib/jni/libglpk_java.36.dylib
+Reason: image not found
+at java.lang.ClassLoader\$NativeLibrary.load(Native Method)
+----

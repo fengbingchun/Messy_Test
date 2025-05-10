@@ -1,0 +1,73 @@
+.TH libglpk-java 3 "February 16th, 2018" "version 1.12.0" "libglpk-java overview"
+.SH NAME
+libglpk-java \- GNU Linear Programming Kit Java Binding
+.SH DESCRIPTION
+The GNU Linear Programming Kit (GLPK) package supplies a solver for
+large scale linear programming (LP) and mixed integer programming (MIP).
+The GLPK project is hosted at http://www.gnu.org/software/glpk.
+.PP
+It has two mailing lists:
+.nf
+- help-glpk@gnu.org and
+- bug-glpk@gnu.org.
+.fi
+.PP
+To subscribe to one of these lists, please, send an empty mail with a
+Subject: header line of just "subscribe" to the list.
+.PP
+GLPK provides a library written in C and a standalone solver.
+The source code provided at ftp://gnu.ftp.org/gnu/glpk/ contains the
+documentation of the library in file doc/glpk.pdf.
+.PP
+The Java platform provides the Java Native Interface (JNI) to integrate
+non-Java language libraries into Java applications.
+.PP
+Project GLPK for Java delivers a Java Binding for GLPK. It is hosted at
+http://glpk-java.sourceforge.net/.
+.PP
+To report problems and suggestions concerning GLPK for Java, please, send
+an email to the author at xypron.glpk@gmx.de.
+.SH ARCHITECTURE
+A GLPK for Java application will consist of the following
+.nf
+- the GLPK library
+- the GLPK for Java JNI library
+- the GLPK for Java class library
+- the application code.
+.fi
+.SH GLPK LIBRARY
+The GLPK library can be compiled from source code. Follow the instructions
+in file INSTALL provided in the source distribution. Precompiled
+packages are available in many Linux distributions.
+.PP
+The usual installation path for the library is /usr/local/lib/libglpk.so.
+The library has to be in the search path for binaries.
+.SH GLPK FOR JAVA JNI LIBRARY
+The GLPK for Java JNI library can be compiled from source code. Follow
+the instructions in file INSTALL provided in the source distribution.
+.PP
+The usual installation path for the library is
+/usr/local/lib/jni/libglpk-java.so.
+The library has to be in the search path for binaries. Specify the
+library path upon invocation of the application, e.g.
+.nf
+java -Djava.library.path=/usr/local/lib/jni
+.fi
+
+.SH GLPK FOR JAVA CLASS LIBRARY
+The source code to compile the GLPK for Java class library is provided at
+http://glpk-java.sourceforge.net.
+.PP
+The GLPK for Java class library can be compiled from source code. Follow
+the instructions in file INSTALL provided in the source distribution.
+The usual installation path for the library is 
+/usr/local/share/java/glpk-java.jar.
+.PP
+The library has to be in the CLASSPATH. Specify the classpath upon
+invocation of the application, e.g.
+.nf
+java -classpath /usr/local/share/java/glpk-java.jar;.
+.fi
+.SH SEE ALSO
+Further documentation and examples can be found in the documentation
+path, which defaults to /usr/local/share/doc/libglpk-java.

@@ -1,0 +1,69 @@
+alloy.mps      Aluminium alloy blending
+assign.mod     Assignment problem
+bpp.mod        Bin packing problem
+cal.mod        Print an ASCII calendar of the given year
+cf12a.mod      Curve fitting problem
+cf12b.mod      Curve fitting problem
+cflsq.mod      Curve fitting problem by least squares
+color.mod      Graph coloring problem
+cpp.mod        Critical path problem
+crypto.mod     A crypto-arithmetic puzzle
+dea.mod        Data envelopment analysis (DEA)
+diet.mod       Stigler's nutrition model
+dist.mod       A product distribution model
+egypt.mod      A static model for fertilizer production
+fctp.mod       Fixed-charge transportation problem
+food.mod       Food manufacture model
+food2.mod      Food manufacture model
+furnace.mps    Electric-arc furnace steelmaking
+gap.mod        Generalized assignment problem
+graceful.mod   Graceful Tree Labeling Problem
+graph.mod      Graph visualization
+hashi.mod      A solver for the Japanese number-puzzle Hashiwokakero
+huge.mod       Arithmetic mean of a large number of integers
+icecream.mps   Ice cream blending
+jssp.mod       Job-shop scheduling problem
+life_goe.mod   Conway's Game of Life garden of eden checker
+magic.mod      Magic square
+maxcut.mod     Maximum cut problem
+maxflow.mod    Maximum flow problem
+mfasp.mod      Minimum feedback arc set problem
+mfvsp.mod      Minimum feedback vertex set problem
+min01ks.mod    Finding minimal equivalent 0-1 knapsack inequality
+misp.mod       Maximum independent set problem
+money.mod      A crypto-arithmetic puzzle
+murtagh.mps    Oil refinery model
+mvcp.mod       Minimum vertex cover problem
+numbrix.mod    Number placement puzzle
+pbn/*.*        Paint-by-numbers puzzle
+pentomino.mod  A geometric placement puzzle
+plan.lp        A simple LP problem (CPLEX LP format)
+plan.mod       A simple LP problem (MathProg format)
+plan.mps       A simple LP problem (MPS format)
+planarity.mod  Graph planarity testing
+powpl25h.mod   Power plant LP scheduler (25hrs for daylightsavings)
+powplant.mod   Power plant LP scheduler
+prod.mod       A multiperiod production model
+qfit.mod       Quadratic curve fitting solution
+queens.mod     A classic combinatorial optimization problem
+sat.mod        Satisfiability problem
+shiftcov.mod   Workforce shift coverage assignment problem
+shikaku.mod    A solver for the logic puzzle Shikaku
+sorting.mod    How to sort arrays in MathProg
+spp.mod        Shortest path problem
+stigler.mod    Original Stigler's 1939 diet problem
+sudoku.mod     Number placement puzzle
+tas.mod        Tail assignment problem
+tiling.mod     Rectifiable polyomino tilings generator
+todd.mod       A class of hard instances of 0-1 knapsack problems
+toto.mod       Covering code generator, especially for football pool
+               systems
+train.mod      A model of railroad passenger car allocation
+transp.mod     A transportation problem
+trick.mod      A transportation design problem
+tsp.mod        Traveling salesman problem
+wolfra6d.lp    Neumann CA grid emulator generator
+wolfra6d.mod   Neumann CA grid emulator generator
+xyacfs.mod     Extended yet another curve fitting solution
+yacfs.mod      Yet another curve fitting solution
+zebra.mod      Who owns the zebra?

@@ -1,0 +1,88 @@
+ -----
+ Classes
+ -----
+ Heinrich Schuchardt
+ <xypron.glpk@gmx.de>
+ -----
+ 2017-01-21
+ -----
+
+Classes
+
+ GLPK for Java uses the Simplified Wrapper and Interface Generator 
+ (SWIG) to create the JNI interface to GLPK.
+ Classes are created in path org.gnu.glpk.
+
+   * Class GlpkCallback is called by the MIP solver callback routine.
+
+   * Interface GlpkCallbackListener can be implemented to register a listener for
+   class GlpkCallback.
+
+   * Class GlpkTerminal is called by the MIP solver terminal output routine.
+
+   * Interface GlpkTerminalListener can be implemented to register a listener for
+   class GlpkTerminal.
+
+   * Class GlpkException is thrown if an error occurs.
+
+   * Class GLPK maps the functions from glpk.h.
+
+   * Class GLPKConstants maps the constants from glpk.h to methods.
+
+   * Class GLPKJNI contains the definitions of the native functions.
+
+ The following classes map structures from glpk.h:
+
+   * glp_arc
+
+   * glp_attr
+
+   * glp_bfcp
+
+   * glp_cpxcp
+
+   * glp_graph
+
+   * glp_iocp
+
+   * glp_iptcp
+
+   * glp_mpscp
+
+   * glp_prob
+
+   * glp_smcp
+
+   * glp_tran
+
+   * glp_tree
+
+   * glp_vertex
+
+ The following classes are used to map pointers:
+
+   * SWIGTYPE_p_double
+
+   * SWIGTYPE_p_f_p_q_const__char_v_______void
+
+   * SWIGTYPE_p_f_p_struct_glp_tree_p_void__void
+
+   * SWIGTYPE_p_f_p_void__void
+
+   * SWIGTYPE_p_f_p_void_p_q_const__char__int
+
+   * SWIGTYPE_p_int
+
+   * SWIGTYPE_p_p_glp_vertex
+
+   * SWIGTYPE_p_size_t
+
+   * SWIGTYPE_p_va_list
+
+   * SWIGTYPE_p_void
+
+ The following clases are used for network problems:
+
+   * glp_java_arc_data
+
+   * glp_java_vertex_data

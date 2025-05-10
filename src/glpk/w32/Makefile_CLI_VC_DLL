@@ -1,0 +1,19 @@
+# Build GLPK JNI DLL with Microsoft Visual Studio Express 2010
+GLPKVERS=4_65
+CFLAGS = /I. /I../swig-cli /I$(GLPK_HOME)\src /nologo /W3 /O2 /Zi \
+	-DGLPKPRELOAD
+
+OBJSET = \
+..\swig-cli\src\c\glpk_wrap.obj
+
+.c.obj:
+	cl.exe $(CFLAGS) /Fo$*.obj /c $*.c
+
+all: libglpk_cli.dll
+
+libglpk_cli.dll: $(OBJSET)
+        cl.exe $(CFLAGS) /LD /Felibglpk_cli_native.dll \
+          ..\swig-cli\src\c\glpk_wrap.obj glpk_cli_dll.res glpk_$(GLPKVERS).lib
+
+check:
+	check_cli.bat

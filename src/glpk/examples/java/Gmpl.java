@@ -1,0 +1,111 @@
+
+import org.gnu.glpk.*;
+
+public class Gmpl implements GlpkCallbackListener, GlpkTerminalListener {
+    private boolean hookUsed = false;
+
+    public static void main(String[] arg) {
+        if (1 != arg.length) {
+            System.out.println("Usage: java Gmpl model.mod");
+            return;
+        }
+        GLPK.glp_java_set_numeric_locale("C");
+        new Gmpl().solve(arg);
+    }
+
+    public void solve(String[] arg) {
+        glp_prob lp;
+        glp_tran tran;
+        glp_iocp iocp;
+
+        String fname;
+        int skip = 0;
+        int ret;
+
+        // listen to callbacks
+        GlpkCallback.addListener(this);
+
+        // listen to terminal output
+        GlpkTerminal.addListener(this);
+
+        try {
+
+            // create problem
+            lp = GLPK.glp_create_prob();
+
+            // allocate workspace
+            tran = GLPK.glp_mpl_alloc_wksp();
+
+            // read model
+            fname = arg[0];
+            ret = GLPK.glp_mpl_read_model(tran, fname, skip);
+            if (ret != 0) {
+                GLPK.glp_mpl_free_wksp(tran);
+                GLPK.glp_delete_prob(lp);
+                throw new RuntimeException("Model file not valid: " + fname);
+            }
+
+            // generate model
+            ret = GLPK.glp_mpl_generate(tran, null);
+            if (ret != 0) {
+                GLPK.glp_mpl_free_wksp(tran);
+                GLPK.glp_delete_prob(lp);
+                throw new RuntimeException("Cannot generate model: " + fname);
+            }
+
+            // build model
+            GLPK.glp_mpl_build_prob(tran, lp);
+
+            // set solver parameters
+            iocp = new glp_iocp();
+            GLPK.glp_init_iocp(iocp);
+            iocp.setPresolve(GLPKConstants.GLP_ON);
+
+            // do not listen to output anymore
+            GlpkTerminal.removeListener(this);
+
+            // solve model
+            ret = GLPK.glp_intopt(lp, iocp);
+
+            // postsolve model
+            if (ret == 0) {
+                GLPK.glp_mpl_postsolve(tran, lp,
+                                       GLPKConstants.GLP_MIP);
+            }
+
+            // free memory
+            GLPK.glp_mpl_free_wksp(tran);
+            GLPK.glp_delete_prob(lp);
+
+	} catch (org.gnu.glpk.GlpkException e) {
+            System.err.println("An error inside the GLPK library occured.");
+            System.err.println(e.getMessage());
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+        }
+
+        // do not listen for callbacks anymore
+        GlpkCallback.removeListener(this);
+
+        // check that the terminal hook function has been used
+        if (!hookUsed) {
+            throw new RuntimeException(
+                "The terminal output hook was not used.");
+        }
+    }
+
+    @Override
+    public boolean output(String str) {
+        hookUsed = true;
+        System.out.print(str);
+        return false;
+    }
+
+    @Override
+    public void callback(glp_tree tree) {
+        int reason = GLPK.glp_ios_reason(tree);
+        if (reason == GLPKConstants.GLP_IBINGO) {
+            System.out.println("Better solution found");
+        }
+    }
+}

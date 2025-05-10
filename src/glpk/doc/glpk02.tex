@@ -1,0 +1,3480 @@
+%* glpk02.tex *%
+
+\chapter{Basic API Routines}
+
+\section{General conventions}
+
+\subsection{Library header}
+
+All GLPK API data types and routines are defined in the header file
+\verb|glpk.h|. It should be included in all source files which use
+GLPK API, either directly or indirectly through some other header file
+as follows:
+
+\begin{verbatim}
+   #include <glpk.h>
+\end{verbatim}
+
+\subsection{Error handling}
+
+If some GLPK API routine detects erroneous or incorrect data passed by
+the application program, it writes appropriate diagnostic messages to
+the terminal and then abnormally terminates the application program.
+In most practical cases this allows to simplify programming by avoiding
+numerous checks of return codes. Thus, in order to prevent crashing the
+application program should check all data, which are suspected to be
+incorrect, before calling GLPK API routines.
+
+Should note that this kind of error handling is used only in cases of
+incorrect data passed by the application program. If, for example, the
+application program calls some GLPK API routine to read data from an
+input file and these data are incorrect, the GLPK API routine reports
+about error in the usual way by means of the return code.
+
+\subsection{Thread safety}
+
+The standard version of GLPK API is {\it not} thread safe and therefore
+should not be used in multi-threaded programs.
+
+\subsection{Array indexing}
+
+Normally all GLPK API routines start array indexing from 1, not from 0
+(except the specially stipulated cases). This means, for example, that
+if some vector $x$ of the length $n$ is passed as an array to some GLPK
+API routine, the latter expects vector components to be placed in
+locations \verb|x[1]|, \verb|x[2]|, \dots, \verb|x[n]|, and the
+location \verb|x[0]| normally is not used.
+
+To avoid indexing errors it is most convenient and most reliable to
+declare the array \verb|x| as follows:
+
+\begin{verbatim}
+   double x[1+n];
+\end{verbatim}
+
+\noindent
+or to allocate it as follows:
+
+\begin{verbatim}
+   double *x;
+   . . .
+   x = calloc(1+n, sizeof(double));
+   . . .
+\end{verbatim}
+
+\noindent
+In both cases one extra location \verb|x[0]| is reserved that allows
+passing the array to GLPK routines in a usual way.
+
+\section{Problem object}
+
+All GLPK API routines deal with so called {\it problem object}, which
+is a program object of type \verb|glp_prob| and intended to represent
+a particular LP or MIP instance.
+
+The type \verb|glp_prob| is a data structure declared in the header
+file \verb|glpk.h| as follows:
+
+\begin{verbatim}
+   typedef struct glp_prob glp_prob;
+\end{verbatim}
+
+Problem objects (i.e. program objects of the \verb|glp_prob| type) are
+allocated and managed internally by the GLPK API routines. The
+application program should never use any members of the \verb|glp_prob|
+structure directly and should deal only with pointers to these objects
+(that is, \verb|glp_prob *| values).
+
+The problem object consists of the following segments:
+
+%\vspace*{-8pt}
+
+%\begin{itemize}\setlength{\itemsep}{0pt}
+\Item{---}problem segment,
+
+\Item{---}basis segment,
+
+\Item{---}interior-point segment, and
+
+\Item{---}MIP segment.
+%\end{itemize}
+
+\subsection{Problem segment}
+
+The {\it problem segment} contains original LP/MIP data, which
+corresponds to the problem formulation (1.1)---(1.3) (see Section
+\ref{seclp}, page \pageref{seclp}). This segment includes the following
+components:
+
+%\vspace*{-8pt}
+
+%\begin{itemize}\setlength{\itemsep}{0pt}
+\Item{---}rows (auxiliary variables),
+
+\Item{---}columns (structural variables),
+
+\Item{---}objective function, and
+
+\Item{---}constraint matrix.
+%\end{itemize}
+
+%\vspace*{-7pt}
+
+Rows and columns have the same set of the following attributes:
+
+%\vspace*{-7pt}
+
+%\begin{itemize}\setlength{\itemsep}{0pt}
+\Item{---}ordinal number,
+
+\Item{---}symbolic name (1 up to 255 arbitrary graphic characters),
+
+\Item{---}type (free, lower bound, upper bound, double bound, fixed),
+
+\Item{---}numerical values of lower and upper bounds,
+
+\Item{---}scale factor.
+%\end{itemize}
+
+%\vspace*{-7pt}
+
+{\it Ordinal numbers} are intended for referencing rows and columns.
+Row ordinal numbers are integers $1, 2, \dots, m$, and column ordinal
+numbers are integers $1, 2, \dots, n$, where $m$ and $n$ are,
+respectively, the current number of rows and columns in the problem
+object.
+
+{\it Symbolic names} are intended for informational purposes. They also
+can be used for referencing rows and columns.
+
+{\it Types and bounds} of rows (auxiliary variables) and columns
+(structural variables) are explained above (see Section \ref{seclp},
+page \pageref{seclp}).
+
+{\it Scale factors} are used internally for scaling rows and columns of
+the constraint matrix.
+
+Information about the {\it objective function} includes numerical
+values of objective coefficients and a flag, which defines the
+optimization direction (i.e. minimization or maximization).
+
+The {\it constraint matrix} is a $m \times n$ rectangular matrix built
+of constraint coefficients $a_{ij}$, which defines the system of linear
+constraints (1.2) (see Section \ref{seclp}, page \pageref{seclp}). This
+matrix is stored in the problem object in both row-wise and column-wise
+sparse formats.
+
+Once the problem object has been created, the application program can
+access and modify any components of the problem segment in arbitrary
+order.
+
+\subsection{Basis segment}
+
+The {\it basis segment} of the problem object keeps information related
+to the current basic solution. It includes:
+
+%\vspace*{-8pt}
+
+%\begin{itemize}\setlength{\itemsep}{0pt}
+\Item{---}row and column statuses,
+
+\Item{---}basic solution statuses,
+
+\Item{---}factorization of the current basis matrix, and
+
+\Item{---}basic solution components.
+%\end{itemize}
+
+%\vspace*{-8pt}
+
+The {\it row and column statuses} define which rows and columns are
+basic and which are non-basic. These statuses may be assigned either by
+the application program of by some API routines. Note that these
+statuses are always defined independently on whether the corresponding
+basis is valid or not.
+
+The {\it basic solution statuses} include the {\it primal status} and
+the {\it dual status}, which are set by the simplex-based solver once
+the problem has been solved. The primal status shows whether a primal
+basic solution is feasible, infeasible, or undefined. The dual status
+shows the same for a dual basic solution.
+
+The {\it factorization of the basis matrix} is some factorized form
+(like {\it LU}-factorization) of the current basis matrix (defined by
+the current row and column statuses). The factorization is used by
+simplex-based solvers and kept when the solver terminates the search.
+This feature allows efficiently reoptimizing the problem after some
+modifications (for example, after changing some bounds or objective
+coefficients). It also allows performing the post-optimal analysis (for
+example, computing components of the simplex table, etc.).
+
+The {\it basic solution components} include primal and dual values of
+all auxiliary and structural variables for the most recently obtained
+basic solution.
+
+\subsection{Interior-point segment}
+
+The {\it interior-point segment} contains interior-point solution
+components, which include the solution status, and primal and dual
+values of all auxiliary and structural variables.
+
+\subsection{MIP segment}
+
+The {\it MIP segment} is used only for MIP problems. This segment
+includes:
+
+%\vspace*{-8pt}
+
+%\begin{itemize}\setlength{\itemsep}{0pt}
+\Item{---}column kinds,
+
+\Item{---}MIP solution status, and
+
+\Item{---}MIP solution components.
+%\end{itemize}
+
+%\vspace*{-8pt}
+
+The {\it column kinds} define which columns (i.e. structural variables)
+are integer and which are continuous.
+
+The {\it MIP solution status} is set by the MIP solver and shows whether
+a MIP solution is integer optimal, integer feasible (non-optimal), or
+undefined.
+
+The {\it MIP solution components} are computed by the MIP solver and
+include primal values of all auxiliary and structural variables for the
+most recently obtained MIP solution.
+
+Note that in case of MIP problem the basis segment corresponds to
+the optimal solution of LP relaxation, which is also available to the
+application program.
+
+Currently the search tree is not kept in the MIP segment, so if the
+search has been terminated, it cannot be continued.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Problem creating and modifying routines}
+
+\subsection{glp\_create\_prob --- create problem object}
+
+\synopsis
+
+\begin{verbatim}
+   glp_prob *glp_create_prob(void);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_create_prob| creates a new problem object, which
+initially is ``empty'', i.e. has no rows and columns.
+
+\returns
+
+The routine returns a pointer to the created object, which should be
+used in any subsequent operations on this object.
+
+\subsection{glp\_set\_prob\_name --- assign (change) problem name}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_prob_name(glp_prob *P, const char *name);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_prob_name| assigns a given symbolic
+\verb|name| (1 up to 255 characters) to the specified problem object.
+
+If the parameter \verb|name| is \verb|NULL| or empty string, the
+routine erases an existing symbolic name of the problem object.
+
+\subsection{glp\_set\_obj\_name --- assign (change) objective function
+name}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_obj_name(glp_prob *P, const char *name);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_obj_name| assigns a given symbolic
+\verb|name| (1 up to 255 characters) to the objective function of the
+specified problem object.
+
+If the parameter \verb|name| is \verb|NULL| or empty string, the
+routine erases an existing symbolic name of the objective function.
+
+\newpage
+
+\subsection{glp\_set\_obj\_dir --- set (change) optimization direction
+flag}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_obj_dir(glp_prob *P, int dir);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_obj_dir| sets (changes) the optimization
+direction flag (i.e. ``sense'' of the objective function) as specified
+by the parameter \verb|dir|:
+
+\verb|GLP_MIN| means minimization;
+
+\verb|GLP_MAX| means maximization.
+
+Note that by default the problem is minimization.
+
+\subsection{glp\_add\_rows --- add new rows to problem object}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_add_rows(glp_prob *P, int nrs);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_add_rows| adds \verb|nrs| rows (constraints) to
+the specified problem object. New rows are always added to the end of
+the row list, so the ordinal numbers of existing rows are not changed.
+
+Being added each new row is initially free (unbounded) and has empty
+list of the constraint coefficients.
+
+Each new row becomes a non-active (non-binding) constraint, i.e. the
+corresponding auxiliary variable is marked as basic.
+
+If the basis factorization exists, adding row(s) invalidates it.
+
+\returns
+
+The routine \verb|glp_add_rows| returns the ordinal number of the first
+new row added to the problem object.
+
+\subsection{glp\_add\_cols --- add new columns to problem object}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_add_cols(glp_prob *P, int ncs);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_add_cols| adds \verb|ncs| columns (structural
+variables) to the specified problem object. New columns are always
+added to the end of the column list, so the ordinal numbers of existing
+columns are not changed.
+
+Being added each new column is initially fixed at zero and has empty
+list of the constraint coefficients.
+
+Each new column is marked as non-basic, i.e. zero value of the
+corresponding structural variable becomes an active (binding) bound.
+
+If the basis factorization exists, it remains valid.
+
+\returns
+
+The routine \verb|glp_add_cols| returns the ordinal number of the first
+new column added to the problem object.
+
+\subsection{glp\_set\_row\_name --- assign (change) row name}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_row_name(glp_prob *P, int i, const char *name);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_row_name| assigns a given symbolic
+\verb|name| (1 up to 255 characters) to \verb|i|-th row (auxiliary
+variable) of the specified problem object.
+
+If the parameter \verb|name| is \verb|NULL| or empty string, the
+routine erases an existing name of $i$-th row.
+
+\subsection{glp\_set\_col\_name --- assign (change) column name}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_col_name(glp_prob *P, int j, const char *name);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_col_name| assigns a given symbolic
+\verb|name| (1 up to 255 characters) to \verb|j|-th column (structural
+variable) of the specified problem object.
+
+If the parameter \verb|name| is \verb|NULL| or empty string, the
+routine erases an existing name of $j$-th column.
+
+\subsection{glp\_set\_row\_bnds --- set (change) row bounds}
+
+\synopsis
+
+{\tt void glp\_set\_row\_bnds(glp\_prob *P, int i, int type,
+double lb, double ub);}
+
+\description
+
+The routine \verb|glp_set_row_bnds| sets (changes) the type and bounds
+of \verb|i|-th row (auxiliary variable) of the specified problem
+object.
+
+The parameters \verb|type|, \verb|lb|, and \verb|ub| specify the type,
+lower bound, and upper bound, respectively, as follows:
+
+\begin{center}
+\begin{tabular}{cr@{}c@{}ll}
+Type & \multicolumn{3}{c}{Bounds} & Comment \\
+\hline
+\verb|GLP_FR| & $-\infty <$ &$\ x\ $& $< +\infty$
+   & Free (unbounded) variable \\
+\verb|GLP_LO| & $lb \leq$ &$\ x\ $& $< +\infty$
+   & Variable with lower bound \\
+\verb|GLP_UP| & $-\infty <$ &$\ x\ $& $\leq ub$
+   & Variable with upper bound \\
+\verb|GLP_DB| & $lb \leq$ &$\ x\ $& $\leq ub$
+   & Double-bounded variable \\
+\verb|GLP_FX| & $lb =$ &$\ x\ $& $= ub$
+   & Fixed variable \\
+\end{tabular}
+\end{center}
+
+\noindent
+where $x$ is the auxiliary variable associated with $i$-th row.
+
+If the row has no lower bound, the parameter \verb|lb| is ignored. If
+the row has no upper bound, the parameter \verb|ub| is ignored. If the
+row is an equality constraint (i.e. the corresponding auxiliary
+variable is of fixed type), only the parameter \verb|lb| is used while
+the parameter \verb|ub| is ignored.
+
+Being added to the problem object each row is initially free, i.e. its
+type is \verb|GLP_FR|.
+
+\subsection{glp\_set\_col\_bnds --- set (change) column bounds}
+
+\synopsis
+
+{\tt void glp\_set\_col\_bnds(glp\_prob *P, int j, int type,
+double lb, double ub);}
+
+\description
+
+The routine \verb|glp_set_col_bnds| sets (changes) the type and bounds
+of \verb|j|-th column (structural variable) of the specified problem
+object.
+
+The parameters \verb|type|, \verb|lb|, and \verb|ub| specify the type,
+lower bound, and upper bound, respectively, as follows:
+
+\begin{center}
+\begin{tabular}{cr@{}c@{}ll}
+Type & \multicolumn{3}{c}{Bounds} & Comment \\
+\hline
+\verb|GLP_FR| & $-\infty <$ &$\ x\ $& $< +\infty$
+   & Free (unbounded) variable \\
+\verb|GLP_LO| & $lb \leq$ &$\ x\ $& $< +\infty$
+   & Variable with lower bound \\
+\verb|GLP_UP| & $-\infty <$ &$\ x\ $& $\leq ub$
+   & Variable with upper bound \\
+\verb|GLP_DB| & $lb \leq$ &$\ x\ $& $\leq ub$
+   & Double-bounded variable \\
+\verb|GLP_FX| & $lb =$ &$\ x\ $& $= ub$
+   & Fixed variable \\
+\end{tabular}
+\end{center}
+
+\noindent
+where $x$ is the structural variable associated with $j$-th column.
+
+If the column has no lower bound, the parameter \verb|lb| is ignored.
+If the column has no upper bound, the parameter \verb|ub| is ignored.
+If the column is of fixed type, only the parameter \verb|lb| is used
+while the parameter \verb|ub| is ignored.
+
+Being added to the problem object each column is initially fixed at
+zero, i.e. its type is \verb|GLP_FX| and both bounds are 0.
+
+%\newpage
+
+\subsection{glp\_set\_obj\_coef --- set (change) objective coefficient
+or constant term}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_obj_coef(glp_prob *P, int j, double coef);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_obj_coef| sets (changes) the objective
+coefficient at \verb|j|-th column (structural variable). A new value of
+the objective coefficient is specified by the parameter \verb|coef|.
+
+If the parameter \verb|j| is 0, the routine sets (changes) the constant
+term (``shift'') of the objective function.
+
+\newpage
+
+\subsection{glp\_set\_mat\_row --- set (replace) row of the constraint
+matrix}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_mat_row(glp_prob *P, int i, int len, const int ind[],
+                        const double val[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_mat_row| stores (replaces) the contents of
+\verb|i|-th row of the constraint matrix of the specified problem
+object.
+
+Column indices and numerical values of new row elements should be
+placed in locations\linebreak \verb|ind[1]|, \dots, \verb|ind[len]| and
+\verb|val[1]|, \dots, \verb|val[len]|, respectively, where
+$0 \leq$ \verb|len| $\leq n$ is the new length of $i$-th row, $n$ is
+the current number of columns in the problem object. Elements with
+identical column indices are not allowed. Zero elements are allowed,
+but they are not stored in the constraint matrix.
+
+If the parameter \verb|len| is 0, the parameters \verb|ind| and/or
+\verb|val| can be specified as \verb|NULL|.
+
+\note
+
+If the basis factorization exists and changing the row changes
+coefficients at basic column(s), the factorization is invalidated.
+
+\subsection{glp\_set\_mat\_col --- set (replace) column of the
+constr\-aint matrix}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_mat_col(glp_prob *P, int j, int len, const int ind[],
+                        const double val[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_mat_col| stores (replaces) the contents of
+\verb|j|-th column of the constraint matrix of the specified problem
+object.
+
+Row indices and numerical values of new column elements should be
+placed in locations\linebreak \verb|ind[1]|, \dots, \verb|ind[len]| and
+\verb|val[1]|, \dots, \verb|val[len]|, respectively, where
+$0 \leq$ \verb|len| $\leq m$ is the new length of $j$-th column, $m$ is
+the current number of rows in the problem object. Elements with
+identical row indices are not allowed. Zero elements are allowed, but
+they are not stored in the constraint matrix.
+
+If the parameter \verb|len| is 0, the parameters \verb|ind| and/or
+\verb|val| can be specified as \verb|NULL|.
+
+\note
+
+If the basis factorization exists, changing the column corresponding
+to a basic structural variable invalidates it.
+
+\newpage
+
+\subsection{glp\_load\_matrix --- load (replace) the whole constraint
+matrix}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_load_matrix(glp_prob *P, int ne, const int ia[],
+                        const int ja[], const double ar[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_load_matrix| loads the constraint matrix passed
+in  the arrays \verb|ia|, \verb|ja|, and \verb|ar| into the specified
+problem object. Before loading the current contents of the constraint
+matrix is destroyed.
+
+Constraint coefficients (elements of the constraint matrix) should be
+specified as triplets (\verb|ia[k]|, \verb|ja[k]|, \verb|ar[k]|) for
+$k=1,\dots,ne$, where \verb|ia[k]| is the row index, \verb|ja[k]| is
+the column index, and \verb|ar[k]| is a numeric value of corresponding
+constraint coefficient. The parameter \verb|ne| specifies the total
+number of (non-zero) elements in the matrix to be loaded. Coefficients
+with identical indices are not allowed. Zero coefficients are allowed,
+however, they are not stored in the constraint matrix.
+
+If the parameter \verb|ne| is 0, the parameters \verb|ia|, \verb|ja|,
+and/or \verb|ar| can be specified as \verb|NULL|.
+
+\note
+
+If the basis factorization exists, this operation invalidates it.
+
+\subsection{glp\_check\_dup --- check for duplicate elements in sparse
+matrix}
+
+\synopsis
+
+{\tt int glp\_check\_dup(int m, int n, int ne, const int ia[],
+const int ja[]);}
+
+\description
+
+The routine \verb|glp_check_dup checks| for duplicate elements (that
+is, elements with identical indices) in a sparse matrix specified in
+the coordinate format.
+
+The parameters $m$ and $n$ specifies, respectively, the number of rows
+and columns in the matrix, $m\geq 0$, $n\geq 0$.
+
+The parameter {\it ne} specifies the number of (structurally) non-zero
+elements in the matrix,\linebreak {\it ne} $\geq 0$.
+
+Elements of the matrix are specified as doublets $(ia[k],ja[k])$ for
+$k=1,\dots,ne$, where $ia[k]$ is a row index, $ja[k]$ is a column
+index.
+
+The routine \verb|glp_check_dup| can be used prior to a call to the
+routine \verb|glp_load_matrix| to check that the constraint matrix to
+be loaded has no duplicate elements.
+
+\returns
+
+\begin{retlist}
+0&    the matrix representation is correct;\\
+$-k$& indices $ia[k]$ or/and $ja[k]$ are out of range;\\
+$+k$& element $(ia[k],ja[k])$ is duplicate.\\
+\end{retlist}
+
+\subsection{glp\_sort\_matrix --- sort elements of the constraint
+matrix}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_sort_matrix(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_sort_matrix| sorts elements of the constraint
+matrix by rebuilding its row and column linked lists.
+
+On exit from the routine the constraint matrix is not changed, however,
+elements in the row linked lists become ordered by ascending column
+indices, and the elements in the column linked lists become ordered by
+ascending row indices.
+
+\subsection{glp\_del\_rows --- delete rows from problem object}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_del_rows(glp_prob *P, int nrs, const int num[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_del_rows| deletes rows from the specified problem
+object. Ordinal numbers of rows to be deleted should be placed in
+locations \verb|num[1]|, \dots, \verb|num[nrs]|, where ${\tt nrs}>0$.
+
+Note that deleting rows involves changing ordinal numbers of other
+rows remaining in the problem object. New ordinal numbers of the
+remaining rows are assigned under the assumption that the original
+order of rows is not changed. Let, for example, before deletion there
+be five rows $a$, $b$, $c$, $d$, $e$ with ordinal numbers 1, 2, 3, 4,
+5, and let rows $b$ and $d$ have been deleted. Then after deletion the
+remaining rows $a$, $c$, $e$ are assigned new oridinal numbers 1, 2, 3.
+
+If the basis factorization exists, deleting active (binding) rows,
+i.e. whose auxiliary variables are marked as non-basic, invalidates it.
+
+%\newpage
+
+\subsection{glp\_del\_cols --- delete columns from problem object}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_del_cols(glp_prob *P, int ncs, const int num[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_del_cols| deletes columns from the specified
+problem object. Ordinal numbers of columns to be deleted should be
+placed in locations \verb|num[1]|, \dots, \verb|num[ncs]|, where
+${\tt ncs}>0$.
+
+Note that deleting columns involves changing ordinal numbers of other
+columns remaining in\linebreak the problem object. New ordinal numbers
+of the remaining columns are assigned under the assumption that the
+original order of columns is not changed. Let, for example, before
+deletion  there be six columns $p$, $q$, $r$, $s$, $t$, $u$ with
+ordinal numbers 1, 2, 3, 4, 5, 6, and let columns $p$, $q$, $s$ have
+been deleted. Then after deletion the remaining columns $r$, $t$, $u$
+are assigned new ordinal numbers 1, 2, 3.
+
+If the basis factorization exists, deleting basic columns invalidates
+it.
+
+\subsection{glp\_copy\_prob --- copy problem object content}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_copy_prob(glp_prob *dest, glp_prob *prob, int names);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_copy_prob| copies the content of the problem
+object \verb|prob| to the problem object \verb|dest|.
+
+The parameter \verb|names| is a flag. If it is \verb|GLP_ON|,
+the routine also copies all symbolic names; otherwise, if it is
+\verb|GLP_OFF|, no symbolic names are copied.
+
+\subsection{glp\_erase\_prob --- erase problem object content}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_erase_prob(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_erase_prob| erases the content of the specified
+problem object. The effect of this operation is the same as if the
+problem object would be deleted with the routine \verb|glp_delete_prob|
+and then created anew with the routine \verb|glp_create_prob|, with the
+only exception that the pointer to the problem object remains valid.
+
+%\newpage
+
+\subsection{glp\_delete\_prob --- delete problem object}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_delete_prob(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_delete_prob| deletes a problem object, which the
+parameter \verb|lp| points to, freeing all the memory allocated to this
+object.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Problem retrieving routines}
+
+\subsection{glp\_get\_prob\_name --- retrieve problem name}
+
+\synopsis
+
+\begin{verbatim}
+   const char *glp_get_prob_name(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_prob_name| returns a pointer to an internal
+buffer, which contains symbolic name of the problem. However, if the
+problem has no assigned name, the routine returns \verb|NULL|.
+
+\subsection{glp\_get\_obj\_name --- retrieve objective function name}
+
+\synopsis
+
+\begin{verbatim}
+   const char *glp_get_obj_name(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_obj_name| returns a pointer to an internal
+buffer, which contains symbolic name assigned to the objective
+function. However, if the objective function has no assigned name, the
+routine returns \verb|NULL|.
+
+\subsection{glp\_get\_obj\_dir --- retrieve optimization direction
+flag}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_obj_dir(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_obj_dir| returns the optimization direction
+flag (i.e. ``sense'' of the objective function):
+
+\verb|GLP_MIN| means minimization;
+
+\verb|GLP_MAX| means maximization.
+
+\subsection{glp\_get\_num\_rows --- retrieve number of rows}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_num_rows(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_num_rows| returns the current number of rows
+in the specified problem object.
+
+\newpage
+
+\subsection{glp\_get\_num\_cols --- retrieve number of columns}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_num_cols(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_num_cols| returns the current number of
+columns in the specified problem object.
+
+\subsection{glp\_get\_row\_name --- retrieve row name}
+
+\synopsis
+
+\begin{verbatim}
+   const char *glp_get_row_name(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_row_name| returns a pointer to an internal
+buffer, which contains a symbolic name assigned to \verb|i|-th row.
+However, if the row has no assigned name, the routine returns
+\verb|NULL|.
+
+\subsection{glp\_get\_col\_name --- retrieve column name}
+
+\synopsis
+
+\begin{verbatim}
+   const char *glp_get_col_name(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_col_name| returns a pointer to an internal
+buffer, which contains a symbolic name assigned to \verb|j|-th column.
+However, if the column has no assigned name, the routine returns
+\verb|NULL|.
+
+\subsection{glp\_get\_row\_type --- retrieve row type}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_row_type(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_row_type| returns the type of \verb|i|-th
+row, i.e. the type of corresponding auxiliary variable, as follows:
+
+\verb|GLP_FR| --- free (unbounded) variable;
+
+\verb|GLP_LO| --- variable with lower bound;
+
+\verb|GLP_UP| --- variable with upper bound;
+
+\verb|GLP_DB| --- double-bounded variable;
+
+\verb|GLP_FX| --- fixed variable.
+
+\subsection{glp\_get\_row\_lb --- retrieve row lower bound}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_row_lb(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_row_lb| returns the lower bound of
+\verb|i|-th row, i.e. the lower bound of corresponding auxiliary
+variable. However, if the row has no lower bound, the routine returns
+\verb|-DBL_MAX|.
+
+\vspace*{-4pt}
+
+\subsection{glp\_get\_row\_ub --- retrieve row upper bound}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_row_ub(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_row_ub| returns the upper bound of
+\verb|i|-th row, i.e. the upper bound of corresponding auxiliary
+variable. However, if the row has no upper bound, the routine returns
+\verb|+DBL_MAX|.
+
+\vspace*{-4pt}
+
+\subsection{glp\_get\_col\_type --- retrieve column type}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_col_type(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_col_type| returns the type of \verb|j|-th
+column, i.e. the type of corresponding structural variable, as follows:
+
+\verb|GLP_FR| --- free (unbounded) variable;
+
+\verb|GLP_LO| --- variable with lower bound;
+
+\verb|GLP_UP| --- variable with upper bound;
+
+\verb|GLP_DB| --- double-bounded variable;
+
+\verb|GLP_FX| --- fixed variable.
+
+\vspace*{-4pt}
+
+\subsection{glp\_get\_col\_lb --- retrieve column lower bound}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_col_lb(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_col_lb| returns the lower bound of
+\verb|j|-th column, i.e. the lower bound of corresponding structural
+variable. However, if the column has no lower bound, the routine
+returns \verb|-DBL_MAX|.
+
+\subsection{glp\_get\_col\_ub --- retrieve column upper bound}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_col_ub(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_col_ub| returns the upper bound of
+\verb|j|-th column, i.e. the upper bound of corresponding structural
+variable. However, if the column has no upper bound, the routine
+returns \verb|+DBL_MAX|.
+
+\subsection{glp\_get\_obj\_coef --- retrieve objective coefficient or
+constant term}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_obj_coef(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_obj_coef| returns the objective coefficient
+at \verb|j|-th structural variable (column).
+
+If the parameter \verb|j| is 0, the routine returns the constant term
+(``shift'') of the objective function.
+
+\subsection{glp\_get\_num\_nz --- retrieve number of constraint
+coefficients}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_num_nz(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_num_nz| returns the number of non-zero
+elements in the constraint matrix of the specified problem object.
+
+\subsection{glp\_get\_mat\_row --- retrieve row of the constraint
+matrix}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_mat_row(glp_prob *P, int i, int ind[], double val[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_get_mat_row| scans (non-zero) elements of
+\verb|i|-th row of the constraint matrix of the specified problem
+object and stores their column indices and numeric values to locations
+\verb|ind[1]|, \dots, \verb|ind[len]| and \verb|val[1]|, \dots,
+\verb|val[len]|, respectively, where $0\leq{\tt len}\leq n$ is the
+number of elements in $i$-th row, $n$ is the number of columns.
+
+The parameter \verb|ind| and/or \verb|val| can be specified as
+\verb|NULL|, in which case corresponding information is not stored.
+
+%\newpage
+
+\returns
+
+The routine \verb|glp_get_mat_row| returns the length \verb|len|, i.e.
+the number of (non-zero) elements in \verb|i|-th row.
+
+\subsection{glp\_get\_mat\_col --- retrieve column of the constraint
+matrix}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_mat_col(glp_prob *P, int j, int ind[], double val[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_get_mat_col| scans (non-zero) elements of
+\verb|j|-th column of the constraint matrix of the specified problem
+object and stores their row indices and numeric values to locations
+\linebreak \verb|ind[1]|, \dots, \verb|ind[len]| and \verb|val[1]|,
+\dots, \verb|val[len]|, respectively, where $0\leq{\tt len}\leq m$ is
+the number of elements in $j$-th column, $m$ is the number of rows.
+
+The parameter \verb|ind| and/or \verb|val| can be specified as
+\verb|NULL|, in which case corresponding information is not stored.
+
+\returns
+
+The routine \verb|glp_get_mat_col| returns the length \verb|len|, i.e.
+the number of (non-zero) elements in \verb|j|-th column.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Row and column searching routines}
+
+Sometimes it may be necessary to find rows and/or columns by their
+names (assigned with the routines \verb|glp_set_row_name| and
+\verb|glp_set_col_name|). Though a particular row/column can be found
+by its name using simple enumeration of all rows/columns, in case of
+large instances such a {\it linear} search may take too long time.
+
+To significantly reduce the search time the application program may
+create the row/column name index, which is an auxiliary data structure
+implementing a {\it binary} search. Even in worst cases the search
+takes logarithmic time, i.e. the time needed to find a particular row
+(or column) by its name is $O(\log_2m)$ (or $O(\log_2n)$), where $m$
+and $n$ are, resp., the number of rows and columns in the problem
+object.
+
+It is important to note that:
+
+\Item{1.}On creating the problem object with the routine
+\verb|glp_create_prob| the name index is {\it not} created.
+
+\Item{2.}The name index can be created (destroyed) at any time with the
+routine \verb|glp_create_index| (\verb|glp_delete_index|). Having been
+created the name index becomes part of the corresponding problem
+object.
+
+\Item{3.}The time taken to create the name index is
+$O[(m+n)\log_2(m+n)]$, so it is recommended to create the index only
+once, for example, just after the problem object was created.
+
+\Item{4.}If the name index exists, it is automatically updated every
+time the name of a row/column is assigned/changed. The update operation
+takes logarithmic time.
+
+\Item{5.}If the name index does not exist, the application should not
+call the routines \verb|glp_find_row| and \verb|glp_find_col|.
+Otherwise, an error message will be issued and abnormal program
+termination will occur.
+
+\Item{6.}On destroying the problem object with the routine
+\verb|glp_delete_prob|, the name index, if exists, is automatically
+destroyed.
+
+\subsection{glp\_create\_index --- create the name index}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_create_index(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_create_index| creates the name index for the
+specified problem object. The name index is an auxiliary data
+structure, which is intended to quickly (i.e. for logarithmic time)
+find rows and columns by their names.
+
+This routine can be called at any time. If the name index already
+exists, the routine does nothing.
+
+\newpage
+
+\subsection{glp\_find\_row --- find row by its name}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_find_row(glp_prob *P, const char *name);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_find_row| returns the ordinal number of a row,
+which is assigned the specified symbolic \verb|name|. If no such row
+exists, the routine returns 0.
+
+\subsection{glp\_find\_col --- find column by its name}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_find_col(glp_prob *P, const char *name);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_find_col| returns the ordinal number of a column,
+which is assigned the specified symbolic \verb|name|. If no such column
+exists, the routine returns 0.
+
+\subsection{glp\_delete\_index --- delete the name index}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_delete_index(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_delete_index| deletes the name index previously
+created by the routine\linebreak \verb|glp_create_index| and frees the
+memory allocated to this auxiliary data structure.
+
+This routine can be called at any time. If the name index does not
+exist, the routine does nothing.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Problem scaling routines}
+
+\subsection{Background}
+
+In GLPK the {\it scaling} means a linear transformation applied to the
+constraint matrix to improve its numerical properties.\footnote{In many
+cases a proper scaling allows making the constraint matrix to be better
+conditioned, i.e. decreasing its condition number, that makes
+computations numerically more stable.}
+
+The main equality is the following:
+$$\widetilde{A}=RAS,\eqno(2.1)$$
+where $A=(a_{ij})$ is the original constraint matrix, $R=(r_{ii})>0$ is
+a diagonal matrix used to scale rows (constraints), $S=(s_{jj})>0$ is a
+diagonal matrix used to scale columns (variables), $\widetilde{A}$ is
+the scaled constraint matrix.
+
+From (2.1) it follows that in the {\it scaled} problem instance each
+original constraint coefficient $a_{ij}$ is replaced by corresponding
+scaled constraint coefficient:
+$$\widetilde{a}_{ij}=r_{ii}a_{ij}s_{jj}.\eqno(2.2)$$
+
+Note that the scaling is performed internally and therefore
+transparently to the user. This means that on API level the user always
+deal with unscaled data.
+
+Scale factors $r_{ii}$ and $s_{jj}$ can be set or changed at any time
+either directly by the application program in a problem specific way
+(with the routines \verb|glp_set_rii| and \verb|glp_set_sjj|), or by
+some API routines intended for automatic scaling.
+
+\subsection{glp\_set\_rii --- set (change) row scale factor}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_rii(glp_prob *P, int i, double rii);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_rii| sets (changes) the scale factor $r_{ii}$
+for $i$-th row of the specified problem object.
+
+\subsection{glp\_set\_sjj --- set (change) column scale factor}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_sjj(glp_prob *P, int j, double sjj);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_sjj| sets (changes) the scale factor $s_{jj}$
+for $j$-th column of the specified problem object.
+
+\newpage
+
+\subsection{glp\_get\_rii --- retrieve row scale factor}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_rii(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_rii| returns current scale factor $r_{ii}$
+for $i$-th row of the specified problem object.
+
+\vspace*{-6pt}
+
+\subsection{glp\_get\_sjj --- retrieve column scale factor}
+
+\vspace*{-4pt}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_sjj(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_sjj| returns current scale factor $s_{jj}$
+for $j$-th column of the specified problem object.
+
+\vspace*{-6pt}
+
+\subsection{glp\_scale\_prob --- scale problem data}
+
+\vspace*{-4pt}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_scale_prob(glp_prob *P, int flags);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_scale_prob| performs automatic scaling of problem
+data for the specified problem object.
+
+The parameter \verb|flags| specifies scaling options used by the
+routine. The options can be combined with the bitwise OR operator and
+may be the following:
+
+\verb|GLP_SF_GM  | --- perform geometric mean scaling;
+
+\verb|GLP_SF_EQ  | --- perform equilibration scaling;
+
+\verb|GLP_SF_2N  | --- round scale factors to nearest power of two;
+
+\verb|GLP_SF_SKIP| --- skip scaling, if the problem is well scaled.
+
+The parameter \verb|flags| may be also specified as \verb|GLP_SF_AUTO|,
+in which case the routine chooses the scaling options automatically.
+
+\vspace*{-6pt}
+
+\subsection{glp\_unscale\_prob --- unscale problem data}
+
+\vspace*{-4pt}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_unscale_prob(glp_prob *P);
+\end{verbatim}
+
+The routine \verb|glp_unscale_prob| performs unscaling of problem data
+for the specified problem object.
+
+``Unscaling'' means replacing the current scaling matrices $R$ and $S$
+by unity matrices that cancels the scaling effect.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{LP basis constructing routines}
+
+\subsection{Background}
+
+To start the search the simplex method needs a valid initial basis.
+In GLPK the basis is completely defined by a set of {\it statuses}
+assigned to {\it all} (auxiliary and structural) variables, where the
+status may be one of the following:
+
+\verb|GLP_BS| --- basic variable;
+
+\verb|GLP_NL| --- non-basic variable having active lower bound;
+
+\verb|GLP_NU| --- non-basic variable having active upper bound;
+
+\verb|GLP_NF| --- non-basic free variable;
+
+\verb|GLP_NS| --- non-basic fixed variable.
+
+The basis is {\it valid}, if the basis matrix, which is a matrix built
+of columns of the augmented constraint matrix $(I\:|-A)$ corresponding
+to basic variables, is non-singular. This, in particular, means that
+the number of basic variables must be the same as the number of rows in
+the problem object. (For more details see Section \ref{lpbasis}, page
+\pageref{lpbasis}.)
+
+Any initial basis may be constructed (or restored) with the API
+routines \verb|glp_set_row_stat| and \verb|glp_set_col_stat| by
+assigning appropriate statuses to auxiliary and structural variables.
+Another way to construct an initial basis is to use API routines like
+\verb|glp_adv_basis|, which implement so called
+{\it crashing}.\footnote{This term is from early linear programming
+systems and means a heuristic to construct a valid initial basis.} Note
+that on normal exit the simplex solver remains the basis valid, so in
+case of re-optimization there is no need to construct an initial basis
+from scratch.
+
+\subsection{glp\_set\_row\_stat --- set (change) row status}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_row_stat(glp_prob *P, int i, int stat);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_row_stat| sets (changes) the current status
+of \verb|i|-th row (auxiliary variable) as specified by the parameter
+\verb|stat|:
+
+\verb|GLP_BS| --- make the row basic (make the constraint inactive);
+
+\verb|GLP_NL| --- make the row non-basic (make the constraint active);
+
+\verb|GLP_NU| --- make the row non-basic and set it to the upper bound;
+if the row is not double-bounded, this status is equivalent to
+\verb|GLP_NL| (only in case of this routine);
+
+\verb|GLP_NF| --- the same as \verb|GLP_NL| (only in case of this
+routine);
+
+\verb|GLP_NS| --- the same as \verb|GLP_NL| (only in case of this
+routine).
+
+\newpage
+
+\subsection{glp\_set\_col\_stat --- set (change) column status}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_col_stat(glp_prob *P, int j, int stat);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_col_stat sets| (changes) the current status
+of \verb|j|-th column (structural variable) as specified by the
+parameter \verb|stat|:
+
+\verb|GLP_BS| --- make the column basic;
+
+\verb|GLP_NL| --- make the column non-basic;
+
+\verb|GLP_NU| --- make the column non-basic and set it to the upper
+bound; if the column is not double-bounded, this status is equivalent
+to \verb|GLP_NL| (only in case of this routine);
+
+\verb|GLP_NF| --- the same as \verb|GLP_NL| (only in case of this
+routine);
+
+\verb|GLP_NS| --- the same as \verb|GLP_NL| (only in case of this
+routine).
+
+\subsection{glp\_std\_basis --- construct standard initial LP basis}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_std_basis(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_std_basis| constructs the ``standard'' (trivial)
+initial LP basis for the specified problem object.
+
+In the ``standard'' LP basis all auxiliary variables (rows) are basic,
+and all structural variables (columns) are non-basic (so the
+corresponding basis matrix is unity).
+
+\subsection{glp\_adv\_basis --- construct advanced initial LP basis}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_adv_basis(glp_prob *P, int flags);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_adv_basis| constructs an advanced initial LP
+basis for the specified problem object.
+
+The parameter \verb|flags| is reserved for use in the future and must
+be specified as zero.
+
+In order to construct the advanced initial LP basis the routine does
+the following:
+
+1) includes in the basis all non-fixed auxiliary variables;
+
+2) includes in the basis as many non-fixed structural variables as
+possible keeping the triangular form of the basis matrix;
+
+3) includes in the basis appropriate (fixed) auxiliary variables to
+complete the basis.
+
+As a result the initial LP basis has as few fixed variables as possible
+and the corresponding basis matrix is triangular.
+
+\subsection{glp\_cpx\_basis --- construct Bixby's initial LP basis}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_cpx_basis(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_cpx_basis| constructs an initial basis for the
+specified problem object with the algorithm proposed by
+R.~Bixby.\footnote{Robert E. Bixby, ``Implementing the Simplex Method:
+The Initial Basis.'' ORSA Journal on Computing, Vol. 4, No. 3, 1992,
+pp. 267-84.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Simplex method routines}
+
+The {\it simplex method} is a well known efficient numerical procedure
+to solve LP problems.
+
+On each iteration the simplex method transforms the original system of
+equaility constraints (1.2) resolving them through different sets of
+variables to an equivalent system called {\it the simplex table} (or
+sometimes {\it the simplex tableau}), which has the following form:
+$$
+\begin{array}{r@{\:}c@{\:}r@{\:}c@{\:}r@{\:}c@{\:}r}
+z&=&d_1(x_N)_1&+&d_2(x_N)_2&+ \dots +&d_n(x_N)_n \\
+(x_B)_1&=&\xi_{11}(x_N)_1& +& \xi_{12}(x_N)_2& + \dots +&
+   \xi_{1n}(x_N)_n \\
+(x_B)_2&=& \xi_{21}(x_N)_1& +& \xi_{22}(x_N)_2& + \dots +&
+   \xi_{2n}(x_N)_n \\
+\multicolumn{7}{c}
+{.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .} \\
+(x_B)_m&=&\xi_{m1}(x_N)_1& +& \xi_{m2}(x_N)_2& + \dots +&
+   \xi_{mn}(x_N)_n \\
+\end{array} \eqno (2.3)
+$$
+where: $(x_B)_1, (x_B)_2, \dots, (x_B)_m$ are basic variables;
+$(x_N)_1, (x_N)_2, \dots, (x_N)_n$ are non-basic variables;
+$d_1, d_2, \dots, d_n$ are reduced costs;
+$\xi_{11}, \xi_{12}, \dots, \xi_{mn}$ are coefficients of the
+simplex table. (May note that the original LP problem (1.1)---(1.3)
+also has the form of a simplex table, where all equalities are resolved
+through auxiliary variables.)
+
+From the linear programming theory it is known that if an optimal
+solution of the LP problem (1.1)---(1.3) exists, it can always be
+written in the form (2.3), where non-basic variables are set on their
+bounds while values of the objective function and basic variables are
+determined by the corresponding equalities of the simplex table.
+
+A set of values of all basic and non-basic variables determined by the
+simplex table is called {\it basic solution}. If all basic variables
+are within their bounds, the basic solution is called {\it (primal)
+feasible}, otherwise it is called {\it (primal) infeasible}. A feasible
+basic solution, which provides a smallest (in case of minimization) or
+a largest (in case of maximization) value of the objective function is
+called {\it optimal}. Therefore, for solving LP problem the simplex
+method tries to find its optimal basic solution.
+
+Primal feasibility of some basic solution may be stated by simple
+checking if all basic variables are within their bounds. Basic solution
+is optimal if additionally the following optimality conditions are
+satisfied for all non-basic variables:
+\begin{center}
+\begin{tabular}{lcc}
+Status of $(x_N)_j$ & Minimization & Maximization \\
+\hline
+$(x_N)_j$ is free & $d_j = 0$ & $d_j = 0$ \\
+$(x_N)_j$ is on its lower bound & $d_j \geq 0$ & $d_j \leq 0$ \\
+$(x_N)_j$ is on its upper bound & $d_j \leq 0$ & $d_j \geq 0$ \\
+\end{tabular}
+\end{center}
+In other words, basic solution is optimal if there is no non-basic
+variable, which changing in the feasible direction (i.e. increasing if
+it is free or on its lower bound, or decreasing if it is free or on its
+upper bound) can improve (i.e. decrease in case of minimization or
+increase in case of maximization) the objective function.
+
+If all non-basic variables satisfy to the optimality conditions shown
+above (independently on whether basic variables are within their bounds
+or not), the basic solution is called {\it dual feasible}, otherwise it
+is called {\it dual infeasible}.
+
+It may happen that some LP problem has no primal feasible solution due
+to incorrect\linebreak formulation --- this means that its constraints
+conflict with each other. It also may happen that some LP problem has
+unbounded solution again due to incorrect formulation --- this means
+that some non-basic variable can improve the objective function, i.e.
+the optimality conditions are violated, and at the same time this
+variable can infinitely change in the feasible direction meeting
+no resistance from basic variables. (May note that in the latter case
+the LP problem has no dual feasible solution.)
+
+\subsection{glp\_simplex --- solve LP problem with the primal or dual
+simplex method}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_simplex(glp_prob *P, const glp_smcp *parm);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_simplex| is a driver to the LP solver based on
+the simplex method. This routine retrieves problem data from the
+specified problem object, calls the solver to solve the problem
+instance, and stores results of computations back into the problem
+object.
+
+The simplex solver has a set of control parameters. Values of the
+control parameters can be passed in the structure \verb|glp_smcp|,
+which the parameter \verb|parm| points to. For detailed description of
+this structure see paragraph ``Control parameters'' below.
+Before specifying some control parameters the application program
+should initialize the structure \verb|glp_smcp| by default values of
+all control parameters using the routine \verb|glp_init_smcp| (see the
+next subsection). This is needed for backward compatibility, because in
+the future there may appear new members in the structure
+\verb|glp_smcp|.
+
+The parameter \verb|parm| can be specified as \verb|NULL|, in which
+case the solver uses default settings.
+
+\returns
+
+\begin{retlist}
+0 & The LP problem instance has been successfully solved. (This code
+does {\it not} necessarily mean that the solver has found optimal
+solution. It only means that the solution process was successful.) \\
+
+\verb|GLP_EBADB| & Unable to start the search, because the initial
+basis specified in the problem object is invalid---the number of basic
+(auxiliary and structural) variables is not the same as the number of
+rows in the problem object.\\
+
+\verb|GLP_ESING| & Unable to start the search, because the basis matrix
+corresponding to the initial basis is singular within the working
+precision.\\
+
+\verb|GLP_ECOND| & Unable to start the search, because the basis matrix
+corresponding to the initial basis is ill-conditioned, i.e. its
+condition number is too large.\\
+
+\verb|GLP_EBOUND| & Unable to start the search, because some
+double-bounded (auxiliary or structural) variables have incorrect
+bounds.\\
+
+\verb|GLP_EFAIL| & The search was prematurely terminated due to the
+solver failure.\\
+
+\verb|GLP_EOBJLL| & The search was prematurely terminated, because the
+objective function being maximized has reached its lower limit and
+continues decreasing (the dual simplex only).\\
+
+\verb|GLP_EOBJUL| & The search was prematurely terminated, because the
+objective function being minimized has reached its upper limit and
+continues increasing (the dual simplex only).\\
+
+\verb|GLP_EITLIM| & The search was prematurely terminated, because the
+simplex iteration limit has been exceeded.\\
+
+\verb|GLP_ETMLIM| & The search was prematurely terminated, because the
+time limit has been exceeded.\\
+\end{retlist}
+
+\begin{retlist}
+\verb|GLP_ENOPFS| & The LP problem instance has no primal feasible
+solution (only if the LP presolver is used).\\
+
+\verb|GLP_ENODFS| & The LP problem instance has no dual feasible
+solution (only if the LP presolver is used).\\
+\end{retlist}
+
+\para{Built-in LP presolver}
+
+The simplex solver has {\it built-in LP presolver}. It is a subprogram
+that transforms the original LP problem specified in the problem object
+to an equivalent LP problem, which may be easier for solving with the
+simplex method than the original one. This is attained mainly due to
+reducing the problem size and improving its numeric properties (for
+example, by removing some inactive constraints or by fixing some
+non-basic variables). Once the transformed LP problem has been solved,
+the presolver transforms its basic solution back to the corresponding
+basic solution of the original problem.
+
+Presolving is an optional feature of the routine \verb|glp_simplex|,
+and by default it is disabled. In order to enable the LP presolver the
+control parameter \verb|presolve| should be set to \verb|GLP_ON| (see
+paragraph ``Control parameters'' below). Presolving may be used when
+the problem instance is solved for the first time. However, on
+performing re-optimization the presolver should be disabled.
+
+The presolving procedure is transparent to the API user in the sense
+that all necessary processing is performed internally, and a basic
+solution of the original problem recovered by the presolver is the same
+as if it were computed directly, i.e. without presolving.
+
+Note that the presolver is able to recover only optimal solutions. If
+a computed solution is infeasible or non-optimal, the corresponding
+solution of the original problem cannot be recovered and therefore
+remains undefined. If you need to know a basic solution even if it is
+infeasible or non-optimal, the presolver should be disabled.
+
+\para{Terminal output}
+
+Solving large problem instances may take a long time, so the solver
+reports some information about the current basic solution, which is
+sent to the terminal. This information has the following format:
+
+\begin{verbatim}
+   nnn:  obj = xxx  infeas = yyy (num) cnt
+\end{verbatim}
+
+\noindent
+where: `\verb|nnn|' is the iteration number, `\verb|xxx|' is the
+current value of the objective function (it is unscaled and has correct
+sign); `\verb|yyy|' is the current sum of primal or dual
+infeasibilities (it is scaled and therefore may be used only for visual
+estimating), `\verb|num|' is the current number of primal or dual
+infeasibilities (phase I) or non-optimalities (phase II), `\verb|cnt|'
+is the number of basis factorizations since the last terminal output.
+
+The symbol preceding the iteration number indicates which phase of the
+simplex method is in effect:
+
+{\it Blank} means that the solver is searching for primal feasible
+solution using the primal simplex or for dual feasible solution using
+the dual simplex;
+
+{\it Asterisk} (\verb|*|) means that the solver is searching for
+optimal solution using the primal simplex;
+
+{\it Hash} (\verb|#|) means that the solver is searching for optimal
+solution using the dual simplex.
+
+\newpage
+
+\para{Control parameters}
+
+This paragraph describes all control parameters currently used in the
+simplex solver. Symbolic names of control parameters are names of
+corresponding members in the structure \verb|glp_smcp|.
+
+\bigskip
+
+{\tt int msg\_lev} (default: {\tt GLP\_MSG\_ALL})
+
+Message level for terminal output:
+
+\verb|GLP_MSG_OFF| --- no output;
+
+\verb|GLP_MSG_ERR| --- error and warning messages only;
+
+\verb|GLP_MSG_ON | --- normal output;
+
+\verb|GLP_MSG_ALL| --- full output (including informational messages).
+
+\bigskip
+
+{\tt int meth} (default: {\tt GLP\_PRIMAL})
+
+Simplex method option:
+
+\verb|GLP_PRIMAL| --- use two-phase primal simplex;
+
+\verb|GLP_DUAL  | --- use two-phase dual simplex;
+
+\verb|GLP_DUALP | --- use two-phase dual simplex, and if it fails,
+switch to the primal simplex.
+
+\bigskip
+
+{\tt int pricing} (default: {\tt GLP\_PT\_PSE})
+
+Pricing technique:
+
+\verb|GLP_PT_STD| --- standard (``textbook'');
+
+\verb|GLP_PT_PSE| --- projected steepest edge.
+
+\bigskip
+
+{\tt int r\_test} (default: {\tt GLP\_RT\_HAR})
+
+Ratio test technique:
+
+\verb|GLP_RT_STD| --- standard (``textbook'');
+
+\verb|GLP_RT_HAR| --- Harris' two-pass ratio test.
+
+\bigskip
+
+{\tt double tol\_bnd} (default: {\tt 1e-7})
+
+Tolerance used to check if the basic solution is primal feasible.
+(Do not change this parameter without detailed understanding its
+purpose.)
+
+%\newpage
+\bigskip
+
+{\tt double tol\_dj} (default: {\tt 1e-7})
+
+Tolerance used to check if the basic solution is dual feasible.
+(Do not change this parameter without detailed understanding its
+purpose.)
+
+\bigskip
+
+{\tt double tol\_piv} (default: {\tt 1e-9})
+
+Tolerance used to choose eligble pivotal elements of the simplex table.
+(Do not change this parameter without detailed understanding its
+purpose.)
+
+%\bigskip
+\newpage
+
+{\tt double obj\_ll} (default: {\tt -DBL\_MAX})
+
+Lower limit of the objective function. If the objective function
+reaches this limit and continues decreasing, the solver terminates the
+search. (Used in the dual simplex only.)
+
+\bigskip
+
+{\tt double obj\_ul} (default: {\tt +DBL\_MAX})
+
+Upper limit of the objective function. If the objective function
+reaches this limit and continues increasing, the solver terminates the
+search. (Used in the dual simplex only.)
+
+\bigskip
+
+{\tt int it\_lim} (default: {\tt INT\_MAX})
+
+Simplex iteration limit.
+
+\bigskip
+
+{\tt int tm\_lim} (default: {\tt INT\_MAX})
+
+Searching time limit, in milliseconds.
+
+\bigskip
+
+{\tt int out\_frq} (default: {\tt 500})
+
+Output frequency, in iterations. This parameter specifies how
+frequently the solver sends information about the solution process to
+the terminal.
+
+\bigskip
+
+{\tt int out\_dly} (default: {\tt 0})
+
+Output delay, in milliseconds. This parameter specifies how long the
+solver should delay sending information about the solution process to
+the terminal.
+
+\bigskip
+
+{\tt int presolve} (default: {\tt GLP\_OFF})
+
+LP presolver option:
+
+\verb|GLP_ON | --- enable using the LP presolver;
+
+\verb|GLP_OFF| --- disable using the LP presolver.
+
+\newpage
+
+\para{Example 1}
+
+The following example main program reads LP problem instance in fixed
+MPS format from file \verb|25fv47.mps|,\footnote{This instance in fixed
+MPS format can be found in the Netlib LP collection; see
+{\tt ftp://ftp.netlib.org/lp/data/}.} constructs an advanced initial
+basis, solves the instance with the primal simplex method (by default),
+and writes the solution to file \verb|25fv47.txt|.
+
+\begin{footnotesize}
+\begin{verbatim}
+/* spxsamp1.c */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <glpk.h>
+
+int main(void)
+{     glp_prob *P;
+      P = glp_create_prob();
+      glp_read_mps(P, GLP_MPS_DECK, NULL, "25fv47.mps");
+      glp_adv_basis(P, 0);
+      glp_simplex(P, NULL);
+      glp_print_sol(P, "25fv47.txt");
+      glp_delete_prob(P);
+      return 0;
+}
+
+/* eof */
+\end{verbatim}
+\end{footnotesize}
+
+Below here is shown the terminal output from this example program.
+
+\begin{footnotesize}
+\begin{verbatim}
+Reading problem data from '25fv47.mps'...
+Problem: 25FV47
+Objective: R0000
+822 rows, 1571 columns, 11127 non-zeros
+6919 records were read
+One free row was removed
+Constructing initial basis...
+Size of triangular part is 812
+GLPK Simplex Optimizer, v4.57
+821 rows, 1571 columns, 10400 non-zeros
+      0: obj =   7.131703290e+03 inf =   2.145e+05 (204)
+    500: obj =   1.886711682e+04 inf =   8.273e+02 (36) 4
+    741: obj =   1.846047936e+04 inf =   5.575e-14 (0) 2
+*  1000: obj =   9.220063473e+03 inf =   2.423e-14 (432) 2
+*  1500: obj =   6.187659664e+03 inf =   1.019e-13 (368) 4
+*  2000: obj =   5.503442062e+03 inf =   0.000e+00 (33) 5
+*  2052: obj =   5.501845888e+03 inf =   0.000e+00 (0)
+OPTIMAL LP SOLUTION FOUND
+Writing basic solution to '25fv47.txt'...
+\end{verbatim}
+\end{footnotesize}
+
+\newpage
+
+\para{Example 2}
+
+The following example main program solves the same LP problem instance
+as in Example 1 above, however, it uses the dual simplex method, which
+starts from the standard initial basis.
+
+\begin{footnotesize}
+\begin{verbatim}
+/* spxsamp2.c */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <glpk.h>
+
+int main(void)
+{     glp_prob *P;
+      glp_smcp parm;
+      P = glp_create_prob();
+      glp_read_mps(P, GLP_MPS_DECK, NULL, "25fv47.mps");
+      glp_init_smcp(&parm);
+      parm.meth = GLP_DUAL;
+      glp_simplex(P, &parm);
+      glp_print_sol(P, "25fv47.txt");
+      glp_delete_prob(P);
+      return 0;
+}
+
+/* eof */
+\end{verbatim}
+\end{footnotesize}
+
+Below here is shown the terminal output from this example program.
+
+\begin{footnotesize}
+\begin{verbatim}
+Reading problem data from '25fv47.mps'...
+Problem: 25FV47
+Objective: R0000
+822 rows, 1571 columns, 11127 non-zeros
+6919 records were read
+One free row was removed
+GLPK Simplex Optimizer, v4.57
+821 rows, 1571 columns, 10400 non-zeros
+      0:                         inf =   1.223e+02 (41)
+    258:                         inf =   3.091e-16 (0) 2
+#   500: obj =  -5.071287080e+03 inf =   2.947e-15 (292) 2
+#  1000: obj =  -1.352843873e+03 inf =   8.452e-15 (302) 5
+#  1500: obj =   7.985859737e+02 inf =   1.127e-14 (263) 5
+#  2000: obj =   3.059023029e+03 inf =   6.290e-11 (197) 4
+#  2500: obj =   5.354770966e+03 inf =   7.172e-13 (130) 5
+#  2673: obj =   5.501845888e+03 inf =   3.802e-16 (0) 2
+OPTIMAL LP SOLUTION FOUND
+Writing basic solution to '25fv47.txt'...
+\end{verbatim}
+\end{footnotesize}
+
+\newpage
+
+\subsection{glp\_exact --- solve LP problem in exact arithmetic}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_exact(glp_prob *P, const glp_smcp *parm);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_exact| is a tentative implementation of the
+primal two-phase simplex method based on exact (rational) arithmetic.
+It is similar to the routine \verb|glp_simplex|, however, for all
+internal computations it uses arithmetic of rational numbers, which is
+exact in mathematical sense, i.e. free of round-off errors unlike
+floating-point arithmetic.
+
+Note that the routine \verb|glp_exact| uses only three control
+parameters passed in the structure \verb|glp_smcp|, namely,
+\verb|msg_lev|, \verb|it_lim|, and \verb|tm_lim|.
+
+\returns
+
+\begin{retlist}
+0 & The LP problem instance has been successfully solved. (This code
+does {\it not} necessarily mean that the solver has found optimal
+solution. It only means that the solution process was successful.) \\
+
+\verb|GLP_EBADB| & Unable to start the search, because the initial basis
+specified in the problem object is invalid---the number of basic
+(auxiliary and structural) variables is not the same as the number of
+rows in the problem object.\\
+
+\verb|GLP_ESING| & Unable to start the search, because the basis matrix
+corresponding to the initial basis is exactly singular.\\
+
+\verb|GLP_EBOUND| & Unable to start the search, because some
+double-bounded (auxiliary or structural) variables have incorrect
+bounds.\\
+
+\verb|GLP_EFAIL| & The problem instance has no rows/columns.\\
+
+\verb|GLP_EITLIM| & The search was prematurely terminated, because the
+simplex iteration limit has been exceeded.\\
+
+\verb|GLP_ETMLIM| & The search was prematurely terminated, because the
+time limit has been exceeded.\\
+\end{retlist}
+
+\para{Note}
+
+Computations in exact arithmetic are very time-consuming, so solving
+LP problem with the routine \verb|glp_exact| from the very beginning is
+not a good idea. It is much better at first to find an optimal basis
+with the routine \verb|glp_simplex| and only then to call
+\verb|glp_exact|, in which case only a few simplex iterations need to
+be performed in exact arithmetic.
+
+\newpage
+
+\subsection{glp\_init\_smcp --- initialize simplex solver control
+parameters}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_init_smcp(glp_smcp *parm);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_init_smcp| initializes control parameters, which
+are used by the simplex solver, with default values.
+
+Default values of the control parameters are stored in
+a \verb|glp_smcp| structure, which the parameter \verb|parm| points to.
+
+\subsection{glp\_get\_status --- determine generic status of basic
+solution}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_status(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_status| reports the generic status of the
+current basic solution for the specified problem object as follows:
+
+\verb|GLP_OPT   | --- solution is optimal;
+
+\verb|GLP_FEAS  | --- solution is feasible;
+
+\verb|GLP_INFEAS| --- solution is infeasible;
+
+\verb|GLP_NOFEAS| --- problem has no feasible solution;
+
+\verb|GLP_UNBND | --- problem has unbounded solution;
+
+\verb|GLP_UNDEF | --- solution is undefined.
+
+More detailed information about the status of basic solution can be
+retrieved with the routines \verb|glp_get_prim_stat| and
+\verb|glp_get_dual_stat|.
+
+\subsection{glp\_get\_prim\_stat --- retrieve status of primal basic
+solution}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_prim_stat(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_prim_stat| reports the status of the primal
+basic solution for the specified problem object as follows:
+
+\verb|GLP_UNDEF | --- primal solution is undefined;
+
+\verb|GLP_FEAS  | --- primal solution is feasible;
+
+\verb|GLP_INFEAS| --- primal solution is infeasible;
+
+\verb|GLP_NOFEAS| --- no primal feasible solution exists.
+
+\subsection{glp\_get\_dual\_stat --- retrieve status of dual basic
+solution}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_dual_stat(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_dual_stat| reports the status of the dual
+basic solution for the specified problem object as follows:
+
+\verb|GLP_UNDEF | --- dual solution is undefined;
+
+\verb|GLP_FEAS  | --- dual solution is feasible;
+
+\verb|GLP_INFEAS| --- dual solution is infeasible;
+
+\verb|GLP_NOFEAS| --- no dual feasible solution exists.
+
+\subsection{glp\_get\_obj\_val --- retrieve objective value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_obj_val(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_obj_val| returns current value of the
+objective function.
+
+\subsection{glp\_get\_row\_stat --- retrieve row status}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_row_stat(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_row_stat| returns current status assigned to
+the auxiliary variable associated with \verb|i|-th row as follows:
+
+\verb|GLP_BS| --- basic variable;
+
+\verb|GLP_NL| --- non-basic variable on its lower bound;
+
+\verb|GLP_NU| --- non-basic variable on its upper bound;
+
+\verb|GLP_NF| --- non-basic free (unbounded) variable;
+
+\verb|GLP_NS| --- non-basic fixed variable.
+
+%\newpage
+
+\subsection{glp\_get\_row\_prim --- retrieve row primal value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_row_prim(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_row_prim| returns primal value of the
+auxiliary variable associated with \verb|i|-th row.
+
+\subsection{glp\_get\_row\_dual --- retrieve row dual value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_row_dual(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_row_dual| returns dual value (i.e. reduced
+cost) of the auxiliary variable associated with \verb|i|-th row.
+
+\subsection{glp\_get\_col\_stat --- retrieve column status}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_col_stat(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_col_stat| returns current status assigned to
+the structural variable associated with \verb|j|-th column as follows:
+
+\verb|GLP_BS| --- basic variable;
+
+\verb|GLP_NL| --- non-basic variable on its lower bound;
+
+\verb|GLP_NU| --- non-basic variable on its upper bound;
+
+\verb|GLP_NF| --- non-basic free (unbounded) variable;
+
+\verb|GLP_NS| --- non-basic fixed variable.
+
+\subsection{glp\_get\_col\_prim --- retrieve column primal value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_col_prim(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_col_prim| returns primal value of the
+structural variable associated with \verb|j|-th column.
+
+%\newpage
+
+\subsection{glp\_get\_col\_dual --- retrieve column dual value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_get_col_dual(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_col_dual| returns dual value (i.e. reduced
+cost) of the structural variable associated with \verb|j|-th column.
+
+\newpage
+
+\subsection{glp\_get\_unbnd\_ray --- determine variable causing
+unboundedness}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_unbnd_ray(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_unbnd_ray| returns the number $k$ of
+a variable, which causes primal or dual unboundedness.
+If $1\leq k\leq m$, it is $k$-th auxiliary variable, and if
+$m+1\leq k\leq m+n$, it is $(k-m)$-th structural variable, where $m$ is
+the number of rows, $n$ is the number of columns in the problem object.
+If such variable is not defined, the routine returns 0.
+
+\para{Note}
+
+If it is not exactly known which version of the simplex solver
+detected unboundedness, i.e. whether the unboundedness is primal or
+dual, it is sufficient to check the status of the variable
+with the routine \verb|glp_get_row_stat| or \verb|glp_get_col_stat|.
+If the variable is non-basic, the unboundedness is primal, otherwise,
+if the variable is basic, the unboundedness is dual (the latter case
+means that the problem has no primal feasible dolution).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Interior-point method routines}
+
+{\it Interior-point methods} (also known as {\it barrier methods}) are
+more modern and powerful numerical methods for large-scale linear
+programming. Such methods are especially efficient for very sparse LP
+problems and allow solving such problems much faster than the simplex
+method.
+
+In brief, the GLPK interior-point solver works as follows.
+
+At first, the solver transforms the original LP to a {\it working} LP
+in the standard format:
+
+\medskip
+
+\noindent
+\hspace{.5in} minimize
+$$z = c_1x_{m+1} + c_2x_{m+2} + \dots + c_nx_{m+n} + c_0 \eqno (2.4)$$
+\hspace{.5in} subject to linear constraints
+$$
+\begin{array}{r@{\:}c@{\:}r@{\:}c@{\:}r@{\:}c@{\:}l}
+a_{11}x_{m+1}&+&a_{12}x_{m+2}&+ \dots +&a_{1n}x_{m+n}&=&b_1 \\
+a_{21}x_{m+1}&+&a_{22}x_{m+2}&+ \dots +&a_{2n}x_{m+n}&=&b_2 \\
+\multicolumn{7}{c}
+{.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .} \\
+a_{m1}x_{m+1}&+&a_{m2}x_{m+2}&+ \dots +&a_{mn}x_{m+n}&=&b_m \\
+\end{array} \eqno (2.5)
+$$
+\hspace{.5in} and non-negative variables
+$$x_1\geq 0,\ \ x_2\geq 0,\ \ \dots,\ \ x_n\geq 0 \eqno(2.6)$$
+where: $z$ is the objective function; $x_1$, \dots, $x_n$ are variables;
+$c_1$, \dots, $c_n$ are objective coefficients; $c_0$ is a constant term
+of the objective function; $a_{11}$, \dots, $a_{mn}$ are constraint
+coefficients; $b_1$, \dots, $b_m$ are right-hand sides.
+
+Using vector and matrix notations the working LP (2.4)---(2.6) can be
+written as follows:
+$$z=c^Tx+c_0\ \rightarrow\ \min,\eqno(2.7)$$
+$$Ax=b,\eqno(2.8)$$
+$$x\geq 0,\eqno(2.9)$$
+where: $x=(x_j)$ is $n$-vector of variables, $c=(c_j)$ is $n$-vector of
+objective coefficients, $A=(a_{ij})$ is $m\times n$-matrix of
+constraint coefficients, and $b=(b_i)$ is $m$-vector of right-hand
+sides.
+
+Karush--Kuhn--Tucker optimality conditions for LP (2.7)---(2.9) are the
+following:
+$$Ax=b,\eqno(2.10)$$
+$$A^T\pi+\lambda=c,\eqno(2.11)$$
+$$\lambda^Tx=0,\eqno(2.12)$$
+$$x\geq 0,\ \ \lambda\geq 0,\eqno(2.13)$$
+where:
+$\pi$ is $m$-vector of Lagrange multipliers (dual variables) for
+equality constraints (2.8),\linebreak $\lambda$ is $n$-vector of
+Lagrange multipliers (dual variables) for non-negativity constraints
+(2.9),\linebreak (2.10) is the primal feasibility condition, (2.11) is
+the dual feasibility condition, (2.12) is the primal-dual
+complementarity condition, and (2.13) is the non-negativity conditions.
+
+The main idea of the primal-dual interior-point method is based on
+finding a point in the primal-dual space (i.e. in the space of all
+primal and dual variables $x$, $\pi$, and $\lambda$), which satisfies
+to all optimality conditions (2.10)---(2.13). Obviously, $x$-component
+of such point then provides an optimal solution to the working LP
+(2.7)---(2.9).
+
+To find the optimal point $(x^*,\pi^*,\lambda^*)$ the interior-point
+method attempts to solve the system of equations (2.10)---(2.12), which
+is closed in the sense that the number of variables $x_j$, $\pi_i$, and
+$\lambda_j$ and the number equations are the same and equal to $m+2n$.
+Due to condition (2.12) this system of equations is non-linear, so it
+can be solved with a version of {\it Newton's method} provided with
+additional rules to keep the current point within the positive orthant
+as required by the non-negativity conditions (2.13).
+
+Finally, once the optimal point $(x^*,\pi^*,\lambda^*)$ has been found,
+the solver performs inverse transformations to recover corresponding
+solution to the original LP passed to the solver from the application
+program.
+
+\subsection{glp\_interior --- solve LP problem with the interior-point
+method}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_interior(glp_prob *P, const glp_iptcp *parm);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_interior| is a driver to the LP solver based on
+the primal-dual interior-point method. This routine retrieves problem
+data from the specified problem object, calls the solver to solve the
+problem instance, and stores results of computations back into the
+problem object.
+
+The interior-point solver has a set of control parameters. Values of
+the control parameters can be passed in the structure \verb|glp_iptcp|,
+which the parameter \verb|parm| points to. For detailed description of
+this structure see paragraph ``Control parameters'' below. Before
+specifying some control parameters the application program should
+initialize the structure \verb|glp_iptcp| by default values of all
+control parameters using the routine \verb|glp_init_iptcp| (see the
+next subsection). This is needed for backward compatibility, because in
+the future there may appear new members in the structure
+\verb|glp_iptcp|.
+
+The parameter \verb|parm| can be specified as \verb|NULL|, in which
+case the solver uses default settings.
+
+\returns
+
+\begin{retlist}
+0 & The LP problem instance has been successfully solved. (This code
+does {\it not} necessarily mean that the solver has found optimal
+solution. It only means that the solution process was successful.) \\
+
+\verb|GLP_EFAIL| & The problem has no rows/columns.\\
+
+\verb|GLP_ENOCVG| & Very slow convergence or divergence.\\
+
+\verb|GLP_EITLIM| & Iteration limit exceeded.\\
+
+\verb|GLP_EINSTAB| & Numerical instability on solving Newtonian
+system.\\
+\end{retlist}
+
+\newpage
+
+\para{Comments}
+
+The routine \verb|glp_interior| implements an easy version of
+the primal-dual interior-point method based on Mehrotra's
+technique.\footnote{S. Mehrotra. On the implementation of a primal-dual
+interior point method. SIAM J. on Optim., 2(4), pp. 575-601, 1992.}
+
+Note that currently the GLPK interior-point solver does not include
+many important features, in particular:
+
+%\vspace*{-8pt}
+
+%\begin{itemize}
+\Item{---}it is not able to process dense columns. Thus, if the
+constraint matrix of the LP problem has dense columns, the solving
+process may be inefficient;
+
+\Item{---}it has no features against numerical instability. For some LP
+problems premature termination may happen if the matrix $ADA^T$ becomes
+singular or ill-conditioned;
+
+\Item{---}it is not able to identify the optimal basis, which
+corresponds to the interior-point solution found.
+%\end{itemize}
+
+%\vspace*{-8pt}
+
+\para{Terminal output}
+
+Solving large LP problems may take a long time, so the solver reports
+some information about every interior-point iteration,\footnote{Unlike
+the simplex method the interior point method usually needs 30---50
+iterations (independently on the problem size) in order to find an
+optimal solution.} which is sent to the terminal. This information has
+the following format:
+
+\begin{verbatim}
+nnn: obj = fff; rpi = ppp; rdi = ddd; gap = ggg
+\end{verbatim}
+
+\noindent where: \verb|nnn| is iteration number, \verb|fff| is the
+current value of the objective function (in the case of maximization it
+has wrong sign), \verb|ppp| is the current relative primal
+infeasibility (cf. (2.10)):
+$$\frac{\|Ax^{(k)}-b\|}{1+\|b\|},\eqno(2.14)$$
+\verb|ddd| is the current relative dual infeasibility (cf. (2.11)):
+$$\frac{\|A^T\pi^{(k)}+\lambda^{(k)}-c\|}{1+\|c\|},\eqno(2.15)$$
+\verb|ggg| is the current primal-dual gap (cf. (2.12)):
+$$\frac{|c^Tx^{(k)}-b^T\pi^{(k)}|}{1+|c^Tx^{(k)}|},\eqno(2.16)$$
+and $[x^{(k)},\pi^{(k)},\lambda^{(k)}]$ is the current point on $k$-th
+iteration, $k=0,1,2,\dots$\ . Note that all solution components are
+internally scaled, so information sent to the terminal is suitable only
+for visual inspection.
+
+\newpage
+
+\para{Control parameters}
+
+This paragraph describes all control parameters currently used in the
+interior-point solver. Symbolic names of control parameters are names of
+corresponding members in the structure \verb|glp_iptcp|.
+
+\bigskip
+
+{\tt int msg\_lev} (default: {\tt GLP\_MSG\_ALL})
+
+Message level for terminal output:
+
+\verb|GLP_MSG_OFF|---no output;
+
+\verb|GLP_MSG_ERR|---error and warning messages only;
+
+\verb|GLP_MSG_ON |---normal output;
+
+\verb|GLP_MSG_ALL|---full output (including informational messages).
+
+\bigskip
+
+{\tt int ord\_alg} (default: {\tt GLP\_ORD\_AMD})
+
+Ordering algorithm used prior to Cholesky factorization:
+
+\verb|GLP_ORD_NONE  |---use natural (original) ordering;
+
+\verb|GLP_ORD_QMD   |---quotient minimum degree (QMD);
+
+\verb|GLP_ORD_AMD   |---approximate minimum degree (AMD);
+
+\verb|GLP_ORD_SYMAMD|---approximate minimum degree (SYMAMD).
+
+\bigskip
+
+\para{Example}
+
+The following main program reads LP problem instance in fixed MPS
+format from file\linebreak \verb|25fv47.mps|,\footnote{This instance in
+fixed MPS format can be found in the Netlib LP collection; see
+{\tt ftp://ftp.netlib.org/lp/data/}.} solves it with the interior-point
+solver, and writes the solution to file \verb|25fv47.txt|.
+
+\begin{footnotesize}
+\begin{verbatim}
+/* iptsamp.c */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <glpk.h>
+
+int main(void)
+{     glp_prob *P;
+      P = glp_create_prob();
+      glp_read_mps(P, GLP_MPS_DECK, NULL, "25fv47.mps");
+      glp_interior(P, NULL);
+      glp_print_ipt(P, "25fv47.txt");
+      glp_delete_prob(P);
+      return 0;
+}
+
+/* eof */
+\end{verbatim}
+\end{footnotesize}
+
+\newpage
+
+Below here is shown the terminal output from this example program.
+
+\begin{footnotesize}
+\begin{verbatim}
+Reading problem data from `25fv47.mps'...
+Problem: 25FV47
+Objective: R0000
+822 rows, 1571 columns, 11127 non-zeros
+6919 records were read
+Original LP has 822 row(s), 1571 column(s), and 11127 non-zero(s)
+Working LP has 821 row(s), 1876 column(s), and 10705 non-zero(s)
+Matrix A has 10705 non-zeros
+Matrix S = A*A' has 11895 non-zeros (upper triangle)
+Minimal degree ordering...
+Computing Cholesky factorization S = L'*L...
+Matrix L has 35411 non-zeros
+Guessing initial point...
+Optimization begins...
+  0: obj =   1.823377629e+05; rpi =  1.3e+01; rdi =  1.4e+01; gap =  9.3e-01
+  1: obj =   9.260045192e+04; rpi =  5.3e+00; rdi =  5.6e+00; gap =  6.8e+00
+  2: obj =   3.596999742e+04; rpi =  1.5e+00; rdi =  1.2e+00; gap =  1.8e+01
+  3: obj =   1.989627568e+04; rpi =  4.7e-01; rdi =  3.0e-01; gap =  1.9e+01
+  4: obj =   1.430215557e+04; rpi =  1.1e-01; rdi =  8.6e-02; gap =  1.4e+01
+  5: obj =   1.155716505e+04; rpi =  2.3e-02; rdi =  2.4e-02; gap =  6.8e+00
+  6: obj =   9.660273208e+03; rpi =  6.7e-03; rdi =  4.6e-03; gap =  3.9e+00
+  7: obj =   8.694348283e+03; rpi =  3.7e-03; rdi =  1.7e-03; gap =  2.0e+00
+  8: obj =   8.019543639e+03; rpi =  2.4e-03; rdi =  3.9e-04; gap =  1.0e+00
+  9: obj =   7.122676293e+03; rpi =  1.2e-03; rdi =  1.5e-04; gap =  6.6e-01
+ 10: obj =   6.514534518e+03; rpi =  6.1e-04; rdi =  4.3e-05; gap =  4.1e-01
+ 11: obj =   6.361572203e+03; rpi =  4.8e-04; rdi =  2.2e-05; gap =  3.0e-01
+ 12: obj =   6.203355508e+03; rpi =  3.2e-04; rdi =  1.7e-05; gap =  2.6e-01
+ 13: obj =   6.032943411e+03; rpi =  2.0e-04; rdi =  9.3e-06; gap =  2.1e-01
+ 14: obj =   5.796553021e+03; rpi =  9.8e-05; rdi =  3.2e-06; gap =  1.0e-01
+ 15: obj =   5.667032431e+03; rpi =  4.4e-05; rdi =  1.1e-06; gap =  5.6e-02
+ 16: obj =   5.613911867e+03; rpi =  2.5e-05; rdi =  4.1e-07; gap =  3.5e-02
+ 17: obj =   5.560572626e+03; rpi =  9.9e-06; rdi =  2.3e-07; gap =  2.1e-02
+ 18: obj =   5.537276001e+03; rpi =  5.5e-06; rdi =  8.4e-08; gap =  1.1e-02
+ 19: obj =   5.522746942e+03; rpi =  2.2e-06; rdi =  4.0e-08; gap =  6.7e-03
+ 20: obj =   5.509956679e+03; rpi =  7.5e-07; rdi =  1.8e-08; gap =  2.9e-03
+ 21: obj =   5.504571733e+03; rpi =  1.6e-07; rdi =  5.8e-09; gap =  1.1e-03
+ 22: obj =   5.502576367e+03; rpi =  3.4e-08; rdi =  1.0e-09; gap =  2.5e-04
+ 23: obj =   5.502057119e+03; rpi =  8.1e-09; rdi =  3.0e-10; gap =  7.7e-05
+ 24: obj =   5.501885996e+03; rpi =  9.4e-10; rdi =  1.2e-10; gap =  2.4e-05
+ 25: obj =   5.501852464e+03; rpi =  1.4e-10; rdi =  1.2e-11; gap =  3.0e-06
+ 26: obj =   5.501846549e+03; rpi =  1.4e-11; rdi =  1.2e-12; gap =  3.0e-07
+ 27: obj =   5.501845954e+03; rpi =  1.4e-12; rdi =  1.2e-13; gap =  3.0e-08
+ 28: obj =   5.501845895e+03; rpi =  1.5e-13; rdi =  1.2e-14; gap =  3.0e-09
+OPTIMAL SOLUTION FOUND
+Writing interior-point solution to `25fv47.txt'...
+\end{verbatim}
+\end{footnotesize}
+
+\newpage
+
+\subsection{glp\_init\_iptcp --- initialize interior-point solver
+control parameters}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_init_iptcp(glp_iptcp *parm);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_init_iptcp| initializes control parameters, which
+are used by the interior-point solver, with default values.
+
+Default values of the control parameters are stored in the structure
+\verb|glp_iptcp|, which the parameter \verb|parm| points to.
+
+\subsection{glp\_ipt\_status --- determine solution status}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_ipt_status(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_ipt_status| reports the status of a solution
+found by the interior-point solver as follows:
+
+\verb|GLP_UNDEF | --- interior-point solution is undefined;
+
+\verb|GLP_OPT   | --- interior-point solution is optimal;
+
+\verb|GLP_INFEAS| --- interior-point solution is infeasible;
+
+\verb|GLP_NOFEAS| --- no feasible primal-dual solution exists.
+
+\subsection{glp\_ipt\_obj\_val --- retrieve objective value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_ipt_obj_val(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_ipt_obj_val| returns value of the objective
+function for interior-point solution.
+
+\subsection{glp\_ipt\_row\_prim --- retrieve row primal value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_ipt_row_prim(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_ipt_row_prim| returns primal value of the
+auxiliary variable associated with \verb|i|-th row.
+
+\newpage
+
+\subsection{glp\_ipt\_row\_dual --- retrieve row dual value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_ipt_row_dual(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_ipt_row_dual| returns dual value (i.e. reduced
+cost) of the auxiliary variable associated with \verb|i|-th row.
+
+\subsection{glp\_ipt\_col\_prim --- retrieve column primal value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_ipt_col_prim(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_ipt_col_prim| returns primal value of the
+structural variable associated with \verb|j|-th column.
+
+\subsection{glp\_ipt\_col\_dual --- retrieve column dual value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_ipt_col_dual(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_ipt_col_dual| returns dual value (i.e. reduced
+cost) of the structural variable associated with \verb|j|-th column.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Mixed integer programming routines}
+
+\subsection{glp\_set\_col\_kind --- set (change) column kind}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_col_kind(glp_prob *P, int j, int kind);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_col_kind| sets (changes) the kind of
+\verb|j|-th column (structural variable) as specified by the parameter
+\verb|kind|:
+
+\verb|GLP_CV| --- continuous variable;
+
+\verb|GLP_IV| --- integer variable;
+
+\verb|GLP_BV| --- binary variable.
+
+Setting a column to \verb|GLP_BV| has the same effect as if it were
+set to \verb|GLP_IV|, its lower bound were set 0, and its upper bound
+were set to 1.
+
+\subsection{glp\_get\_col\_kind --- retrieve column kind}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_col_kind(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_col_kind| returns the kind of \verb|j|-th
+column (structural variable) as follows:
+
+\verb|GLP_CV| --- continuous variable;
+
+\verb|GLP_IV| --- integer variable;
+
+\verb|GLP_BV| --- binary variable.
+
+\subsection{glp\_get\_num\_int --- retrieve number of integer columns}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_num_int(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_num_int| returns the number of columns
+(structural variables), which are marked as integer. Note that this
+number {\it does} include binary columns.
+
+\newpage
+
+\subsection{glp\_get\_num\_bin --- retrieve number of binary columns}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_num_bin(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_num_bin| returns the number of columns
+(structural variables), which are marked as integer and whose lower
+bound is zero and upper bound is one.
+
+\subsection{glp\_intopt --- solve MIP problem with the branch-and-cut
+method}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_intopt(glp_prob *P, const glp_iocp *parm);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_intopt| is a driver to the MIP solver based on
+the branch-and-cut method, which is a hybrid of branch-and-bound and
+cutting plane methods.
+
+If the presolver is disabled (see paragraph ``Control parameters''
+below), on entry to the routine \verb|glp_intopt| the problem object,
+which the parameter \verb|mip| points to, should contain optimal
+solution to LP relaxation (it can be obtained, for example, with the
+routine \verb|glp_simplex|). Otherwise, if the presolver is enabled, it
+is not necessary.
+
+The MIP solver has a set of control parameters. Values of the control
+parameters can be passed in the structure \verb|glp_iocp|, which the
+parameter \verb|parm| points to. For detailed description of this
+structure see paragraph ``Control parameters'' below. Before specifying
+some control parameters the application program should initialize the
+structure \verb|glp_iocp| by default values of all control parameters
+using the routine \verb|glp_init_iocp| (see the next subsection). This
+is needed for backward compatibility, because in the future there may
+appear new members in the structure \verb|glp_iocp|.
+
+The parameter \verb|parm| can be specified as \verb|NULL|, in which case
+the solver uses default settings.
+
+Note that the GLPK branch-and-cut solver is not perfect, so it is
+unable to solve hard or very large scale MIP instances for a reasonable
+time.
+
+\returns
+
+\begin{retlist}
+0 & The MIP problem instance has been successfully solved. (This code
+does {\it not} necessarily mean that the solver has found optimal
+solution. It only means that the solution process was successful.) \\
+
+\verb|GLP_EBOUND| & Unable to start the search, because some
+double-bounded variables have incorrect bounds or some integer
+variables have non-integer (fractional) bounds.\\
+
+\verb|GLP_EROOT| & Unable to start the search, because optimal basis
+for initial LP relaxation is not provided. (This code may appear only
+if the presolver is disabled.)\\
+
+\verb|GLP_ENOPFS| & Unable to start the search, because LP relaxation
+of the MIP problem instance has no primal feasible solution. (This code
+may appear only if the presolver is enabled.)\\
+\end{retlist}
+
+\newpage
+
+\begin{retlist}
+\verb|GLP_ENODFS| & Unable to start the search, because LP relaxation
+of the MIP problem instance has no dual feasible solution. In other
+word, this code means that if the LP relaxation has at least one primal
+feasible solution, its optimal solution is unbounded, so if the MIP
+problem has at least one integer feasible solution, its (integer)
+optimal solution is also unbounded. (This code may appear only if the
+presolver is enabled.)\\
+
+\verb|GLP_EFAIL| & The search was prematurely terminated due to the
+solver failure.\\
+
+\verb|GLP_EMIPGAP| & The search was prematurely terminated, because the
+relative mip gap tolerance has been reached.\\
+
+\verb|GLP_ETMLIM| & The search was prematurely terminated, because the
+time limit has been exceeded.\\
+
+\verb|GLP_ESTOP| & The search was prematurely terminated by application.
+(This code may appear only if the advanced solver interface is used.)\\
+\end{retlist}
+
+\para{Built-in MIP presolver}
+
+The branch-and-cut solver has {\it built-in MIP presolver}. It is
+a subprogram that transforms the original MIP problem specified in the
+problem object to an equivalent MIP problem, which may be easier for
+solving with the branch-and-cut method than the original one. For
+example, the presolver can remove redundant constraints and variables,
+whose optimal values are known, perform bound and coefficient reduction,
+etc. Once the transformed MIP problem has been solved, the presolver
+transforms its solution back to corresponding solution of the original
+problem.
+
+Presolving is an optional feature of the routine \verb|glp_intopt|, and
+by default it is disabled. In order to enable the MIP presolver, the
+control parameter \verb|presolve| should be set to \verb|GLP_ON| (see
+paragraph ``Control parameters'' below).
+
+\para{Advanced solver interface}
+
+The routine \verb|glp_intopt| allows the user to control the
+branch-and-cut search by passing to the solver a user-defined callback
+routine. For more details see Chapter ``Branch-and-Cut API Routines''.
+
+\para{Terminal output}
+
+Solving a MIP problem may take a long time, so the solver reports some
+information about best known solutions, which is sent to the terminal.
+This information has the following format:
+
+\begin{verbatim}
++nnn: mip = xxx <rho> yyy gap (ppp; qqq)
+\end{verbatim}
+
+\noindent
+where: `\verb|nnn|' is the simplex iteration number; `\verb|xxx|' is a
+value of the objective function for the best known integer feasible
+solution (if no integer feasible solution has been found yet,
+`\verb|xxx|' is the text `\verb|not found yet|'); `\verb|rho|' is the
+string `\verb|>=|' (in case of minimization) or `\verb|<=|' (in case of
+maximization); `\verb|yyy|' is a global bound for exact integer optimum
+(i.e. the exact integer optimum is always in the range from `\verb|xxx|'
+to `\verb|yyy|'); `\verb|gap|' is the relative mip gap, in percents,
+computed as $gap=|xxx-yyy|/(|xxx|+{\tt DBL\_EPSILON})\cdot 100\%$ (if
+$gap$ is greater than $999.9\%$, it is not printed); `\verb|ppp|' is the
+number of subproblems in the active list, `\verb|qqq|' is the number of
+subproblems which have been already fathomed and therefore removed from
+the branch-and-bound search tree.
+
+\newpage
+
+\subsubsection{Control parameters}
+
+This paragraph describes all control parameters currently used in the
+MIP solver. Symbolic names of control parameters are names of
+corresponding members in the structure \verb|glp_iocp|.
+
+\bigskip\vspace*{-2pt}
+
+{\tt int msg\_lev} (default: {\tt GLP\_MSG\_ALL})
+
+Message level for terminal output:
+
+\verb|GLP_MSG_OFF| --- no output;
+
+\verb|GLP_MSG_ERR| --- error and warning messages only;
+
+\verb|GLP_MSG_ON | --- normal output;
+
+\verb|GLP_MSG_ALL| --- full output (including informational messages).
+
+\bigskip\vspace*{-2pt}
+
+{\tt int br\_tech} (default: {\tt GLP\_BR\_DTH})
+
+Branching technique option:
+
+\verb|GLP_BR_FFV| --- first fractional variable;
+
+\verb|GLP_BR_LFV| --- last fractional variable;
+
+\verb|GLP_BR_MFV| --- most fractional variable;
+
+\verb|GLP_BR_DTH| --- heuristic by Driebeck and Tomlin;
+
+\verb|GLP_BR_PCH| --- hybrid pseudo-cost heuristic.
+
+\bigskip\vspace*{-2pt}
+
+{\tt int bt\_tech} (default: {\tt GLP\_BT\_BLB})
+
+Backtracking technique option:
+
+\verb|GLP_BT_DFS| --- depth first search;
+
+\verb|GLP_BT_BFS| --- breadth first search;
+
+\verb|GLP_BT_BLB| --- best local bound;
+
+\verb|GLP_BT_BPH| --- best projection heuristic.
+
+\bigskip\vspace*{-2pt}
+
+{\tt int pp\_tech} (default: {\tt GLP\_PP\_ALL})
+
+Preprocessing technique option:
+
+\verb|GLP_PP_NONE| --- disable preprocessing;
+
+\verb|GLP_PP_ROOT| --- perform preprocessing only on the root level;
+
+\verb|GLP_PP_ALL | --- perform preprocessing on all levels.
+
+\bigskip\vspace*{-2pt}
+
+{\tt int sr\_heur} (default: {\tt GLP\_ON})
+
+Simple rounding heuristic option:
+
+\verb|GLP_ON | --- enable applying the simple rounding heuristic;
+
+\verb|GLP_OFF| --- disable applying the simple rounding heuristic.
+
+\newpage
+
+{\tt int fp\_heur} (default: {\tt GLP\_OFF})
+
+Feasibility pump heuristic option:
+
+\verb|GLP_ON | --- enable applying the feasibility pump heuristic;
+
+\verb|GLP_OFF| --- disable applying the feasibility pump heuristic.
+
+\bigskip
+
+{\tt int ps\_heur} (default: {\tt GLP\_OFF})
+
+Proximity search heuristic\footnote{The Fischetti--Monaci Proximity
+Search (a.k.a. Proxy) heuristic. This algorithm is often capable of
+rapidly improving a feasible solution of a MIP problem with binary
+variables. It allows to quickly obtain suboptimal solutions in some
+problems which take too long time to be solved to optimality.} option:
+
+\verb|GLP_ON | --- enable applying the proximity search heuristic;
+
+\verb|GLP_OFF| --- disable applying the proximity search pump heuristic.
+
+\bigskip
+
+{\tt int ps\_tm\_lim} (default: {\tt 60000})
+
+Time limit, in milliseconds, for the proximity search heuristic (see
+above).
+
+\bigskip
+
+{\tt int gmi\_cuts} (default: {\tt GLP\_OFF})
+
+Gomory's mixed integer cut option:
+
+\verb|GLP_ON | --- enable generating Gomory's cuts;
+
+\verb|GLP_OFF| --- disable generating Gomory's cuts.
+
+\bigskip
+
+{\tt int mir\_cuts} (default: {\tt GLP\_OFF})
+
+Mixed integer rounding (MIR) cut option:
+
+\verb|GLP_ON | --- enable generating MIR cuts;
+
+\verb|GLP_OFF| --- disable generating MIR cuts.
+
+\bigskip
+
+{\tt int cov\_cuts} (default: {\tt GLP\_OFF})
+
+Mixed cover cut option:
+
+\verb|GLP_ON | --- enable generating mixed cover cuts;
+
+\verb|GLP_OFF| --- disable generating mixed cover cuts.
+
+\bigskip
+
+{\tt int clq\_cuts} (default: {\tt GLP\_OFF})
+
+Clique cut option:
+
+\verb|GLP_ON | --- enable generating clique cuts;
+
+\verb|GLP_OFF| --- disable generating clique cuts.
+
+\newpage
+
+{\tt double tol\_int} (default: {\tt 1e-5})
+
+Absolute tolerance used to check if optimal solution to the current LP
+relaxation is integer feasible. (Do not change this parameter without
+detailed understanding its purpose.)
+
+\bigskip
+
+{\tt double tol\_obj} (default: {\tt 1e-7})
+
+Relative tolerance used to check if the objective value in optimal
+solution to the current LP relaxation is not better than in the best
+known integer feasible solution. (Do not change this parameter without
+detailed understanding its purpose.)
+
+\bigskip
+
+{\tt double mip\_gap} (default: {\tt 0.0})
+
+The relative mip gap tolerance. If the relative mip gap for currently
+known best integer feasible solution falls below this tolerance, the
+solver terminates the search. This allows obtainig suboptimal integer
+feasible solutions if solving the problem to optimality takes too long
+time.
+
+\bigskip
+
+{\tt int tm\_lim} (default: {\tt INT\_MAX})
+
+Searching time limit, in milliseconds.
+
+\bigskip
+
+{\tt int out\_frq} (default: {\tt 5000})
+
+Output frequency, in milliseconds. This parameter specifies how
+frequently the solver sends information about the solution process to
+the terminal.
+
+\bigskip
+
+{\tt int out\_dly} (default: {\tt 10000})
+
+Output delay, in milliseconds. This parameter specifies how long the
+solver should delay sending information about solution of the current
+LP relaxation with the simplex method to the terminal.
+
+\bigskip
+
+{\tt void (*cb\_func)(glp\_tree *tree, void *info)}
+(default: {\tt NULL})
+
+Entry point to the user-defined callback routine. \verb|NULL| means
+the advanced solver interface is not used. For more details see Chapter
+``Branch-and-Cut API Routines''.
+
+\bigskip
+
+{\tt void *cb\_info} (default: {\tt NULL})
+
+Transit pointer passed to the routine \verb|cb_func| (see above).
+
+\bigskip
+
+{\tt int cb\_size} (default: {\tt 0})
+
+The number of extra (up to 256) bytes allocated for each node of the
+branch-and-bound tree to store application-specific data. On creating
+a node these bytes are initialized by binary zeros.
+
+\bigskip
+
+{\tt int presolve} (default: {\tt GLP\_OFF})
+
+MIP presolver option:
+
+\verb|GLP_ON | --- enable using the MIP presolver;
+
+\verb|GLP_OFF| --- disable using the MIP presolver.
+
+\newpage
+
+{\tt int binarize} (default: {\tt GLP\_OFF})
+
+Binarization option (used only if the presolver is enabled):
+
+\verb|GLP_ON | --- replace general integer variables by binary ones;
+
+\verb|GLP_OFF| --- do not use binarization.
+
+\subsection{glp\_init\_iocp --- initialize integer optimizer control
+parameters}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_init_iocp(glp_iocp *parm);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_init_iocp| initializes control parameters, which
+are used by the branch-and-cut solver, with default values.
+
+Default values of the control parameters are stored in
+a \verb|glp_iocp| structure, which the parameter \verb|parm| points to.
+
+\subsection{glp\_mip\_status --- determine status of MIP solution}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_mip_status(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_mip_status| reports the status of a MIP solution
+found by the MIP solver as follows:
+
+\verb|GLP_UNDEF | --- MIP solution is undefined;
+
+\verb|GLP_OPT   | --- MIP solution is integer optimal;
+
+\verb|GLP_FEAS  | --- MIP solution is integer feasible, however, its
+optimality (or non-optimality) has not been proven, perhaps due to
+premature termination of the search;
+
+\verb|GLP_NOFEAS| --- problem has no integer feasible solution (proven
+by the solver).
+
+\subsection{glp\_mip\_obj\_val --- retrieve objective value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_mip_obj_val(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_mip_obj_val| returns value of the objective
+function for MIP solution.
+
+\newpage
+
+\subsection{glp\_mip\_row\_val --- retrieve row value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_mip_row_val(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_mip_row_val| returns value of the auxiliary
+variable associated with \verb|i|-th row for MIP solution.
+
+\subsection{glp\_mip\_col\_val --- retrieve column value}
+
+\synopsis
+
+\begin{verbatim}
+   double glp_mip_col_val(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_mip_col_val| returns value of the structural
+variable associated with \verb|j|-th column for MIP solution.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Additional routines}
+
+\subsection{glp\_check\_kkt --- check feasibility/optimality
+conditions}
+
+\synopsis
+
+{\parskip=0pt
+\tt void glp\_check\_kkt(glp\_prob *P, int sol, int cond,
+double *ae\_max, int *ae\_ind,
+
+\hspace{105pt}double *re\_max, int *re\_ind);}
+
+\description
+
+The routine \verb|glp_check_kkt| allows to check
+feasibility/optimality conditions for the current solution stored in
+the specified problem object. (For basic and interior-point solutions
+these conditions are known as {\it Karush--Kuhn--Tucker optimality
+conditions}.)
+
+The parameter \verb|sol| specifies which solution should be checked:
+
+\verb|GLP_SOL| --- basic solution;
+
+\verb|GLP_IPT| --- interior-point solution;
+
+\verb|GLP_MIP| --- mixed integer solution.
+
+The parameter \verb|cond| specifies which condition should be checked:
+
+\verb|GLP_KKT_PE| --- check primal equality constraints (KKT.PE);
+
+\verb|GLP_KKT_PB| --- check primal bound constraints (KKT.PB);
+
+\verb|GLP_KKT_DE| --- check dual equality constraints (KKT.DE). This
+conditions can be checked only for basic or interior-point solution;
+
+\verb|GLP_KKT_DB| --- check dual bound constraints (KKT.DB). This
+conditions can be checked only for basic or interior-point solution.
+
+Detailed explanations of these conditions are given below in paragraph
+``Background''.
+
+On exit the routine stores the following information to locations
+specified by parameters \verb|ae_max|, \verb|ae_ind|, \verb|re_max|,
+and \verb|re_ind| (if some parameter is a null pointer, corresponding
+information is not stored):
+
+\verb|ae_max| --- largest absolute error;
+
+\verb|ae_ind| --- number of row (KKT.PE), column (KKT.DE), or variable
+(KKT.PB, KKT.DB) with the largest absolute error;
+
+\verb|re_max| --- largest relative error;
+
+\verb|re_ind| --- number of row (KKT.PE), column (KKT.DE), or variable
+(KKT.PB, KKT.DB) with the largest relative error.
+
+Row (auxiliary variable) numbers are in the range 1 to $m$, where $m$
+is the number of rows in the problem object. Column (structural
+variable) numbers are in the range 1 to $n$, where $n$ is the number
+of columns in the problem object. Variable numbers are in the range
+1 to $m+n$, where variables with numbers 1 to $m$ correspond to rows,
+and variables with numbers $m+1$ to $m+n$ correspond to columns. If
+the error reported is exact zero, corresponding row, column or variable
+number is set to zero.
+
+\newpage
+
+\para{Background}
+
+\def\arraystretch{1.5}
+
+The first condition checked by the routine is the following:
+$$x_R - A x_S = 0, \eqno{\rm (KKT.PE)}$$
+where $x_R$ is the subvector of auxiliary variables (rows), $x_S$ is
+the subvector of structural variables (columns), $A$ is the constraint
+matrix. This condition expresses the requirement that all primal
+variables should satisfy to the system of equality constraints of the
+original LP problem. In case of exact arithmetic this condition would
+be satisfied for any basic solution; however, in case of inexact
+(floating-point) arithmetic, this condition shows how accurate the
+primal solution is, that depends on accuracy of a representation of the
+basis matrix used by the simplex method, or on accuracy provided by the
+interior-point method.
+
+To check the condition (KKT.PE) the routine computes the vector of
+residuals:
+$$g = x_R - A x_S,$$
+and determines component of this vector that correspond to largest
+absolute and relative errors:
+$${\tt ae\_max}=\max_{1\leq i\leq m}|g_i|,$$
+$${\tt re\_max}=\max_{1\leq i\leq m}\frac{|g_i|}{1+|(x_R)_i|}.$$
+
+The second condition checked by the routine is the following:
+$$l_k \leq x_k \leq u_k {\rm \ \ \ for\ all}\ k=1,\dots,m+n,
+\eqno{\rm (KKT.PB)}$$
+where $x_k$ is auxiliary ($1\leq k\leq m$) or structural
+($m+1\leq k\leq m+n$) variable, $l_k$ and $u_k$ are, respectively,
+lower and upper bounds of the variable $x_k$ (including cases of
+infinite bounds). This condition expresses the requirement that all
+primal variables shoudl satisfy to bound constraints of the original
+LP problem. In case of basic solution all non-basic variables are
+placed on their active bounds, so actually the condition (KKT.PB) needs
+to be checked for basic variables only. If the primal solution has
+sufficient accuracy, this condition shows its primal feasibility.
+
+To check the condition (KKT.PB) the routine computes a vector of
+residuals:
+$$
+h_k = \left\{
+\begin{array}{ll}
+0,         & {\rm if}\ l_k \leq x_k \leq u_k \\
+x_k - l_k, & {\rm if}\ x_k < l_k \\
+x_k - u_k, & {\rm if}\ x_k > u_k \\
+\end{array}
+\right.
+$$
+for all $k=1,\dots,m+n$, and determines components of this vector that
+correspond to largest absolute and relative errors:
+$${\tt ae\_max}=\max_{1\leq k \leq m+n}|h_k|,$$
+$${\tt re\_max}=\max_{1\leq k \leq m+n}\frac{|h_k|}{1+|x_k|}.$$
+
+\newpage
+
+The third condition checked by the routine is:
+$${\rm grad}\;Z = c = (\tilde{A})^T \pi + d,$$
+where $Z$ is the objective function, $c$ is the vector of objective
+coefficients, $(\tilde{A})^T$ is a matrix transposed to the expanded
+constraint matrix $\tilde{A} = (I|-A)$, $\pi$ is a vector of Lagrange
+multipliers that correspond to equality constraints of the original LP
+problem, $d$ is a vector of Lagrange multipliers that correspond to
+bound constraints for all (auxiliary and structural) variables of the
+original LP problem. Geometrically the third condition expresses the
+requirement that the gradient of the objective function should belong
+to the orthogonal complement of a linear subspace defined by the
+equality and active bound constraints, i.e. that the gradient is
+a linear combination of normals to the constraint hyperplanes, where
+Lagrange multipliers $\pi$ and $d$ are coefficients of that linear
+combination.
+
+To eliminate the vector $\pi$ rewrite the third condition as:
+$$
+\left(\begin{array}{@{}c@{}}I \\ -A^T\end{array}\right) \pi =
+\left(\begin{array}{@{}c@{}}d_R \\ d_S\end{array}\right) +
+\left(\begin{array}{@{}c@{}}c_R \\ c_S\end{array}\right),
+$$
+or, equivalently,
+$$
+\left\{
+\begin{array}{r@{}c@{}c}
+\pi + d_R&\ =\ &c_R, \\
+-A^T\pi + d_S&\ =\ &c_S. \\
+\end{array}
+\right.
+$$
+
+Then substituting the vector $\pi$ from the first equation into the
+second we finally have:
+$$A^T (d_R - c_R) + (d_S - c_S) = 0, \eqno{\rm(KKT.DE)}$$
+where $d_R$ is the subvector of reduced costs of auxiliary variables
+(rows), $d_S$ is the subvector of reduced costs of structural variables
+(columns), $c_R$ and $c_S$ are subvectors of objective coefficients at,
+respectively, auxiliary and structural variables, $A^T$ is a matrix
+transposed to the constraint matrix of the original LP problem. In case
+of exact arithmetic this condition would be satisfied for any basic
+solution; however, in case of inexact (floating-point) arithmetic, this
+condition shows how accurate the dual solution is, that depends on
+accuracy of a representation of the basis matrix used by the simplex
+method, or on accuracy provided by the interior-point method.
+
+To check the condition (KKT.DE) the routine computes a vector of
+residuals:
+$$u = A^T (d_R - c_R) + (d_S - c_S),$$
+and determines components of this vector that correspond to largest
+absolute and relative errors:
+$${\tt ae\_max}=\max_{1\leq j\leq n}|u_j|,$$
+$${\tt re\_max}=\max_{1\leq j\leq n}\frac{|u_j|}{1+|(d_S)_j-(c_S)_j|}.$$
+
+\newpage
+
+The fourth condition checked by the routine is the following:
+$$
+\left\{
+\begin{array}{l@{\ }r@{\ }c@{\ }c@{\ }c@{\ }l@{\ }c@{\ }c@{\ }c@{\ }l}
+{\rm if} & -\infty & < & x_k & < & +\infty,
+& {\rm then} & d_k & = & 0 \\
+{\rm if} & l_k     & \leq & x_k & < & +\infty,
+& {\rm then} & d_k & \geq & 0\ {\rm(minimization)} \\
+&&&&&&       & d_k & \leq & 0\ {\rm(maximization)} \\
+{\rm if} & -\infty & <    & x_k & \leq & u_k,
+& {\rm then} & d_k & \leq & 0\ {\rm(minimization)} \\
+&&&&&&       & d_k & \geq & 0\ {\rm(maximization)} \\
+{\rm if} & l_k     & \leq & x_k & \leq & u_k,
+& {\rm then} & d_k & {\rm is} & {\rm of\ any\ sign} \\
+\end{array}\right.\eqno{\rm(KKT.DB)}
+$$
+for all $k=1,\dots,m+n$, where $d_k$ is a reduced cost (Lagrange
+multiplier) of auxiliary ($1\leq k\leq m$) or structural
+($m+1\leq k\leq m+n$) variable $x_k$. Geometrically this condition
+expresses the requirement that constraints of the original problem must
+``hold'' the point preventing its movement along the anti-gradient (in
+case of minimization) or the gradient (in case of maximization) of the
+objective function. In case of basic solution reduced costs of all
+basic variables are placed on their active (zero) bounds, so actually
+the condition (KKT.DB) needs to be checked for non-basic variables
+only. If the dual solution has sufficient accuracy, this condition
+shows the dual feasibility of the solution.
+
+To check the condition (KKT.DB) the routine computes a vector of
+residuals:
+$$
+v_k = \left\{
+\begin{array}{ll}
+0,         & {\rm if}\ d_k\ {\rm has\ correct\ sign} \\
+|d_k|,     & {\rm if}\ d_k\ {\rm has\ wrong\ sign} \\
+\end{array}
+\right.
+$$
+for all $k=1,\dots,m+n$, and determines components of this vector that
+correspond to largest absolute and relative errors:
+$${\tt ae\_max}=\max_{1\leq k\leq m+n}|v_k|,$$
+$${\tt re\_max}=\max_{1\leq k\leq m+n}\frac{|v_k|}{1+|d_k - c_k|}.$$
+
+Note that the complete set of Karush-Kuhn-Tucker optimality conditions
+also includes the fifth, so called {\it complementary slackness
+condition}, which expresses the requirement that at least either
+a primal variable $x_k$ or its dual counterpart $d_k$ should be on its
+bound for all $k=1,\dots,m+n$. Currently checking this condition is
+not implemented yet.
+
+\def\arraystretch{1}
+
+%* eof *%

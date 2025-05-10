@@ -1,0 +1,283 @@
+@.@ LP/MIP PREPROCESSING ROUTINES
+=================================
+
+@.@.1 Introduction
+
+GLPK has a set of routines that constitute so called the LP/MIP
+preprocessor. Its main purpose is to improve a given formulation of the
+LP or MIP problem instance provided by the user.
+
+As a rule the LP/MIP preprocessor is used internally (if enabled) in
+the LP or MIP solver. However, for various reasons the user may need
+to call the preprocessing routines directly in his/her application
+program, in which case he/she may use API routines described in this
+section.
+
+The preprocessing of an LP/MIP problem instance and recovering its
+solution include several steps, which are performed in the following
+order.
+
+1. Allocating the workspace. The preprocessor allocates the workspace,
+   an internal data structure used on all subsequent steps.
+
+2. Loading the original problem instance. The preprocessor copies all
+   the problem components from the original problem object (glp_prob)
+   specified by the user into the workspace. On this step the user also
+   should specify the solution type: basic solution (assumes the
+   primal or dual simplex solver), interior-point solution (assumes the
+   interior-point solver), or MIP solution (assumes the MIP solver).
+   This is needed, because some preprocessing transformations depend on
+   the solution type.
+
+3. Preprocessing. The user calls preprocessing routines that transform
+   the problem instance residing in the workspace.
+
+4. Building the resultant problem instance. The preprocessor converts
+   the problem instance from an internal workspace representation
+   to the standard problem object (glp_prob) and returns that object to
+   the user.
+
+5. Solving the resultant problem instance. The user calls an
+   appropriate solver routine to obtain a solution to the resultant
+   problem instance.
+
+6. Postprocessing. The user provides the solution to the resultant
+   problem instance found on the previous step, and the preprocessor
+   performs inverse transformations to recover the solution to the
+   original problem instance. Should note that only optimal or integer
+   feasible (for MIP) solutions can be recovered.
+
+7. Obtaining original solution. The preprocessor copies the solution
+   to the original problem instance recovered on the previous step from
+   the workspace to the original problem object (glp_prob). The effect
+   is the same as if the solution were computed by a solver. Note that
+   steps 6 and 7 can be performed multiple times (for example, to
+   recover intermediate integer feasible solutions during the integer
+   optimization).
+
+8. Freeing the workspace. The preprocessor frees all the memory
+   allocated to the workspace.
+
+EXAMPLE
+
+In this example the program reads the LP problem data from input file
+murtagh.mps\footnote{This is an example model included in the GLPK
+distribution.}, performs standard preprocessing, solves the resultant
+LP with the primal simplex method, and then recovers the solution to
+the original LP.
+
+/* nppsamp.c */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <glpk.h>
+
+int main(void)
+{     glp_prep *npp;
+      glp_prob *P, *Q;
+      int ret;
+      npp = glp_npp_alloc_wksp();
+      P = glp_create_prob();
+      ret = glp_read_mps(P, GLP_MPS_DECK, NULL, "murtagh.mps");
+      if (ret != 0)
+      {  printf("Error on reading problem data\n");
+         goto skip;
+      }
+      glp_set_obj_dir(P, GLP_MAX);
+      glp_npp_load_prob(npp, P, GLP_SOL, GLP_ON);
+      ret = glp_npp_preprocess1(npp, 0);
+      switch (ret)
+      {  case 0:
+            break;
+         case GLP_ENOPFS:
+            printf("LP has no primal feasible solution\n");
+            goto skip;
+         case GLP_ENODFS:
+            printf("LP has no dual feasible solution\n");
+            goto skip;
+         default:
+            xassert(ret != ret);
+      }
+      Q = glp_create_prob();
+      glp_npp_build_prob(npp, Q);
+      ret = glp_simplex(Q, NULL);
+      if (ret == 0 && glp_get_status(Q) == GLP_OPT)
+      {  glp_npp_postprocess(npp, Q);
+         glp_npp_obtain_sol(npp, P);
+      }
+      else
+         printf("Unable to recover non-optimal solution\n");
+      glp_delete_prob(Q);
+skip: glp_npp_free_wksp(npp);
+      glp_delete_prob(P);
+      return 0;
+}
+
+/* eof */
+------------------------------------------------------------------------
+@.@.2 glp_npp_alloc_wksp - allocate the preprocessor workspace
+
+SYNOPSIS
+
+glp_prep *glp_npp_alloc_wksp(void);
+
+DESCRIPTION
+
+The routine glp_npp_alloc_wksp allocates the preprocessor workspace.
+(Note that multiple instances of the workspace may be allocated, if
+necessary.)
+
+RETURNS
+
+The routine returns a pointer to the workspace, which should be used in
+all subsequent operations.
+------------------------------------------------------------------------
+@.@.3 glp_npp_load_prob - load original problem instance
+
+SYNOPSIS
+
+void glp_npp_load_prob(glp_prep *prep, glp_prob *P, int sol,
+      int names);
+
+DESCRIPTION
+
+The routine glp_npp_load_prob loads the original problem instance from
+the specified problem object P into the preprocessor workspace. (Note
+that this operation can be performed only once.)
+
+The parameter sol specifies which solution is required:
+
+GLP_SOL - basic solution;
+
+GLP_IPT - interior-point solution;
+
+GLP_MIP - mixed integer solution.
+
+The parameter names is a flag. If it is GLP_ON, the symbolic names of
+original rows and columns are also loaded into the workspace. Otherwise,
+if the flag is GLP_OFF, the row and column names are not loaded.
+------------------------------------------------------------------------
+@.@.4 glp_npp_preprocess1 - perform basic LP/MIP preprocessing
+
+SYNOPSIS
+
+int glp_npp_preprocess1(glp_prep *prep, int hard);
+
+DESCRIPTION
+
+The routine glp_npp_preprocess1 performs basic LP/MIP preprocessing
+that currently includes:
+
+-- removing free rows;
+
+-- replacing double-sided constraint rows with almost identical bounds,
+   by equality constraint rows;
+
+-- removing fixed columns;
+
+-- replacing double-bounded columns with almost identical bounds by
+   fixed columns and removing those columns;
+
+-- removing empty rows;
+
+-- removing equality constraint row singletons and corresponding
+   columns;
+
+-- removing inequality constraint row singletons and corresponding
+   columns;
+
+-- performing general row analysis;
+
+-- removing redundant row bounds;
+
+-- removing forcing rows and corresponding columns;
+
+-- removing rows which become free due to redundant bounds;
+
+-- computing implied bounds for all columns and using them to
+   strengthen current column bounds (MIP only, optional, performed if
+   the flag hard is on);
+
+-- fixing and removing empty columns;
+
+-- removing column singletons, which are implied slack variables, and
+   corresponding rows;
+
+-- removing bounds of columns, which are implied free variables, and
+   replacing corresponding rows by equality constraints.
+
+If the flag hard is GLP_ON, the routine attempts to improve current
+column bounds multiple times within the main processing loop, in which
+case this feature may take a time. Otherwise, if the flag hard is
+GLP_OFF, improving column bounds is performed only once at the end of
+the main loop. (Note that this feature is used for MIP only.)
+
+RETURNS
+
+0          - the problem instance has been successfully preprocessed;
+
+GLP_ENOPFS - primal/integer infeasibility has been detected;
+
+GLP_ENODFS - dual infeasibility has been detected.
+------------------------------------------------------------------------
+@.@.5 glp_npp_build_prob - build resultant problem instance
+
+SYNOPSIS
+
+void glp_npp_build_prob(glp_prep *prep, glp_prob *Q);
+
+DESCRIPTION
+
+The routine glp_npp_build_prob obtains all necessary information from
+the preprocessor workspace to build the resultant (preprocessed)
+problem instance, and stores it in the specified problem object Q. Note
+that before building the current content of this problem object is
+erased with the routine glp_erase_prob.
+------------------------------------------------------------------------
+@.@.6 glp_npp_postprocess - postprocess solution to resultant problem
+
+SYNOPSIS
+
+void glp_npp_postprocess(glp_prep *prep, glp_prob *Q);
+
+DESCRIPTION
+
+The routine glp_npp_postprocess performs postprocessing of a solution
+to the resultant (preprocessed) problem instance specified by the
+problem object Q and recovers corrseponding solution to the original
+problem instance. The recovered solution is stored in the preprocessor
+workspace and can be obtained with the routine glp_npp_obtain_sol.
+
+It is assumed that the resultant problem instance Q has been solved
+with an appropriate solver depending on the solution type previously
+passed to the routine glp_npp_load_prob (the parameter sol). Note that
+only optimal or integer feasible (for MIP) solution can be recovered,
+so the calling program should use the routine glp_status to make sure
+that this condition is met.
+------------------------------------------------------------------------
+@.@.7 glp_npp_obtain_sol - obtain solution to original problem
+
+SYNOPSIS
+
+void glp_npp_obtain_sol(glp_prep *prep, glp_prob *P);
+
+DESCRIPTION
+
+The routine glp_npp_obtain_sol copies the solution to the original
+problem instance previously recovered by the routine
+glp_npp_postorocess from the preprocessor workspace to the problem
+object P. The effect is the same as if the solution were computed by an
+appropriate solver.
+------------------------------------------------------------------------
+@.@.8 glp_npp_free_wksp - free the preprocessor workspace
+
+SYNOPSIS
+
+void glp_npp_free_wksp(glp_prep *prep);
+
+DESCRIPTION
+
+The routine glp_npp_free_wksp frees all the memory allocated to the
+preprocessor workspace.
+
+===EOF===

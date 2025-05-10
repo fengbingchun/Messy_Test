@@ -1,0 +1,40 @@
+c sample.asn
+c
+c This is an example of the assignment problem data
+c in DIMACS format.
+c
+p asn 17 22
+c
+n 1
+n 2
+n 3
+n 4
+n 5
+n 6
+n 7
+n 8
+c
+a 1  9 13
+a 1 10 21
+a 1 12 20
+a 2 10 12
+a 2 12  8
+a 2 13 26
+a 3 11 22
+a 3 13 11
+a 4  9 12
+a 4 12 36
+a 4 14 25
+a 5 11 41
+a 5 12 40
+a 5 13 11
+a 5 14  4
+a 5 15  8
+a 5 16 35
+a 5 17 32
+a 6  9 13
+a 7 10 19
+a 8 10 39
+a 8 11 15
+c
+c eof

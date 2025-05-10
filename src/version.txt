@@ -69,3 +69,7 @@
 	version: 3.47.0
 	date: 2024.10.22
 	url: https://www.sqlite.org/download.html
+16. GLPK:
+	version: 4.65
+	date: 2018.03.17
+	url: https://sourceforge.net/projects/winglpk/

@@ -1,0 +1,207 @@
+%* glpk11.tex *%
+
+\chapter{External Software Used In GLPK}
+
+In the GLPK package there are used some external software listed in
+this Appendix. Note that these software are {\it not} part of GLPK, but
+are used with GLPK and included in the distribution.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{AMD}
+
+\noindent
+AMD Version 2.2, Copyright {\copyright} 2007 by Timothy A. Davis,
+Patrick R. Amestoy, and Iain S. Duff.  All Rights Reserved.
+
+\para{Description}
+
+AMD is a set of routines for pre-ordering sparse matrices prior to
+Cholesky or LU factorization, using the approximate minimum degree
+ordering algorithm.
+
+\para{License}
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
+USA.
+
+Permission is hereby granted to use or copy this program under the
+terms of the GNU LGPL, provided that the Copyright, this License,
+and the Availability of the original version is retained on all
+copies.  User documentation of any code that uses this code or any
+modified version of this code must cite the Copyright, this License,
+the Availability note, and ``Used by permission.''  Permission to
+modify the code and to distribute modified code is granted, provided
+the Copyright, this License, and the Availability note are retained,
+and a notice that the code was modified is included.
+
+AMD is available under alternate licences; contact T. Davis for
+details.
+
+\para{Availability}
+
+\noindent
+\url{http://www.cise.ufl.edu/research/sparse/amd}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{COLAMD/SYMAMD}
+
+\noindent
+COLAMD/SYMAMD Version 2.7, Copyright {\copyright} 1998-2007, Timothy A.
+Davis, All Rights Reserved.
+
+\para{Description}
+
+colamd: an approximate minimum degree column ordering algorithm, for
+LU factorization of symmetric or unsymmetric matrices, QR factorization,
+least squares, interior point methods for linear programming problems,
+and other related problems.
+
+symamd: an approximate minimum degree ordering algorithm for Cholesky
+factorization of symmetric matrices.
+
+\para{Authors}
+
+The authors of the code itself are Stefan I. Larimore and Timothy A.
+Davis (davis at cise.ufl.edu), University of Florida.  The algorithm
+was developed in collaboration with John Gilbert, Xerox PARC, and
+Esmond Ng, Oak Ridge National Laboratory.
+
+\para{License}
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1 of
+the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
+USA.
+
+Permission is hereby granted to use or copy this program under the
+terms of the GNU LGPL, provided that the Copyright, this License,
+and the Availability of the original version is retained on all
+copies.  User documentation of any code that uses this code or any
+modified version of this code must cite the Copyright, this License,
+the Availability note, and ``Used by permission.''  Permission to
+modify the code and to distribute modified code is granted, provided
+the Copyright, this License, and the Availability note are retained,
+and a notice that the code was modified is included.
+
+COLAMD is also available under alternate licenses, contact T. Davis for
+details.
+
+\para{Availability}
+
+\noindent
+\url{http://www.cise.ufl.edu/research/sparse/colamd}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\newpage
+
+\section{MiniSat}
+
+\noindent
+MiniSat-C v1.14.1, Copyright {\copyright} 2005, Niklas Sorensson.
+
+\para{Description}
+
+MiniSat is a minimalistic implementation of a Chaff-like SAT solver
+based on the two-literal watch scheme for fast BCP and clause learning
+by conflict analysis.
+
+\newpage
+
+\para{License}
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+\para{Availability}
+
+\noindent
+\url{http://www.cs.chalmers.se/Cs/Research/FormalMethods/MiniSat}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{zlib}
+
+\noindent
+zlib version 1.2.5, Copyright {\copyright} 1995--2010 Jean-loup Gailly
+and Mark Adler.
+
+\para{Description}
+
+zlib is a general purpose data compression library. All the code is
+thread safe. The data format used by the zlib library is described by
+RFCs (Request for Comments) 1950 to 1952 in the files
+\verb|rfc1950.txt| (zlib format), \verb|rfc1951.txt| (deflate format)
+and \verb|rfc1952.txt| (gzip format).
+
+\para{License}
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would
+   be appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not
+   be misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+   distribution.
+
+\hfill Jean-loup Gailly
+
+\hfill Mark Adler
+
+\para{Availability}
+
+\noindent
+\url{http://www.zlib.net/}
+
+%* eof *%

@@ -1,0 +1,48 @@
+/* edge.dat */
+
+/***********************************************************************
+*  Web Paint-by-Number Puzzle #23 from <www.webpbn.com>.
+*  Copyright (C) 2004 by Jan Wolter. Used by permission.
+*
+*  Nonrepresentational Test Pattern
+*
+*  created by Jan Wolter
+*  Apr 5, 2004
+*
+*  Encoded in GNU MathProg by Andrew Makhorin <mao@gnu.org>.
+***********************************************************************/
+
+data;
+
+param m := 11;
+
+param n := 10;
+
+param row : 1  :=
+      1     1
+      2     3
+      3     1
+      4     2
+      5     1
+      6     3
+      7     3
+      8     1
+      9     2
+      10    2
+      11    4
+;
+
+param col : 1  2  :=
+      1     1  .
+      2     3  .
+      3     1  .
+      4     2  2
+      5     2  .
+      6     4  .
+      7     1  .
+      8     3  .
+      9     3  .
+      10    1  .
+;
+
+end;

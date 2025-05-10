@@ -1,0 +1,464 @@
+%* glpk06.tex *%
+
+\chapter{Miscellaneous API Routines}
+
+\section{GLPK environment routines}
+
+\subsection{glp\_init\_env --- initialize GLPK environment}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_init_env(void);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_init_env| initializes the GLPK environment.
+Normally the application program does not need to call this routine,
+because it is called automatically on the first call to any API
+routine.
+
+\returns
+
+\begin{retlist}
+0 & initialization successful;\\
+1 & environment is already initialized;\\
+2 & initialization failed (insufficient memory);\\
+3 & initialization failed (unsupported programming model).\\
+\end{retlist}
+
+\subsection{glp\_version --- determine library version}
+
+\synopsis
+
+\begin{verbatim}
+   const char *glp_version(void);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_version| returns a pointer to a null-terminated
+character string, which specifies the version of the GLPK library in
+the form \verb|"X.Y"|, where `\verb|X|' is the major version number,
+and `\verb|Y|' is the minor version number, for example, \verb|"4.16"|.
+
+\newpage
+
+\subsection{glp\_free\_env --- free GLPK environment}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_free_env(void);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_free_env| frees all resources used by GLPK
+routines (memory blocks, etc.) which are currently still in use.
+
+Normally the application program does not need to call this routine,
+because GLPK routines always free all unused resources. However, if
+the application program even has deleted all problem objects, there
+will be several memory blocks still allocated for the internal library
+needs. For some reasons the application program may want GLPK to free
+this memory, in which case it should call \verb|glp_free_env|.
+
+Note that a call to \verb|glp_free_env| invalidates all problem objects
+which still exist.
+
+\returns
+
+\begin{retlist}
+0 & termination successful;\\
+1 & environment is inactive (was not initialized).\\
+\end{retlist}
+
+\subsection{glp\_printf --- write formatted output to terminal}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_printf(const char *fmt, ...);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_printf| uses the format control string
+\verb|fmt| to format its parameters and writes the formatted output to
+the terminal.
+
+This routine is a replacement of the standard C function
+\verb|printf| and used by all GLPK routines to perform terminal
+output. The application program may use \verb|glp_printf| for the same
+purpose that allows controlling its terminal output with the routines
+\verb|glp_term_out| and \verb|glp_term_hook|.
+
+\subsection{glp\_vprintf --- write formatted output to terminal}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_vprintf(const char *fmt, va_list arg);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_vprintf| uses the format control string
+\verb|fmt| to format its parameters specified by the list \verb|arg|
+and writes the formatted output to the terminal.
+
+This routine is a replacement of the standard C function
+\verb|vprintf| and used by all GLPK routines to perform terminal
+output. The application program may use \verb|glp_vprintf| for the same
+purpose that allows controlling its terminal output with the routines
+\verb|glp_term_out| and \verb|glp_term_hook|.
+
+\newpage
+
+\subsection{glp\_term\_out --- enable/disable terminal output}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_term_out(int flag);
+\end{verbatim}
+
+\description
+
+Depending on the parameter flag the routine \verb|glp_term_out| enables
+or disables terminal output performed by glpk routines:
+
+\verb|GLP_ON | --- enable terminal output;
+
+\verb|GLP_OFF| --- disable terminal output.
+
+\returns
+
+The routine \verb|glp_term_out| returns the previous value of the
+terminal output flag.
+
+\subsection{glp\_term\_hook --- intercept terminal output}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_term_hook(int (*func)(void *info, const char *s), void *info);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_term_hook| installs the user-defined hook routine
+to intercept all terminal output performed by GLPK routines.
+
+%This feature can be used to redirect the terminal output to other
+%destination, for example, to a file or a text window.
+
+The parameter {\it func} specifies the user-defined hook routine. It is
+called from an internal printing routine, which passes to it two
+parameters: {\it info} and {\it s}. The parameter {\it info} is a
+transit pointer specified in corresponding call to the routine
+\verb|glp_term_hook|; it may be used to pass some additional information
+to the hook routine. The parameter {\it s} is a pointer to the null
+terminated character string, which is intended to be written to the
+terminal. If the hook routine returns zero, the printing routine writes
+the string {\it s} to the terminal in a usual way; otherwise, if the
+hook routine returns non-zero, no terminal output is performed.
+
+To uninstall the hook routine both parameters {\it func} and {\it info}
+should be specified as \verb|NULL|.
+
+\para{Example}
+
+\begin{footnotesize}
+\begin{verbatim}
+static int hook(void *info, const char *s)
+{     FILE *foo = info;
+      fputs(s, foo);
+      return 1;
+}
+
+int main(void)
+{     FILE *foo;
+      . . .
+      glp_term_hook(hook, foo); /* redirect terminal output */
+      . . .
+      glp_term_hook(NULL, NULL); /* resume terminal output */
+      . . .
+}
+\end{verbatim}
+\end{footnotesize}
+
+\newpage
+
+\subsection{glp\_open\_tee --- start copying terminal output}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_open_tee(const char *fname);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_open_tee| starts copying all the terminal output
+to an output text file, whose name is specified by the character string
+\verb|fname|.
+
+\returns
+
+\begin{retlist}
+0 & operation successful;\\
+1 & copying terminal output is already active;\\
+2 & unable to create output file.\\
+\end{retlist}
+
+\subsection{glp\_close\_tee --- stop copying terminal output}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_close_tee(void);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_close_tee| stops copying the terminal output to
+the output text file previously open by the routine \verb|glp_open_tee|
+closing that file.
+
+\returns
+
+\begin{retlist}
+0 & operation successful;\\
+1 & copying terminal output was not started.\\
+\end{retlist}
+
+\subsection{glp\_error --- display error message and terminate
+execution}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_error(const char *fmt, ...);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_error| (implemented as a macro) formats its
+parameters using the format control string \verb|fmt|, writes the
+formatted message to the terminal, and then abnormally terminates the
+program.
+
+\newpage
+
+\subsection{glp\_at\_error --- check for error state}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_at_error(void);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_at_error| checks if the GLPK environment is at
+error state, i.~e.~if the call to the routine is (indirectly) made from
+the \verb|glp_error| routine via an user-defined hook routine.
+
+This routine can be used, for example, by a custom output handler
+(installed with the routine \verb|glp_term_hook|) to determine whether
+or not the message to be displayed is an error message.
+
+\returns
+
+If the GLPK environment is at error state, the routine returns
+non-zero, otherwise zero.
+
+\subsection{glp\_assert --- check logical condition}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_assert(int expr);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_assert| (implemented as a macro) checks
+a logical condition specified by the expression \verb|expr|. If the
+condition is true (non-zero), the routine does nothing; otherwise, if
+the condition is false (zero), the routine prints an error message and
+abnormally terminates the program.
+
+This routine is a replacement of the standard C function \verb|assert|
+and used by all GLPK routines to check program logic. The application
+program may use \verb|glp_assert| for the same purpose.
+
+\subsection{glp\_error\_hook --- install hook to intercept abnormal
+termination}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_error_hook(void (*func)(void *info), void *info);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_error_hook| installs a user-defined hook routine
+to intercept abnormal termination.
+
+The parameter \verb|func| specifies the user-defined hook routine. It
+is called from the routine \verb|glp_error| before the latter calls the
+abort function to abnormally terminate the application program because
+of fatal error. The parameter \verb|info| is a transit pointer,
+specified in the corresponding call to the routine
+\verb|glp_error_hook|; it may be used to pass some information to the
+hook routine.
+
+To uninstall the hook routine the parameters \verb|func| and \verb|info|
+should be specified as \verb|NULL|.
+
+If the hook routine returns, the application program is abnormally
+terminated. To prevent abnormal termnation the hook routine may perform
+a global jump using the standard function \verb|longjmp|, in which case
+the application program {\it must} call the routine \verb|glp_free_env|.
+
+\subsection{glp\_alloc --- allocate memory block}
+
+\synopsis
+
+\begin{verbatim}
+   void *glp_alloc(int n, int size);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_alloc| dynamically allocates a memory block of
+\verb|n|$\times$\verb|size| bytes long. Note that:
+
+1) the parameters \verb|n| and \verb|size| must be positive;
+
+2) having been allocated the memory block contains arbitrary data, that
+is, it is {\it not} initialized by binary zeros;
+
+3) if the block cannot be allocated due to insufficient memory, the
+routine prints an error message and abnormally terminates the program.
+
+This routine is a replacement of the standard C function \verb|malloc|
+and used by GLPK routines for dynamic memory allocation. The
+application program may use \verb|glp_alloc| for the same purpose.
+
+\returns
+
+The routine \verb|glp_alloc| returns a pointer to the memory block
+allocated. To free this block the routine \verb|glp_free| (not the
+standard C function \verb|free|!) should be used.
+
+\subsection{glp\_realloc --- reallocate memory block}
+
+\synopsis
+
+\begin{verbatim}
+   void *glp_realloc(void *ptr, int n, int size);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_realloc| dynamically reallocates a memory block
+pointed to by \verb|ptr|, which was previously allocated by the routine
+\verb|glp_alloc| or reallocated by this routine. Note that the pointer
+\verb|ptr| must be valid and must not be \verb|NULL|. The new size of
+the memory block is \verb|n|$\times$\verb|size| bytes long. Note that:
+
+1) both parameters \verb|n| and \verb|size| must be positive;
+
+2) if the block cannot be reallocated due to insufficient memory, the
+routine prints an error message and abnormally terminates the program.
+
+This routine is a replacement of the standard C function \verb|realloc|
+and used by GLPK routines for dynamic memory allocation. The
+application program may use \verb|glp_realloc| for the same purpose.
+
+\returns
+
+The routine \verb|glp_realloc| returns a pointer to the memory block
+reallocated. To free this block the routine \verb|glp_free| (not the
+standard C function \verb|free|!) should be used.
+
+\newpage
+
+\subsection{glp\_free --- free memory block}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_free(void *ptr);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_free| deallocates a memory block pointed to by
+\verb|ptr|, which was previously allocated by the routine
+\verb|glp_malloc| or reallocated by the routine \verb|glp_realloc|.
+Note that the pointer \verb|ptr| must be valid and must not be
+\verb|NULL|.
+
+This routine is a replacement of the standard C function \verb|free|
+and used by GLPK routines for dynamic memory allocation. The
+application program may use \verb|glp_free| for the same purpose.
+
+\subsection{glp\_mem\_usage --- get memory usage information}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_mem_usage(int *count, int *cpeak, size_t *total, size_t *tpeak);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_mem_usage| reports some information about
+utilization of the memory by the routines \verb|glp_malloc|,
+\verb|glp_calloc|, and \verb|glp_free|. Information is stored to
+locations specified by corresponding parameters (see below). Any
+parameter can be specified as \verb|NULL|, in which case corresponding
+information is not stored.
+
+\verb|*count| is the number of currently allocated memory blocks.
+
+\verb|*cpeak| is the peak value of \verb|*count| reached since the
+initialization of the GLPK library environment.
+
+\verb|*total| is the total amount, in bytes, of currently allocated
+memory blocks.
+
+\verb|*tpeak| is the peak value of \verb|*total| reached since the
+initialization of the GLPK library envirionment.
+
+\para{Example}
+
+\begin{footnotesize}
+\begin{verbatim}
+glp_mem_usage(&count, NULL, NULL, NULL);
+printf("%d memory block(s) are still allocated\n", count);
+\end{verbatim}
+\end{footnotesize}
+
+\subsection{glp\_mem\_limit --- set memory usage limit}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_mem_limit(int limit);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_mem_limit| limits the amount of memory available
+for dynamic allocation (with the routines \verb|glp_malloc| and
+\verb|glp_calloc|) to \verb|limit| megabytes.
+
+%* eof *%

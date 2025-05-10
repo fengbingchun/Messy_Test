@@ -1,0 +1,6 @@
+This subdirectory contains examples, which illustrate how to use
+GLPK and the GNU MathProg modeling language for practical solving the
+paint-by-numbers puzzle.
+
+For details please see the document "Solving Paint-By-Numbers Puzzles
+with GLPK" included in this subdirectory (file pbn.pdf).

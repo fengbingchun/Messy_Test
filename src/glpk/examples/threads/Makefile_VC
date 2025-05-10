@@ -1,0 +1,26 @@
+## Build multiseed example with Microsoft Visual Studio Express ##
+
+CFLAGS = \
+/I. \
+/I..\..\src \
+/I..\..\w64 \
+/DHAVE_CONFIG_H=1 \
+/D_CRT_SECURE_NO_WARNINGS=1 \
+/nologo \
+/W3 \
+/O2 \
+/Zi
+
+.c.obj:
+        cl.exe $(CFLAGS) /Fo$*.obj /c $*.c
+
+all: multiseed.exe
+
+multiseed.exe: multiseed.obj ..\..\w64\glpk_4_61.dll
+        cl.exe $(CFLAGS) /Fmultiseed.exe \
+                multiseed.obj ..\..\w64\glpk_4_61.lib
+
+check: multiseed.exe
+        .\multiseed.exe clustering.mod 20
+
+## eof ##

@@ -1,0 +1,104 @@
+/* define default font */
+body, p, pre, td, select, input, li {
+  font-family: "Arial", sans-serif;
+  font-size: 13px;
+  color: #000;
+}
+
+/* define space before and after paragraphs */
+p {
+  margin:  0px;
+  padding: 3px 0px 3px 0px;
+}
+
+/* show preformatted text in a grey box */
+pre {
+  border: 1px solid #bbb;
+  color: #000;
+  background-color: #eee;
+  font-family: "Courier", monospace;
+  }
+
+/* headings in blue without frame */
+h2, h3, h4, h5, h6 {
+  color: #0055aa;
+  background-color: transparent;
+  border: none;
+  margin:  0px;
+  padding: 6px 0px 6px 0px;
+  font-weight: bold;
+  }
+
+/* headings in black when printed */
+@media print {
+  h2, h3, h4, h5, h6 {
+    color: #000;
+  }
+}
+
+/* define size and style of headings */
+h2 {
+  font-size: 28px;
+  }
+
+h3 {
+  font-size: 24px;
+  }
+
+h4 {
+  font-size: 20px;
+  }
+
+h5 {
+  font-size: 16px;
+  }
+
+h6 {
+  font-size: 16px;
+  font-style: italic;
+  }
+
+/* show banner are with black background */
+#banner {
+  background-color: #000;
+  background-image: url(../images/flower.jpg);
+  background-repeat: no-repeat;
+  background-position: left;
+  border-bottom: 1px solid #000;
+  height: 100px;
+}
+
+#breadcrumbs {
+  background-color: #eee;
+  border-color: #999;
+}
+
+/* text style and position for project title */
+#bannerLeft {
+  font-size: 36px;
+  font-weight: bold;
+  padding: 30px 4px 4px 6px;
+  color: #fff;
+  margin-right: 1.5em;
+  margin-left: 197px;
+}
+
+/* show right banner image in right top corner */
+#bannerRight {
+  position: absolute;
+  padding: 0px;
+  right: 0px; top: 0px;
+  }
+
+/* no frame around preformatted text in source-repository.html */
+.source {
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
+}
+
+/* Workaround for IE9 scrollbar in navigation column */
+#navcolumn {
+  overflow: hidden;
+}
+

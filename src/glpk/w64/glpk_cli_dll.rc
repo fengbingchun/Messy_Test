@@ -1,0 +1,30 @@
+#include "VerRsrc.h"
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION            1,10,0,0
+PRODUCTVERSION         1,10,0,0
+FILEFLAGSMASK          0
+FILEFLAGS              0
+FILEOS                 VOS_UNKNOWN
+FILETYPE               VFT_DLL
+FILESUBTYPE            VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName",      "Xypron\0"
+            VALUE "FileDescription",  "CLI wrapper for GLPK 4.65 64bit\0"
+            VALUE "FileVersion",      "1.10.0.0\0"
+            VALUE "InternalName",     "libglpk_cli_native.dll\0"
+            VALUE "LegalCopyright",   "Heinrich Schuchardt, GPL v3"
+            VALUE "OriginalFilename", "libglpk_cli_native.dll\0"
+            VALUE "ProductName",      "GLPK for C#/CLI - http://glpk-cli.sourceforge.net\0"
+            VALUE "ProductVersion",   "1.10.0.0\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        /* supports English language (0x409) in the Windows ANSI codepage (1252). */
+        VALUE "Translation", 0x409, 1252
+    END
+END

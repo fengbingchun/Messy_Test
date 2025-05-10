@@ -1,0 +1,16 @@
+/* sudoku.dat, a hard Sudoku puzzle which causes branching */
+
+data;
+
+param givens : 1 2 3 4 5 6 7 8 9 :=
+           1   1 . . . . . 7 . .
+           2   . 2 . . . . 5 . .
+           3   6 . . 3 8 . . . .
+           4   . 7 8 . . . . . .
+           5   . . . 6 . 9 . . .
+           6   . . . . . . 1 4 .
+           7   . . . . 2 5 . . 9
+           8   . . 3 . . . . 6 .
+           9   . . 4 . . . . . 2 ;
+
+end;

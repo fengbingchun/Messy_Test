@@ -1,0 +1,29 @@
+ -----
+ Examples
+ -----
+ Heinrich Schuchardt
+ <xypron.glpk@gmx.de>
+ -----
+ 2017-01-21
+ -----
+
+Examples
+
+ Examples are provided in directory examples/java of the source distribution of
+ GLPK for Java.
+
+ To compile the examples the classpath must point to glpk-java.jar, e.g.
+
+---
+javac -classpath /usr/local/shared/java/glpk-java.jar Example.java
+---
+
+ To run the examples the classpath must point to glpk-java.jar. The
+ java.library.path must point to the directory with the dynamic link libraries,
+ e.g.
+
+---
+java -Djava.library.path=/usr/local/lib/jni \
+-classpath /usr/local/shared/java/glpk-java.jar:. \
+Example
+---

@@ -1,0 +1,5 @@
+This subdirectory contains files which demonstrate using data tables
+in MathProg models for MySQL and iODBC.
+
+Script mysql_setup.sh is used to load the data from the *.sql files to
+a MySQL database. Change the username, if necessary.

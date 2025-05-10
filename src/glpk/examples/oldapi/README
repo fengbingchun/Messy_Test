@@ -1,0 +1,11 @@
+The program module in this subdirectory contains an implementation of
+the old GLPK API as it was defined in GLPK 4.48.
+
+To compile an existing project using the old GLPK API you need to add
+to the project two files lpx.h and lpx.c.
+
+Please note that you may mix calls to old and new GLPK API routines in
+the same project (except calls to glp_create_prob and glp_delete_prob).
+
+The file lpxsamp.c is an example that illustrates using the old GLPK
+API routines.

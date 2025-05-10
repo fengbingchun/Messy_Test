@@ -1,0 +1,160 @@
+%* glpk10.tex *%
+
+\chapter{Stand-alone LP/MIP Solver}
+\label{chaglpsol}
+
+The GLPK package includes the program \verb|glpsol|, which is a
+stand-alone LP/MIP solver. This program can be invoked from the command
+line to read LP/MIP problem data in any format supported by GLPK, solve
+the problem, and write its solution to an output text file.
+
+\para{Usage}
+
+\verb|glpsol| [{\it options\dots}] [{\it filename}]
+
+\para{General options}
+
+\begin{verbatim}
+   --mps             read LP/MIP problem in fixed MPS format
+   --freemps         read LP/MIP problem in free MPS format (default)
+   --lp              read LP/MIP problem in CPLEX LP format
+   --glp             read LP/MIP problem in GLPK format
+   --math            read LP/MIP model written in GNU MathProg modeling
+                     language
+   -m filename, --model filename
+                     read model section and optional data section from
+                     filename (same as --math)
+   -d filename, --data filename
+                     read data section from filename (for --math only);
+                     if model file also has data section, it is ignored
+   -y filename, --display filename
+                     send display output to filename (for --math only);
+                     by default the output is sent to terminal
+   --seed value      initialize pseudo-random number generator used in
+                     MathProg model with specified seed (any integer);
+                     if seed value is ?, some random seed will be used
+   --mincost         read min-cost flow problem in DIMACS format
+   --maxflow         read maximum flow problem in DIMACS format
+   --cnf             read CNF-SAT problem in DIMACS format
+   --simplex         use simplex method (default)
+   --interior        use interior point method (LP only)
+   -r filename, --read filename
+                     read solution from filename rather to find it with
+                     the solver
+   --min             minimization
+   --max             maximization
+   --scale           scale problem (default)
+   --noscale         do not scale problem
+   -o filename, --output filename
+                     write solution to filename in printable format
+   -w filename, --write filename
+                     write solution to filename in plain text format
+   --ranges filename
+                     write sensitivity analysis report to filename in
+                     printable format (simplex only)
+   --tmlim nnn       limit solution time to nnn seconds
+   --memlim nnn      limit available memory to nnn megabytes
+   --check           do not solve problem, check input data only
+   --name probname   change problem name to probname
+   --wmps filename   write problem to filename in fixed MPS format
+   --wfreemps filename
+                     write problem to filename in free MPS format
+   --wlp filename    write problem to filename in CPLEX LP format
+   --wglp filename   write problem to filename in GLPK format
+   --wcnf filename   write problem to filename in DIMACS CNF-SAT format
+   --log filename    write copy of terminal output to filename
+   -h, --help        display this help information and exit
+   -v, --version     display program version and exit
+\end{verbatim}
+
+\para{LP basis factorization options}
+
+\begin{verbatim}
+   --luf             plain LU factorization (default)
+   --btf             block triangular LU factorization
+   --ft              Forrest-Tomlin update (requires --luf; default)
+   --cbg             Schur complement + Bartels-Golub update
+   --cgr             Schur complement + Givens rotation update
+\end{verbatim}
+
+\para{Options specific to the simplex solver}
+
+\begin{verbatim}
+   --primal          use primal simplex (default)
+   --dual            use dual simplex
+   --std             use standard initial basis of all slacks
+   --adv             use advanced initial basis (default)
+   --bib             use Bixby's initial basis
+   --ini filename    use as initial basis previously saved with -w
+                     (disables LP presolver)
+   --steep           use steepest edge technique (default)
+   --nosteep         use standard "textbook" pricing
+   --relax           use Harris' two-pass ratio test (default)
+   --norelax         use standard "textbook" ratio test
+   --presol          use presolver (default; assumes --scale and --adv)
+   --nopresol        do not use presolver
+   --exact           use simplex method based on exact arithmetic
+   --xcheck          check final basis using exact arithmetic
+\end{verbatim}
+
+\para{Options specific to the interior-point solver}
+
+\begin{verbatim}
+   --nord            use natural (original) ordering
+   --qmd             use quotient minimum degree ordering
+   --amd             use approximate minimum degree ordering (default)
+   --symamd          use approximate minimum degree ordering
+\end{verbatim}
+
+\para{Options specific to the MIP solver}
+
+\begin{verbatim}
+   --nomip           consider all integer variables as continuous
+                     (allows solving MIP as pure LP)
+   --first           branch on first integer variable
+   --last            branch on last integer variable
+   --mostf           branch on most fractional variable
+   --drtom           branch using heuristic by Driebeck and Tomlin
+                     (default)
+   --pcost           branch using hybrid pseudocost heuristic (may be
+                     useful for hard instances)
+   --dfs             backtrack using depth first search
+   --bfs             backtrack using breadth first search
+   --bestp           backtrack using the best projection heuristic
+   --bestb           backtrack using node with best local bound
+                     (default)
+   --intopt          use MIP presolver (default)
+   --nointopt        do not use MIP presolver
+   --binarize        replace general integer variables by binary ones
+                     (assumes --intopt)
+   --fpump           apply feasibility pump heuristic
+   --proxy [nnn]     apply proximity search heuristic (nnn is time limit
+                     in seconds; default is 60)
+   --gomory          generate Gomory's mixed integer cuts
+   --mir             generate MIR (mixed integer rounding) cuts
+   --cover           generate mixed cover cuts
+   --clique          generate clique cuts
+   --cuts            generate all cuts above
+   --mipgap tol      set relative mip gap tolerance to tol
+   --minisat         translate integer feasibility problem to CNF-SAT
+                     and solve it with MiniSat solver
+   --objbnd bound    add inequality obj <= bound (minimization) or
+                     obj >= bound (maximization) to integer feasibility
+                     problem (assumes --minisat)
+\end{verbatim}
+
+For description of the MPS format see Appendix \ref{champs}, page
+\pageref{champs}.
+
+For description of the CPLEX LP format see Appendix \ref{chacplex},
+page \pageref{chacplex}.
+
+For description of the modeling language see the document ``Modeling
+Language GNU MathProg: Language Reference'' included in the GLPK
+distribution.
+
+For description of the DIMACS min-cost flow problem format and DIMACS
+maximum flow problem format see the document ``GLPK: Graph and Network
+Routines'' included in the GLPK distribution.
+
+%* eof *%

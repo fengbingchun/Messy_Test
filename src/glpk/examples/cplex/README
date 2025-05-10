@@ -1,0 +1,44 @@
+The program module in this subdirectory is a crude implementation of
+CPLEX-like interface to GLPK API. It consists of two files: cplex.c and
+cplex.h.
+
+NOTE that this module is NOT a clean room implementation of the CPLEX
+callable library. It only implements a CPLEX-like interface to the GLPK
+API routines, and its main purpose is to provide possibility to build
+and run applications which normally use the CPLEX callable library.
+
+This module approximately corresponds to CPLEX 9.0.
+
+Currently this module can be used as a linear programming solver for
+Concorde, the state-of-the-art computer code for solving the symmetric
+traveling salesman problem (TSP) developed by David Applegate, Robert
+Bixby, Vasek Chvatal, and William Cook. For details about Concorde see
+its web page at http://www.tsp.gatech.edu/concorde.html.
+
+To build Concorde along with GLPK you need to do the following:
+
+1. Configure, build, and install GLPK.
+
+2. Download the Concorde tarball co031219.tgz (version Dec 19, 2003),
+   unpack and unarchive it.
+
+3. Copy files cplex.h and cplex.c to subdirectory concorde/LP/.
+
+4. Create file named lpglpk.c in subdirectory concorde/LP/. This file
+   must contain the following two lines:
+
+      #include "cplex.c"
+      #include "lpcplex8.c"
+
+5. Configure Concorde in usual way (./configure) and then build it with
+   the following command:
+
+      make CPPFLAGS=-I. LPSOLVER_INTERFACE=lpglpk.c LPSOLVER_LIB=-lglpk
+
+   The Concorde executable can be found in subdirectory concorde/TSP/.
+
+Please note that currently this GLPK interface module does not support
+some important features (namely, CPXgetijdiv, CPXmdleave, CPXpivotin,
+CPXpivotout, and CPXstrongbranch), so large (more than 1000 nodes) TSP
+instances cannot be solved in a reasonable time, and some instances may
+cause abnormal termination of Concorde (if CPXgetijdiv is called).

@@ -1,0 +1,1145 @@
+%* glpk-java.tex *%
+
+%***********************************************************************
+%  This code is part of GLPK for Java.
+%
+%  Copyright (C) 2009-2018 Heinrich Schuchardt,
+%  <xypron.glpk@gmx.de>
+%
+%  GLPK for Java is free software: you can redistribute it and/or 
+%  modify it under the terms of the GNU General Public License as
+%  published by the Free Software Foundation, either version 3 of the
+%  License, or (at your option) any later version.
+%
+%  GLPK for Java is distributed in the hope that it will be useful, but 
+%  WITHOUT ANY WARRANTY; without even the implied warranty of 
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+%  General Public License for more details.
+%
+%  You should have received a copy of the GNU General Public License
+%  along with GLPK for Java. If not, see <http://www.gnu.org/licenses/>.
+%***********************************************************************
+
+\documentclass[a4paper,11pt]{report}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{makeidx}
+%%generate index
+\makeindex
+
+\newcommand{\glpkJavaVersion}{1.12.0}
+\newcommand{\glpkVersionMajor}{4}
+\newcommand{\glpkVersionMinor}{65}
+
+\newcommand{\code}{\texttt}
+
+\renewcommand\contentsname{\sf\bfseries Contents}
+\renewcommand\chaptername{\sf\bfseries Chapter}
+\renewcommand\appendixname{\sf\bfseries Appendix}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt} 
+
+\begin{document}
+% Use Java style for listings.
+% For escaping to latex inside listings use "#.".
+\lstset{
+  basicstyle=\ttfamily,
+  showstringspaces=true,
+  commentstyle=\color{blue},
+  language=Java,
+  escapeinside={\#}{.}
+}
+
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{1in}
+
+\begin{huge}
+\sf\bfseries GNU Linear Programming Kit\linebreak
+Java Binding
+\end{huge}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf Reference Manual
+\end{LARGE}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf Version \glpkJavaVersion
+\end{LARGE}
+
+\vspace{0.5in}
+\begin{Large}
+\sf \today
+\end{Large}
+\end{center}
+
+\newpage
+
+\vspace*{1in}
+
+\vfill
+
+\medskip \noindent
+Copyright \copyright{} 2009-{\the\year} Heinrich Schuchardt,
+xypron.glpk@gmx.de
+
+\medskip \noindent
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+\medskip \noindent
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided also that the
+entire resulting derived work is distributed under the terms of
+a permission notice identical to this one.
+
+\medskip \noindent
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions.
+
+\medskip \noindent
+Windows is a registered trademark of Microsoft Corporation. 
+Java is a registered trademark of Oracle and/or its affiliates.
+OS X is a trademark of Apple Inc.
+
+\tableofcontents
+
+\chapter{Introduction}
+The GNU Linear Programming Kit (GLPK)\cite{GLPK} package supplies a solver for
+large scale linear programming (LP) and mixed integer programming (MIP). The
+GLPK project is hosted at
+\linebreak\href{http://www.gnu.org/software/glpk}{http://www.gnu.org/software/glpk}.
+
+It has two mailing lists:\index{support}
+\begin{itemize}
+\item\href{mailto:help-glpk@gnu.org}{help-glpk@gnu.org} and 
+\item\href{mailto:bug-glpk@gnu.org}{bug-glpk@gnu.org}.
+\end{itemize}
+To subscribe to one of these lists, please, send an empty mail with a Subject:
+header line of just "subscribe" to the list.
+
+GLPK provides a library written in C and a standalone solver.
+
+The source code provided at
+\href{ftp://gnu.ftp.org/gnu/glpk/}{ftp://gnu.ftp.org/gnu/glpk/} contains the
+documentation of the library in  file doc/glpk.pdf.
+
+The Java platform provides the Java Native Interface (JNI)\cite{JNI} to
+integrate non-Java language libraries into Java applications.
+
+Project GLPK for Java delivers a Java Binding for GLPK. It is hosted at
+\linebreak\href{http://glpk-java.sourceforge.net/}{http://glpk-java.sourceforge.net/}.
+
+To report problems and suggestions concerning GLPK for Java, please, send an
+email to the author at \href{mailto:xypron.glpk@gmx.de}{xypron.glpk@gmx.de}\index{support}.
+
+\chapter{Getting started}
+
+This chapter will run you through the installation of GLPK for Java and the
+execution of a trivial example.
+
+\section{Installation}\index{installation}
+\subsection{Windows}
+
+The following description assumes:
+
+\begin{itemize}
+\item You are using a 64-bit version of Windows. Replace folder name w64 by w32
+if you are using a 32-bit version.
+\item The current version of GLPK is \glpkVersionMajor.\glpkVersionMinor.
+Please, adjust paths if necessary.
+\item Your path for program files is "C:\textbackslash Program Files".
+Please, adjust paths if necessary.
+\end{itemize}
+
+Download the current version of GLPK for Windows from
+\href{https://sourceforge.net/projects/winglpk/}{https://sourceforge.net/projects/winglpk/}.
+
+The filename for version \glpkVersionMajor.\glpkVersionMinor\ is
+winglpk-\glpkVersionMajor.\glpkVersionMinor.zip. Unzip the file. Copy folder
+glpk-\glpkVersionMajor.\glpkVersionMinor\ to
+"C:\textbackslash Program Files\textbackslash GLPK\textbackslash ".
+
+To check the installation run the following command:
+
+\lstset{language=bash,escapeinside={\#}{.}}
+\begin{lstlisting}
+"C:\Program Files\GLPK\w64\glpsol.exe" --version
+\end{lstlisting}
+
+To use GLPK for Java you need a Java development kit to be installed.
+The Oracle JDK can be downloaded from
+\href{http://www.oracle.com/technetwork/java/javase/downloads/index.html}{http://www.oracle.com/technetwork/java/javase/downloads/index.html}.
+
+To check the installation run the following commands:
+
+\begin{lstlisting}
+"%JAVA_HOME%\bin\javac" -version
+java -version
+\end{lstlisting}
+
+\subsection{Linux}
+\subsubsection{Debian package}
+
+For Debian and Ubuntu an installation package for GLPK for Java exists.
+It can be installed by the following commands:
+
+\lstset{language=bash,escapeinside={\#}{.}}
+\begin{lstlisting}
+sudo apt-get install libglpk-java
+\end{lstlisting}
+
+The installation will be in /usr not in /usr/local as assumed in the examples
+below.
+
+\subsubsection{Installation from source}
+
+Download the current version of GLPK source with
+
+\begin{lstlisting}
+wget ftp://ftp.gnu.org/gnu/glpk/glpk-#\glpkVersionMajor..#\glpkVersionMinor..tar.gz
+\end{lstlisting}
+
+Unzip the archive with:
+
+\begin{lstlisting}
+tar -xzf glpk-#\glpkVersionMajor..#\glpkVersionMinor..tar.gz
+cd glpk-#\glpkVersionMajor..#\glpkVersionMinor.
+\end{lstlisting}
+
+Configure with
+
+\begin{lstlisting}
+./configure
+\end{lstlisting}
+
+Make and install with:
+
+\begin{lstlisting}
+make
+make check
+sudo make install
+\end{lstlisting}
+
+Check the installation with
+
+\begin{lstlisting}
+glpsol --version
+\end{lstlisting}
+
+For the next steps you will need a Java Development Kit (JDK) to be installed.
+
+You can check the correct installation with the following commands:
+
+\begin{lstlisting}
+$JAVA_HOME/bin/javac -version
+java -version
+\end{lstlisting}
+
+If the JDK is missing refer to http://openjdk.java.net/install/ for
+installation instructions.
+
+To build GLPK for Java you will need package SWIG (Simplified Wrapper and
+Interface Generator, \href{http://www.swig.org/}{http://www.swig.org/}). You
+can check the installation with the following command:
+
+\begin{lstlisting}
+swig -version
+\end{lstlisting}
+
+Most Linux distribution contain a SWIG package. The installation command will
+depend on the distribution, e.g.
+
+\begin{itemize}
+\item Debian: sudo apt-get install swig
+\item Fedora: sudo yum install swig
+\item Gentoo: sudo emerge swig
+\end{itemize}
+
+Download GLPK for Java from \href{https://sourceforge.net/projects/glpk-java/files/}{https://sourceforge.net/projects/glpk-java/files/}.
+
+Unzip the archive with:
+
+\begin{lstlisting}
+tar -xzf glpk-java-#\glpkJavaVersion..tar.gz
+cd glpk-java-#\glpkJavaVersion.
+\end{lstlisting}
+
+Configure with:
+\begin{lstlisting}
+./configure
+\end{lstlisting}
+
+If configure is called with \code{--enable-libpath},
+class GLPKJNI will try to load the GLPK library from the path specified by
+java.library.path (see section \ref{sec:JNI-library}).
+
+Some POSIX systems like OS X have jni.h in a special path. You may want to
+specify this path in the parameters CPPFLAGS and SWIGFLAGS for the configure
+script, e.g.
+
+\begin{lstlisting}
+./configure \
+  CPPFLAGS=-I/System/Library/Frameworks/JavaVM.framework/Headers \
+  SWIGFLAGS=-I/System/Library/Frameworks/JavaVM.framework/Headers
+\end{lstlisting}
+
+If libglpk.so is in a special path you may specify this path using parameter
+LDFLAGS, e.g.
+
+\begin{lstlisting}
+./configure LDFLAGS=-L/opt/lib
+\end{lstlisting}
+
+Make and install with:
+
+\begin{lstlisting}
+make
+make check
+sudo make install
+\end{lstlisting}
+
+\index{installation path}If you have no authorization to install GLPK and GLPK
+for Java in the /usr directory, you can alternatively install it in your home
+directory as is shown in the following listing.
+
+\begin{lstlisting}
+#\#. Download source code
+mkdir -p /home/$USER/src
+cd /home/$USER/src
+rm -rf glpk-#\glpkVersionMajor..#\glpkVersionMinor.*
+wget http://ftp.gnu.org/gnu/glpk/glpk-#\glpkVersionMajor..#\glpkVersionMinor..tar.gz
+tar -xzf glpk-#\glpkVersionMajor..#\glpkVersionMinor..tar.gz
+rm -rf glpk-java-#\glpkJavaVersion.*
+wget http://download.sourceforge.net/project/glpk-java/\
+glpk-java/glpk-java-#\glpkJavaVersion./libglpk-java-#\glpkJavaVersion..tar.gz
+tar -xzf libglpk-java-#\glpkJavaVersion..tar.gz
+
+#\#. Build and install GLPK
+cd /home/$USER/src/glpk-#\glpkVersionMajor..#\glpkVersionMinor.
+./configure --prefix=/home/$USER/glpk
+make
+make check
+make install
+
+#\#. Build and install GLPK for Java
+cd /home/$USER/src/libglpk-java-#\glpkJavaVersion.
+export CPPFLAGS=-I/home/$USER/glpk/include
+export SWIGFLAGS=-I/home/$USER/glpk/include
+export LD_LIBRARY_PATH=/home/$USER/glpk/lib
+./configure --prefix=/home/$USER/glpk
+make
+make check
+make install
+unset CPPFLAGS
+unset SWIGFLAGS
+
+#\#. Build and run example
+cd /home/$USER/src/libglpk-java-#\glpkJavaVersion./examples/java
+$JAVA_HOME/bin/javac \
+-classpath /home/$USER/glpk/share/java/glpk-java-#\glpkJavaVersion..jar \
+GmplSwing.java
+$JAVA_HOME/bin/java \
+-Djava.library.path=/home/$USER/glpk/lib/jni \
+-classpath /home/$USER/glpk/share/java/glpk-java-#\glpkJavaVersion..jar:. \
+GmplSwing marbles.mod
+\end{lstlisting}
+
+\subsection{OS X}
+\subsubsection{Installation from source}
+
+For building GLPK for Java the package manager Homebrew is needed. The
+installation and usage is described at \url{https://brew.sh}.
+
+Install GLPK
+
+\begin{lstlisting}
+brew install glpk
+\end{lstlisting}
+
+For the next steps you will need a Java Development Kit (JDK) to be installed.
+
+You can check the correct installation with the following commands:
+
+\begin{lstlisting}
+$JAVA_HOME/bin/javac -version
+java -version
+\end{lstlisting}
+
+If the JDK is missing it can be installed with
+
+\begin{lstlisting}
+brew cask install java
+\end{lstlisting}
+
+To build GLPK for Java you will need package SWIG (Simplified Wrapper and
+Interface Generator, \href{http://www.swig.org/}{http://www.swig.org/}). You
+can check the installation with the following command:
+
+\begin{lstlisting}
+swig -version
+\end{lstlisting}
+
+SWIG can be installed with
+
+\begin{lstlisting}
+brew install swig
+\end{lstlisting}
+
+Download GLPK for Java from \url{https://sourceforge.net/projects/glpk-java/files/}.
+
+Unzip the archive with:
+
+\begin{lstlisting}
+tar -xzf glpk-java-#\glpkJavaVersion..tar.gz
+cd glpk-java-#\glpkJavaVersion.
+\end{lstlisting}
+
+Configure with:
+\begin{lstlisting}
+./configure
+\end{lstlisting}
+
+If configure is called with \code{--enable-libpath},
+class GLPKJNI will try to load the GLPK library from the path specified by
+java.library.path (see section \ref{sec:JNI-library}).
+
+OS X has jni.h in a special path. You will have to specify this path by setting
+parameters CPPFLAGS and SWIGFLAGS for the configure script.
+
+\begin{lstlisting}
+./configure \
+  CPPFLAGS=-I/System/Library/Frameworks/JavaVM.framework/Headers \
+  SWIGFLAGS=-I/System/Library/Frameworks/JavaVM.framework/Headers
+\end{lstlisting}
+
+If libglpk.so is in a special path you may specify this path using parameter
+LDFLAGS, e.g.
+
+\begin{lstlisting}
+./configure LDFLAGS=-L/opt/lib
+\end{lstlisting}
+
+Make and install with:
+
+\begin{lstlisting}
+make
+make check
+sudo make install
+\end{lstlisting}
+
+\section{Trivial example}
+
+In the example we will create a Java class which will write the GLPK version to the console.
+
+With a text editor create a text file Test.java with the following content:
+
+\lstset{language=Java,escapeinside={\#}{.}}
+\begin{lstlisting}
+import org.gnu.glpk.GLPK;
+public class Test {
+  public static void main(String[] args) {
+    System.out.println( GLPK.glp_version());
+  }
+}
+\end{lstlisting}
+
+\subsection{Windows}
+
+Compile the class
+
+\lstset{language=bash,escapeinside={\#}{.}}
+\begin{lstlisting}
+set CLASSPATH=C:Program Files\GLPK\glpk-#\glpkVersionMajor..#\glpkVersionMinor.\w64\glpk-java.jar
+"%JAVA_HOME%/bin/javac" Test.java
+\end{lstlisting}
+
+Run the class
+
+\begin{lstlisting}
+set CLASSPATH=C:\Program Files\GLPK\glpk-#\glpkVersionMajor..#\glpkVersionMinor.\w64\glpk-java.jar;.
+java -Djava.library.path="C:Program Files\GLPK\glpk-#\glpkVersionMajor..#\glpkVersionMinor.\w64" Test
+\end{lstlisting}
+
+The output will be the GLPK version number, for example: \glpkVersionMajor.\glpkVersionMinor.
+
+\subsection{Linux}
+Compile the class
+
+\begin{lstlisting}
+javac -classpath /usr/local/share/java/glpk-java.jar Test.java
+\end{lstlisting}
+
+Run the class:
+
+\begin{lstlisting}
+java -Djava.library.path=/usr/local/lib/jni \
+-classpath /usr/local/share/java/glpk-java.jar:. \
+Test
+\end{lstlisting}
+
+The output will be the GLPK version number, for example: \glpkVersionMajor.\glpkVersionMinor.
+
+\chapter{Architecture}
+A GLPK for Java application will consist of
+\begin{itemize}
+\item the GLPK library
+\item the GLPK for Java JNI library
+\item the GLPK for Java class library
+\item the application code.
+\end{itemize}
+
+\section{GLPK library}
+
+\subsection{Source}
+The source code to compile the GLPK library is provided at \linebreak\href{ftp://gnu.ftp.org/gnu/glpk/}{ftp://gnu.ftp.org/gnu/glpk/}.
+
+\subsection{Linux}
+\index{Linux}
+The GLPK library can be compiled from source code. Follow the instructions in file INSTALL provided in the source distribution. Precompiled packages are available in many Linux distributions.
+
+The usual installation path for the library is /usr/local/lib/libglpk.so.
+\subsection{Windows}
+\index{Windows}
+The GLPK library can be compiled from source code. The build and make files are in directory w32 for 32 bit Windows and in w64 for 64 bit Windows. The name of the created library is glpk\_\glpkVersionMajor\_\glpkVersionMinor.dll for revision \glpkVersionMajor.\glpkVersionMinor.
+
+A precompiled version of GLPK is provided at \href{http://winglpk.sourceforge.net}{http://winglpk.sourceforge.net}.
+
+The library has to be in the search path for binaries. Either copy the library to a directory that is already in the path (e.g. C:\textbackslash windows\textbackslash system32) or update the path in the system settings of Windows.
+
+\section{GLPK for Java JNI library}
+\index{JNI library}
+\subsection{Source}
+The source code to compile the GLPK for Java JNI library is provided at \linebreak\href{http://glpk-java.sourceforge.net}{http://glpk-java.sourceforge.net}.
+
+\subsection{Linux}
+\index{Linux}
+The GLPK for Java JNI library can be compiled from source code. Follow the instructions in file INSTALL provided in the source distribution.
+
+The usual installation path for the library is /usr/local/lib/libglpk-java.so.
+\subsection{Windows}
+\index{Windows}
+The GLPK for Java JNI library can be compiled from source code. The build and make files are in directory w32 for 32 bit Windows and in w64 for 64 bit Windows. The name of the created library is glpk\_\glpkVersionMajor\_\glpkVersionMinor\_java.dll for revision \glpkVersionMajor.\glpkVersionMinor.
+
+A precompiled version of GLPK for Java is provided at \linebreak\href{http://winglpk.sourceforge.net}{http://winglpk.sourceforge.net}.
+
+The library has to be in the search path for binaries. Either copy the library to a directory that is already in the path (e.g. C:\textbackslash windows\textbackslash system32) or update the path in the system settings of Windows.
+
+\section{GLPK for Java class library}
+The source code to compile the GLPK for Java class library is provided at \linebreak\href{http://glpk-java.sourceforge.net}{http://glpk-java.sourceforge.net}.
+
+\subsection{Linux}
+\index{Linux}
+The GLPK for Java class library can be compiled from source code. Follow the instructions in file INSTALL provided in the source distribution.
+
+The usual installation path for the library is /usr/local/share/java/glpk-java.jar.
+
+For Debian and Ubuntu the following packages are needed for compilation:
+\begin{itemize}
+	\item libtool
+	\item swig
+	\item openjdk-6-jdk (or a higher version)
+\end{itemize}
+\subsection{Windows}
+\index{Windows}
+The GLPK for Java class library can be compiled from source code. The build and make files are in directory w32 for 32 bit Windows and in w64 for 64 bit Windows. The name of the created library is glpk-java.jar.
+
+A precompiled version of GLPK including GLPK-Java is provided at \linebreak\href{http://winglpk.sourceforge.net}{http://winglpk.sourceforge.net}.
+
+\subsection{Classpath}
+\index{classpath}
+The library has to be in the CLASSPATH. Update the classpath in the system settings of Windows or specify the classpath upon invocation of the application, e.g.
+\begin{verbatim}
+java -classpath ./glpk-java.jar;. MyApplication
+\end{verbatim}
+\chapter{Maven}
+For using this library in your Maven project enter the following repository and dependency in your pom.xml:
+\lstset{language=xml,escapeinside={\#}{.}}
+\begin{lstlisting}
+<repositories>
+    <repository>
+        <id>XypronRelease</id>
+        <name>Xypron Release</name>
+        <url>https://www.xypron.de/repository</url>
+        <layout>default</layout>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>org.gnu.glpk</groupId>
+        <artifactId>glpk-java</artifactId>
+        <version>#\glpkJavaVersion.</version>
+    </dependency>
+</dependencies>
+\end{lstlisting}
+The artifact does not include the binary libraries, which have to be installed separately.
+\chapter{Classes}
+\index{classes}
+GLPK for Java uses the Simplified Wrapper and Interface Generator (SWIG)\index{SWIG}\cite{SWIG} to create
+the JNI interface to GLPK.
+\index{class path}
+Classes are created in path org.gnu.glpk.
+
+Class GlpkCallback is called by the MIP solver callback routine.
+
+Interface GlpkCallbackListener can be implemented to register a listener for
+class GlpkCallback.
+
+Class GlpkTerminal is called by the MIP solver terminal output routine.
+
+Interface GlpkTerminalListener can be implemented to register a listener for
+class GlpkTerminal.
+
+Class GlpkException is thrown if an error occurs.
+
+Class GLPK maps the functions from glpk.h.
+
+Class GLPKConstants maps the constants from glpk.h to methods.
+
+Class GLPKJNI contains the definitions of the native functions.
+
+The following classes map structures from glpk.h:
+\begin{itemize}
+\item glp\_attr
+\item glp\_bfcp
+\item glp\_cpxcp
+\item glp\_iocp
+\item glp\_iptcp
+\item glp\_long
+\item glp\_mpscp
+\item glp\_prob
+\item glp\_smcp
+\item glp\_tran
+\item glp\_tree
+\item LPXKKT
+\item glp\_arc
+\item glp\_graph
+\item glp\_vertex
+\end{itemize}
+
+The following classes are used to map pointers:
+\begin{itemize}
+\item SWIGTYPE\_p\_double
+\item SWIGTYPE\_p\_f\_p\_glp\_tree\_p\_void\_\_void
+\item SWIGTYPE\_p\_f\_p\_q\_const\_\_char\_v\_\_\_\_\_\_\_void
+\item SWIGTYPE\_p\_f\_p\_void\_\_void
+\item SWIGTYPE\_p\_f\_p\_void\_p\_q\_const\_\_char\_\_int
+\item SWIGTYPE\_p\_int
+\item SWIGTYPE\_p\_glp\_arc
+\item SWIGTYPE\_p\_glp\_graph
+\item SWIGTYPE\_p\_glp\_vertex
+\item SWIGTYPE\_p\_va\_list
+\item SWIGTYPE\_p\_void
+\end{itemize}
+
+The following clases are used for network problems:
+\begin{itemize}
+\item glp\_java\_arc\_data
+\item glp\_java\_vertex\_data
+\end{itemize}
+
+\chapter{Usage}
+Please, refer to file doc/glpk.pdf of the GLPK source distribution for a detailed description of the methods and constants.
+
+\section{Loading the JNI library}
+\label{sec:JNI-library}
+\index{JNI library}
+To be able to use the JNI library in a Java program it has to be loaded.
+The path to dynamic link libaries can specified on the command line when
+calling the Java runtime, e.g.
+\begin{verbatim}
+java -Djava.library.path=/usr/local/lib/jni/libglpk_java
+\end{verbatim}
+
+The following code is used in class GLPKJNI to load the JNI library:
+
+% Use Java style for listings.
+% For escaping to latex inside listings use "`'".
+\lstset{language=Java,escapeinside={\`}{'}}
+\begin{lstlisting}
+static {
+  try {
+    if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+      // try to load Windows library
+#ifdef GLPKPRELOAD
+      try {
+        System.loadLibrary("glpk_`\glpkVersionMajor'_`\glpkVersionMinor'");
+      } catch (UnsatisfiedLinkError e) {
+        // The dependent library might be in the OS library search path.
+      }
+#endif
+      System.loadLibrary("glpk_`\glpkVersionMajor'_`\glpkVersionMinor'_java");
+    } else {
+      // try to load Linux library
+#ifdef GLPKPRELOAD
+      try {
+        System.loadLibrary("glpk");
+      } catch (UnsatisfiedLinkError e) {
+        // The dependent library might be in the OS library search path.
+      }   
+#endif
+      System.loadLibrary("glpk_java");
+    }
+  } catch (UnsatisfiedLinkError e) {
+    System.err.println(
+      "The dynamic link library for GLPK for Java could not be"
+      + "loaded.\nConsider using\njava -Djava.library.path=");
+    throw e;
+  }
+}
+\end{lstlisting}
+
+GLPKPRELOAD is enabled in the Windows build files by default.
+For POSIX systems it can be enabled by
+
+\lstset{language=bash,escapeinside={\#}{.}}
+\begin{lstlisting}
+./configure --enable-libpath
+\end{lstlisting}
+
+If the JNI library can not be loaded, you will receive an exception
+\linebreak java.lang.UnsatisfiedLinkError.
+
+\section{Exceptions}
+\index{exceptions}
+\index{GlpkException}
+When illegal parameters are passed to a function of the GLPK native library
+an exception GlpkException is thrown. Due to the architecture of GLPK all
+GLPK objects are invalid when such an exception has occured.
+
+\subsection{Implementation details}
+GLPK for Java registers a function glp\_java\_error\_hook() to glp\_error\_hook()
+before calling an GLPK API function. If an error occurs function glp\_free\_env
+is called and a long jump is used to return to the calling environment. Then
+function glp\_java\_throw() is called which throws GlpkException.
+
+\section{Network problems}
+For network problems additional data like capacity and cost of arcs or the
+inflow of vertics has to be specified. The GLPK library does not provide
+data structures. In GLPK for Java classes \_glp\_java\_arc\_data and
+\_glp\_java\_vertex\_data are provided.
+
+When creating a graph the size of the structures for these classes has to be
+specified. In some routines the offsets to individual fields in the structures are
+needed. The following constants have been defined:
+
+\begin{itemize}
+\item GLP\_JAVA\_A\_CAP  - offset of field cap in arc data
+\item GLP\_JAVA\_A\_COST - offset of field cost in arc data
+\item GLP\_JAVA\_A\_LOW  - offset of field low in arc data
+\item GLP\_JAVA\_A\_RC   - offset of field rc in arc data
+\item GLP\_JAVA\_A\_X    - offset of field x in arc data
+\item GLP\_JAVA\_A\_SIZE - size of arc data
+\item GLP\_JAVA\_V\_CUT  - offset of field cut in vertex data
+\item GLP\_JAVA\_V\_PI   - offset of field pi in vertex data
+\item GLP\_JAVA\_V\_RHS  - offset of field rhs in vertex data
+\item GLP\_JAVA\_V\_SET  - offset of field set in vertex data
+\item GLP\_JAVA\_V\_SIZE - size of vertex data
+\end{itemize}
+
+For accessing vertices method GLPK.glp\_java\_vertex\_get can be used.
+
+For accessing the data areas of arcs and vertices methods
+GLPK.glp\_java\_arc\_get\_data,\linebreak
+GLPK.glp\_java\_vertex\_data\_get, and
+GLPK.glp\_java\_vertex\_get\_data can be used.
+
+\lstset{language=Java,escapeinside={\#}{'}}
+\begin{lstlisting}
+glp_arc arc;
+glp_java_arc_data adata;
+glp_java_vertex_data vdata;
+
+glp_graph graph =
+        GLPK.glp_create_graph(
+        GLPKConstants.GLP_JAVA_V_SIZE,
+        GLPKConstants.GLP_JAVA_A_SIZE);
+GLPK.glp_set_graph_name(graph,
+        MinimumCostFlow.class.getName());
+
+int ret = GLPK.glp_add_vertices(graph, 9);
+
+GLPK.glp_set_vertex_name(graph, 1, "v1");
+GLPK.glp_set_vertex_name(graph, 2, "v2");
+GLPK.glp_set_vertex_name(graph, 3, "v3");
+GLPK.glp_set_vertex_name(graph, 4, "v4");
+GLPK.glp_set_vertex_name(graph, 5, "v5");
+GLPK.glp_set_vertex_name(graph, 6, "v6");
+GLPK.glp_set_vertex_name(graph, 7, "v7");
+GLPK.glp_set_vertex_name(graph, 8, "v8");
+GLPK.glp_set_vertex_name(graph, 9, "v9");
+           
+vdata = GLPK.glp_java_vertex_data_get(graph, 1);
+vdata.setRhs(20);
+vdata = GLPK.glp_java_vertex_data_get(graph, 9);
+vdata.setRhs(-20);
+        
+arc = GLPK.glp_add_arc(graph, 1, 2);
+adata = GLPK.glp_java_arc_get_data(arc);
+adata.setLow(0); adata.setCap(14); adata.setCost(0);
+
+...
+
+GLPK.glp_write_mincost(graph, 
+        GLPKConstants.GLP_JAVA_V_RHS,
+        GLPKConstants.GLP_JAVA_A_LOW,
+        GLPKConstants.GLP_JAVA_A_CAP,
+        GLPKConstants.GLP_JAVA_A_COST,
+        "mincost.dimacs");
+GLPK.glp_delete_graph(graph);
+
+\end{lstlisting}
+
+\section{Callbacks}
+\index{callbacks}
+\index{GlpkCallback}
+\index{GlpkCallbackListener}
+The MIP solver provides a callback functionality. This is used to call
+method callback of class GlpkCallback. A Java program can listen to the
+callbacks by instantiating a class implementing interface
+GlpkCallbackListener and registering the object with method addListener()
+of class GlpkCallback. The listener can be deregistered with method
+removeListener(). The listener can use method GLPK.glp\_ios\_reason() to find
+out why it is called. For details see the GLPK library documentation.
+
+\begin{landscape}
+\begin{figure}
+\caption{Callbacks and Error Handling}
+\includegraphics[scale=.313]{swimlanes.pdf}
+\end{figure}
+\end{landscape}
+
+\section{Output listener}
+\index{output listener}
+\index{GlpkTerminal}
+\index{GlpkTerminalListener}
+GLPK provides a hook for terminal output. A Java program can listen to the
+callbacks by instantiating a class implementing interface GlpkTerminalListener
+and registering the object with method addListener of class GlpkTerminal.
+The listener can be dregistered with method removeListener().
+After a call to glp\_free\_env() the GlpkTerminal has to registered again
+by calling GLPK.glp\_term\_hook(null, null). glp\_free\_env() is called if
+an exception GlpkException occurs.
+
+\section{Aborting a GLPK library call}
+\index{abort}
+\index{GlpkException}
+\index{glp\_java\_error}
+Method void GLPK.glp\_java\_error(String message) can be used to abort any call
+to the GLPK library. An exception GlpkException will occur. The call must be
+placed in the same thread as the initial call that is to be aborted.
+The output method of a GlpkTerminalListener can be used for this purpose.
+
+\section{Debugging support}
+\index{message level}
+\index{debug}
+\index{glp\_java\_set\_msg\_lvl}
+Method void GLPK.glp\_java\_set\_msg\_lvl(int msg\_lvl) can be used to enable
+extra output signaling when a GLPK library function is entered or left using 
+value with GLPKConstants.GLP\_JAVA\_MSG\_LVL\_ALL. The output is disabled by a
+call with value GLPKConstants.GLP\_JAVA\_MSG\_LVL\_OFF.
+
+\section{Locales}
+\index{locales}
+\index{glp\_java\_set\_numeric\_locale}
+Method void GLPK.glp\_java\_set\_numeric\_locale(String locale) can be used to
+set the locale for numeric formatting. When importing model files the GLPK
+library expects to be using locale "C".
+
+\section{Threads}
+\index{threads}
+The GLPK library is not thread safe. Never two threads should be running that
+access the GLPK library at the same time. When a new thread accesses the
+library it should call GLPK.glp\_free\_env(). When using an GlpkTerminalListener
+it is necessary to register GlpkTerminal again by calling
+\linebreak GLPK.glp\_term\_hook(null, null).
+
+When writing a GUI application it is advisable to use a separate thread for
+the calls to GLPK. Otherwise the GUI cannot react to events during the call
+to the GLPK libary.
+
+\chapter{Examples}
+\index{examples}
+
+Examples are provided in directory examples/java of the source distribution of
+GLPK for Java.
+
+To compile the examples the classpath must point to glpk-java.jar, e.g.
+\begin{verbatim}
+javac -classpath /usr/local/shared/java/glpk-java.jar Example.java
+\end{verbatim}
+To run the examples the classpath must point to glpk-java.jar. The java.library.path
+must point to the directory with the dynamic link libraries, e.g.
+\begin{verbatim}
+java -Djava.library.path=/usr/local/lib/jni \
+-classpath /usr/local/shared/java/glpk-java.jar:. \
+Example
+\end{verbatim}
+
+\section{Lp.java}
+
+\subsection{Description}
+This example solves a small linear problem and ouputs the solution.
+
+\subsection{Coding}
+\begin{lstlisting}
+import org.gnu.glpk.GLPK;
+import org.gnu.glpk.GLPKConstants;
+import org.gnu.glpk.GlpkException;
+import org.gnu.glpk.SWIGTYPE_p_double;
+import org.gnu.glpk.SWIGTYPE_p_int;
+import org.gnu.glpk.glp_prob;
+import org.gnu.glpk.glp_smcp;
+
+public class Lp {
+    //	Minimize z = (x1-x2) /2 + (1-(x1-x2)) = -.5 * x1 + .5 * x2 + 1
+    //
+    //	subject to
+    //	0.0<= x1 - x2 <= 0.2
+    //	where,
+    //	0.0 <= x1 <= 0.5
+    //	0.0 <= x2 <= 0.5
+
+    public static void main(String[] arg) {
+        glp_prob lp;
+        glp_smcp parm;
+        SWIGTYPE_p_int ind;
+        SWIGTYPE_p_double val;
+        int ret;
+
+        try {
+            // Create problem
+            lp = GLPK.glp_create_prob();
+            System.out.println("Problem created");
+            GLPK.glp_set_prob_name(lp, "myProblem");
+
+            // Define columns
+            GLPK.glp_add_cols(lp, 2);
+            GLPK.glp_set_col_name(lp, 1, "x1");
+            GLPK.glp_set_col_kind(lp, 1, GLPKConstants.GLP_CV);
+            GLPK.glp_set_col_bnds(lp, 1, GLPKConstants.GLP_DB, 0, .5);
+            GLPK.glp_set_col_name(lp, 2, "x2");
+            GLPK.glp_set_col_kind(lp, 2, GLPKConstants.GLP_CV);
+            GLPK.glp_set_col_bnds(lp, 2, GLPKConstants.GLP_DB, 0, .5);
+
+            // Create constraints
+            GLPK.glp_add_rows(lp, 1);
+
+            GLPK.glp_set_row_name(lp, 1, "c1");
+            GLPK.glp_set_row_bnds(lp, 1, GLPKConstants.GLP_DB, 0, 0.2);
+            ind = GLPK.new_intArray(3);
+            GLPK.intArray_setitem(ind, 1, 1);
+            GLPK.intArray_setitem(ind, 2, 2);
+            val = GLPK.new_doubleArray(3);
+            GLPK.doubleArray_setitem(val, 1, 1.);
+            GLPK.doubleArray_setitem(val, 2, -1.);
+            GLPK.glp_set_mat_row(lp, 1, 2, ind, val);
+            GLPK.delete_intArray(ind);
+            GLPK.delete_doubleArray(val);
+
+            // Define objective
+            GLPK.glp_set_obj_name(lp, "z");
+            GLPK.glp_set_obj_dir(lp, GLPKConstants.GLP_MIN);
+            GLPK.glp_set_obj_coef(lp, 0, 1.);
+            GLPK.glp_set_obj_coef(lp, 1, -.5);
+            GLPK.glp_set_obj_coef(lp, 2, .5);
+
+            // Solve model
+            parm = new glp_smcp();
+            GLPK.glp_init_smcp(parm);
+            ret = GLPK.glp_simplex(lp, parm);
+
+            // Retrieve solution
+            if (ret == 0) {
+                write_lp_solution(lp);
+            } else {
+                System.out.println("The problem could not be solved");
+            }
+
+            // Free memory
+            GLPK.glp_delete_prob(lp);
+        } catch (GlpkException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * write simplex solution
+     * @param lp problem
+     */
+    static void write_lp_solution(glp_prob lp) {
+        int i;
+        int n;
+        String name;
+        double val;
+
+        name = GLPK.glp_get_obj_name(lp);
+        val = GLPK.glp_get_obj_val(lp);
+        System.out.print(name);
+        System.out.print(" = ");
+        System.out.println(val);
+        n = GLPK.glp_get_num_cols(lp);
+        for (i = 1; i <= n; i++) {
+            name = GLPK.glp_get_col_name(lp, i);
+            val = GLPK.glp_get_col_prim(lp, i);
+            System.out.print(name);
+            System.out.print(" = ");
+            System.out.println(val);
+        }
+    }
+}
+\end{lstlisting}
+
+\section{Gmpl.java}
+
+\subsection{Description}
+This example reads a GMPL file and executes it.
+The callback function is used to write an output line
+when a better MIP soluton has been found.
+
+Run the program with the model file as parameter.
+\begin{verbatim}
+java -Djava.library.path=/usr/local/lib \
+-classpath /usr/local/shared/java/glpk-java.jar:. \
+GLPKSwig marbles.mod
+\end{verbatim}
+
+\subsection{Coding}
+\begin{lstlisting}
+import org.gnu.glpk.GLPK;
+import org.gnu.glpk.GLPKConstants;
+import org.gnu.glpk.GlpkCallback;
+import org.gnu.glpk.GlpkCallbackListener;
+import org.gnu.glpk.glp_iocp;
+import org.gnu.glpk.glp_prob;
+import org.gnu.glpk.glp_tran;
+import org.gnu.glpk.glp_tree;
+
+public class Gmpl implements GlpkCallbackListener {
+
+    public static void main(String[] arg) {
+        if (1 != arg.length) {
+            System.out.println("Usage: java Gmpl model.mod");
+            return;
+        }
+        new Gmpl().solve(arg);
+    }
+
+    public void solve(String[] arg) {
+        glp_prob lp = null;
+        glp_tran tran;
+        glp_iocp iocp;
+
+        String fname;
+        int skip = 0;
+        int ret;
+
+        GlpkCallback.addListener(this);
+
+        fname = new String(arg[0]);
+
+        lp = GLPK.glp_create_prob();
+        System.out.println("Problem created");
+
+        tran = GLPK.glp_mpl_alloc_wksp();
+        ret = GLPK.glp_mpl_read_model(tran, fname, skip);
+        if (ret != 0) {
+            GLPK.glp_mpl_free_wksp(tran);
+            GLPK.glp_delete_prob(lp);
+            throw new RuntimeException("Model file not found: " + fname);
+        }
+
+        // generate model
+        GLPK.glp_mpl_generate(tran, null);
+        // build model
+        GLPK.glp_mpl_build_prob(tran, lp);
+        // set solver parameters
+        iocp = new glp_iocp();
+        GLPK.glp_init_iocp(iocp);
+        iocp.setPresolve(GLPKConstants.GLP_ON);
+        // solve model
+        ret = GLPK.glp_intopt(lp, iocp);
+        // postsolve model
+        if (ret == 0) {
+            GLPK.glp_mpl_postsolve(tran, lp, GLPKConstants.GLP_MIP);
+        }
+        // free memory
+        GLPK.glp_mpl_free_wksp(tran);
+        GLPK.glp_delete_prob(lp);
+    }
+
+    public void callback(glp_tree tree) {
+        int reason = GLPK.glp_ios_reason(tree);
+        if (reason == GLPKConstants.GLP_IBINGO) {
+            System.out.println("Better solution found");
+        }
+    }
+}
+\end{lstlisting}
+\chapter{Troubleshooting}
+\index{troubleshooting}
+This chapter discusses errors that may occur due to incorrect usage of
+the GLPK for Java package.
+
+If the GLPK for Java class library was built for another version of GLPK
+than the GLPK for JNI library a java.lang.UnsatisfiedLinkError may
+occur in class org.gnu.glpk.GLPKJNI, e.g.
+
+\begin{verbatim}
+Exception in thread "main" java.lang.UnsatisfiedLinkError:
+org.gnu.glpk.GLPKJNI.GLP_BF_LUF_get()I
+at org.gnu.glpk.GLPKJNI.GLP_BF_LUF_get(Native Method)
+at org.gnu.glpk.GLPKConstants.<clinit>(GLPKConstants.java:56) 
+\end{verbatim}
+
+If the GLPK for JNI library was built for another version of GLPK than
+the currently installed GLPK library an java.lang.UnsatisfiedLinkError
+may occur during dlopen, e.g.
+
+\begin{verbatim}
+Exception in thread "main" java.lang.UnsatisfiedLinkError:
+/usr/local/lib/jni/libglpk_java.36.dylib:
+dlopen(/usr/local/lib/jni/libglpk_java.36.dylib, 1):
+Library not loaded: /usr/local/opt/glpk/lib/libglpk.35.dylib
+Referenced from: /usr/local/lib/jni/libglpk_java.36.dylib
+Reason: image not found
+at java.lang.ClassLoader\$NativeLibrary.load(Native Method)
+\end{verbatim}
+
+\chapter{License}
+\index{license}
+GLPK for Java is free software: you can redistribute it and/or 
+modify it under the terms of the GNU General Public License\cite{GPL} as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+GLPK for Java is distributed in the hope that it will be useful, but 
+WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GLPK for Java. If not, see 
+\href{http://www.gnu.org/licenses/}{http://www.gnu.org/licenses/}.
+
+\bibliographystyle{plain}
+\bibliography{mybib}
+\newpage
+\printindex
+\end{document}

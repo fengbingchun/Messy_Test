@@ -1,0 +1,179 @@
+%* glpk.tex *%
+
+%***********************************************************************
+%  This code is part of GLPK (GNU Linear Programming Kit).
+%
+%  Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+%  2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017 Andrew Makhorin,
+%  Department for Applied Informatics, Moscow Aviation Institute,
+%  Moscow, Russia. All rights reserved. E-mail: <mao@gnu.org>.
+%
+%  GLPK is free software: you can redistribute it and/or modify it
+%  under the terms of the GNU General Public License as published by
+%  the Free Software Foundation, either version 3 of the License, or
+%  (at your option) any later version.
+%
+%  GLPK is distributed in the hope that it will be useful, but WITHOUT
+%  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+%  or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+%  License for more details.
+%
+%  You should have received a copy of the GNU General Public License
+%  along with GLPK. If not, see <http://www.gnu.org/licenses/>.
+%***********************************************************************
+
+%  To produce glpk.pdf from glpk.tex run the following two commands:
+%     latex glpk.tex
+%     dvipdfm -p letter glpk.dvi
+%  Note: You need TeX Live 2010 or later version.
+
+\documentclass[11pt]{report}
+\usepackage{amssymb}
+\usepackage[dvipdfm,linktocpage,colorlinks,linkcolor=blue,
+urlcolor=blue]{hyperref}
+\usepackage{indentfirst}
+\usepackage{lscape}
+\usepackage{niceframe}
+\usepackage[all]{xy}
+
+% US Letter = 8.5 x 11 in
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+%\setlength{\footskip}{0.5in}
+\setlength{\parindent}{16pt}
+\setlength{\parskip}{5pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+%\setlength{\itemsep}{\parskip}
+%\setlength{\parsep}{0pt}
+%\setlength{\leftmargini}{\parindent}
+%\renewcommand{\labelitemi}{---}
+
+\newcommand{\Item}[1]{\parbox[t]{\parindent}{#1}}
+\def\para#1{\noindent{\bf#1}}
+\def\synopsis{\para{Synopsis}}
+\def\description{\para{Description}}
+\def\note{\para{Note}}
+\def\returns{\para{Returns}}
+
+\renewcommand\contentsname{\sf\bfseries Contents}
+\renewcommand\chaptername{\sf\bfseries Chapter}
+\renewcommand\appendixname{\sf\bfseries Appendix}
+
+\newenvironment{retlist}
+{  \def\arraystretch{1.5}
+   \noindent
+   \begin{tabular}{@{}p{1in}@{}p{5.5in}@{}}
+}
+{\end{tabular}}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\artdecoframe{
+
+\begin{center}
+
+\vspace*{1.5in}
+
+\begin{huge}
+\sf\bfseries GNU Linear Programming Kit
+\end{huge}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf Reference Manual
+\end{LARGE}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf for GLPK Version 4.64
+\end{LARGE}
+
+\vspace{0.5in}
+\begin{Large}
+\sf (DRAFT, November 2017)
+\end{Large}
+\end{center}
+
+\vspace*{3.8in}
+}
+
+\newpage
+
+\vspace*{1in}
+
+\vfill
+
+\noindent
+The GLPK package is part of the GNU Project released under the aegis of
+GNU.
+
+\noindent
+Copyright \copyright{} 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
+2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017 Andrew Makhorin,
+Department for Applied Informatics, Moscow Aviation Institute, Moscow,
+Russia. All rights reserved.
+
+\noindent
+Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301, USA.
+
+\noindent
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+\noindent
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided also that
+the entire resulting derived work is distributed under the terms of
+a permission notice identical to this one.
+
+\noindent
+Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+{\setlength{\parskip}{0pt}\tableofcontents}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{glpk01}
+
+\include{glpk02}
+
+\include{glpk03}
+
+\include{glpk04}
+
+\include{glpk05}
+
+\include{glpk06}
+
+\appendix
+
+\include{glpk07}
+
+\include{glpk08}
+
+\include{glpk09}
+
+\include{glpk10}
+
+\include{glpk11}
+
+\include{glpk12}
+
+\end{document}

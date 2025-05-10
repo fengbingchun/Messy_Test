@@ -1,0 +1,442 @@
+ -----
+ Getting started
+ -----
+ Heinrich Schuchardt
+ <xypron.glpk@gmx.de>
+ -----
+ 2017-01-21
+ -----
+
+Getting started
+
+ This chapter will run you through the installation of GLPK for Java and
+ the execution of a trivial example.
+
+* Installation
+
+** Windows
+ 
+ The following description assumes:
+   
+   * You are using a 64-bit version of Windows. Replace folder name w64 by w32
+     if you are using a 32-bit version.
+
+   * The current version of GLPK is
+     ${glpkVersionMajor}.${glpkVersionMinor}. Please adjust pathes if
+     necessary.
+ 
+   * Your path for program files is "C:\Program Files". Please adjust pathes
+     if necessary.
+
+   * The GLPK library (glpk_${glpkVersionMajor}_${glpkVersionMinor}.dll) is
+     in the search path for binaries specified by the environment variable PATH.
+
+ Download the current version of GLPK for Windows from
+ {{{https://sourceforge.net/projects/winglpk/}https://sourceforge.net/projects/winglpk/}}.
+
+ The filename for version ${glpkVersionMajor}.${glpkVersionMinor} is
+ winglpk-${glpkVersionMajor}.${glpkVersionMinor}.zip. Unzip the file. Copy
+ folder glpk-${glpkVersionMajor}.${glpkVersionMinor} to
+ "C:\\Program Files\\GLPK\\".
+
+ To check the installation run the following command:
+
+----
+"C:\Program Files\GLPK\w64\glpsol.exe" --version
+----
+
+ To use GLPK for Java you need a Java development kit to be installed. The
+ Oracle JDK can be downloaded from
+ {{{http://www.oracle.com/technetwork/java/javase/downloads/index.html}http://www.oracle.com/technetwork/java/javase/downloads/index.html}}.
+ 
+ To check the installation run the following commands:
+
+----
+"%JAVA_HOME%\bin\javac" -version
+java -version
+----
+
+** Linux
+
+*** Debian package
+
+ For Debian and Ubuntu an installation package for GLPK for Java exists. It can
+ be installed by the following commands:
+
+----
+sudo apt-get install libglpk-java
+----
+
+ The installation path will be /usr not in /usr/local as assumed in the
+ examples below.
+
+*** Installation from source
+
+**** Prerequisites
+
+ To build glpk-java you will need the following
+
+   * gcc
+
+   * libtool
+
+   * SWIG
+
+   * GLPK
+
+   * Java JDK
+ 
+ For Debian and Ubuntu the following packages should be installed
+
+   * build-essential
+
+   * glpk
+
+   * openjdk-8-jdk
+
+   * libtool
+
+   * swig
+
+ The installation command is:
+
+----
+sudo apt-get install build-essential glpk openjdk-8-jdk libtool swig
+----
+ 
+ For Fedora the following packages should be installed
+
+   * gcc
+
+   * glpk-devel
+
+   * java-1.8.0-openjdk-devel
+
+   * libtool
+
+   * swig
+
+ The installation command is:
+
+----
+sudo yum install gcc glpk-devel java-1.8.0-openjdk-devel libtool swig
+----
+
+ Packages for Gentoo can be installed using the emerge command.
+
+**** GLPK
+
+ Download the current version of GLPK source with
+
+----
+wget ftp://ftp.gnu.org/gnu/glpk/glpk-${glpkVersionMajor}.${glpkVersionMinor}.tar.gz
+----
+
+ Unzip the archive with:
+
+----
+tar -xzf glpk-${glpkVersionMajor}.${glpkVersionMinor}.tar.gz
+cd glpk-${glpkVersionMajor}.${glpkVersionMinor}
+----
+
+ Configure with:
+
+----
+./configure
+----
+
+ If configure is called with --enable-libpath, class GLPKJNI will try to load
+ the GLPK library from
+ the path specified by java.library.path.
+
+ OS X has jni.h in a special path. You may want to specify this path in the
+ parameters CPPFLAGS and SWIGFLAGS for the configure script
+
+----
+./ configure \
+  CPPFLAGS = -I/System/Library/Frameworks/JavaVM.framework/Headers \
+  SWIGFLAGS = -I/System/Library/Frameworks/JavaVM.framework/Headers
+----
+
+ If libglpk.so is in a special path you may specify this path using parameter
+ LDFLAGS, e.g.
+
+----
+./ configure LDFLAGS = -L/opt/lib
+----
+
+ Make and install with:
+
+----
+make
+make check
+sudo make install
+sudo ldconfig
+----
+
+ Check the installation with
+
+----
+glpsol --version
+---- 
+
+**** Tools
+
+ For the next steps you will need a Java Development Kit (JDK) to be installed.
+
+ You can check the correct installation with the following commands:
+
+----
+$JAVA_HOME/bin/javac -version
+java -version
+----
+
+ If the JDK is missing refer to
+ {{{http://openjdk.java.net/install/}http://openjdk.java.net/install/}} for
+ installation instructions.
+
+ To build GLPK for Java you will need package SWIG (Simplified Wrapper and
+ Interface Generator). You can check the installation with the following
+ command:
+
+----
+swig -version
+----
+
+**** GLPK for Java
+
+ Download GLPK for Java from
+ {{{https://sourceforge.net/projects/glpk-java/files/}https://sourceforge.net/projects/glpk-java/files/}}.
+
+ Unzip the archive with:
+
+----
+tar -xzf glpk-java-${project.version}.tar.gz
+cd glpk-java-${project.version}
+----
+
+ Configure with:
+
+----
+./configure
+----
+
+ OS X has jni.h in a special path. You may want to specify this path in the
+ parameters CPPFLAGS and SWIGFLAGS for the configure script, e.g.
+
+----
+./configure \
+CPPFLAGS=-I/System/Library/Frameworks/JavaVM.framework/Headers \
+SWIGFLAGS=-I/System/Library/Frameworks/JavaVM.framework/Headers
+----
+
+ If libglpk.so is in a special path you may specify this path using parameter
+ LDFLAGS, e.g.
+
+----
+./configure LDFLAGS=-L/opt/lib
+----
+
+ Make and install with:
+
+----
+make
+make check
+sudo make install
+sudo ldconfig
+----
+
+ If you have no authorization to install GLPK and GLPK for Java in the /usr
+ directory, you can alternatively install it in your home directory as is
+ shown in the following listing.
+
+----
+# Download source code
+mkdir -p /home/$USER/src
+cd /home/$USER/src
+rm -rf glpk-glpk_${glpkVersionMajor}_${glpkVersionMinor}*
+wget http://ftp.gnu.org/gnu/glpk/glpk-glpk_${glpkVersionMajor}_${glpkVersionMinor}.tar.gz
+tar -xzf glpk-glpk_${glpkVersionMajor}_${glpkVersionMinor}.tar.gz
+rm -rf glpk-java-${project.version}*
+wget http://download.sourceforge.net/project/glpk-java/\
+glpk-java/glpk-java-${project.version}/libglpk-java-${project.version}.tar.gz
+tar -xzf libglpk-java-${project.version}.tar.gz
+
+# Build and install GLPK
+cd /home/$USER/src/glpk-glpk_${glpkVersionMajor}_${glpkVersionMinor}
+./configure --prefix=/home/$USER/glpk
+make -j6
+make check
+make install
+
+# Build and install GLPK for Java
+cd /home/$USER/src/libglpk-java-${project.version}
+export CPPFLAGS=-I/home/$USER/glpk/include
+export SWIGFLAGS=-I/home/$USER/glpk/include
+export LD_LIBRARY_PATH=/home/$USER/glpk/lib
+./configure --prefix=/home/$USER/glpk
+make
+make check
+make install
+unset CPPFLAGS
+unset SWIGFLAGS
+
+# Build and run example
+cd /home/$USER/src/libglpk-java-${project.version}/examples/java
+$JAVA_HOME/bin/javac \
+-classpath /home/$USER/glpk/share/java/glpk-java-${project.version}.jar \
+GmplSwing.java
+$JAVA_HOME/bin/java \
+-Djava.library.path=/home/$USER/glpk/lib/jni \
+-classpath /home/$USER/glpk/share/java/glpk-java-${project.version}.jar:. \
+GmplSwing marbles.mod
+----
+
+** OS X
+
+*** Installation from source
+
+**** Prerequisites
+
+ For building GLPK for Java the package manager Homebrew is needed. The
+ installation and usage is described at https://brew.sh.
+
+ Install GLPK with
+
+----
+brew install glpk
+---
+
+ Check the installation with
+
+----
+glpsol --version
+---- 
+
+ For the next steps you will need a Java Development Kit (JDK) to be installed.
+
+ You can check the correct installation with the following commands:
+
+----
+$JAVA_HOME/bin/javac -version
+java -version
+----
+
+ If the JDK is missing it can be installed with
+
+----
+brew cask install java
+----
+
+ To build GLPK for Java you will need package SWIG (Simplified Wrapper and
+ Interface Generator). You can check the installation with the following
+ command:
+
+----
+swig -version
+----
+
+ SWIG can be installed with
+
+----
+brew install swig
+----
+
+**** GLPK for Java
+
+ Download GLPK for Java from
+ {{{https://sourceforge.net/projects/glpk-java/files/}https://sourceforge.net/projects/glpk-java/files/}}.
+
+ Unzip the archive with:
+
+----
+tar -xzf glpk-java-${project.version}.tar.gz
+cd glpk-java-${project.version}
+----
+
+ Configure with:
+
+----
+./configure
+----
+
+ OS X has jni.h in a special path. You may want to specify this path in the
+ parameters CPPFLAGS and SWIGFLAGS for the configure script, e.g.
+
+----
+./configure \
+CPPFLAGS=-I/System/Library/Frameworks/JavaVM.framework/Headers \
+SWIGFLAGS=-I/System/Library/Frameworks/JavaVM.framework/Headers
+----
+
+ If libglpk.so is in a special path you may specify this path using parameter
+ LDFLAGS, e.g.
+
+----
+./configure LDFLAGS=-L/opt/lib
+----
+
+ Make and install with:
+
+----
+make
+make check
+sudo make install
+sudo ldconfig
+----
+
+* Trivial example
+
+ In the example we will create a Java class which will write the GLPK version
+ to the console.
+
+ With a text editor create a text file Test.java with the following content:
+
+----
+import org.gnu.glpk.GLPK;
+public class Test {
+  public static void main(String[] args) {
+    System.out.println( GLPK.glp_version());
+  }
+}
+----
+
+** Windows
+
+ Compile the class
+
+----
+set CLASSPATH=C:Program Files\GLPK\glpk-${glpkVersionMajor}.${glpkVersionMinor}\w64\glpk-java.jar
+"%JAVA_HOME%/bin/javac" Test.java
+----
+
+ Run the class
+
+----
+path %PATH%;C:\Program Files\GLPK\glpk-${glpkVersionMajor}.${glpkVersionMinor}\w64
+set CLASSPATH=C:\Program Files\GLPK\glpk-${glpkVersionMajor}.${glpkVersionMinor}\w64\glpk-java.jar;.
+java -Djava.library.path="C:Program Files\GLPK\glpk-${glpkVersionMajor}.${glpkVersionMinor}\w64" Test
+----
+
+ The output will be the GLPK version number, for example:
+ ${glpkVersionMajor}.${glpkVersionMinor}.
+
+** Linux
+
+ Compile the class
+
+----
+javac -classpath /usr/local/share/java/glpk-java.jar Test.java
+----
+
+ Run the class:
+
+----
+java -Djava.library.path=/usr/local/lib/jni \
+-classpath /usr/local/share/java/glpk-java.jar:. \
+Test
+----
+
+ The output will be the GLPK version number, for example:
+ ${glpkVersionMajor}.${glpkVersionMinor}.
+

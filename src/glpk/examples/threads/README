@@ -1,0 +1,66 @@
+Thread local memory example
+===========================
+
+The GLPK library, when compiled with default options, uses a separate environment
+for each thread that is executed. So each thread is isolated. The only exeption
+is error handling. An error in any of the library functions will not only
+terminate the active thread but the complete process.
+
+This can be circumvented by defining an error handling routine with
+glp_error_hook(). This directory contains an example demonstrating running a
+multithreaded application with error handling.
+
+
+The example code
+----------------
+
+The program multiseed solves a MathProg model multiple times in separate parallel
+threads. Each threads uses a different seed for the MathProg pseudo random number
+generator.
+
+The MathProg model clustering.mod generates 50 randomly distributed "towns". Out
+of the towns it selects 3 to be cluster centers and assign the other towns to the
+clusters such that the sum of the population weighted euclidian distances between
+towns and centers is minimized.
+
+The solution is written to a Scalable Vector File which can be viewed with a web
+browser.
+
+For demonstration purposes at the end of every third thread the error handling
+routine is triggered by calling glp_error(). This results in output like
+
+    18-00086 Model has been successfully processed
+    18-00087 Voluntarily throwing an error in multiseed.c at line 147
+    18-00088 Error detected in file multiseed.c at line 146
+    18-00089 Error caught
+
+Terminal output is preceeded by numbers indicating the thread index and the
+output line. You can pipe it through sort to get a better overiew, e.g.
+
+    multiseed clustering.mod 20 | sort
+
+
+Building and running the example code
+-------------------------------------
+
+On Linux multiseed can be compiled with gcc by calling
+
+    make
+
+The code can be executed with
+
+    make check
+
+For compiling the example on 64bit Windows with Microsoft Visual Studio C++ run
+
+    Build_Multiseed.bat
+
+You may have to adust the variable HOME in the batch file depending on the
+installation path of Visual Studio.
+
+You can run multiseed with
+
+    multiseed <filename> <count>
+
+Where filename is the path to the model file and count is the number of parallel
+threads.

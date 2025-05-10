@@ -1,0 +1,413 @@
+%* cnfsat.tex *%
+
+\documentclass[11pt,draft]{article}
+\usepackage{amssymb}
+\usepackage{indentfirst}
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\footskip}{0.5in}
+\setlength{\parindent}{16pt}
+\setlength{\parskip}{5pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\setlength{\itemsep}{\parskip}
+\setlength{\parsep}{0pt}
+\setlength{\leftmargini}{\parindent}
+\renewcommand{\labelitemi}{---}
+
+\def\para#1{\noindent{\bf#1}}
+\def\synopsis{\para{Synopsis}}
+\def\description{\para{Description}}
+\def\returns{\para{Returns}}
+
+\newenvironment{retlist}
+{  \def\arraystretch{1.5}
+   \noindent
+   \begin{tabular}{@{}p{1in}@{}p{5.5in}@{}}
+}
+{\end{tabular}}
+
+\begin{document}
+
+\title{\bf CNF Satisfiability Problem}
+
+\author{Andrew Makhorin {\tt<mao@gnu.org>}}
+
+\date{August 2011}
+
+\maketitle
+
+\section{Introduction}
+
+The {\it Satisfiability Problem (SAT)} is a classic combinatorial
+problem. Given a Boolean formula of $n$ variables
+$$f(x_1,x_2,\dots,x_n),\eqno(1.1)$$
+this problem is to find such values of the variables, on which the
+formula takes on the value {\it true}.
+
+The {\it CNF Satisfiability Problem (CNF-SAT)} is a version of the
+Satisfiability Problem, where the Boolean formula (1.1) is specified
+in the {\it Conjunctive Normal Form (CNF)}, that means that it is a
+conjunction of {\it clauses}, where a clause is a disjunction of
+{\it literals}, and a literal is a variable or its negation.
+For example:
+$$(x_1\vee x_2)\;\&\;(\neg x_2\vee x_3\vee\neg x_4)\;\&\;(\neg
+x_1\vee x_4).\eqno(1.2)$$
+Here $x_1$, $x_2$, $x_3$, $x_4$ are Boolean variables to be assigned,
+$\neg$ means
+negation (logical {\it not}), $\vee$ means disjunction (logical
+{\it or}), and $\&$ means conjunction (logical {\it and}). One may
+note that the formula (1.2) is {\it satisfiable}, because on
+$x_1$ = {\it true}, $x_2$ = {\it false}, $x_3$ = {\it false}, and
+$x_4$ = {\it true} it takes on the value {\it true}. If a formula
+is not satisfiable, it is called {\it unsatisfiable}, that means that
+it takes on the value {\it false} on any values of its variables.
+
+Any CNF-SAT problem can be easily translated to a 0-1 programming
+problem as follows.\linebreak A Boolean variable $x$ can be modeled by
+a binary variable in a natural way: $x=1$ means that $x$ takes on the
+value {\it true}, and $x=0$ means that $x$ takes on the value
+{\it false}. Then, if a literal is a negated variable, i.e. $t=\neg x$,
+it can be expressed as $t=1-x$. Since a formula in CNF is a conjunction
+of clauses, to provide its satisfiability we should require all its
+clauses to  take on the value {\it true}. A particular clause is
+a disjunction of literals:
+$$t\vee t'\vee t''\dots ,\eqno(1.3)$$
+so it takes on the value {\it true} iff at least one of its literals
+takes on the value {\it true}, that can be expressed as the following
+inequality constraint:
+$$t+t'+t''+\dots\geq 1.\eqno(1.4)$$
+Note that no objective function is used in this case, because only
+a feasible solution needs to be found.
+
+For example, the formula (1.2) can be translated to the following
+constraints:
+$$\begin{array}{c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c}
+x_1&+&x_2&&&&&\geq&1\\
+&&(1-x_2)&+&x_3&+&(1-x_4)&\geq&1\\
+(1-x_1)&&&&&+&x_4&\geq&1\\
+\end{array}$$
+$$x_1, x_2, x_3, x_4\in\{0,1\}$$
+Carrying out all constant terms to the right-hand side gives
+corresponding 0-1 programming problem in the standard format:
+$$\begin{array}{r@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }r}
+x_1&+&x_2&&&&&\geq&1\\
+&-&x_2&+&x_3&-&x_4&\geq&-1\\
+-x_1&&&&&+&x_4&\geq&0\\
+\end{array}$$
+$$x_1, x_2, x_3, x_4\in\{0,1\}$$
+
+In general case translation of a CNF-SAT problem results in the
+following 0-1 programming problem:
+$$\sum_{j\in J^+_i}x_j-\sum_{j\in J^-_i}x_j\geq 1-|J^-_i|,
+\ \ \ i=1,\dots,m\eqno(1.5)$$
+$$x_j\in\{0,1\},\ \ \ j=1,\dots,n\eqno(1.6)$$
+where $n$ is the number of variables, $m$ is the number of clauses
+(inequality constraints),\linebreak $J^+_i\subseteq\{1,\dots,n\}$ is
+a subset of variables, whose literals in $i$-th clause do not have
+negation, and $J^-_i\subseteq\{1,\dots,n\}$ is a subset of variables,
+whose literals in $i$-th clause are negations of that variables. It is
+assumed that $J^+_i\cap J^-_i=\varnothing$ for all $i$.
+
+\section{GLPK API Routines}
+
+\subsection{glp\_read\_cnfsat --- read CNF-SAT problem data in DIMACS
+format}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_read_cnfsat(glp_prob *P, const char *fname);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_read_cnfsat| reads the CNF-SAT problem data from
+a text file in DIMACS format and automatically translates the data to
+corresponding 0-1 programming problem instance (1.5)--(1.6).
+
+The parameter \verb|P| specifies the problem object, to which the
+0-1 programming problem instance should be stored. Note that before
+reading data the current content of the problem object is completely
+erased with the routine \verb|glp_erase_prob|.
+
+The character string \verb|fname| specifies the name of a text file
+to be read in. (If the file name ends with the suffix `\verb|.gz|',
+the file is assumed to be compressed, in which case the routine
+decompresses it ``on the fly''.)
+
+\newpage
+
+\returns
+
+If the operation was successful, the routine returns zero. Otherwise,
+it prints an error message and returns non-zero.
+
+\para{DIMACS CNF-SAT problem format}\footnote{This material is based on
+the paper ``Satisfiability Suggested Format'', which is publicly
+available at {\tt http://dimacs.rutgers.edu/}.}
+
+The DIMACS input file is a plain ASCII text file. It contains lines of
+several types described below. A line is terminated with an end-of-line
+character. Fields in each line are separated by at least one blank
+space.
+
+\para{Comment lines.} Comment lines give human-readable information
+about the file and are ignored by programs. Comment lines can appear
+anywhere in the file. Each comment line begins with a lower-case
+character \verb|c|.
+
+\begin{verbatim}
+   c This is a comment line
+\end{verbatim}
+
+\para{Problem line.} There is one problem line per data file. The
+problem line must appear before any clause lines. It has the following
+format:
+
+\begin{verbatim}
+   p cnf VARIABLES CLAUSES
+\end{verbatim}
+
+\noindent
+The lower-case character \verb|p| signifies that this is a problem
+line. The three character problem designator \verb|cnf| identifies the
+file as containing specification information for the CNF-SAT problem.
+The \verb|VARIABLES| field contains an integer value specifying $n$,
+the number of variables in the instance. The \verb|CLAUSES| field
+contains an integer value specifying $m$, the number of clauses in the
+instance.
+
+\para{Clauses.} The clauses appear immediately after the problem
+line. The variables are assumed to be numbered from 1 up to $n$. It is
+not necessary that every variable appears in the instance. Each clause
+is represented by a sequence of numbers separated by either a space,
+tab, or new-line character. The non-negated version of a variable $j$
+is represented by $j$; the negated version is represented by $-j$. Each
+clause is terminated by the value 0. Unlike many formats that represent
+the end of a clause by a new-line character, this format allows clauses
+to be on multiple lines.
+
+\para{Example.} Below here is an example of the data file in DIMACS
+format corresponding to the CNF-SAT problem (1.2).
+
+\begin{footnotesize}
+\begin{verbatim}
+c sample.cnf
+c
+c This is an example of the CNF-SAT problem data
+c in DIMACS format.
+c
+p cnf 4 3
+1 2 0
+-4 3
+-2 0
+-1 4 0
+c
+c eof
+\end{verbatim}
+\end{footnotesize}
+
+\newpage
+
+\subsection{glp\_check\_cnfsat --- check for CNF-SAT problem instance}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_check_cnfsat(glp\_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_check_cnfsat| checks if the specified problem
+object \verb|P| contains a 0-1 programming problem instance in the
+format (1.5)--(1.6) and therefore encodes a CNF-SAT problem instance.
+
+\returns
+
+If the specified problem object has the format (1.5)--(1.6), the
+routine returns zero, otherwise non-zero.
+
+\subsection{glp\_write\_cnfsat --- write CNF-SAT problem data in DIMACS
+format}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_write_cnfsat(glp_prob *P, const char *fname);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_write_cnfsat| automatically translates the
+specified 0-1 programming problem instance (1.5)--(1.6) to a CNF-SAT
+problem instance and writes the problem data to a text file in DIMACS
+format.
+
+The parameter \verb|P| is the problem object, which should specify
+a 0-1 programming problem instance in the format (1.5)--(1.6).
+
+The character string \verb|fname| specifies a name of the output text
+file to be written. (If the file name ends with suffix `\verb|.gz|',
+the file is assumed to be compressed, in which case the routine
+performs automatic compression on writing that file.)
+
+\returns
+
+If the operation was successful, the routine returns zero. Otherwise,
+it prints an error message and returns non-zero.
+
+\subsection{glp\_minisat1 --- solve CNF-SAT problem instance with
+MiniSat solver}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_minisat1(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_minisat1| is a driver to MiniSat, a CNF-SAT
+solver developed by Niklas E\'en and Niklas S\"orensson, Chalmers
+University of Technology, Sweden.\footnote{The MiniSat software module
+is {\it not} part of GLPK, but is used with GLPK and included in the
+distribution.}
+
+\newpage
+
+It is assumed that the specified problem object \verb|P| contains
+a 0-1 programming problem instance in the format (1.5)--(1.6) and
+therefore encodes a CNF-SAT problem instance.
+
+If the problem instance has been successfully solved to the end, the
+routine \verb|glp_minisat1| returns 0. In this case the routine
+\verb|glp_mip_status| can be used to determine the solution status:
+
+\begin{itemize}
+\item {\tt GLP\_OPT} means that the solver found an integer feasible
+solution and therefore the corresponding CNF-SAT instance is
+satisfiable;
+
+\item {\tt GLP\_NOFEAS} means that no integer feasible solution exists
+and therefore the corresponding CNF-SAT instance is unsatisfiable.
+\end{itemize}
+
+If an integer feasible solution was found, corresponding values of
+binary variables can be retrieved with the routine
+\verb|glp_mip_col_val|.
+
+\returns
+
+\begin{retlist}
+0 & The MIP problem instance has been successfully solved. (This code
+does {\it not} necessarily mean that the solver has found feasible
+solution. It only means that the solution process was successful.)\\
+
+{\tt GLP\_EDATA} & The specified problem object contains a MIP
+instance which does {\it not} have the format (1.5)--(1.6).\\
+
+{\tt GLP\_EFAIL} & The solution process was unsuccessful because of
+the solver failure.\\
+\end{retlist}
+
+\subsection{glp\_intfeas1 --- solve integer feasibility problem}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_intfeas1(glp_prob *P, int use_bound, int obj_bound);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_intfeas1| is a tentative implementation of
+an integer feasibility solver based on a CNF-SAT solver (currently
+it is MiniSat; see Subsection 2.4).
+
+If the parameter \verb|use_bound| is zero, the routine searches for
+{\it any} integer feasibile solution to the specified integer
+programming problem. Note that in this case the objective function is
+ignored.
+
+If the parameter \verb|use_bound| is non-zero, the routine searches for
+an integer feasible solution, which provides a value of the objective
+function not worse than \verb|obj_bound|. In other word, the parameter
+\verb|obj_bound| specifies an upper (in case of minimization) or lower
+(in case of maximization) bound to the objective function.
+
+If the specified problem has been successfully solved to the end, the
+routine \verb|glp_intfeas1| returns 0. In this case the routine
+\verb|glp_mip_status| can be used to determine the solution status:
+
+\begin{itemize}
+\item {\tt GLP\_FEAS} means that the solver found an integer feasible
+solution;
+
+\item {\tt GLP\_NOFEAS} means that the problem has no integer feasible
+solution (if {\tt use\_bound} is zero) or it has no integer feasible
+solution, which is not worse than {\tt obj\_bound} (if {\tt use\_bound}
+is non-zero).
+\end{itemize}
+
+\newpage
+
+If an integer feasible solution was found, corresponding values of
+variables (columns) can be retrieved with the routine
+\verb|glp_mip_col_val|.
+
+\para{Usage Notes}
+
+The integer programming problem specified by the parameter \verb|P|
+should satisfy to the following requirements:
+
+\begin{enumerate}
+\item All variables (columns) should be either binary ({\tt GLP\_BV})
+or fixed at integer values ({\tt GLP\_FX}).
+
+\item All constraint and objective coefficients should be integer
+numbers in the range\linebreak $[-2^{31},\ +2^{31}-1]$.
+\end{enumerate}
+
+Though there are no special requirements to the constraints,
+currently the routine \verb|glp_intfeas1| is efficient mainly for
+problems, where most constraints (rows) fall into the following three
+classes:
+
+\begin{enumerate}
+\item Covering inequalities
+$$\sum_{j}t_j\geq 1,$$
+where $t_j=x_j$ or $t_j=1-x_j$, $x_j$ is a binary variable.
+
+\item Packing inequalities
+$$\sum_{j}t_j\leq 1.$$
+
+\item Partitioning equalities (SOS1 constraints)
+$$\sum_{j}t_j=1.$$
+\end{enumerate}
+
+\returns
+
+\begin{retlist}
+0 & The problem has been successfully solved. (This code does
+{\it not} necessarily mean that the solver has found an integer
+feasible solution. It only means that the solution process was
+successful.) \\
+
+{\tt GLP\_EDATA} & The specified problem object does not satisfy
+to the requirements listed in Paragraph `Usage Notes'. \\
+
+{\tt GLP\_ERANGE} & An integer overflow occured on translating the
+specified problem to a CNF-SAT problem. \\
+
+{\tt GLP\_EFAIL} & The solution process was unsuccessful because of
+the solver failure. \\
+\end{retlist}
+
+\end{document}

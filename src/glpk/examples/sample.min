@@ -1,0 +1,26 @@
+c sample.min
+c
+c This is an example of the minimum cost flow problem data
+c in DIMACS format.
+c
+p min 9 14
+c
+n 1 20
+n 9 -20
+c
+a 1 2 0 14 0
+a 1 4 0 23 0
+a 2 3 0 10 2
+a 2 4 0  9 3
+a 3 5 2 12 1
+a 3 8 0 18 0
+a 4 5 0 26 0
+a 5 2 0 11 1
+a 5 6 0 25 5
+a 5 7 0  4 7
+a 6 7 0  7 0
+a 6 8 4  8 0
+a 7 9 0 15 3
+a 8 9 0 20 9
+c
+c eof

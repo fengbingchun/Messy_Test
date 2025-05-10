@@ -1,0 +1,12 @@
+c sample.cnf
+c
+c This is an example of the CNF-SAT problem data
+c in DIMACS format.
+c
+p cnf 4 3
+1 2 0
+-4 3
+-2 0
+-1 4 0
+c
+c eof

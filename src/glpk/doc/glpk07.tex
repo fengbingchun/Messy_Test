@@ -1,0 +1,258 @@
+%* glpk07.tex *%
+
+\chapter{Installing GLPK on Your Computer}
+\label{install}
+
+\section{Downloading the distribution tarball}
+
+The distribution tarball of the most recent version of the GLPK
+package can be found on \url{http://ftp.gnu.org/gnu/glpk/} [via http]
+and \url{ftp://ftp.gnu.org/gnu/glpk/} [via FTP]. It can also be found
+on one of the FTP mirrors; see \url{http://www.gnu.org/prep/ftp.html}.
+Please use a mirror if possible.
+
+To make sure that the GLPK distribution tarball you have downloaded is
+intact you need to download the corresponding `\verb|.sig|' file and
+run a command like this:
+
+\begin{verbatim}
+   gpg --verify glpk-4.38.tar.gz.sig
+\end{verbatim}
+
+\noindent
+If that command fails because you do not have the required public key,
+run the following command to import it:
+
+\begin{verbatim}
+   gpg --keyserver keys.gnupg.net --recv-keys 5981E818
+\end{verbatim}
+
+\noindent
+and then re-run the previous command.
+
+\section{Unpacking the distribution tarball}
+
+The GLPK package (like all other GNU software) is distributed in the
+form of packed archive. This is one file named \verb|glpk-X.Y.tar.gz|,
+where {\it X} is the major version number and {\it Y} is the minor
+version number.
+
+In order to prepare the distribution for installation you need to copy
+the GLPK distribution file to a working subdirectory and then unpack
+and unarchive the distribution file with the following command:
+
+\begin{verbatim}
+   tar zx < glpk-X.Y.tar
+\end{verbatim}
+
+\newpage
+
+\section{Configuring the package}
+
+After unpacking and unarchiving the GLPK distribution you should
+configure the package,\linebreak i.e. automatically tune it for your
+platform.
+
+Normally, you should just \verb|cd| to the subdirectory \verb|glpk-X.Y|
+and run the configure script, e.g.
+
+\begin{verbatim}
+   ./configure
+\end{verbatim}
+
+The `\verb|configure|' shell script attempts to guess correct values
+for various system-dependent variables used during compilation. It uses
+those values to create a `\verb|Makefile|' in each directory of the
+package. It also creates file `\verb|config.h|' containing
+platform-dependent definitions. Finally, it creates a shell script
+`\verb|config.status|' that you can run in the future to recreate the
+current configuration, a file `\verb|config.cache|' that saves the
+results of its tests to speed up reconfiguring, and a file
+`\verb|config.log|' containing compiler output (useful mainly for
+debugging `\verb|configure|').
+
+Running `\verb|configure|' takes about a minute. While it is running,
+it displays some informational messages that tell you what it
+is doing. If you don't want to see these messages, run
+`\verb|configure|' with its standard output redirected to
+`\verb|dev/null|'; for example, `\verb|./configure > /dev/null|'.
+
+By default both static and shared versions of the GLPK library will be
+compiled. Compilation of the shared librariy can be turned off by
+specifying the `\verb|--disable-shared|' option to `\verb|configure|':
+
+\begin{verbatim}
+   ./configure --disable-shared
+\end{verbatim}
+
+\noindent
+If you encounter problems building the library try using the above
+option, because some platforms do not support shared libraries.
+
+The GLPK package has some optional features listed below. By default
+all these features are disabled. To enable a feature the corresponding
+option should be passed to the configure script.
+
+\verb|--with-gmp         | Enable using the GNU MP bignum library
+
+This feature allows the exact simplex solver to use the GNU MP bignum
+library. If it is disabled, the exact simplex solver uses the GLPK
+bignum module, which provides the same functionality as GNU MP, however,
+it is much less efficient.
+
+For details about the GNU MP bignum library see its web page at
+\url{http://gmplib.org/}.
+
+\verb|--enable-dl        | The same as `\verb|--enable-dl=ltdl|'
+
+\verb|--enable-dl=ltdl   | Enable shared library support (GNU)
+
+\verb|--enable-dl=dlfcn  | Enable shared library support (POSIX)
+
+Currently this feature is only needed to provide dynamic linking to
+ODBC and MySQL shared libraries (see below).
+
+For details about the GNU shared library support see the manual at
+\url{http://www.gnu.org/software/libtool/manual/}.
+
+\verb|--enable-odbc      |
+Enable using ODBC table driver (\verb|libiodbc|)
+
+\verb|--enable-odbc=unix |
+Enable using ODBC table driver (\verb|libodbc|)
+
+This feature allows transmitting data between MathProg model objects
+and relational databases accessed through ODBC.
+
+For more details about this feature see the supplement ``Using Data
+Tables in the GNU MathProg Modeling Language'' (\verb|doc/tables.pdf|).
+
+\verb|--enable-mysql     |
+Enable using MySQL table driver (\verb|libmysql|)
+
+This feature allows transmitting data between MathProg model objects
+and MySQL relational databases.
+
+For more details about this feature see the supplement ``Using Data
+Tables in the GNU MathProg Modeling Language'' (\verb|doc/tables.pdf|).
+
+\section{Compiling the package}
+
+Normally, you can compile (build) the package by typing the command:
+
+\begin{verbatim}
+   make
+\end{verbatim}
+
+\noindent
+It reads `\verb|Makefile|' generated by `\verb|configure|' and performs
+all necessary jobs.
+
+If you want, you can override the `\verb|make|' variables \verb|CFLAGS|
+and \verb|LDFLAGS| like this:
+
+\begin{verbatim}
+   make CFLAGS=-O2 LDFLAGS=-s
+\end{verbatim}
+
+To compile the package in a different directory from the one containing
+the source code, you must use a version of `\verb|make|' that supports
+`\verb|VPATH|' variable, such as GNU `\verb|make|'. `\verb|cd|' to the
+directory where you want the object files and executables to go and run
+the `\verb|configure|' script. `\verb|configure|' automatically checks
+for the source code in the directory that `\verb|configure|' is in and
+in `\verb|..|'. If for some reason `\verb|configure|' is not in the
+source code directory that you are configuring, then it will report
+that it can't find the source code. In that case, run `\verb|configure|'
+with the option `\verb|--srcdir=DIR|', where \verb|DIR| is the
+directory that contains the source code.
+
+Some systems require unusual options for compilation or linking that
+the `\verb|configure|' script does not know about. You can give
+`\verb|configure|' initial values for variables by setting them in the
+environment. Using a Bourne-compatible shell, you can do that on the
+command line like this:
+
+\begin{verbatim}
+   CC=c89 CFLAGS=-O2 LIBS=-lposix ./configure
+\end{verbatim}
+
+\noindent
+Or on systems that have the `\verb|env|' program, you can do it like
+this:
+
+\begin{verbatim}
+   env CPPFLAGS=-I/usr/local/include LDFLAGS=-s ./configure
+\end{verbatim}
+
+Here are the `\verb|make|' variables that you might want to override
+with environment variables when running `\verb|configure|'.
+
+For these variables, any value given in the environment overrides the
+value that `\verb|configure|' would choose:
+
+\verb|CC      | C compiler program. The default is `\verb|cc|'.
+
+\verb|INSTALL | Program used to install files. The default value is
+`\verb|install|' if you have it,\\
+\verb|           | otherwise `\verb|cp|'.
+
+For these variables, any value given in the environment is added to the
+value that `\verb|configure|' chooses:
+
+\verb|DEFS    | Configuration options, in the form
+`\verb|-Dfoo -Dbar| \dots'.
+
+\verb|LIBS    | Libraries to link with, in the form
+`\verb|-lfoo -lbar| \dots'.
+
+\section{Checking the package}
+
+To check the package, i.e. to run some tests included in the package,
+you can use the following command:
+
+\begin{verbatim}
+   make check
+\end{verbatim}
+
+\section{Installing the package}
+
+Normally, to install the GLPK package you should type the following
+command:
+
+\begin{verbatim}
+   make install
+\end{verbatim}
+
+\noindent
+By default, `\verb|make install|' will install the package's files in
+`\verb|usr/local/bin|', `\verb|usr/local/lib|', etc. You can specify an
+installation prefix other than `\verb|/usr/local|' by giving
+`\verb|configure|' the option `\verb|--prefix=PATH|'. Alternately, you
+can do so by consistently giving a value for the `\verb|prefix|'
+variable when you run `\verb|make|', e.g.
+
+\begin{verbatim}
+   make prefix=/usr/gnu
+   make prefix=/usr/gnu install
+\end{verbatim}
+
+After installing you can remove the program binaries and object files
+from the source directory by typing `\verb|make clean|'. To remove all
+files that `\verb|configure|' created (`\verb|Makefile|',
+`\verb|config.status|', etc.), just type `\verb|make distclean|'.
+
+The file `\verb|configure.ac|' is used to create `\verb|configure|' by
+a program called `\verb|autoconf|'. You only need it if you want to
+remake `\verb|configure|' using a newer version of `\verb|autoconf|'.
+
+\section{Uninstalling the package}
+
+To uninstall the GLPK package, i.e. to remove all the package's files
+from the system places, you can use the following command:
+
+\begin{verbatim}
+   make uninstall
+\end{verbatim}
+
+%* eof *%

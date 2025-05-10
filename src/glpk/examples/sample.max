@@ -1,0 +1,26 @@
+c sample.max
+c
+c This is an example of the maximum flow problem data
+c in DIMACS format.
+c
+p max 9 14
+c
+n 1 s
+n 9 t
+c
+a 1 2 14
+a 1 4 23
+a 2 3 10
+a 2 4  9
+a 3 5 12
+a 3 8 18
+a 4 5 26
+a 5 2 11
+a 5 6 25
+a 5 7  4
+a 6 7  7
+a 6 8  8
+a 7 9 15
+a 8 9 20
+c
+c eof

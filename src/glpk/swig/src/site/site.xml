@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+  <bannerRight>
+    <name>Download</name>
+    <src>images/download.png</src>
+    <href>http://sourceforge.net/projects/glpk-java</href>
+  </bannerRight>
+  <body>
+    <head>
+      <![CDATA[<link rel="icon" type="image/png" href="images/favicon.png" />]]>
+    </head>
+    <breadcrumbs>
+      <item name="Xypron" href="https://www.xypron.de/" />
+      <item name="Projects" href="https://www.xypron.de/projects/" />
+      <item name="GLPK for Java" href="./index.html" />
+    </breadcrumbs>  
+    <menu name="Overview" inherit="top">
+      <item name="About" href="index.html" collapse="true">
+        <item name="Downloading" href="index.html#Downloading" />
+        <item name="Maven" href="index.html#Maven" />
+      </item>
+      <item name="Getting Started" href="gettingStarted.html" collapse="true">
+        <item name="Installation" href="gettingStarted.html#Installation" />
+        <item name="Trivial example" href="gettingStarted.html#Trivial_example" />
+      </item>
+      <item name="Architecture" href="architecture.html" collapse="true">
+        <item name="GLPK library" href="architecture.html#GLPK_library" />
+        <item name="GLPK for Java JNI library" href="architecture.html#GLPK_for_Java_JNI_library" />
+        <item name="GLPK for Java class library" href="architecture.html#GLPK_for_Java_class_library" />
+      </item>
+      <item name="Classes" href="classes.html" />
+      <item name="Usage" href="usage.html" collapse="true">
+        <item name="Loading the JNI library" href="usage.html#Loading_the_JNI_library" />
+        <item name="Exceptions" href="usage.html#Exceptions" />
+        <item name="Network problems" href="usage.html#Network_problems" />
+        <item name="Callbacks" href="usage.html#Callbacks" />
+        <item name="Output listener" href="usage.html#Output_listener" />
+        <item name="Aborting a GLPK library call" href="usage.html#Aborting_a_GLPK_library_call" />
+        <item name="Debugging support" href="usage.html#Debugging_support" />
+        <item name="Locales" href="usage.html#Locales" />
+        <item name="Threads" href="usage.html#Threads" />
+      </item>
+      <item name="Examples" href="examples.html" collapse="true" />
+      <item name="Troubleshooting" href="troubleshooting.html" collapse="true" />
+    </menu>
+    <menu name="Documentation">
+      <item name="Javadoc" href="apidocs/index.html" />
+    </menu>
+    <menu ref="parent" inherit="top"/>
+    <menu ref="modules" inherit="top"/>
+    <menu ref="reports" inherit="top"/> 
+  </body>
+</project>

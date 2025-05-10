@@ -1,0 +1,4301 @@
+%* gmpl.tex *%
+
+%***********************************************************************
+%  This code is part of GLPK (GNU Linear Programming Kit).
+%
+%  Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+%  2009, 2010, 2011, 2013, 2014, 2015, 2016 Andrew Makhorin, Department
+%  for Applied Informatics, Moscow Aviation Institute, Moscow, Russia.
+%  All rights reserved. E-mail: <mao@gnu.org>.
+%
+%  GLPK is free software: you can redistribute it and/or modify it
+%  under the terms of the GNU General Public License as published by
+%  the Free Software Foundation, either version 3 of the License, or
+%  (at your option) any later version.
+%
+%  GLPK is distributed in the hope that it will be useful, but WITHOUT
+%  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+%  or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+%  License for more details.
+%
+%  You should have received a copy of the GNU General Public License
+%  along with GLPK. If not, see <http://www.gnu.org/licenses/>.
+%***********************************************************************
+
+%  To produce gmpl.pdf from gmpl.tex run the following two commands:
+%     latex gmpl.tex
+%     dvipdfm -p letter gmpl.dvi
+%  Note: You need TeX Live 2010 or later version.
+
+\documentclass[11pt]{report}
+\usepackage{amssymb}
+\usepackage[dvipdfm,linktocpage,colorlinks,linkcolor=blue,
+urlcolor=blue]{hyperref}
+\usepackage{indentfirst}
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\footskip}{0.5in}
+\setlength{\parindent}{16pt}
+\setlength{\parskip}{5pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\setlength{\itemsep}{\parskip}
+\setlength{\parsep}{0pt}
+\setlength{\leftmargini}{\parindent}
+\renewcommand{\labelitemi}{---}
+
+\def\para#1{\noindent{\bf#1}}
+
+\renewcommand\contentsname{\sf\bfseries Contents}
+\renewcommand\chaptername{\sf\bfseries Chapter}
+\renewcommand\appendixname{\sf\bfseries Appendix}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{1.5in}
+
+\begin{huge}
+\sf\bfseries Modeling Language GNU MathProg
+\end{huge}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf Language Reference
+\end{LARGE}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf for GLPK Version 4.58
+\end{LARGE}
+
+\vspace{0.5in}
+\begin{Large}
+\sf (DRAFT, February 2016)
+\end{Large}
+
+\end{center}
+
+\newpage
+
+\vspace*{1in}
+
+\vfill
+
+\noindent
+The GLPK package is part of the GNU Project released under the aegis of
+GNU.
+
+\noindent
+Copyright \copyright{} 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007,
+2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016 Andrew Makhorin,
+Department for Applied Informatics, Moscow Aviation Institute, Moscow,
+Russia. All rights reserved.
+
+\noindent
+Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
+MA 02110-1301, USA.
+
+\noindent
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+\noindent
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided also that
+the entire resulting derived work is distributed under the terms of
+a permission notice identical to this one.
+
+\noindent
+Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+{\setlength{\parskip}{0pt}
+\tableofcontents
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introduction}
+
+{\it GNU MathProg} is a modeling language intended for describing
+linear mathematical programming models.\footnote{The GNU MathProg
+language is a subset of the AMPL language. Its GLPK implementation is
+mainly based on the paper: {\it Robert Fourer}, {\it David M. Gay}, and
+{\it Brian W. Kernighan}, ``A Modeling Language for Mathematical
+Programming.'' {\it Management Science} 36 (1990), pp.~519-54.}
+
+Model descriptions written in the GNU MathProg language consist of
+a set of statements and data blocks constructed by the user from the
+language elements described in this document.
+
+In a process called {\it translation}, a program called the {\it model
+translator} analyzes the model description and translates it into
+internal data structures, which may be then used either for generating
+mathematical programming problem instance or directly by a program
+called the {\it solver} to obtain numeric solution of the problem.
+
+\section{Linear programming problem}
+\label{problem}
+
+In MathProg the linear programming (LP) problem is stated as follows:
+
+\medskip
+
+\noindent\hspace{1in}minimize (or maximize)
+$$z=c_1x_1+c_2x_2+\dots+c_nx_n+c_0\eqno(1.1)$$
+\noindent\hspace{1in}subject to linear constraints
+$$
+\begin{array}{l@{\ }c@{\ }r@{\ }c@{\ }r@{\ }c@{\ }r@{\ }c@{\ }l}
+L_1&\leq&a_{11}x_1&+&a_{12}x_2&+\dots+&a_{1n}x_n&\leq&U_1\\
+L_2&\leq&a_{21}x_1&+&a_{22}x_2&+\dots+&a_{2n}x_n&\leq&U_2\\
+\multicolumn{9}{c}{.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .}\\
+L_m&\leq&a_{m1}x_1&+&a_{m2}x_2&+\dots+&a_{mn}x_n&\leq&U_m\\
+\end{array}\eqno(1.2)
+$$
+\noindent\hspace{1in}and bounds of variables
+$$
+\begin{array}{l@{\ }c@{\ }c@{\ }c@{\ }l}
+l_1&\leq&x_1&\leq&u_1\\
+l_2&\leq&x_2&\leq&u_2\\
+\multicolumn{5}{c}{.\ \ .\ \ .\ \ .\ \ .}\\
+l_n&\leq&x_n&\leq&u_n\\
+\end{array}\eqno(1.3)
+$$
+
+\newpage
+
+\noindent
+where $x_1$, $x_2$, \dots, $x_n$ are variables; $z$ is the objective
+function; $c_1$, $c_2$, \dots, $c_n$ are objective coefficients; $c_0$
+is the constant term (``shift'') of the objective function; $a_{11}$,
+$a_{12}$, \dots, $a_{mn}$ are constraint coefficients; $L_1$, $L_2$,
+\dots, $L_m$ are lower constraint bounds; $U_1$, $U_2$, \dots, $U_m$
+are upper constraint bounds; $l_1$, $l_2$, \dots, $l_n$ are lower
+bounds of variables; $u_1$, $u_2$, \dots, $u_n$ are upper bounds of
+variables.
+
+Bounds of variables and constraint bounds can be finite as well as
+infinite. Besides, lower bounds can be equal to corresponding upper
+bounds. Thus, the following types of variables and constraints are
+allowed:
+
+\medskip
+
+{\def\arraystretch{1.4}
+\noindent\hspace{54pt}
+\begin{tabular}{@{}r@{\ }c@{\ }c@{\ }c@{\ }l@{\hspace*{39.5pt}}l}
+$-\infty$&$<$&$x$&$<$&$+\infty$&Free (unbounded) variable\\
+$l$&$\leq$&$x$&$<$&$+\infty$&Variable with lower bound\\
+$-\infty$&$<$&$x$&$\leq$&$u$&Variable with upper bound\\
+$l$&$\leq$&$x$&$\leq$&$u$&Double-bounded variable\\
+$l$&$=$&$x$&=&$u$&Fixed variable\\
+\end{tabular}
+
+\noindent\hfil
+\begin{tabular}{@{}r@{\ }c@{\ }c@{\ }c@{\ }ll}
+$-\infty$&$<$&$\sum a_jx_j$&$<$&$+\infty$&Free (unbounded) linear
+form\\
+$L$&$\leq$&$\sum a_jx_j$&$<$&$+\infty$&Inequality constraint ``greater
+than or equal to''\\
+$-\infty$&$<$&$\sum a_jx_j$&$\leq$&$U$&Inequality constraint ``less
+than or equal to''\\
+$L$&$\leq$&$\sum a_jx_j$&$\leq$&$U$&Double-bounded inequality
+constraint\\
+$L$&$=$&$\sum a_jx_j$&=&$U$&Equality constraint\\
+\end{tabular}
+}
+
+\medskip
+
+In addition to pure LP problems MathProg also allows mixed integer
+linear programming (MIP) problems, where some or all variables are
+restricted to be integer or binary.
+
+\section{Model objects}
+
+In MathProg the model is described in terms of sets, parameters,
+variables, constraints, and objectives, which are called {\it model
+objects}.
+
+The user introduces particular model objects using the language
+statements. Each model object is provided with a symbolic name which
+uniquely identifies the object and is intended for referencing
+purposes.
+
+Model objects, including sets, can be multidimensional arrays built
+over indexing sets. Formally, $n$-dimensional array $A$ is the mapping:
+$$A:\Delta\rightarrow\Xi,\eqno(1.4)$$
+where $\Delta\subseteq S_1\times\dots\times S_n$ is a subset of the
+Cartesian product of indexing sets, $\Xi$ is a set of array members.
+In MathProg the set $\Delta$ is called the {\it subscript domain}. Its
+members are $n$-tuples $(i_1,\dots,i_n)$, where $i_1\in S_1$, \dots,
+$i_n\in S_n$.
+
+If $n=0$, the Cartesian product above has exactly one member (namely,
+0-tuple), so it is convenient to think scalar objects as 0-dimensional
+arrays having one member.
+
+\newpage
+
+The type of array members is determined by the type of corresponding
+model object as follows:
+
+\medskip
+
+\noindent\hfil
+\begin{tabular}{@{}ll@{}}
+Model object&Array member\\
+\hline
+Set&Elemental plain set\\
+Parameter&Number or symbol\\
+Variable&Elemental variable\\
+Constraint&Elemental constraint\\
+Objective&Elemental objective\\
+\end{tabular}
+
+\medskip
+
+In order to refer to a particular object member the object should be
+provided with {\it subscripts}. For example, if $a$ is a 2-dimensional
+parameter defined over $I\times J$, a reference to its particular
+member can be written as $a[i,j]$, where $i\in I$ and $j\in J$. It is
+understood that scalar objects being 0-dimensional need no subscripts.
+
+\section{Structure of model description}
+
+It is sometimes desirable to write a model which, at various points,
+may require different data for each problem instance to be solved using
+that model. For this reason in MathProg the model description consists
+of two parts: the {\it model section} and the {\it data section}.
+
+The model section is a main part of the model description that contains
+declarations of model objects and is common for all problems based on
+the corresponding model.
+
+The data section is an optional part of the model description that
+contains data specific for a particular problem instance.
+
+Depending on what is more convenient the model and data sections can be
+placed either in one file or in two separate files. The latter feature
+allows having arbitrary number of different data sections to be used
+with the same model section.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Coding model description}
+\label{coding}
+
+The model description is coded in a plain text format using ASCII
+character set. Characters valid in the model description are the
+following:
+
+\begin{itemize}
+\item alphabetic characters:\\
+\verb|A B C D E F G H I J K L M N O P Q R S T U V W X Y Z|\\
+\verb|a b c d e f g h i j k l m n o p q r s t u v w x y z _|
+\item numeric characters:\\
+\verb|0 1 2 3 4 5 6 7 8 9|
+\item special characters:\\
+\verb?! " # & ' ( ) * + , - . / : ; < = > [ ] ^ { | } ~?
+\item white-space characters:\\
+\verb|SP HT CR NL VT FF|
+\end{itemize}
+
+Within string literals and comments any ASCII characters (except
+control characters) are valid.
+
+White-space characters are non-significant. They can be used freely
+between lexical units to improve readability of the model description.
+They are also used to separate lexical units from each other if there
+is no other way to do that.
+
+Syntactically model description is a sequence of lexical units in the
+following categories:
+
+\begin{itemize}
+\item symbolic names;
+\item numeric literals;
+\item string literals;
+\item keywords;
+\item delimiters;
+\item comments.
+\end{itemize}
+
+The lexical units of the language are discussed below.
+
+\newpage
+
+\section{Symbolic names}
+
+A {\it symbolic name} consists of alphabetic and numeric characters,
+the first of which should be alphabetic. All symbolic names are
+distinct (case sensitive).
+
+\para{Examples}
+
+\begin{verbatim}
+alpha123
+This_is_a_name
+_P123_abc_321
+\end{verbatim}
+
+Symbolic names are used to identify model objects (sets, parameters,
+variables, constraints, objectives) and dummy indices.
+
+All symbolic names (except names of dummy indices) should be unique,
+i.e. the model description should have no objects with identical names.
+Symbolic names of dummy indices should be unique within the scope,
+where they are valid.
+
+\section{Numeric literals}
+
+A {\it numeric literal} has the form {\it xx}{\tt E}{\it syy}, where
+{\it xx} is a number with optional decimal point, {\it s} is the sign
+{\tt+} or {\tt-}, {\it yy} is a decimal exponent. The letter {\tt E} is
+case insensitive and can be coded as {\tt e}.
+
+\para{Examples}
+
+\begin{verbatim}
+123
+3.14159
+56.E+5
+.78
+123.456e-7
+\end{verbatim}
+
+Numeric literals are used to represent numeric quantities. They have
+obvious fixed meaning.
+
+\section{String literals}
+
+A {\it string literal} is a sequence of arbitrary characters enclosed
+either in single quotes or in double quotes. Both these forms are
+equivalent.
+
+If a single quote is part of a string literal enclosed in single
+quotes, it should be coded twice. Analogously, if a double quote is
+part of a string literal enclosed in double quotes, it should be coded
+twice.
+
+\para{Examples}
+
+\begin{verbatim}
+'This is a string'
+"This is another string"
+'That''s all'
+"""Hello there,"" said the captain."
+\end{verbatim}
+
+String literals are used to represent symbolic quantities.
+
+\section{Keywords}
+
+A {\it keyword} is a sequence of alphabetic characters and possibly
+some special characters.
+
+All keywords fall into two categories: {\it reserved keywords}, which
+cannot be used as symbolic names, and {\it non-reserved keywords},
+which are recognized by context and therefore can be used as symbolic
+names.
+
+The reserved keywords are the following:
+
+\noindent\hfil
+\begin{tabular}{@{}p{.7in}p{.7in}p{.7in}p{.7in}@{}}
+{\tt and}&{\tt else}&{\tt mod}&{\tt union}\\
+{\tt by}&{\tt if}&{\tt not}&{\tt within}\\
+{\tt cross}&{\tt in}&{\tt or}\\
+{\tt diff}&{\tt inter}&{\tt symdiff}\\
+{\tt div}&{\tt less}&{\tt then}\\
+\end{tabular}
+
+Non-reserved keywords are described in following sections.
+
+All the keywords have fixed meaning, which will be explained on
+discussion of corresponding syntactic constructions, where the keywords
+are used.
+
+\section{Delimiters}
+
+A {\it delimiter} is either a single special character or a sequence of
+two special characters as follows:
+
+\noindent\hfil
+\begin{tabular}{@{}p{.3in}p{.3in}p{.3in}p{.3in}p{.3in}p{.3in}p{.3in}
+p{.3in}p{.3in}@{}}
+{\tt+}&{\tt**}&{\tt<=}&{\tt>}&{\tt\&\&}&{\tt:}&{\tt|}&{\tt[}&
+{\tt>>}\\
+{\tt-}&{\tt\textasciicircum}&{\tt=}&{\tt<>}&{\tt||}&{\tt;}&
+{\tt\char126}&{\tt]}&{\tt<-}\\
+{\tt*}&{\tt\&}&{\tt==}&{\tt!=}&{\tt.}&{\tt:=}&{\tt(}&{\tt\{}\\
+{\tt/}&{\tt<}&{\tt>=}&{\tt!}&{\tt,}&{\tt..}&{\tt)}&{\tt\}}\\
+\end{tabular}
+
+If the delimiter consists of two characters, there should be no spaces
+between the characters.
+
+All the delimiters have fixed meaning, which will be explained on
+discussion corresponding syntactic constructions, where the delimiters
+are used.
+
+\section{Comments}
+
+For documenting purposes the model description can be provided with
+{\it comments}, which may have two different forms. The first form is
+a {\it single-line comment}, which begins with the character {\tt\#}
+and extends until end of line. The second form is a {\it comment
+sequence}, which is a sequence of any characters enclosed within
+{\tt/*} and {\tt*/}.
+
+\para{Examples}
+
+\begin{verbatim}
+param n := 10; # This is a comment
+/* This is another comment */
+\end{verbatim}
+
+Comments are ignored by the model translator and can appear anywhere in
+the model description, where white-space characters are allowed.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\chapter{Expressions}
+
+An {\it expression} is a rule for computing a value. In model
+description expressions are used as constituents of certain statements.
+
+In general case expressions consist of operands and operators.
+
+Depending on the type of the resultant value all expressions fall into
+the following categories:
+
+\vspace*{-8pt}
+
+\begin{itemize}
+\item numeric expressions;
+\item symbolic expressions;
+\item indexing expressions;
+\item set expressions;
+\item logical expressions;
+\item linear expressions.
+\end{itemize}
+
+\vspace*{-8pt}
+
+\section{Numeric expressions}
+
+A {\it numeric expression} is a rule for computing a single numeric
+value represented as a floating-point number.
+
+The primary numeric expression may be a numeric literal, dummy index,
+unsubscripted parameter, subscripted parameter, built-in function
+reference, iterated numeric expression, conditional numeric expression,
+or another numeric expression enclosed in parentheses.
+
+\para{Examples}
+
+\noindent
+\begin{tabular}{@{}ll@{}}
+\verb|1.23                                |&(numeric literal)\\
+\verb|j|&(dummy index)\\
+\verb|time|&(unsubscripted parameter)\\
+\verb|a['May 2003',j+1]|&(subscripted parameter)\\
+\verb|abs(b[i,j])|&(function reference)\\
+\end{tabular}
+
+\newpage
+
+\noindent
+\begin{tabular}{@{}ll@{}}
+\verb|sum{i in S diff T} alpha[i] * b[i,j]|&(iterated expression)\\
+\verb|if i in I then 2 * p else q[i+1]|&(conditional expression)\\
+\verb|(b[i,j] + .5 * c)|&(parenthesized expression)\\
+\end{tabular}
+
+More general numeric expressions containing two or more primary numeric
+expressions may be constructed by using certain arithmetic operators.
+
+\para{Examples}
+
+\begin{verbatim}
+j+1
+2 * a[i-1,j+1] - b[i,j]
+sum{j in J} a[i,j] * x[j] + sum{k in K} b[i,k] * x[k]
+(if i in I and p >= 1 then 2 * p else q[i+1]) / (a[i,j] + 1.5)
+\end{verbatim}
+
+\subsection{Numeric literals}
+
+If the primary numeric expression is a numeric literal, the resultant
+value is obvious.
+
+\subsection{Dummy indices}
+
+If the primary numeric expression is a dummy index, the resultant value
+is current value assigned to that dummy index.
+
+\subsection{Unsubscripted parameters}
+
+If the primary numeric expression is an unsubscripted parameter (which
+should be 0-dimen\-sional), the resultant value is the value of that
+parameter.
+
+\subsection{Subscripted parameters}
+
+The primary numeric expression, which refers to a subscripted
+parameter, has the following syntactic form:
+$$
+\mbox{{\it name}{\tt[}$i_1${\tt,} $i_2${\tt,} \dots{\tt,} $i_n${\tt]}}
+$$
+where {\it name} is the symbolic name of the parameter, $i_1$, $i_2$,
+\dots, $i_n$ are subscripts.
+
+Each subscript should be a numeric or symbolic expression. The number
+of subscripts in the subscript list should be the same as the dimension
+of the parameter with which the subscript list is associated.
+
+Actual values of subscript expressions are used to identify
+a particular member of the parameter that determines the resultant
+value of the primary expression.
+
+\newpage
+
+\subsection{Function references}
+
+In MathProg there exist the following built-in functions which may be
+used in numeric expressions:
+
+\begin{tabular}{@{}p{112pt}p{328pt}@{}}
+{\tt abs(}$x${\tt)}&$|x|$, absolute value of $x$\\
+{\tt atan(}$x${\tt)}&$\arctan x$, principal value of the arc tangent of
+$x$ (in radians)\\
+{\tt atan(}$y${\tt,} $x${\tt)}&$\arctan y/x$, principal value of the
+arc tangent of $y/x$ (in radians). In this case the signs of both
+arguments $y$ and $x$ are used to determine the quadrant of the
+resultant value\\
+{\tt card(}$X${\tt)}&$|X|$, cardinality (the number of elements) of
+set $X$\\
+{\tt ceil(}$x${\tt)}&$\lceil x\rceil$, smallest integer not less than
+$x$ (``ceiling of $x$'')\\
+{\tt cos(}$x${\tt)}&$\cos x$, cosine of $x$ (in radians)\\
+{\tt exp(}$x${\tt)}&$e^x$, base-$e$ exponential of $x$\\
+{\tt floor(}$x${\tt)}&$\lfloor x\rfloor$, largest integer not greater
+than $x$ (``floor of $x$'')\\
+{\tt gmtime()}&the number of seconds elapsed since 00:00:00~Jan~1, 1970,
+Coordinated Universal Time (for details see Section \ref{gmtime},
+page \pageref{gmtime})\\
+{\tt length(}$s${\tt)}&$|s|$, length of character string $s$\\
+{\tt log(}$x${\tt)}&$\log x$, natural logarithm of $x$\\
+{\tt log10(}$x${\tt)}&$\log_{10}x$, common (decimal) logarithm of $x$\\
+{\tt max(}$x_1${\tt,} $x_2${\tt,} \dots{\tt,} $x_n${\tt)}&the largest
+of values $x_1$, $x_2$, \dots, $x_n$\\
+{\tt min(}$x_1${\tt,} $x_2${\tt,} \dots{\tt,} $x_n${\tt)}&the smallest
+of values $x_1$, $x_2$, \dots, $x_n$\\
+{\tt round(}$x${\tt)}&rounding $x$ to nearest integer\\
+{\tt round(}$x${\tt,} $n${\tt)}&rounding $x$ to $n$ fractional decimal
+digits\\
+{\tt sin(}$x${\tt)}&$\sin x$, sine of $x$ (in radians)\\
+{\tt sqrt(}$x${\tt)}&$\sqrt{x}$, non-negative square root of $x$\\
+{\tt str2time(}$s${\tt,} $f${\tt)}&converting character string $s$ to
+calendar time (for details see Section \ref{str2time}, page
+\pageref{str2time})\\
+{\tt tan(}$x${\tt)}&$\tan x$, tangent of $x$ (in radians)\\
+{\tt trunc(}$x${\tt)}&truncating $x$ to nearest integer\\
+{\tt trunc(}$x${\tt,} $n${\tt)}&truncating $x$ to $n$ fractional
+decimal digits\\
+{\tt Irand224()}&generating pseudo-random integer uniformly distributed
+in $[0,2^{24})$\\
+{\tt Uniform01()}&generating pseudo-random number uniformly distributed
+in $[0,1)$\\
+{\tt Uniform(}$a${\tt,} $b${\tt)}&generating pseudo-random number
+uniformly distributed in $[a,b)$\\
+{\tt Normal01()}&generating Gaussian pseudo-random variate with
+$\mu=0$ and $\sigma=1$\\
+{\tt Normal(}$\mu${\tt,} $\sigma${\tt)}&generating Gaussian
+pseudo-random variate with given $\mu$ and $\sigma$\\
+\end{tabular}
+
+Arguments of all built-in functions, except {\tt card}, {\tt length},
+and {\tt str2time}, should be numeric expressions. The argument of
+{\tt card} should be a set expression. The argument of {\tt length} and
+both arguments of {\tt str2time} should be symbolic expressions.
+
+The resultant value of the numeric expression, which is a function
+reference, is the result of applying the function to its argument(s).
+
+Note that each pseudo-random generator function has a latent argument
+(i.e. some internal state), which is changed whenever the function has
+been applied. Thus, if the function is applied repeatedly even to
+identical arguments, due to the side effect different resultant values
+are always produced.
+
+\newpage
+
+\subsection{Iterated expressions}
+\label{itexpr}
+
+An {\it iterated numeric expression} is a primary numeric expression,
+which has the following syntactic form:
+$$\mbox{\it iterated-operator indexing-expression integrand}$$
+where {\it iterated-operator} is the symbolic name of the iterated
+operator to be performed (see below), {\it indexing-expression} is an
+indexing expression which introduces dummy indices and controls
+iterating, {\it integrand} is a numeric expression that participates in
+the operation.
+
+In MathProg there exist four iterated operators, which may be used in
+numeric expressions:
+
+{\def\arraystretch{2}
+\noindent\hfil
+\begin{tabular}{@{}lll@{}}
+{\tt sum}&summation&$\displaystyle\sum_{(i_1,\dots,i_n)\in\Delta}
+f(i_1,\dots,i_n)$\\
+{\tt prod}&production&$\displaystyle\prod_{(i_1,\dots,i_n)\in\Delta}
+f(i_1,\dots,i_n)$\\
+{\tt min}&minimum&$\displaystyle\min_{(i_1,\dots,i_n)\in\Delta}
+f(i_1,\dots,i_n)$\\
+{\tt max}&maximum&$\displaystyle\max_{(i_1,\dots,i_n)\in\Delta}
+f(i_1,\dots,i_n)$\\
+\end{tabular}
+}
+
+\noindent where $i_1$, \dots, $i_n$ are dummy indices introduced in
+the indexing expression, $\Delta$ is the domain, a set of $n$-tuples
+specified by the indexing expression which defines particular values
+assigned to the dummy indices on performing the iterated operation,
+$f(i_1,\dots,i_n)$ is the integrand, a numeric expression whose
+resultant value depends on the dummy indices.
+
+The resultant value of an iterated numeric expression is the result of
+applying of the iterated operator to its integrand over all $n$-tuples
+contained in the domain.
+
+\subsection{Conditional expressions}
+\label{ifthen}
+
+A {\it conditional numeric expression} is a primary numeric expression,
+which has one of the following two syntactic forms:
+$$
+{\def\arraystretch{1.4}
+\begin{array}{l}
+\mbox{{\tt if} $b$ {\tt then} $x$ {\tt else} $y$}\\
+\mbox{{\tt if} $b$ {\tt then} $x$}\\
+\end{array}
+}
+$$
+where $b$ is an logical expression, $x$ and $y$ are numeric
+expressions.
+
+The resultant value of the conditional expression depends on the value
+of the logical expression that follows the keyword {\tt if}. If it
+takes on the value {\it true}, the value of the conditional expression
+is the value of the expression that follows the keyword {\tt then}.
+Otherwise, if the logical expression takes on the value {\it false},
+the value of the conditional expression is the value of the expression
+that follows the keyword {\it else}. If the second, reduced form of the
+conditional expression is used and the logical expression takes on the
+value {\it false}, the resultant value of the conditional expression is
+zero.
+
+\newpage
+
+\subsection{Parenthesized expressions}
+
+Any numeric expression may be enclosed in parentheses that
+syntactically makes it a primary numeric expression.
+
+Parentheses may be used in numeric expressions, as in algebra, to
+specify the desired order in which operations are to be performed.
+Where parentheses are used, the expression within the parentheses is
+evaluated before the resultant value is used.
+
+The resultant value of the parenthesized expression is the same as the
+value of the expression enclosed within parentheses.
+
+\subsection{Arithmetic operators}
+
+In MathProg there exist the following arithmetic operators, which may
+be used in numeric expressions:
+
+\begin{tabular}{@{}ll@{}}
+{\tt +} $x$&unary plus\\
+{\tt -} $x$&unary minus\\
+$x$ {\tt +} $y$&addition\\
+$x$ {\tt -} $y$&subtraction\\
+$x$ {\tt less} $y$&positive difference (if $x<y$ then 0 else $x-y$)\\
+$x$ {\tt *} $y$&multiplication\\
+$x$ {\tt /} $y$&division\\
+$x$ {\tt div} $y$&quotient of exact division\\
+$x$ {\tt mod} $y$&remainder of exact division\\
+$x$ {\tt **} $y$, $x$ {\tt\textasciicircum} $y$&exponentiation (raising
+to power)\\
+\end{tabular}
+
+\noindent where $x$ and $y$ are numeric expressions.
+
+If the expression includes more than one arithmetic operator, all
+operators are performed from left to right according to the hierarchy
+of operations (see below) with the only exception that the
+exponentiaion operators are performed from right to left.
+
+The resultant value of the expression, which contains arithmetic
+operators, is the result of applying the operators to their operands.
+
+\subsection{Hierarchy of operations}
+\label{hierarchy}
+
+The following list shows the hierarchy of operations in numeric
+expressions:
+
+\noindent\hfil
+\begin{tabular}{@{}ll@{}}
+Operation&Hierarchy\\
+\hline
+Evaluation of functions ({\tt abs}, {\tt ceil}, etc.)&1st\\
+Exponentiation ({\tt**}, {\tt\textasciicircum})&2nd\\
+Unary plus and minus ({\tt+}, {\tt-})&3rd\\
+Multiplication and division ({\tt*}, {\tt/}, {\tt div}, {\tt mod})&4th\\
+Iterated operations ({\tt sum}, {\tt prod}, {\tt min}, {\tt max})&5th\\
+Addition and subtraction ({\tt+}, {\tt-}, {\tt less})&6th\\
+Conditional evaluation ({\tt if} \dots {\tt then} \dots {\tt else})&
+7th\\
+\end{tabular}
+
+\newpage
+
+This hierarchy is used to determine which of two consecutive operations
+is performed first. If the first operator is higher than or equal to
+the second, the first operation is performed. If it is not, the second
+operator is compared to the third, etc. When the end of the expression
+is reached, all of the remaining operations are performed in the
+reverse order.
+
+\section{Symbolic expressions}
+
+A {\it symbolic expression} is a rule for computing a single symbolic
+value represented as a character string.
+
+The primary symbolic expression may be a string literal, dummy index,
+unsubscripted parameter, subscripted parameter, built-in function
+reference, conditional symbolic expression, or another symbolic
+expression enclosed in parentheses.
+
+It is also allowed to use a numeric expression as the primary symbolic
+expression, in which case the resultant value of the numeric expression
+is automatically converted to the symbolic type.
+
+\para{Examples}
+
+\noindent
+\begin{tabular}{@{}ll@{}}
+\verb|'May 2003'|&(string literal)\\
+\verb|j|&(dummy index)\\
+\verb|p|&(unsubscripted parameter)\\
+\verb|s['abc',j+1]|&(subscripted parameter)\\
+\verb|substr(name[i],k+1,3)|&(function reference)\\
+\verb|if i in I then s[i,j] & "..." else t[i+1]|
+& (conditional expression) \\
+\verb|((10 * b[i,j]) & '.bis')|&(parenthesized expression)\\
+\end{tabular}
+
+More general symbolic expressions containing two or more primary
+symbolic expressions may be constructed by using the concatenation
+operator.
+
+\para{Examples}
+
+\begin{verbatim}
+'abc[' & i & ',' & j & ']'
+"from " & city[i] " to " & city[j]
+\end{verbatim}
+
+The principles of evaluation of symbolic expressions are completely
+analogous to the ones given for numeric expressions (see above).
+
+\subsection{Function references}
+
+In MathProg there exist the following built-in functions which may be
+used in symbolic expressions:
+
+\begin{tabular}{@{}p{112pt}p{328pt}@{}}
+{\tt substr(}$s${\tt,} $x${\tt)}&substring of $s$ starting from
+position $x$\\
+{\tt substr(}$s${\tt,} $x${\tt,} $y${\tt)}&substring of $s$ starting
+from position $x$ and having length $y$\\
+{\tt time2str(}$t${\tt,} $f${\tt)}&converting calendar time to
+character string (for details see Section \ref{time2str}, page
+\pageref{time2str})\\
+\end{tabular}
+
+The first argument of {\tt substr} should be a symbolic expression
+while its second and optional third arguments should be numeric
+expressions.
+
+The first argument of {\tt time2str} should be a numeric expression,
+and its second argument should be a symbolic expression.
+
+The resultant value of the symbolic expression, which is a function
+reference, is the result of applying the function to its arguments.
+
+\subsection{Symbolic operators}
+
+Currently in MathProg there exists the only symbolic operator:
+$$\mbox{\tt s \& t}$$
+where $s$ and $t$ are symbolic expressions. This operator means
+concatenation of its two symbolic operands, which are character
+strings.
+
+\subsection{Hierarchy of operations}
+
+The following list shows the hierarchy of operations in symbolic
+expressions:
+
+\noindent\hfil
+\begin{tabular}{@{}ll@{}}
+Operation&Hierarchy\\
+\hline
+Evaluation of numeric operations&1st-7th\\
+Concatenation ({\tt\&})&8th\\
+Conditional evaluation ({\tt if} \dots {\tt then} \dots {\tt else})&
+9th\\
+\end{tabular}
+
+This hierarchy has the same meaning as was explained above for numeric
+expressions (see Subsection \ref{hierarchy}, page \pageref{hierarchy}).
+
+\section{Indexing expressions and dummy indices}
+\label{indexing}
+
+An {\it indexing expression} is an auxiliary construction, which
+specifies a plain set of $n$-tuples and introduces dummy indices. It
+has two syntactic forms:
+$$
+{\def\arraystretch{1.4}
+\begin{array}{l}
+\mbox{{\tt\{} {\it entry}$_1${\tt,} {\it entry}$_2${\tt,} \dots{\tt,}
+{\it entry}$_m$ {\tt\}}}\\
+\mbox{{\tt\{} {\it entry}$_1${\tt,} {\it entry}$_2${\tt,} \dots{\tt,}
+{\it entry}$_m$ {\tt:} {\it predicate} {\tt\}}}\\
+\end{array}
+}
+$$
+where {\it entry}{$_1$}, {\it entry}{$_2$}, \dots, {\it entry}{$_m$}
+are indexing entries, {\it predicate} is a logical expression that
+specifies an optional predicate (logical condition).
+
+Each {\it indexing entry} in the indexing expression has one of the
+following three forms:
+$$
+{\def\arraystretch{1.4}
+\begin{array}{l}
+\mbox{$i$ {\tt in} $S$}\\
+\mbox{{\tt(}$i_1${\tt,} $i_2${\tt,} \dots{\tt,}$i_n${\tt)} {\tt in}
+$S$}\\
+\mbox{$S$}\\
+\end{array}
+}
+$$
+where $i_1$, $i_2$, \dots, $i_n$ are indices, $S$ is a set expression
+(discussed in the next section) that specifies the basic set.
+
+\newpage
+
+The number of indices in the indexing entry should be the same as the
+dimension of the basic set $S$, i.e. if $S$ consists of 1-tuples, the
+first form should be used, and if $S$ consists of $n$-tuples, where
+$n>1$, the second form should be used.
+
+If the first form of the indexing entry is used, the index $i$ can be
+a dummy index only (see below). If the second form is used, the indices
+$i_1$, $i_2$, \dots, $i_n$ can be either dummy indices or some numeric
+or symbolic expressions, where at least one index should be a dummy
+index. The third, reduced form of the indexing entry has the same
+effect as if there were $i$ (if $S$ is 1-dimensional) or
+$i_1$, $i_2$, \dots, $i_n$ (if $S$ is $n$-dimensional) all specified as
+dummy indices.
+
+A {\it dummy index} is an auxiliary model object, which acts like an
+individual variable. Values assigned to dummy indices are components of
+$n$-tuples from basic sets, i.e. some numeric and symbolic quantities.
+
+For referencing purposes dummy indices can be provided with symbolic
+names. However, unlike other model objects (sets, parameters, etc.)
+dummy indices need not be explicitly declared. Each {\it undeclared}
+symbolic name being used in the indexing position of an indexing entry
+is recognized as the symbolic name of corresponding dummy index.
+
+Symbolic names of dummy indices are valid only within the scope of the
+indexing expression, where the dummy indices were introduced. Beyond
+the scope the dummy indices are completely inaccessible, so the same
+symbolic names may be used for other purposes, in particular, to
+represent dummy indices in other indexing expressions.
+
+The scope of indexing expression, where implicit declarations of dummy
+indices are valid, depends on the context, in which the indexing
+expression is used:
+
+\vspace*{-8pt}
+
+\begin{itemize}
+\item If the indexing expression is used in iterated operator, its
+scope extends until the end of the integrand.
+\item If the indexing expression is used as a primary set expression,
+its scope extends until the end of that indexing expression.
+\item If the indexing expression is used to define the subscript domain
+in declarations of some model objects, its scope extends until the end
+of the corresponding statement.
+\end{itemize}
+
+\vspace*{-8pt}
+
+The indexing mechanism implemented by means of indexing expressions is
+best explained by some examples discussed below.
+
+Let there be given three sets:
+$$
+{\def\arraystretch{1.4}
+\begin{array}{l}
+A=\{4,7,9\},\\
+B=\{(1,Jan),(1,Feb),(2,Mar),(2,Apr),(3,May),(3,Jun)\},\\
+C=\{a,b,c\},\\
+\end{array}
+}
+$$
+where $A$ and $C$ consist of 1-tuples (singlets), $B$ consists of
+2-tuples (doublets). Consider the following indexing expression:
+$$\mbox{{\tt\{i in A, (j,k) in B, l in C\}}}$$
+where {\tt i}, {\tt j}, {\tt k}, and {\tt l} are dummy indices.
+
+\newpage
+
+Although MathProg is not a procedural language, for any indexing
+expression an equivalent algorithmic description can be given. In
+particular, the algorithmic description of the indexing expression
+above could look like follows:
+
+\noindent\hfil
+\begin{tabular}{@{}l@{}}
+{\bf for all} $i\in A$ {\bf do}\\
+\hspace{16pt}{\bf for all} $(j,k)\in B$ {\bf do}\\
+\hspace{32pt}{\bf for all} $l\in C$ {\bf do}\\
+\hspace{48pt}{\it action};\\
+\end{tabular}
+
+\noindent where the dummy indices $i$, $j$, $k$, $l$ are consecutively
+assigned corresponding components of $n$-tuples from the basic sets $A$,
+$B$, $C$, and {\it action} is some action that depends on the context,
+where the indexing expression is used. For example, if the action were
+printing current values of dummy indices, the printout would look like
+follows:
+
+\noindent\hfil
+\begin{tabular}{@{}llll@{}}
+$i=4$&$j=1$&$k=Jan$&$l=a$\\
+$i=4$&$j=1$&$k=Jan$&$l=b$\\
+$i=4$&$j=1$&$k=Jan$&$l=c$\\
+$i=4$&$j=1$&$k=Feb$&$l=a$\\
+$i=4$&$j=1$&$k=Feb$&$l=b$\\
+\multicolumn{4}{c}{.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .}\\
+$i=9$&$j=3$&$k=Jun$&$l=b$\\
+$i=9$&$j=3$&$k=Jun$&$l=c$\\
+\end{tabular}
+
+Let the example indexing expression be used in the following iterated
+operation:
+$$\mbox{{\tt sum\{i in A, (j,k) in B, l in C\} p[i,j,k,l]}}$$
+where {\tt p} is a 4-dimensional numeric parameter or some numeric
+expression whose resultant value depends on {\tt i}, {\tt j}, {\tt k},
+and {\tt l}. In this case the action is summation, so the resultant
+value of the primary numeric expression is:
+$$\sum_{i\in A,(j,k)\in B,l\in C}(p_{ijkl}).$$
+
+Now let the example indexing expression be used as a primary set
+expression. In this case the action is gathering all 4-tuples
+(quadruplets) of the form $(i,j,k,l)$ in one set, so the resultant
+value of such operation is simply the Cartesian product of the basic
+sets:
+$$A\times B\times C=\{(i,j,k,l):i\in A,(j,k)\in B,l\in C\}.$$
+Note that in this case the same indexing expression might be written in
+the reduced form:
+$$\mbox{{\tt\{A, B, C\}}}$$
+because the dummy indices $i$, $j$, $k$, and $l$ are not referenced and
+therefore their symbolic names need not be specified.
+
+\newpage
+
+Finally, let the example indexing expression be used as the subscript
+domain in the declaration of a 4-dimensional model object, say,
+a numeric parameter:
+$$\mbox{{\tt param p\{i in A, (j,k) in B, l in C\}} \dots {\tt;}}$$
+
+\noindent In this case the action is generating the parameter members,
+where each member has the form $p[i,j,k,l]$.
+
+As was said above, some indices in the second form of indexing entries
+may be numeric or symbolic expressions, not only dummy indices. In this
+case resultant values of such expressions play role of some logical
+conditions to select only that $n$-tuples from the Cartesian product of
+basic sets that satisfy these conditions.
+
+Consider, for example, the following indexing expression:
+$$\mbox{{\tt\{i in A, (i-1,k) in B, l in C\}}}$$
+where {\tt i}, {\tt k}, {\tt l} are dummy indices, and {\tt i-1} is
+a numeric expression. The algorithmic decsription of this indexing
+expression is the following:
+
+\noindent\hfil
+\begin{tabular}{@{}l@{}}
+{\bf for all} $i\in A$ {\bf do}\\
+\hspace{16pt}{\bf for all} $(j,k)\in B$ {\bf and} $j=i-1$ {\bf do}\\
+\hspace{32pt}{\bf for all} $l\in C$ {\bf do}\\
+\hspace{48pt}{\it action};\\
+\end{tabular}
+
+\noindent Thus, if this indexing expression were used as a primary set
+expression, the resultant set would be the following:
+$$\{(4,May,a),(4,May,b),(4,May,c),(4,Jun,a),(4,Jun,b),(4,Jun,c)\}.$$
+Should note that in this case the resultant set consists of 3-tuples,
+not of 4-tuples, because in the indexing expression there is no dummy
+index that corresponds to the first component of 2-tuples from the set
+$B$.
+
+The general rule is: the number of components of $n$-tuples defined by
+an indexing expression is the same as the number of dummy indices in
+that expression, where the correspondence between dummy indices and
+components on $n$-tuples in the resultant set is positional, i.e. the
+first dummy index corresponds to the first component, the second dummy
+index corresponds to the second component, etc.
+
+In some cases it is needed to select a subset from the Cartesian
+product of some sets. This may be attained by using an optional logical
+predicate, which is specified in the indexing expression.
+
+Consider, for example, the following indexing expression:
+$$\mbox{{\tt\{i in A, (j,k) in B, l in C: i <= 5 and k <> 'Mar'\}}}$$
+where the logical expression following the colon is a predicate. The
+algorithmic description of this indexing expression is the following:
+
+\noindent\hfil
+\begin{tabular}{@{}l@{}}
+{\bf for all} $i\in A$ {\bf do}\\
+\hspace{16pt}{\bf for all} $(j,k)\in B$ {\bf do}\\
+\hspace{32pt}{\bf for all} $l\in C$ {\bf do}\\
+\hspace{48pt}{\bf if} $i\leq 5$ {\bf and} $k\neq`Mar'$ {\bf then}\\
+\hspace{64pt}{\it action};\\
+\end{tabular}
+
+\noindent Thus, if this indexing expression were used as a primary set
+expression, the resultant set would be the following:
+$$\{(4,1,Jan,a),(4,1,Feb,a),(4,2,Apr,a),\dots,(4,3,Jun,c)\}.$$
+
+If no predicate is specified in the indexing expression, one, which
+takes on the value {\it true}, is assumed.
+
+\section{Set expressions}
+
+A {\it set expression} is a rule for computing an elemental set, i.e.
+a collection of $n$-tuples, where components of $n$-tuples are numeric
+and symbolic quantities.
+
+The primary set expression may be a literal set, unsubscripted set,
+subscripted set, ``arithmetic'' set, indexing expression, iterated set
+expression, conditional set expression, or another set expression
+enclosed in parentheses.
+
+\para{Examples}
+
+\noindent
+\begin{tabular}{@{}ll@{}}
+\verb|{(123,'aaa'), (i+1,'bbb'), (j-1,'ccc')}| &(literal set)\\
+\verb|I| &(unsubscripted set)\\
+\verb|S[i-1,j+1]| &(subscripted set)\\
+\verb|1..t-1 by 2| &(``arithmetic'' set)\\
+\verb|{t in 1..T, (t+1,j) in S: (t,j) in F}| &(indexing expression)\\
+\verb|setof{i in I, j in J}(i+1,j-1)| &(iterated set expression)\\
+\verb|if i < j then S[i,j] else F diff S[i,j]| &(conditional set
+expression)\\
+\verb|(1..10 union 21..30)| &(parenthesized set expression)\\
+\end{tabular}
+
+More general set expressions containing two or more primary set
+expressions may be constructed by using certain set operators.
+
+\para{Examples}
+
+\begin{verbatim}
+(A union B) inter (I cross J)
+1..10 cross (if i < j then {'a', 'b', 'c'} else {'d', 'e', 'f'})
+\end{verbatim}
+
+\subsection{Literal sets}
+
+A {\it literal set} is a primary set expression, which has the
+following two syntactic forms:
+$$
+{\def\arraystretch{1.4}
+\begin{array}{l}
+\mbox{{\tt\{}$e_1${\tt,} $e_2${\tt,} \dots{\tt,} $e_m${\tt\}}}\\
+\mbox{{\tt\{(}$e_{11}${\tt,} \dots{\tt,} $e_{1n}${\tt),}
+{\tt(}$e_{21}${\tt,} \dots{\tt,} $e_{2n}${\tt),} \dots{\tt,}
+{\tt(}$e_{m1}${\tt,} \dots{\tt,} $e_{mn}${\tt)\}}}\\
+\end{array}
+}
+$$
+where $e_1$, \dots, $e_m$, $e_{11}$, \dots, $e_{mn}$ are numeric or
+symbolic expressions.
+
+If the first form is used, the resultant set consists of 1-tuples
+(singlets) enumerated within the curly braces. It is allowed to specify
+an empty set as {\tt\{\ \}}, which has no 1-tuples. If the second form
+is used, the resultant set consists of $n$-tuples enumerated within the
+curly braces, where a particular $n$-tuple consists of corresponding
+components enumerated within the parentheses. All $n$-tuples should
+have the same number of components.
+
+\subsection{Unsubscripted sets}
+
+If the primary set expression is an unsubscripted set (which should be
+0-dimen\-sional), the resultant set is an elemental set associated with
+the corresponding set object.
+
+\subsection{Subscripted sets}
+
+The primary set expression, which refers to a subscripted set, has the
+following syntactic form:
+$$\mbox{{\it name}{\tt[}$i_1${\tt,} $i_2${\tt,} \dots{\tt,}
+$i_n${\tt]}}$$
+where {\it name} is the symbolic name of the set object, $i_1$, $i_2$,
+\dots, $i_n$ are subscripts.
+
+Each subscript should be a numeric or symbolic expression. The number
+of subscripts in the subscript list should be the same as the dimension
+of the set object with which the subscript list is associated.
+
+Actual values of subscript expressions are used to identify a
+particular member of the set object that determines the resultant set.
+
+\subsection{``Arithmetic'' sets}
+
+The primary set expression, which is an ``arithmetic'' set, has the
+following two syntactic forms:
+$$
+{\def\arraystretch{1.4}
+\begin{array}{l}
+\mbox{$t_0$ {\tt..} $t_1$ {\tt by} $\delta t$}\\
+\mbox{$t_0$ {\tt..} $t_1$}\\
+\end{array}
+}
+$$
+where $t_0$, $t_1$, and $\delta t$ are numeric expressions (the value
+of $\delta t$ should not be zero). The second form is equivalent to the
+first form, where $\delta t=1$.
+
+If $\delta t>0$, the resultant set is determined as follows:
+$$\{t:\exists k\in{\cal Z}(t=t_0+k\delta t,\ t_0\leq t\leq t_1)\}.$$
+Otherwise, if $\delta t<0$, the resultant set is determined as follows:
+$$\{t:\exists k\in{\cal Z}(t=t_0+k\delta t,\ t_1\leq t\leq t_0)\}.$$
+
+\subsection{Indexing expressions}
+
+If the primary set expression is an indexing expression, the resultant
+set is determined as described above in Section \ref{indexing}, page
+\pageref{indexing}.
+
+\newpage
+
+\subsection{Iterated expressions}
+
+An {\it iterated set expression} is a primary set expression, which has
+the following syntactic form:
+$$\mbox{{\tt setof} {\it indexing-expression} {\it integrand}}$$
+where {\it indexing-expression} is an indexing expression, which
+introduces dummy indices and controls iterating, {\it integrand} is
+either a single numeric or symbolic expression or a list of numeric and
+symbolic expressions separated by commae and enclosed in parentheses.
+
+If the integrand is a single numeric or symbolic expression, the
+resultant set consists of 1-tuples and is determined as follows:
+$$\{x:(i_1,\dots,i_n)\in\Delta\},$$
+\noindent where $x$ is a value of the integrand, $i_1$, \dots, $i_n$
+are dummy indices introduced in the indexing expression, $\Delta$ is
+the domain, a set of $n$-tuples specified by the indexing expression,
+which defines particular values assigned to the dummy indices on
+performing the iterated operation.
+
+If the integrand is a list containing $m$ numeric and symbolic
+expressions, the resultant set consists of $m$-tuples and is determined
+as follows:
+$$\{(x_1,\dots,x_m):(i_1,\dots,i_n)\in\Delta\},$$
+where $x_1$, \dots, $x_m$ are values of the expressions in the
+integrand list, $i_1$, \dots, $i_n$ and $\Delta$ have the same meaning
+as above.
+
+\subsection{Conditional expressions}
+
+A {\it conditional set expression} is a primary set expression that has
+the following syntactic form:
+$$\mbox{{\tt if} $b$ {\tt then} $X$ {\tt else} $Y$}$$
+where $b$ is an logical expression, $X$ and $Y$ are set expressions,
+which should define sets of the same dimension.
+
+The resultant value of the conditional expression depends on the value
+of the logical expression that follows the keyword {\tt if}. If it
+takes on the value {\it true}, the resultant set is the value of the
+expression that follows the keyword {\tt then}. Otherwise, if the
+logical expression takes on the value {\it false}, the resultant set is
+the value of the expression that follows the keyword {\tt else}.
+
+\subsection{Parenthesized expressions}
+
+Any set expression may be enclosed in parentheses that syntactically
+makes it a primary set expression.
+
+Parentheses may be used in set expressions, as in algebra, to specify
+the desired order in which operations are to be performed. Where
+parentheses are used, the expression within the parentheses is
+evaluated before the resultant value is used.
+
+The resultant value of the parenthesized expression is the same as the
+value of the expression enclosed within parentheses.
+
+\newpage
+
+\subsection{Set operators}
+
+In MathProg there exist the following set operators, which may be used
+in set expressions:
+
+\begin{tabular}{@{}ll@{}}
+$X$ {\tt union} $Y$&union $X\cup Y$\\
+$X$ {\tt diff} $Y$&difference $X\backslash Y$\\
+$X$ {\tt symdiff} $Y$&symmetric difference
+$X\oplus Y=(X\backslash Y)\cup(Y\backslash X)$\\
+$X$ {\tt inter} $Y$&intersection $X\cap Y$\\
+$X$ {\tt cross} $Y$&cross (Cartesian) product $X\times Y$\\
+\end{tabular}
+
+\noindent where $X$ and Y are set expressions, which should define sets
+of identical dimension (except the Cartesian product).
+
+If the expression includes more than one set operator, all operators
+are performed from left to right according to the hierarchy of
+operations (see below).
+
+The resultant value of the expression, which contains set operators, is
+the result of applying the operators to their operands.
+
+The dimension of the resultant set, i.e. the dimension of $n$-tuples,
+of which the resultant set consists of, is the same as the dimension of
+the operands, except the Cartesian product, where the dimension of the
+resultant set is the sum of the dimensions of its operands.
+
+\subsection{Hierarchy of operations}
+
+The following list shows the hierarchy of operations in set
+expressions:
+
+\noindent\hfil
+\begin{tabular}{@{}ll@{}}
+Operation&Hierarchy\\
+\hline
+Evaluation of numeric operations&1st-7th\\
+Evaluation of symbolic operations&8th-9th\\
+Evaluation of iterated or ``arithmetic'' set ({\tt setof}, {\tt..})&
+10th\\
+Cartesian product ({\tt cross})&11th\\
+Intersection ({\tt inter})&12th\\
+Union and difference ({\tt union}, {\tt diff}, {\tt symdiff})&13th\\
+Conditional evaluation ({\tt if} \dots {\tt then} \dots {\tt else})&
+14th\\
+\end{tabular}
+
+This hierarchy has the same meaning as was explained above for numeric
+expressions (see Subsection \ref{hierarchy}, page \pageref{hierarchy}).
+
+\newpage
+
+\section{Logical expressions}
+
+A {\it logical expression} is a rule for computing a single logical
+value, which can be either {\it true} or {\it false}.
+
+The primary logical expression may be a numeric expression, relational
+expression, iterated logical expression, or another logical expression
+enclosed in parentheses.
+
+\para{Examples}
+
+\noindent
+\begin{tabular}{@{}ll@{}}
+\verb|i+1| &(numeric expression)\\
+\verb|a[i,j] < 1.5| &(relational expression)\\
+\verb|s[i+1,j-1] <> 'Mar' & year | &(relational expression)\\
+\verb|(i+1,'Jan') not in I cross J| &(relational expression)\\
+\verb|S union T within A[i] inter B[j]| &(relational expression)\\
+\verb|forall{i in I, j in J} a[i,j] < .5 * b[i]| &(iterated logical
+expression)\\
+\verb|(a[i,j] < 1.5 or b[i] >= a[i,j])| &(parenthesized logical
+expression)\\
+\end{tabular}
+
+More general logical expressions containing two or more primary logical
+expressions may be constructed by using certain logical operators.
+
+\para{Examples}
+
+\begin{verbatim}
+not (a[i,j] < 1.5 or b[i] >= a[i,j]) and (i,j) in S
+(i,j) in S or (i,j) not in T diff U
+\end{verbatim}
+
+\vspace*{-8pt}
+
+\subsection{Numeric expressions}
+
+The resultant value of the primary logical expression, which is a
+numeric expression, is {\it true}, if the resultant value of the
+numeric expression is non-zero. Otherwise the resultant value of the
+logical expression is {\it false}.
+
+\vspace*{-8pt}
+
+\subsection{Relational operators}
+
+In MathProg there exist the following relational operators, which may
+be used in logical expressions:
+
+\begin{tabular}{@{}ll@{}}
+$x$ {\tt<} $y$&test on $x<y$\\
+$x$ {\tt<=} $y$&test on $x\leq y$\\
+$x$ {\tt=} $y$, $x$ {\tt==} $y$&test on $x=y$\\
+$x$ {\tt>=} $y$&test on $x\geq y$\\
+$x$ {\tt>} $y$&test on $x>y$\\
+$x$ {\tt<>} $y$, $x$ {\tt!=} $y$&test on $x\neq y$\\
+$x$ {\tt in} $Y$&test on $x\in Y$\\
+{\tt(}$x_1${\tt,}\dots{\tt,}$x_n${\tt)} {\tt in} $Y$&test on
+$(x_1,\dots,x_n)\in Y$\\
+$x$ {\tt not} {\tt in} $Y$, $x$ {\tt!in} $Y$&test on $x\not\in Y$\\
+{\tt(}$x_1${\tt,}\dots{\tt,}$x_n${\tt)} {\tt not} {\tt in} $Y$,
+{\tt(}$x_1${\tt,}\dots{\tt,}$x_n${\tt)} {\tt !in} $Y$&test on
+$(x_1,\dots,x_n)\not\in Y$\\
+$X$ {\tt within} $Y$&test on $X\subseteq Y$\\
+$X$ {\tt not} {\tt within} $Y$, $X$ {\tt !within} $Y$&test on
+$X\not\subseteq Y$\\
+\end{tabular}
+
+\noindent where $x$, $x_1$, \dots, $x_n$, $y$ are numeric or symbolic
+expressions, $X$ and $Y$ are set expression.
+
+\newpage
+
+1. In the operations {\tt in}, {\tt not in}, and {\tt !in} the
+number of components in the first operands should be the same as the
+dimension of the second operand.
+
+2. In the operations {\tt within}, {\tt not within}, and {\tt !within}
+both operands should have identical dimension.
+
+All the relational operators listed above have their conventional
+mathematical meaning. The resultant value is {\it true}, if
+corresponding relation is satisfied for its operands, otherwise
+{\it false}. (Note that symbolic values are ordered lexicographically,
+and any numeric value precedes any symbolic value.)
+
+\subsection{Iterated expressions}
+
+An {\it iterated logical expression} is a primary logical expression,
+which has the following syntactic form:
+$$\mbox{{\it iterated-operator} {\it indexing-expression}
+{\it integrand}}$$
+where {\it iterated-operator} is the symbolic name of the iterated
+operator to be performed (see below), {\it indexing-expression} is an
+indexing expression which introduces dummy indices and controls
+iterating, {\it integrand} is a numeric expression that participates in
+the operation.
+
+In MathProg there exist two iterated operators, which may be used in
+logical expressions:
+
+{\def\arraystretch{1.4}
+\noindent\hfil
+\begin{tabular}{@{}lll@{}}
+{\tt forall}&$\forall$-quantification&$\displaystyle
+\forall(i_1,\dots,i_n)\in\Delta[f(i_1,\dots,i_n)],$\\
+{\tt exists}&$\exists$-quantification&$\displaystyle
+\exists(i_1,\dots,i_n)\in\Delta[f(i_1,\dots,i_n)],$\\
+\end{tabular}
+}
+
+\noindent where $i_1$, \dots, $i_n$ are dummy indices introduced in
+the indexing expression, $\Delta$ is the domain, a set of $n$-tuples
+specified by the indexing expression which defines particular values
+assigned to the dummy indices on performing the iterated operation,
+$f(i_1,\dots,i_n)$ is the integrand, a logical expression whose
+resultant value depends on the dummy indices.
+
+For $\forall$-quantification the resultant value of the iterated
+logical expression is {\it true}, if the value of the integrand is
+{\it true} for all $n$-tuples contained in the domain, otherwise
+{\it false}.
+
+For $\exists$-quantification the resultant value of the iterated
+logical expression is {\it false}, if the value of the integrand is
+{\it false} for all $n$-tuples contained in the domain, otherwise
+{\it true}.
+
+\subsection{Parenthesized expressions}
+
+Any logical expression may be enclosed in parentheses that
+syntactically makes it a primary logical expression.
+
+Parentheses may be used in logical expressions, as in algebra, to
+specify the desired order in which operations are to be performed.
+Where parentheses are used, the expression within the parentheses is
+evaluated before the resultant value is used.
+
+The resultant value of the parenthesized expression is the same as the
+value of the expression enclosed within parentheses.
+
+\newpage
+
+\subsection{Logical operators}
+
+In MathProg there exist the following logical operators, which may be
+used in logical expressions:
+
+\begin{tabular}{@{}ll@{}}
+{\tt not} $x$, {\tt!}$x$&negation $\neg\ x$\\
+$x$ {\tt and} $y$, $x$ {\tt\&\&} $y$&conjunction (logical ``and'')
+$x\;\&\;y$\\
+$x$ {\tt or} $y$, $x$ {\tt||} $y$&disjunction (logical ``or'')
+$x\vee y$\\
+\end{tabular}
+
+\noindent where $x$ and $y$ are logical expressions.
+
+If the expression includes more than one logical operator, all
+operators are performed from left to right according to the hierarchy
+of the operations (see below). The resultant value of the expression,
+which contains logical operators, is the result of applying the
+operators to their operands.
+
+\subsection{Hierarchy of operations}
+
+The following list shows the hierarchy of operations in logical
+expressions:
+
+\noindent\hfil
+\begin{tabular}{@{}ll@{}}
+Operation&Hierarchy\\
+\hline
+Evaluation of numeric operations&1st-7th\\
+Evaluation of symbolic operations&8th-9th\\
+Evaluation of set operations&10th-14th\\
+Relational operations ({\tt<}, {\tt<=}, etc.)&15th\\
+Negation ({\tt not}, {\tt!})&16th\\
+Conjunction ({\tt and}, {\tt\&\&})&17th\\
+$\forall$- and $\exists$-quantification ({\tt forall}, {\tt exists})&
+18th\\
+Disjunction ({\tt or}, {\tt||})&19th\\
+\end{tabular}
+
+This hierarchy has the same meaning as was explained above for numeric
+expressions (see Subsection \ref{hierarchy}, page \pageref{hierarchy}).
+
+\section{Linear expressions}
+
+A {\it linear expression} is a rule for computing so called
+a {\it linear form} or simply a {\it formula}, which is a linear (or
+affine) function of elemental variables.
+
+The primary linear expression may be an unsubscripted variable,
+subscripted variable, iterated linear expression, conditional linear
+expression, or another linear expression enclosed in parentheses.
+
+It is also allowed to use a numeric expression as the primary linear
+expression, in which case the resultant value of the numeric expression
+is automatically converted to a formula that includes the constant term
+only.
+
+\para{Examples}
+
+\noindent
+\begin{tabular}{@{}ll@{}}
+\verb|z| &(unsubscripted variable)\\
+\verb|x[i,j]| &(subscripted variable)\\
+\verb|sum{j in J} (a[i,j] * x[i,j] + 3 * y[i-1])| &
+(iterated linear expression)\\
+\verb|if i in I then x[i,j] else 1.5 * z + 3.25| &
+(conditional linear expression)\\
+\verb|(a[i,j] * x[i,j] + y[i-1] + .1)| &
+(parenthesized linear expression)\\
+\end{tabular}
+
+More general linear expressions containing two or more primary linear
+expressions may be constructed by using certain arithmetic operators.
+
+\para{Examples}
+
+\begin{verbatim}
+2 * x[i-1,j+1] + 3.5 * y[k] + .5 * z
+(- x[i,j] + 3.5 * y[k]) / sum{t in T} abs(d[i,j,t])
+\end{verbatim}
+
+\vspace*{-5pt}
+
+\subsection{Unsubscripted variables}
+
+If the primary linear expression is an unsubscripted variable (which
+should be 0-dimensional), the resultant formula is that unsubscripted
+variable.
+
+\vspace*{-5pt}
+
+\subsection{Subscripted variables}
+
+The primary linear expression, which refers to a subscripted variable,
+has the following syntactic form:
+$$\mbox{{\it name}{\tt[}$i_1${\tt,} $i_2${\tt,} \dots{\tt,}
+$i_n${\tt]}}$$
+where {\it name} is the symbolic name of the model variable, $i_1$,
+$i_2$, \dots, $i_n$ are subscripts.
+
+Each subscript should be a numeric or symbolic expression. The number
+of subscripts in the subscript list should be the same as the dimension
+of the model variable with which the subscript list is associated.
+
+Actual values of the subscript expressions are used to identify a
+particular member of the model variable that determines the resultant
+formula, which is an elemental variable associated with corresponding
+member.
+
+\vspace*{-5pt}
+
+\subsection{Iterated expressions}
+
+An {\it iterated linear expression} is a primary linear expression,
+which has the following syntactic form:
+$$\mbox{{\tt sum} {\it indexing-expression} {\it integrand}}$$
+where {\it indexing-expression} is an indexing expression, which
+introduces dummy indices and controls iterating, {\it integrand} is
+a linear expression that participates in the operation.
+
+The iterated linear expression is evaluated exactly in the same way as
+the iterated numeric expression (see Subection \ref{itexpr}, page
+\pageref{itexpr}) with exception that the integrand participated in the
+summation is a formula, not a numeric value.
+
+\vspace*{-5pt}
+
+\subsection{Conditional expressions}
+
+A {\it conditional linear expression} is a primary linear expression,
+which has one of the following two syntactic forms:
+$$
+{\def\arraystretch{1.4}
+\begin{array}{l}
+\mbox{{\tt if} $b$ {\tt then} $f$ {\tt else} $g$}\\
+\mbox{{\tt if} $b$ {\tt then} $f$}\\
+\end{array}
+}
+$$
+where $b$ is an logical expression, $f$ and $g$ are linear expressions.
+
+\newpage
+
+The conditional linear expression is evaluated exactly in the same way
+as the conditional numeric expression (see Subsection \ref{ifthen},
+page \pageref{ifthen}) with exception that operands participated in the
+operation are formulae, not numeric values.
+
+\subsection{Parenthesized expressions}
+
+Any linear expression may be enclosed in parentheses that syntactically
+makes it a primary linear expression.
+
+Parentheses may be used in linear expressions, as in algebra, to
+specify the desired order in which operations are to be performed.
+Where parentheses are used, the expression within the parentheses is
+evaluated before the resultant formula is used.
+
+The resultant value of the parenthesized expression is the same as the
+value of the expression enclosed within parentheses.
+
+\subsection{Arithmetic operators}
+
+In MathProg there exists the following arithmetic operators, which may
+be used in linear expressions:
+
+\begin{tabular}{@{}ll@{}}
+{\tt+} $f$&unary plus\\
+{\tt-} $f$&unary minus\\
+$f$ {\tt+} $g$&addition\\
+$f$ {\tt-} $g$&subtraction\\
+$x$ {\tt*} $f$, $f$ {\tt*} $x$&multiplication\\
+$f$ {\tt/} $x$&division
+\end{tabular}
+
+\noindent where $f$ and $g$ are linear expressions, $x$ is a numeric
+expression (more precisely, a linear expression containing only the
+constant term).
+
+If the expression includes more than one arithmetic operator, all
+operators are performed from left to right according to the hierarchy
+of operations (see below). The resultant value of the expression, which
+contains arithmetic operators, is the result of applying the operators
+to their operands.
+
+\subsection{Hierarchy of operations}
+
+The hierarchy of arithmetic operations used in linear expressions is
+the same as for numeric expressions (see Subsection \ref{hierarchy},
+page \pageref{hierarchy}).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Statements}
+
+{\it Statements} are basic units of the model description. In MathProg
+all statements are divided into two categories: declaration statements
+and functional statements.
+
+{\it Declaration statements} (set statement, parameter statement,
+variable statement, constraint statement, objective statement) are used
+to declare model objects of certain kinds and define certain properties
+of such objects.
+
+{\it Functional statements} (solve statement, check statement, display
+statement, printf statement, loop statement, table statement) are
+intended for performing some specific actions.
+
+Note that declaration statements may follow in arbitrary order, which
+does not affect the result of translation. However, any model object
+should be declared before it is referenced in other statements.
+
+\section{Set statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][24pt]{468pt}{
+\hspace{6pt} {\tt set} {\it name} {\it alias} {\it domain} {\tt,}
+{\it attrib} {\tt,} \dots {\tt,} {\it attrib} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it name} is a symbolic name of the set;
+
+\noindent
+{\it alias} is an optional string literal, which specifies an alias of
+the set;
+
+\noindent
+{\it domain} is an optional indexing expression, which specifies
+a subscript domain of the set;
+
+\noindent
+{\it attrib}, \dots, {\it attrib} are optional attributes of the set.
+(Commae preceding attributes may be omitted.)
+
+\para{Optional attributes}
+
+\vspace*{-8pt}
+
+\begin{description}
+\item[{\tt dimen} $n$]\hspace*{0pt}\\
+specifies the dimension of $n$-tuples which the set consists of;
+\item[{\tt within} {\it expression}]\hspace*{0pt}\\
+specifies a superset which restricts the set or all its members
+(elemental sets) to be within that superset;
+\item[{\tt:=} {\it expression}]\hspace*{0pt}\\
+specifies an elemental set assigned to the set or its members;
+\item[{\tt default} {\it expression}]\hspace*{0pt}\\
+specifies an elemental set assigned to the set or its members whenever
+no appropriate data are available in the data section.
+\end{description}
+
+\vspace*{-8pt}
+
+\para{Examples}
+
+\begin{verbatim}
+set nodes;
+set arcs within nodes cross nodes;
+set step{s in 1..maxiter} dimen 2 := if s = 1 then arcs else step[s-1]
+   union setof{k in nodes, (i,k) in step[s-1], (k,j) in step[s-1]}(i,j);
+set A{i in I, j in J}, within B[i+1] cross C[j-1], within D diff E,
+   default {('abc',123), (321,'cba')};
+\end{verbatim}
+
+The set statement declares a set. If the subscript domain is not
+specified, the set is a simple set, otherwise it is an array of
+elemental sets.
+
+The {\tt dimen} attribute specifies the dimension of $n$-tuples, which
+the set (if it is a simple set) or its members (if the set is an array
+of elemental sets) consist of, where $n$ should be an unsigned integer
+from 1 to 20. At most one {\tt dimen} attribute can be specified. If
+the {\tt dimen} attribute is not specified, the dimension of $n$-tuples
+is implicitly determined by other attributes (for example, if there is
+a set expression that follows {\tt:=} or the keyword {\tt default}, the
+dimension of $n$-tuples of corresponding elemental set is used).
+If no dimension information is available, {\tt dimen 1} is assumed.
+
+The {\tt within} attribute specifies a set expression whose resultant
+value is a superset used to restrict the set (if it is a simple set) or
+its members (if the set is an array of elemental sets) to be within
+that superset. Arbitrary number of {\tt within} attributes may be
+specified in the same set statement.
+
+The assign ({\tt:=}) attribute specifies a set expression used to
+evaluate elemental set(s) assigned to the set (if it is a simple set)
+or its members (if the set is an array of elemental sets). If the
+assign attribute is specified, the set is {\it computable} and
+therefore needs no data to be provided in the data section. If the
+assign attribute is not specified, the set should be provided with data
+in the data section. At most one assign or default attribute can be
+specified for the same set.
+
+The {\tt default} attribute specifies a set expression used to evaluate
+elemental set(s) assigned to the set (if it is a simple set) or its
+members (if the set is an array of elemental sets) whenever
+no appropriate data are available in the data section. If neither
+assign nor default attribute is specified, missing data will cause an
+error.
+
+\newpage
+
+\section{Parameter statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][24pt]{468pt}{
+\hspace{6pt} {\tt param} {\it name} {\it alias} {\it domain} {\tt,}
+{\it attrib} {\tt,} \dots {\tt,} {\it attrib} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it name} is a symbolic name of the parameter;
+
+\noindent
+{\it alias} is an optional string literal, which specifies an alias of
+the parameter;
+
+\noindent
+{\it domain} is an optional indexing expression, which specifies
+a subscript domain of the parameter;
+
+\noindent
+{\it attrib}, \dots, {\it attrib} are optional attributes of the
+parameter. (Commae preceding attributes may be omitted.)
+
+\para{Optional attributes}
+
+\vspace*{-8pt}
+
+\begin{description}
+\item[{\tt integer}]\hspace*{0pt}\\
+specifies that the parameter is integer;
+\item[{\tt binary}]\hspace*{0pt}\\
+specifies that the parameter is binary;
+\item[{\tt symbolic}]\hspace*{0pt}\\
+specifies that the parameter is symbolic;
+\item[{\it relation expression}]\hspace*{0pt}\\
+(where {\it relation} is one of: {\tt<}, {\tt<=}, {\tt=}, {\tt==},
+{\tt>=}, {\tt>}, {\tt<>}, {\tt!=})\\
+specifies a condition that restricts the parameter or its members to
+satisfy that condition;
+\item[{\tt in} {\it expression}]\hspace*{0pt}\\
+specifies a superset that restricts the parameter or its members to be
+in that superset;
+\item[{\tt:=} {\it expression}]\hspace*{0pt}\\
+specifies a value assigned to the parameter or its members;
+\item[{\tt default} {\it expression}]\hspace*{0pt}\\
+specifies a value assigned to the parameter or its members whenever
+no appropriate data are available in the data section.
+\end{description}
+
+\vspace*{-8pt}
+
+\para{Examples}
+
+\begin{verbatim}
+param units{raw, prd} >= 0;
+param profit{prd, 1..T+1};
+param N := 20 integer >= 0 <= 100;
+param comb 'n choose k' {n in 0..N, k in 0..n} :=
+   if k = 0 or k = n then 1 else comb[n-1,k-1] + comb[n-1,k];
+param p{i in I, j in J}, integer, >= 0, <= i+j, in A[i] symdiff B[j],
+   in C[i,j], default 0.5 * (i + j);
+param month symbolic default 'May' in {'Mar', 'Apr', 'May'};
+\end{verbatim}
+
+The parameter statement declares a parameter. If a subscript domain is
+not specified, the parameter is a simple (scalar) parameter, otherwise
+it is a $n$-dimensional array.
+
+The type attributes {\tt integer}, {\tt binary}, and {\tt symbolic}
+qualify the type of values that can be assigned to the parameter as
+shown below:
+
+\noindent\hfil
+\begin{tabular}{@{}ll@{}}
+Type attribute&Assigned values\\
+\hline
+(not specified)&Any numeric values\\
+{\tt integer}&Only integer numeric values\\
+{\tt binary}&Either 0 or 1\\
+{\tt symbolic}&Any numeric and symbolic values\\
+\end{tabular}
+
+The {\tt symbolic} attribute cannot be specified along with other type
+attributes. Being specified it should precede all other attributes.
+
+The condition attribute specifies an optional condition that restricts
+values assigned to the parameter to satisfy that condition. This
+attribute has the following syntactic forms:
+
+\begin{tabular}{@{}ll@{}}
+{\tt<} $v$&check for $x<v$\\
+{\tt<=} $v$&check for $x\leq v$\\
+{\tt=} $v$, {\tt==} $v$&check for $x=v$\\
+{\tt>=} $v$&check for $x\geq v$\\
+{\tt>} $v$&check for $x\geq v$\\
+{\tt<>} $v$, {\tt!=} $v$&check for $x\neq v$\\
+\end{tabular}
+
+\noindent where $x$ is a value assigned to the parameter, $v$ is the
+resultant value of a numeric or symbolic expression specified in the
+condition attribute. Arbitrary number of condition attributes can be
+specified for the same parameter. If a value being assigned to the
+parameter during model evaluation violates at least one of specified
+conditions, an error is raised. (Note that symbolic values are ordered
+lexicographically, and any numeric value precedes any symbolic value.)
+
+The {\tt in} attribute is similar to the condition attribute and
+specifies a set expression whose resultant value is a superset used to
+restrict numeric or symbolic values assigned to the parameter to be in
+that superset. Arbitrary number of the {\tt in} attributes can be
+specified for the same parameter. If a value being assigned to the
+parameter during model evaluation is not in at least one of specified
+supersets, an error is raised.
+
+The assign ({\tt:=}) attribute specifies a numeric or symbolic
+expression used to compute a value assigned to the parameter (if it is
+a simple parameter) or its member (if the parameter is an array). If
+the assign attribute is specified, the parameter is {\it computable}
+and therefore needs no data to be provided in the data section. If the
+assign attribute is not specified, the parameter should be provided
+with data in the data section. At most one assign or {\tt default}
+attribute can be specified for the same parameter.
+
+The {\tt default} attribute specifies a numeric or symbolic expression
+used to compute a value assigned to the parameter or its member
+whenever no appropriate data are available in the data section. If
+neither assign nor {\tt default} attribute is specified, missing data
+will cause an error.
+
+\newpage
+
+\section{Variable statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][24pt]{468pt}{
+\hspace{6pt} {\tt var} {\it name} {\it alias} {\it domain} {\tt,}
+{\it attrib} {\tt,} \dots {\tt,} {\it attrib} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it name} is a symbolic name of the variable;
+
+\noindent
+{\it alias} is an optional string literal, which specifies an alias of
+the variable;
+
+\noindent
+{\it domain} is an optional indexing expression, which specifies
+a subscript domain of the variable;
+
+\noindent
+{\it attrib}, \dots, {\it attrib} are optional attributes of the
+variable. (Commae preceding attributes may be omitted.)
+
+\para{Optional attributes}
+
+\vspace*{-8pt}
+
+\begin{description}
+\item[{\tt integer}]\hspace*{0pt}\\
+restricts the variable to be integer;
+\item[{\tt binary}]\hspace*{0pt}\\
+restricts the variable to be binary;
+\item[{\tt>=} {\it expression}]\hspace*{0pt}\\
+specifies an lower bound of the variable;
+\item[{\tt<=} {\it expression}]\hspace*{0pt}\\
+specifies an upper bound of the variable;
+\item[{\tt=} {\it expression}]\hspace*{0pt}\\
+specifies a fixed value of the variable;
+\end{description}
+
+\vspace*{-8pt}
+
+\para{Examples}
+
+\begin{verbatim}
+var x >= 0;
+var y{I,J};
+var make{p in prd}, integer, >= commit[p], <= market[p];
+var store{raw, 1..T+1} >= 0;
+var z{i in I, j in J} >= i+j;
+\end{verbatim}
+
+The variable statement declares a variable. If a subscript domain is
+not specified, the variable is a simple (scalar) variable, otherwise it
+is a $n$-dimensional array of elemental variables.
+
+Elemental variable(s) associated with the model variable (if it is a
+simple variable) or its members (if it is an array) correspond to the
+variables in the LP/MIP problem formulation (see Section \ref{problem},
+page \pageref{problem}). Note that only elemental variables actually
+referenced in some constraints and/or objectives are included in the
+LP/MIP problem instance to be generated.
+
+The type attributes {\tt integer} and {\tt binary} restrict the
+variable to be integer or binary, respectively. If no type attribute is
+specified, the variable is continuous. If all variables in the model
+are continuous, the corresponding problem is of LP class. If there is
+at least one integer or binary variable, the problem is of MIP class.
+
+The lower bound ({\tt>=}) attribute specifies a numeric expression for
+computing an lower bound of the variable. At most one lower bound can
+be specified. By default all variables (except binary ones) have no
+lower bound, so if a variable is required to be non-negative, its zero
+lower bound should be explicitly specified.
+
+The upper bound ({\tt<=}) attribute specifies a numeric expression for
+computing an upper bound of the variable. At most one upper bound
+attribute can be specified.
+
+The fixed value ({\tt=}) attribute specifies a numeric expression for
+computing a value, at which the variable is fixed. This attribute
+cannot be specified along with the bound attributes.
+
+\section{Constraint statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][106pt]{468pt}{
+\hspace{6pt} {\tt s.t.} {\it name} {\it alias} {\it domain} {\tt:}
+{\it expression} {\tt,} {\tt=} {\it expression} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt s.t.} {\it name} {\it alias} {\it domain} {\tt:}
+{\it expression} {\tt,} {\tt<=} {\it expression} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt s.t.} {\it name} {\it alias} {\it domain} {\tt:}
+{\it expression} {\tt,} {\tt>=} {\it expression} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt s.t.} {\it name} {\it alias} {\it domain} {\tt:}
+{\it expression} {\tt,} {\tt<=} {\it expression} {\tt,} {\tt<=}
+{\it expression} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt s.t.} {\it name} {\it alias} {\it domain} {\tt:}
+{\it expression} {\tt,} {\tt>=} {\it expression} {\tt,} {\tt>=}
+{\it expression} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it name} is a symbolic name of the constraint;
+
+\noindent
+{\it alias} is an optional string literal, which specifies an alias of
+the constraint;
+
+\noindent
+{\it domain} is an optional indexing expression, which specifies
+a subscript domain of the constraint;
+
+\noindent
+{\it expression} is a linear expression used to compute a component of
+the constraint. (Commae following expressions may be omitted.)
+
+\noindent
+(The keyword {\tt s.t.} may be written as {\tt subject to} or as
+{\tt subj to}, or may be omitted at all.)
+
+\para{Examples}
+
+\begin{verbatim}
+s.t. r: x + y + z, >= 0, <= 1;
+limit{t in 1..T}: sum{j in prd} make[j,t] <= max_prd;
+subject to balance{i in raw, t in 1..T}:
+   store[i,t+1] = store[i,t] - sum{j in prd} units[i,j] * make[j,t];
+subject to rlim 'regular-time limit' {t in time}:
+   sum{p in prd} pt[p] * rprd[p,t] <= 1.3 * dpp[t] * crews[t];
+\end{verbatim}
+
+The constraint statement declares a constraint. If a subscript domain
+is not specified, the\linebreak constraint is a simple (scalar)
+constraint, otherwise it is a $n$-dimensional array of elemental
+constraints.
+
+Elemental constraint(s) associated with the model constraint (if it is
+a simple constraint) or its members (if it is an array) correspond to
+the linear constraints in the LP/MIP problem formulation (see
+Section \ref{problem}, page \pageref{problem}).
+
+If the constraint has the form of equality or single inequality, i.e.
+includes two expressions, one of which follows the colon and other
+follows the relation sign {\tt=}, {\tt<=}, or {\tt>=}, both expressions
+in the statement can be linear expressions. If the constraint has the
+form of double inequality,\linebreak i.e. includes three expressions,
+the middle expression can be a linear expression while the leftmost and
+rightmost ones can be only numeric expressions.
+
+Generating the model is, roughly speaking, generating its constraints,
+which are always evaluated for the entire subscript domain. Evaluation
+of the constraints leads, in turn, to evaluation of other model objects
+such as sets, parameters, and variables.
+
+Constructing an actual linear constraint included in the problem
+instance, which (constraint) corresponds to a particular elemental
+constraint, is performed as follows.
+
+If the constraint has the form of equality or single inequality,
+evaluation of both linear expressions gives two resultant linear forms:
+$$\begin{array}{r@{\ }c@{\ }r@{\ }c@{\ }r@{\ }c@{\ }r@{\ }c@{\ }r}
+f&=&a_1x_1&+&a_2x_2&+\dots+&a_nx_n&+&a_0,\\
+g&=&b_1x_1&+&a_2x_2&+\dots+&a_nx_n&+&b_0,\\
+\end{array}$$
+where $x_1$, $x_2$, \dots, $x_n$ are elemental variables; $a_1$, $a_2$,
+\dots, $a_n$, $b_1$, $b_2$, \dots, $b_n$ are numeric coefficients;
+$a_0$ and $b_0$ are constant terms. Then all linear terms of $f$ and
+$g$ are carried to the left-hand side, and the constant terms are
+carried to the right-hand side, that gives the final elemental
+constraint in the standard form:
+$$(a_1-b_1)x_1+(a_2-b_2)x_2+\dots+(a_n-b_n)x_n\left\{
+\begin{array}{@{}c@{}}=\\\leq\\\geq\\\end{array}\right\}b_0-a_0.$$
+
+If the constraint has the form of double inequality, evaluation of the
+middle linear expression gives the resultant linear form:
+$$f=a_1x_1+a_2x_2+\dots+a_nx_n+a_0,$$
+and evaluation of the leftmost and rightmost numeric expressions gives
+two numeric values $l$ and $u$, respectively. Then the constant term of
+the linear form is carried to both left-hand and right-handsides that
+gives the final elemental constraint in the standard form:
+$$l-a_0\leq a_1x_1+a_2x_2+\dots+a_nx_n\leq u-a_0.$$
+
+\section{Objective statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][44pt]{468pt}{
+\hspace{6pt} {\tt minimize} {\it name} {\it alias} {\it domain} {\tt:}
+{\it expression} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt maximize} {\it name} {\it alias} {\it domain} {\tt:}
+{\it expression} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it name} is a symbolic name of the objective;
+
+\noindent
+{\it alias} is an optional string literal, which specifies an alias of
+the objective;
+
+\noindent
+{\it domain} is an optional indexing expression, which specifies
+a subscript domain of the objective;
+
+\noindent
+{\it expression} is a linear expression used to compute the linear form
+of the objective.
+
+\newpage
+
+\para{Examples}
+
+\begin{verbatim}
+minimize obj: x + 1.5 * (y + z);
+maximize total_profit: sum{p in prd} profit[p] * make[p];
+\end{verbatim}
+
+The objective statement declares an objective. If a subscript domain is
+not specified, the objective is a simple (scalar) objective. Otherwise
+it is a $n$-dimensional array of elemental objectives.
+
+Elemental objective(s) associated with the model objective (if it is a
+simple objective) or its members (if it is an array) correspond to
+general linear constraints in the LP/MIP problem formulation (see
+Section \ref{problem}, page \pageref{problem}). However, unlike
+constraints the corresponding linear forms are free (unbounded).
+
+Constructing an actual linear constraint included in the problem
+instance, which (constraint) corresponds to a particular elemental
+constraint, is performed as follows. The linear expression specified in
+the objective statement is evaluated that, gives the resultant linear
+form:
+$$f=a_1x_1+a_2x_2+\dots+a_nx_n+a_0,$$
+where $x_1$, $x_2$, \dots, $x_n$ are elemental variables; $a_1$, $a_2$,
+\dots, $a_n$ are numeric coefficients; $a_0$ is the constant term. Then
+the linear form is used to construct the final elemental constraint in
+the standard form:
+$$-\infty<a_1x_1+a_2x_2+\dots+a_nx_n+a_0<+\infty.$$
+
+As a rule the model description contains only one objective statement
+that defines the objective function used in the problem instance.
+However, it is allowed to declare arbitrary number of objectives, in
+which case the actual objective function is the first objective
+encountered in the model description. Other objectives are also
+included in the problem instance, but they do not affect the objective
+function.
+
+\section{Solve statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][24pt]{468pt}{
+\hspace{6pt} {\tt solve} {\tt;}
+}}
+
+\medskip
+
+The solve statement is optional and can be used only once. If no solve
+statement is used, one is assumed at the end of the model section.
+
+The solve statement causes the model to be solved, that means computing
+numeric values of all model variables. This allows using variables in
+statements below the solve statement in the same way as if they were
+numeric parameters.
+
+Note that the variable, constraint, and objective statements cannot be
+used below the solve statement, i.e. all principal components of the
+model should be declared above the solve statement.
+
+\newpage
+
+\section{Check statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][24pt]{468pt}{
+\hspace{6pt} {\tt check} {\it domain} {\tt:} {\it expression} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it domain} is an optional indexing expression, which specifies
+a subscript domain of the check statement;
+
+\noindent
+{\it expression} is an logical expression which specifies the logical
+condition to be checked. (The colon preceding {\it expression} may be
+omitted.)
+
+\para{Examples}
+
+\begin{verbatim}
+check: x + y <= 1 and x >= 0 and y >= 0;
+check sum{i in ORIG} supply[i] = sum{j in DEST} demand[j];
+check{i in I, j in 1..10}: S[i,j] in U[i] union V[j];
+\end{verbatim}
+
+The check statement allows checking the resultant value of an logical
+expression specified in the statement. If the value is {\it false}, an
+error is reported.
+
+If the subscript domain is not specified, the check is performed only
+once. Specifying the subscript domain allows performing multiple check
+for every $n$-tuple in the domain set. In the latter case the logical
+expression may include dummy indices introduced in corresponding
+indexing expression.
+
+\section{Display statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][24pt]{468pt}{
+\hspace{6pt} {\tt display} {\it domain} {\tt:} {\it item} {\tt,}
+\dots {\tt,} {\it item} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it domain} is an optional indexing expression, which specifies
+a subscript domain of the display statement;
+
+\noindent
+{\it item}, \dots, {\it item} are items to be displayed. (The colon
+preceding the first item may be omitted.)
+
+\para{Examples}
+
+\begin{verbatim}
+display: 'x =', x, 'y =', y, 'z =', z;
+display sqrt(x ** 2 + y ** 2 + z ** 2);
+display{i in I, j in J}: i, j, a[i,j], b[i,j];
+\end{verbatim}
+
+The display statement evaluates all items specified in the statement
+and writes their values on the standard output (terminal) in plain text
+format.
+
+If a subscript domain is not specified, items are evaluated and then
+displayed only once. Specifying the subscript domain causes items to be
+evaluated and displayed for every $n$-tuple in the domain set. In the
+latter case items may include dummy indices introduced in corresponding
+indexing expression.
+
+An item to be displayed can be a model object (set, parameter,
+variable, constraint, objective) or an expression.
+
+If the item is a computable object (i.e. a set or parameter provided
+with the assign attribute), the object is evaluated over the entire
+domain and then its content (i.e. the content of the object array) is
+displayed. Otherwise, if the item is not a computable object, only its
+current content (i.e. members actually generated during the model
+evaluation) is displayed.
+
+If the item is an expression, the expression is evaluated and its
+resultant value is displayed.
+
+\section{Printf statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][64pt]{468pt}{
+\hspace{6pt} {\tt printf} {\it domain} {\tt:} {\it format} {\tt,}
+{\it expression} {\tt,} \dots {\tt,} {\it expression} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt printf} {\it domain} {\tt:} {\it format} {\tt,}
+{\it expression} {\tt,} \dots {\tt,} {\it expression} {\tt>}
+{\it filename} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt printf} {\it domain} {\tt:} {\it format} {\tt,}
+{\it expression} {\tt,} \dots {\tt,} {\it expression} {\tt>>}
+{\it filename} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it domain} is an optional indexing expression, which specifies
+a subscript domain of the printf statement;
+
+\noindent
+{\it format} is a symbolic expression whose value specifies a format
+control string. (The colon preceding the format expression may be
+omitted.)
+
+\noindent
+{\it expression}, \dots, {\it expression} are zero or more expressions
+whose values have to be formatted and printed. Each expression should
+be of numeric, symbolic, or logical type.
+
+\noindent
+{\it filename} is a symbolic expression whose value specifies a name
+of a text file, to which the output is redirected. The flag {\tt>}
+means creating a new empty file while the flag {\tt>>} means appending
+the output to an existing file. If no file name is specified, the
+output is written on the standard output (terminal).
+
+\para{Examples}
+
+\begin{verbatim}
+printf 'Hello, world!\n';
+printf: "x = %.3f; y = %.3f; z = %.3f\n", x, y, z > "result.txt";
+printf{i in I, j in J}: "flow from %s to %s is %d\n", i, j, x[i,j]
+   >> result_file & ".txt";
+printf{i in I} 'total flow from %s is %g\n', i, sum{j in J} x[i,j];
+printf{k in K} "x[%s] = " & (if x[k] < 0 then "?" else "%g"),
+   k, x[k];
+\end{verbatim}
+
+The printf statement is similar to the display statement, however, it
+allows formatting data to be written.
+
+If a subscript domain is not specified, the printf statement is
+executed only once. Specifying a subscript domain causes executing the
+printf statement for every $n$-tuple in the domain set. In the latter
+case the format and expression may include dummy indices introduced in
+corresponding indexing expression.
+
+The format control string is a value of the symbolic expression
+{\it format} specified in the printf statement. It is composed of zero
+or more directives as follows: ordinary characters (not {\tt\%}), which
+are copied unchanged to the output stream, and conversion
+specifications, each of which causes evaluating corresponding
+expression specified in the printf statement, formatting it, and
+writing its resultant value to the output stream.
+
+Conversion specifications that may be used in the format control string
+are the following:\linebreak {\tt d}, {\tt i}, {\tt f}, {\tt F},
+{\tt e}, {\tt E}, {\tt g}, {\tt G}, and {\tt s}. These specifications
+have the same syntax and semantics as in the C programming language.
+
+\section{For statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][44pt]{468pt}{
+\hspace{6pt} {\tt for} {\it domain} {\tt:} {\it statement} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt for} {\it domain} {\tt:} {\tt\{} {\it statement}
+\dots {\it statement} {\tt\}} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it domain} is an indexing expression which specifies a subscript
+domain of the for statement. (The colon following the indexing
+expression may be omitted.)
+
+\noindent
+{\it statement} is a statement, which should be executed under control
+of the for statement;
+
+\noindent
+{\it statement}, \dots, {\it statement} is a sequence of statements
+(enclosed in curly braces), which should be executed under control of
+the for statement.
+
+Only the following statements can be used within the for statement:
+check, display, printf, and another for.
+
+\para{Examples}
+
+\begin{verbatim}
+for {(i,j) in E: i != j}
+{  printf "flow from %s to %s is %g\n", i, j, x[i,j];
+   check x[i,j] >= 0;
+}
+for {i in 1..n}
+{  for {j in 1..n} printf " %s", if x[i,j] then "Q" else ".";
+   printf("\n");
+}
+for {1..72} printf("*");
+\end{verbatim}
+
+The for statement causes a statement or a sequence of statements
+specified as part of the for statement to be executed for every
+$n$-tuple in the domain set. Thus, statements within the for statement
+may include dummy indices introduced in corresponding indexing
+expression.
+
+\newpage
+
+\section{Table statement}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][80pt]{468pt}{
+\hspace{6pt} {\tt table} {\it name} {\it alias} {\tt IN} {\it driver}
+{\it arg} \dots {\it arg} {\tt:}
+
+\hspace{6pt} {\tt\ \ \ \ \ } {\it set} {\tt<-} {\tt[} {\it fld} {\tt,}
+\dots {\tt,} {\it fld} {\tt]} {\tt,} {\it par} {\tt\textasciitilde}
+{\it fld} {\tt,} \dots {\tt,} {\it par} {\tt\textasciitilde} {\it fld}
+{\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt table} {\it name} {\it alias} {\it domain} {\tt OUT}
+{\it driver} {\it arg} \dots {\it arg} {\tt:}
+
+\hspace{6pt} {\tt\ \ \ \ \ } {\it expr} {\tt\textasciitilde} {\it fld}
+{\tt,} \dots {\tt,} {\it expr} {\tt\textasciitilde} {\it fld} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it name} is a symbolic name of the table;
+
+\noindent
+{\it alias} is an optional string literal, which specifies an alias of
+the table;
+
+\noindent
+{\it domain} is an indexing expression, which specifies a subscript
+domain of the (output) table;
+
+\noindent
+{\tt IN} means reading data from the input table;
+
+\noindent
+{\tt OUT} means writing data to the output table;
+
+\noindent
+{\it driver} is a symbolic expression, which specifies the driver used
+to access the table (for details see Appendix \ref{drivers}, page
+\pageref{drivers});
+
+\noindent
+{\it arg} is an optional symbolic expression, which is an argument
+pass\-ed to the table driver. This symbolic expression should not
+include dummy indices specified in the domain;
+
+\noindent
+{\it set} is the name of an optional simple set called {\it control
+set}. It can be omitted along with the delimiter {\tt<-};
+
+\noindent
+{\it fld} is a field name. Within square brackets at least one field
+should be specified. The field name following a parameter name or
+expression is optional and can be omitted along with the
+delimiter~{\tt\textasciitilde}, in which case the name of corresponding
+model object is used as the field name;
+
+\noindent
+{\it par} is a symbolic name of a model parameter;
+
+\noindent
+{\it expr} is a numeric or symbolic expression.
+
+\para{Examples}
+
+\begin{verbatim}
+table data IN "CSV" "data.csv": S <- [FROM,TO], d~DISTANCE,
+   c~COST;
+table result{(f,t) in S} OUT "CSV" "result.csv": f~FROM, t~TO,
+   x[f,t]~FLOW;
+\end{verbatim}
+
+The table statement allows reading data from a table into model
+objects such as sets and (non-scalar) parameters as well as writing
+data from the model to a table.
+
+\newpage
+
+\subsection{Table structure}
+
+A {\it data table} is an (unordered) set of {\it records}, where each
+record consists of the same number of {\it fields}, and each field is
+provided with a unique symbolic name called the {\it field name}. For
+example:
+
+\bigskip
+
+\begin{tabular}{@{\hspace*{42mm}}c@{\hspace*{11mm}}c@{\hspace*{10mm}}c
+@{\hspace*{9mm}}c}
+First&Second&&Last\\
+field&field&.\ \ .\ \ .&field\\
+$\downarrow$&$\downarrow$&&$\downarrow$\\
+\end{tabular}
+
+\begin{tabular}{ll@{}}
+Table header&$\rightarrow$\\
+First record&$\rightarrow$\\
+Second record&$\rightarrow$\\
+\\
+\hfil .\ \ .\ \ .\\
+\\
+Last record&$\rightarrow$\\
+\end{tabular}
+\begin{tabular}{|l|l|c|c|}
+\hline
+{\tt FROM}&{\tt TO}&{\tt DISTANCE}&{\tt COST}\\
+\hline
+{\tt Seattle}  &{\tt New-York}&{\tt 2.5}&{\tt 0.12}\\
+{\tt Seattle}  &{\tt Chicago} &{\tt 1.7}&{\tt 0.08}\\
+{\tt Seattle}  &{\tt Topeka}  &{\tt 1.8}&{\tt 0.09}\\
+{\tt San-Diego}&{\tt New-York}&{\tt 2.5}&{\tt 0.15}\\
+{\tt San-Diego}&{\tt Chicago} &{\tt 1.8}&{\tt 0.10}\\
+{\tt San-Diego}&{\tt Topeka}  &{\tt 1.4}&{\tt 0.07}\\
+\hline
+\end{tabular}
+
+\subsection{Reading data from input table}
+
+The input table statement causes reading data from the specified table
+record by record.
+
+Once a next record has been read, numeric or symbolic values of fields,
+whose names are enclosed in square brackets in the table statement, are
+gathered into $n$-tuple, and if the control set is specified in the
+table statement, this $n$-tuple is added to it. Besides, a numeric or
+symbolic value of each field associated with a model parameter is
+assigned to the parameter member identified by subscripts, which are
+components of the $n$-tuple just read.
+
+For example, the following input table statement:
+
+\noindent\hfil
+\verb|table data IN "...": S <- [FROM,TO], d~DISTANCE, c~COST;|
+
+\noindent
+causes reading values of four fields named {\tt FROM}, {\tt TO},
+{\tt DISTANCE}, and {\tt COST} from each record of the specified table.
+Values of fields {\tt FROM} and {\tt TO} give a pair $(f,t)$, which is
+added to the control set {\tt S}. The value of field {\tt DISTANCE} is
+assigned to parameter member ${\tt d}[f,t]$, and the value of field
+{\tt COST} is assigned to parameter member ${\tt c}[f,t]$.
+
+Note that the input table may contain extra fields whose names are not
+specified in the table statement, in which case values of these fields
+on reading the table are ignored.
+
+\subsection{Writing data to output table}
+
+The output table statement causes writing data to the specified table.
+Note that some drivers (namely, CSV and xBASE) destroy the output table
+before writing data, i.e. delete all its existing records.
+
+Each $n$-tuple in the specified domain set generates one record written
+to the output table. Values of fields are numeric or symbolic values of
+corresponding expressions specified in the table statement. These
+expressions are evaluated for each $n$-tuple in the domain set and,
+thus, may include dummy indices introduced in the corresponding indexing
+expression.
+
+For example, the following output table statement:
+
+\noindent\hfil
+\verb|table result{(f,t) in S} OUT "...": f~FROM, t~TO, x[f,t]~FLOW;|
+
+\noindent
+causes writing records, by one record for each pair $(f,t)$ in set
+{\tt S}, to the output table, where each record consists of three
+fields named {\tt FROM}, {\tt TO}, and {\tt FLOW}. The values written
+to fields {\tt FROM} and {\tt TO} are current values of dummy indices
+{\tt f} and {\tt t}, and the value written to field {\tt FLOW} is
+a value of member ${\tt x}[f,t]$ of corresponding subscripted parameter
+or variable.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Model data}
+
+{\it Model data} include elemental sets, which are ``values'' of model
+sets, and numeric and symbolic values of model parameters.
+
+In MathProg there are two different ways to saturate model sets and
+parameters with data. One way is simply providing necessary data using
+the assign attribute. However, in many cases it is more practical to
+separate the model itself and particular data needed for the model. For
+the latter reason in MathProg there is another way, when the model
+description is divided into two parts: model section and data section.
+
+A {\it model section} is a main part of the model description that
+contains declarations of all model objects and is common for all
+problems based on that model.
+
+A {\it data section} is an optional part of the model description that
+contains model data specific for a particular problem.
+
+In MathProg model and data sections can be placed either in one text
+file or in two separate text files.
+
+1. If both model and data sections are placed in one file, the file is
+composed as follows:
+
+\bigskip
+
+\noindent\hfil
+\framebox{\begin{tabular}{l}
+{\it statement}{\tt;}\\
+{\it statement}{\tt;}\\
+\hfil.\ \ .\ \ .\\
+{\it statement}{\tt;}\\
+{\tt data;}\\
+{\it data block}{\tt;}\\
+{\it data block}{\tt;}\\
+\hfil.\ \ .\ \ .\\
+{\it data block}{\tt;}\\
+{\tt end;}
+\end{tabular}}
+
+\newpage
+
+2. If the model and data sections are placed in two separate files, the
+files are composed as follows:
+
+\bigskip
+
+\noindent\hfil
+\begin{tabular}{@{}c@{}}
+\framebox{\begin{tabular}{l}
+{\it statement}{\tt;}\\
+{\it statement}{\tt;}\\
+\hfil.\ \ .\ \ .\\
+{\it statement}{\tt;}\\
+{\tt end;}\\
+\end{tabular}}\\
+\\\\Model file\\
+\end{tabular}
+\hspace{32pt}
+\begin{tabular}{@{}c@{}}
+\framebox{\begin{tabular}{l}
+{\tt data;}\\
+{\it data block}{\tt;}\\
+{\it data block}{\tt;}\\
+\hfil.\ \ .\ \ .\\
+{\it data block}{\tt;}\\
+{\tt end;}\\
+\end{tabular}}\\
+\\Data file\\
+\end{tabular}
+
+\bigskip
+
+Note: If the data section is placed in a separate file, the keyword
+{\tt data} is optional and may be omitted along with the semicolon that
+follows it.
+
+\section{Coding data section}
+
+The {\it data section} is a sequence of data blocks in various formats,
+which are discussed in following sections. The order, in which data
+blocks follow in the data section, may be arbitrary, not necessarily
+the same, in which corresponding model objects follow in the model
+section.
+
+The rules of coding the data section are commonly the same as the rules
+of coding the model description (see Section \ref{coding}, page
+\pageref{coding}), i.e. data blocks are composed from basic lexical
+units such as symbolic names, numeric and string literals, keywords,
+delimiters, and comments. However, for the sake of convenience and for
+improving readability there is one deviation from the common rule: if
+a string literal consists of only alphanumeric characters (including
+the underscore character), the signs {\tt+} and {\tt-}, and/or the
+decimal point, it may be coded without bordering by (single or double)
+quotes.
+
+All numeric and symbolic material provided in the data section is coded
+in the form of numbers and symbols, i.e. unlike the model section
+no expressions are allowed in the data section. Nevertheless, the signs
+{\tt+} and {\tt-} can precede numeric literals to allow coding signed
+numeric quantities, in which case there should be no white-space
+characters between the sign and following numeric literal (if there is
+at least one white-space, the sign and following numeric literal are
+recognized as two different lexical units).
+
+\newpage
+
+\section{Set data block}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][44pt]{468pt}{
+\hspace{6pt} {\tt set} {\it name} {\tt,} {\it record} {\tt,} \dots
+{\tt,} {\it record} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt set} {\it name} {\tt[} {\it symbol} {\tt,} \dots
+{\tt,} {\it symbol} {\tt]} {\tt,} {\it record} {\tt,} \dots {\tt,}
+{\it record} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it name} is a symbolic name of the set;
+
+\noindent
+{\it symbol}, \dots, {\it symbol} are subscripts, which specify
+a particular member of the set (if the set is an array, i.e. a set of
+sets);
+
+\noindent
+{\it record}, \dots, {\it record} are data records.
+
+\noindent
+Commae preceding data records may be omitted.
+
+\para{Data records}
+
+\vspace*{-8pt}
+
+\begin{description}
+\item[{\tt :=}]\hspace*{0pt}\\
+is a non-significant data record, which may be used freely to improve
+readability;
+\item[{\tt(} {\it slice} {\tt)}]\hspace*{0pt}\\
+specifies a slice;
+\item[{\it simple-data}]\hspace*{0pt}\\
+specifies set data in the simple format;
+\item[{\tt:} {\it matrix-data}]\hspace*{0pt}\\
+specifies set data in the matrix format;
+\item[{\tt(tr)} {\tt:} {\it matrix-data}]\hspace*{0pt}\\
+specifies set data in the transposed matrix format. (In this case the
+colon following the keyword {\tt(tr)} may be omitted.)
+\end{description}
+
+\vspace*{-8pt}
+
+\para{Examples}
+
+\begin{verbatim}
+set month := Jan Feb Mar Apr May Jun;
+set month "Jan", "Feb", "Mar", "Apr", "May", "Jun";
+set A[3,Mar] := (1,2) (2,3) (4,2) (3,1) (2,2) (4,4) (3,4);
+set A[3,'Mar'] := 1 2 2 3 4 2 3 1 2 2 4 4 3 4;
+set A[3,'Mar'] : 1 2 3 4 :=
+               1 - + - -
+               2 - + + -
+               3 + - - +
+               4 - + - + ;
+set B := (1,2,3) (1,3,2) (2,3,1) (2,1,3) (1,2,2) (1,1,1) (2,1,1);
+set B := (*,*,*) 1 2 3, 1 3 2, 2 3 1, 2 1 3, 1 2 2, 1 1 1, 2 1 1;
+set B := (1,*,2) 3 2 (2,*,1) 3 1 (1,2,3) (2,1,3) (1,1,1);
+set B := (1,*,*) : 1 2 3 :=
+                 1 + - -
+                 2 - + +
+                 3 - + -
+         (2,*,*) : 1 2 3 :=
+                 1 + - +
+                 2 - - -
+                 3 + - - ;
+\end{verbatim}
+
+\noindent(In these examples {\tt month} is a simple set of singlets,
+{\tt A} is a 2-dimensional array of doublets, and {\tt B} is a simple
+set of triplets. Data blocks for the same set are equivalent in the
+sense that they specify the same data in different formats.)
+
+The {\it set data block} is used to specify a complete elemental set,
+which is assigned to a set (if it is a simple set) or one of its
+members (if the set is an array of sets).\footnote{There is another way
+to specify data for a simple set along with data for parameters. This
+feature is discussed in the next section.}
+
+Data blocks can be specified only for non-computable sets, i.e. for
+sets, which have no assign attribute ({\tt:=}) in the corresponding set
+statements.
+
+If the set is a simple set, only its symbolic name should be specified
+in the header of the data block. Otherwise, if the set is a
+$n$-dimensional array, its symbolic name should be provided with a
+complete list of subscripts separated by commae and enclosed in square
+brackets to specify a particular member of the set array. The number of
+subscripts should be the same as the dimension of the set array, where
+each subscript should be a number or symbol.
+
+An elemental set defined in the set data block is coded as a sequence
+of data records described below.\footnote{{\it Data record} is simply a
+technical term. It does not mean that data records have any special
+formatting.}
+
+\subsection{Assign data record}
+
+The {\it assign data record} ({\tt:=}) is a non-signficant element.
+It may be used for improving readability of data blocks.
+
+\subsection{Slice data record}
+
+The {\it slice data record} is a control record, which specifies a
+{\it slice} of the elemental set defined in the data block. It has the
+following syntactic form:
+$$\mbox{{\tt(} $s_1$ {\tt,} $s_2$ {\tt,} \dots {\tt,} $s_n$ {\tt)}}$$
+where $s_1$, $s_2$, \dots, $s_n$ are components of the slice.
+
+Each component of the slice can be a number or symbol or the asterisk
+({\tt*}). The number of components in the slice should be the same as
+the dimension of $n$-tuples in the elemental set to be defined. For
+instance, if the elemental set contains 4-tuples (quadruplets), the
+slice should have four components. The number of asterisks in the slice
+is called the {\it slice dimension}.
+
+The effect of using slices is the following. If a $m$-dimensional slice
+(i.e. a slice having $m$ asterisks) is specified in the data block, all
+subsequent data records should specify tuples of the dimension~$m$.
+Whenever a $m$-tuple is encountered, each asterisk in the slice is
+replaced by corresponding components of the $m$-tuple that gives the
+resultant $n$-tuple, which is included in the elemental set to be
+defined. For example, if the slice $(a,*,1,2,*)$ is in effect, and
+2-tuple $(3,b)$ is encountered in a subsequent data record, the
+resultant 5-tuple included in the elemental set is $(a,3,1,2,b)$.
+
+The slice having no asterisks itself defines a complete $n$-tuple,
+which is included in the elemental set.
+
+Being once specified the slice effects until either a new slice or the
+end of data block is encountered. Note that if no slice is specified in
+the data block, one, components of which are all asterisks, is assumed.
+
+\subsection{Simple data record}
+
+The {\it simple data record} defines one $n$-tuple in a simple format
+and has the following syntactic form:
+$$\mbox{$t_1$ {\tt,} $t_2$ {\tt,} \dots {\tt,} $t_n$}$$
+where $t_1$, $t_2$, \dots, $t_n$ are components of the $n$-tuple. Each
+component can be a number or symbol. Commae between components are
+optional and may be omitted.
+
+\subsection{Matrix data record}
+
+The {\it matrix data record} defines several 2-tuples (doublets) in
+a matrix format and has the following syntactic form:
+$$\begin{array}{cccccc}
+\mbox{{\tt:}}&c_1&c_2&\dots&c_n&\mbox{{\tt:=}}\\
+r_1&a_{11}&a_{12}&\dots&a_{1n}&\\
+r_2&a_{21}&a_{22}&\dots&a_{2n}&\\
+\multicolumn{5}{c}{.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .}&\\
+r_m&a_{m1}&a_{m2}&\dots&a_{mn}&\\
+\end{array}$$
+where $r_1$, $r_2$, \dots, $r_m$ are numbers and/or symbols
+corresponding to rows of the matrix; $c_1$, $c_2$, \dots, $c_n$ are
+numbers and/or symbols corresponding to columns of the matrix, $a_{11}$,
+$a_{12}$, \dots, $a_{mn}$ are matrix elements, which can be either
+{\tt+} or {\tt-}. (In this data record the delimiter {\tt:} preceding
+the column list and the delimiter {\tt:=} following the column list
+cannot be omitted.)
+
+Each element $a_{ij}$ of the matrix data block (where $1\leq i\leq m$,
+$1\leq j\leq n$) corresponds to 2-tuple $(r_i,c_j)$. If $a_{ij}$ is the
+plus sign ({\tt+}), that 2-tuple (or a longer $n$-tuple, if a slice is
+used) is included in the elemental set. Otherwise, if $a_{ij}$ is the
+minus sign ({\tt-}), that 2-tuple is not included in the elemental set.
+
+Since the matrix data record defines 2-tuples, either the elemental set
+should consist of 2-tuples or the slice currently used should be
+2-dimensional.
+
+\newpage
+
+\subsection{Transposed matrix data record}
+
+The {\it transposed matrix data record} has the following syntactic
+form:
+$$\begin{array}{cccccc}
+\mbox{{\tt(tr) :}}&c_1&c_2&\dots&c_n&\mbox{{\tt:=}}\\
+r_1&a_{11}&a_{12}&\dots&a_{1n}&\\
+r_2&a_{21}&a_{22}&\dots&a_{2n}&\\
+\multicolumn{5}{c}{.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .}&\\
+r_m&a_{m1}&a_{m2}&\dots&a_{mn}&\\
+\end{array}$$
+(In this case the delimiter {\tt:} following the keyword {\tt(tr)} is
+optional and may be omitted.)
+
+This data record is completely analogous to the matrix data record (see
+above) with only exception that in this case each element $a_{ij}$ of
+the matrix corresponds to 2-tuple $(c_j,r_i)$ rather than $(r_i,c_j)$.
+
+Being once specified the {\tt(tr)} indicator affects all subsequent
+data records until either a slice or the end of data block is
+encountered.
+
+\section{Parameter data block}
+
+\noindent
+\framebox[468pt][l]{
+\parbox[c][88pt]{468pt}{
+\hspace{6pt} {\tt param} {\it name} {\tt,} {\it record} {\tt,} \dots
+{\tt,} {\it record} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt param} {\it name} {\tt default} {\it value} {\tt,}
+{\it record} {\tt,} \dots {\tt,} {\it record} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt param} {\tt:} {\it tabbing-data} {\tt;}
+
+\medskip
+
+\hspace{6pt} {\tt param} {\tt default} {\it value} {\tt:}
+{\it tabbing-data} {\tt;}
+}}
+
+\medskip
+
+\noindent
+{\it name} is a symbolic name of the parameter;
+
+\noindent
+{\it value} is an optional default value of the parameter;
+
+\noindent
+{\it record}, \dots, {\it record} are data records;
+
+\noindent
+{\it tabbing-data} specifies parameter data in the tabbing format.
+
+\noindent
+Commae preceding data records may be omitted.
+
+\para{Data records}
+
+\vspace*{-8pt}
+
+\begin{description}
+\item[{\tt :=}]\hspace*{0pt}\\
+is a non-significant data record, which may be used freely to improve
+readability;
+\item[{\tt[} {\it slice} {\tt]}]\hspace*{0pt}\\
+specifies a slice;
+\item[{\it plain-data}]\hspace*{0pt}\\
+specifies parameter data in the plain format;
+\item[{\tt:} {\it tabular-data}]\hspace*{0pt}\\
+specifies parameter data in the tabular format;
+\item[{\tt(tr)} {\tt:} {\it tabular-data}]\hspace*{0pt}\\
+specifies set data in the transposed tabular format. (In this case the
+colon following the keyword {\tt(tr)} may be omitted.)
+\end{description}
+
+\vspace*{-8pt}
+
+\para{Examples}
+
+\begin{verbatim}
+param T := 4;
+param month := 1 Jan 2 Feb 3 Mar 4 Apr 5 May;
+param month := [1] 'Jan', [2] 'Feb', [3] 'Mar', [4] 'Apr', [5] 'May';
+param init_stock := iron 7.32 nickel 35.8;
+param init_stock [*] iron 7.32, nickel 35.8;
+param cost [iron] .025 [nickel] .03;
+param value := iron -.1, nickel .02;
+param       : init_stock  cost  value :=
+      iron       7.32     .025   -.1
+      nickel    35.8      .03     .02 ;
+param : raw : init stock  cost  value :=
+        iron     7.32     .025   -.1
+        nickel  35.8      .03     .02 ;
+param demand default 0 (tr)
+       :  FRA  DET  LAN  WIN  STL  FRE  LAF :=
+   bands  300   .   100   75   .   225  250
+   coils  500  750  400  250   .   850  500
+   plate  100   .    .    50  200   .   250 ;
+param trans_cost :=
+   [*,*,bands]:  FRA  DET  LAN  WIN  STL  FRE  LAF :=
+         GARY     30   10    8   10   11   71    6
+         CLEV     22    7   10    7   21   82   13
+         PITT     19   11   12   10   25   83   15
+   [*,*,coils]:  FRA  DET  LAN  WIN  STL  FRE  LAF :=
+         GARY     39   14   11   14   16   82    8
+         CLEV     27    9   12    9   26   95   17
+         PITT     24   14   17   13   28   99   20
+   [*,*,plate]:  FRA  DET  LAN  WIN  STL  FRE  LAF :=
+         GARY     41   15   12   16   17   86    8
+         CLEV     29    9   13    9   28   99   18
+         PITT     26   14   17   13   31  104   20 ;
+\end{verbatim}
+
+The {\it parameter data block} is used to specify complete data for a
+parameter (or parameters, if data are specified in the tabbing format).
+
+Data blocks can be specified only for non-computable parameters, i.e.
+for parameters, which have no assign attribute ({\tt:=}) in the
+corresponding parameter statements.
+
+Data defined in the parameter data block are coded as a sequence of
+data records described below. Additionally the data block can be
+provided with the optional {\tt default} attribute, which specifies a
+default numeric or symbolic value of the parameter (parameters). This
+default value is assigned to the parameter or its members when
+no appropriate value is defined in the parameter data block. The
+{\tt default} attribute cannot be used, if it is already specified in
+the corresponding parameter statement.
+
+\subsection{Assign data record}
+
+The {\it assign data record} ({\tt:=}) is a non-signficant element.
+It may be used for improving readability of data blocks.
+
+\subsection{Slice data record}
+
+The {\it slice data record} is a control record, which specifies a
+{\it slice} of the parameter array. It has the following syntactic
+form:
+$$\mbox{{\tt[} $s_1$ {\tt,} $s_2$ {\tt,} \dots {\tt,} $s_n$ {\tt]}}$$
+where $s_1$, $s_2$, \dots, $s_n$ are components of the slice.
+
+Each component of the slice can be a number or symbol or the asterisk
+({\tt*}). The number of components in the slice should be the same as
+the dimension of the parameter. For instance, if the parameter is a
+4-dimensional array, the slice should have four components. The number
+of asterisks in the slice is called the {\it slice dimension}.
+
+The effect of using slices is the following. If a $m$-dimensional slice
+(i.e. a slice having $m$ asterisks) is specified in the data block, all
+subsequent data records should specify subscripts of the parameter
+members as if the parameter were $m$-dimensional, not $n$-dimensional.
+
+Whenever $m$ subscripts are encountered, each asterisk in the slice is
+replaced by corresponding subscript that gives $n$ subscripts, which
+define the actual parameter member. For example, if the slice
+$[a,*,1,2,*]$ is in effect, and subscripts 3 and $b$ are encountered in
+a subsequent data record, the complete subscript list used to choose a
+parameter member is $[a,3,1,2,b]$.
+
+It is allowed to specify a slice having no asterisks. Such slice itself
+defines a complete subscript list, in which case the next data record
+should define only a single value of corresponding parameter member.
+
+Being once specified the slice effects until either a new slice or the
+end of data block is encountered. Note that if no slice is specified in
+the data block, one, components of which are all asterisks, is assumed.
+
+\subsection{Plain data record}
+
+The {\it plain data record} defines a subscript list and a single value
+in the plain format. This record has the following syntactic form:
+$$\mbox{$t_1$ {\tt,} $t_2$ {\tt,} \dots {\tt,} $t_n$ {\tt,} $v$}$$
+where $t_1$, $t_2$, \dots, $t_n$ are subscripts, and $v$ is a value.
+Each subscript as well as the value can be a number or symbol. Commae
+following subscripts are optional and may be omitted.
+
+In case of 0-dimensional parameter or slice the plain data record has
+no subscripts and consists of a single value only.
+
+\subsection{Tabular data record}
+
+The {\it tabular data record} defines several values, where each value
+is provided with two subscripts. This record has the following
+syntactic form:
+$$\begin{array}{cccccc}
+\mbox{{\tt:}}&c_1&c_2&\dots&c_n&\mbox{{\tt:=}}\\
+r_1&a_{11}&a_{12}&\dots&a_{1n}&\\
+r_2&a_{21}&a_{22}&\dots&a_{2n}&\\
+\multicolumn{5}{c}{.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .}&\\
+r_m&a_{m1}&a_{m2}&\dots&a_{mn}&\\
+\end{array}$$
+where $r_1$, $r_2$, \dots, $r_m$ are numbers and/or symbols
+corresponding to rows of the table; $c_1$, $c_2$, \dots, $c_n$ are
+numbers and/or symbols corresponding to columns of the table, $a_{11}$,
+$a_{12}$, \dots, $a_{mn}$ are table elements. Each element can be a
+number or symbol or the single decimal point ({\tt.}). (In this data
+record the delimiter {\tt:} preceding the column list and the delimiter
+{\tt:=} following the column list cannot be omitted.)
+
+Each element $a_{ij}$ of the tabular data block ($1\leq i\leq m$,
+$1\leq j\leq n$) defines two subscripts, where the first subscript is
+$r_i$, and the second one is $c_j$. These subscripts are used in
+conjunction with the current slice to form the complete subscript list
+that identifies a particular member of the parameter array. If $a_{ij}$
+is a number or symbol, this value is assigned to the parameter member.
+However, if $a_{ij}$ is the single decimal point, the member is
+assigned a default value specified either in the parameter data block
+or in the parameter statement, or, if no default value is specified,
+the member remains undefined.
+
+Since the tabular data record provides two subscripts for each value,
+either the parameter or the slice currently used should be
+2-dimensional.
+
+\subsection{Transposed tabular data record}
+
+The {\it transposed tabular data record} has the following syntactic
+form:
+$$\begin{array}{cccccc}
+\mbox{{\tt(tr) :}}&c_1&c_2&\dots&c_n&\mbox{{\tt:=}}\\
+r_1&a_{11}&a_{12}&\dots&a_{1n}&\\
+r_2&a_{21}&a_{22}&\dots&a_{2n}&\\
+\multicolumn{5}{c}{.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .}&\\
+r_m&a_{m1}&a_{m2}&\dots&a_{mn}&\\
+\end{array}$$
+(In this case the delimiter {\tt:} following the keyword {\tt(tr)} is
+optional and may be omitted.)
+
+This data record is completely analogous to the tabular data record
+(see above) with only exception that the first subscript defined by
+element $a_{ij}$ is $c_j$ while the second one is $r_i$.
+
+Being once specified the {\tt(tr)} indicator affects all subsequent
+data records until either a slice or the end of data block is
+encountered.
+
+\newpage
+
+\subsection{Tabbing data format}
+
+The parameter data block in the {\it tabbing format} has the following
+syntactic form:
+$$
+\begin{array}{*{8}{l}}
+\multicolumn{4}{l}
+{{\tt param}\ {\tt default}\ value\ {\tt :}\ s\ {\tt :}}&
+p_1\ \ \verb|,|&p_2\ \ \verb|,|&\dots\ \verb|,|&p_r\ \ \verb|:=|\\
+r_{11}\ \verb|,|& r_{12}\ \verb|,|& \dots\ \verb|,|& r_{1n}\ \verb|,|&
+a_{11}\ \verb|,|& a_{12}\ \verb|,|& \dots\ \verb|,|& a_{1r}\ \verb|,|\\
+r_{21}\ \verb|,|& r_{22}\ \verb|,|& \dots\ \verb|,|& r_{2n}\ \verb|,|&
+a_{21}\ \verb|,|& a_{22}\ \verb|,|& \dots\ \verb|,|& a_{2r}\ \verb|,|\\
+\dots & \dots & \dots & \dots & \dots & \dots & \dots & \dots \\
+r_{m1}\ \verb|,|& r_{m2}\ \verb|,|& \dots\ \verb|,|& r_{mn}\ \verb|,|&
+a_{m1}\ \verb|,|& a_{m2}\ \verb|,|& \dots\ \verb|,|& a_{mr}\ \verb|;|\\
+\end{array}
+$$
+
+1. The keyword {\tt default} may be omitted along with a value
+following it.
+
+2. Symbolic name $s$ may be omitted along with the colon following it.
+
+3. All commae are optional and may be omitted.
+
+The data block in the tabbing format shown above is exactly equivalent
+to the following data blocks:
+
+\verb|set| $s$\ \verb|:=|\ $
+\verb|(|r_{11}\verb|,|r_{12}\verb|,|\dots\verb|,|r_{1n}\verb|) |
+\verb|(|r_{21}\verb|,|r_{22}\verb|,|\dots\verb|,|r_{2n}\verb|) |
+\dots
+\verb| (|r_{m1}\verb|,|r_{m2}\verb|,|\dots\verb|,|r_{mn}\verb|);|$
+
+\verb|param| $p_1$\ \verb|default|\ $value$\ \verb|:=|
+
+$\verb|   |
+\verb|[|r_{11}\verb|,|r_{12}\verb|,|\dots\verb|,|r_{1n}\verb|] |a_{11}
+\verb| [|r_{21}\verb|,|r_{22}\verb|,|\dots\verb|,|r_{2n}\verb|] |a_{21}
+\verb| |\dots
+\verb| [|r_{m1}\verb|,|r_{m2}\verb|,|\dots\verb|,|r_{mn}\verb|] |a_{m1}
+\verb|;|
+$
+
+\verb|param| $p_2$\ \verb|default|\ $value$\ \verb|:=|
+
+$\verb|   |
+\verb|[|r_{11}\verb|,|r_{12}\verb|,|\dots\verb|,|r_{1n}\verb|] |a_{12}
+\verb| [|r_{21}\verb|,|r_{22}\verb|,|\dots\verb|,|r_{2n}\verb|] |a_{22}
+\verb| |\dots
+\verb| [|r_{m1}\verb|,|r_{m2}\verb|,|\dots\verb|,|r_{mn}\verb|] |a_{m2}
+\verb|;|
+$
+
+\verb|   |.\ \ \ .\ \ \ .\ \ \ .\ \ \ .\ \ \ .\ \ \ .\ \ \ .\ \ \ .
+
+\verb|param| $p_r$\ \verb|default|\ $value$\ \verb|:=|
+
+$\verb|   |
+\verb|[|r_{11}\verb|,|r_{12}\verb|,|\dots\verb|,|r_{1n}\verb|] |a_{1r}
+\verb| [|r_{21}\verb|,|r_{22}\verb|,|\dots\verb|,|r_{2n}\verb|] |a_{2r}
+\verb| |\dots
+\verb| [|r_{m1}\verb|,|r_{m2}\verb|,|\dots\verb|,|r_{mn}\verb|] |a_{mr}
+\verb|;|
+$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\chapter{Using suffixes}
+
+\vspace*{-12pt}
+
+Suffixes can be used to retrieve additional values associated with
+model variables, constraints, and objectives.
+
+A {\it suffix} consists of a period ({\tt.}) followed by a non-reserved
+keyword. For example, if {\tt x} is a two-dimensional variable,
+{\tt x[i,j].lb} is a numeric value equal to the lower bound of
+elemental variable {\tt x[i,j]}, which (value) can be used everywhere
+in expressions like a numeric parameter.
+
+For model variables suffixes have the following meaning:
+
+\begin{tabular}{@{}ll@{}}
+{\tt.lb}&lower bound\\
+{\tt.ub}&upper bound\\
+{\tt.status}&status in the solution:\\
+&0 --- undefined\\
+&1 --- basic\\
+&2 --- non-basic on lower bound\\
+&3 --- non-basic on upper bound\\
+&4 --- non-basic free (unbounded) variable\\
+&5 --- non-basic fixed variable\\
+{\tt.val}&primal value in the solution\\
+{\tt.dual}&dual value (reduced cost) in the solution\\
+\end{tabular}
+
+For model constraints and objectives suffixes have the following
+meaning:
+
+\begin{tabular}{@{}ll@{}}
+{\tt.lb}&lower bound of the linear form\\
+{\tt.ub}&upper bound of the linear form\\
+{\tt.status}&status in the solution:\\
+&0 --- undefined\\
+&1 --- non-active\\
+&2 --- active on lower bound\\
+&3 --- active on upper bound\\
+&4 --- active free (unbounded) row\\
+&5 --- active equality constraint\\
+{\tt.val}&primal value of the linear form in the solution\\
+{\tt.dual}&dual value (reduced cost) of the linear form in the
+solution\\
+\end{tabular}
+
+Note that suffixes {\tt.status}, {\tt.val}, and {\tt.dual} can be used
+only below the solve statement.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Date and time functions}
+
+\noindent\hfil
+\begin{tabular}{c}
+by Andrew Makhorin \verb|<mao@gnu.org>|\\
+and Heinrich Schuchardt \verb|<heinrich.schuchardt@gmx.de>|\\
+\end{tabular}
+
+\section{Obtaining current calendar time}
+\label{gmtime}
+
+To obtain the current calendar time in MathProg there exists the
+function {\tt gmtime}. It has no arguments and returns the number of
+seconds elapsed since 00:00:00 on January 1, 1970, Coordinated
+Universal Time (UTC). For example:
+
+\begin{verbatim}
+      param utc := gmtime();
+\end{verbatim}
+
+MathProg has no function to convert UTC time returned by the function
+{\tt gmtime} to {\it local} calendar times. Thus, if you need to
+determine the current local calendar time, you have to add to the UTC
+time returned the time offset from UTC expressed in seconds. For
+example, the time in Berlin during the winter is one hour ahead of UTC
+that corresponds to the time offset +1~hour~= +3600~secs, so the
+current winter calendar time in Berlin may be determined as follows:
+
+\begin{verbatim}
+      param now := gmtime() + 3600;
+\end{verbatim}
+
+\noindent Similarly, the summer time in Chicago (Central Daylight Time)
+is five hours behind UTC, so the corresponding current local calendar
+time may be determined as follows:
+
+\begin{verbatim}
+      param now := gmtime() - 5 * 3600;
+\end{verbatim}
+
+Note that the value returned by {\tt gmtime} is volatile, i.e. being
+called several times this function may return different values.
+
+\section{Converting character string to calendar time}
+\label{str2time}
+
+The function {\tt str2time(}{\it s}{\tt,} {\it f}{\tt)} converts a
+character string (timestamp) specified by its first argument {\it s},
+which should be a symbolic expression, to the calendar time suitable
+for arithmetic calculations. The conversion is controlled by the
+specified format string {\it f} (the second argument), which also
+should be a symbolic expression.
+
+\newpage
+
+The result of conversion returned by {\tt str2time} has the same
+meaning as values returned by the function {\tt gmtime} (see Subsection
+\ref{gmtime}, page \pageref{gmtime}). Note that {\tt str2time} does
+{\tt not} correct the calendar time returned for the local timezone,
+i.e. being applied to 00:00:00 on January 1, 1970 it always returns 0.
+
+For example, the model statements:
+
+\begin{verbatim}
+      param s, symbolic, := "07/14/98 13:47";
+      param t := str2time(s, "%m/%d/%y %H:%M");
+      display t;
+\end{verbatim}
+
+\noindent produce the following printout:
+
+\begin{verbatim}
+      t = 900424020
+\end{verbatim}
+
+\noindent where the calendar time printed corresponds to 13:47:00 on
+July 14, 1998.
+
+The format string passed to the function {\tt str2time} consists of
+conversion specifiers and ordinary characters. Each conversion
+specifier begins with a percent ({\tt\%}) character followed by a
+letter.
+
+The following conversion specifiers may be used in the format string:
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%b}&The abbreviated month name (case insensitive). At least three
+first letters of the month name should appear in the input string.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%d}&The day of the month as a decimal number (range 1 to 31).
+Leading zero is permitted, but not required.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%h}&The same as {\tt\%b}.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%H}&The hour as a decimal number, using a 24-hour clock (range 0
+to 23). Leading zero is permitted, but not required.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%m}&The month as a decimal number (range 1 to 12). Leading zero is
+permitted, but not required.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%M}&The minute as a decimal number (range 0 to 59). Leading zero
+is permitted, but not required.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%S}&The second as a decimal number (range 0 to 60). Leading zero
+is permitted, but not required.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%y}&The year without a century as a decimal number (range 0 to 99).
+Leading zero is permitted, but not required. Input values in the range
+0 to 68 are considered as the years 2000 to 2068 while the values 69 to
+99 as the years 1969 to 1999.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%z}&The offset from GMT in ISO 8601 format.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%\%}&A literal {\tt\%} character.\\
+\end{tabular}
+
+All other (ordinary) characters in the format string should have a
+matching character in the input string to be converted. Exceptions are
+spaces in the input string which can match zero or more space
+characters in the format string.
+
+\newpage
+
+If some date and/or time component(s) are missing in the format and,
+therefore, in the input string, the function {\tt str2time} uses their
+default values corresponding to 00:00:00 on January 1, 1970, that is,
+the default value of the year is 1970, the default value of the month
+is January, etc.
+
+The function {\tt str2time} is applicable to all calendar times in the
+range 00:00:00 on January 1, 0001 to 23:59:59 on December 31, 4000 of
+the Gregorian calendar.
+
+\section{Converting calendar time to character string}
+\label{time2str}
+
+The function {\tt time2str(}{\it t}{\tt,} {\it f}{\tt)} converts the
+calendar time specified by its first argument {\it t}, which should be
+a numeric expression, to a character string (symbolic value). The
+conversion is controlled by the specified format string {\it f} (the
+second argument), which should be a symbolic expression.
+
+The calendar time passed to {\tt time2str} has the same meaning as
+values returned by the function {\tt gmtime} (see Subsection
+\ref{gmtime}, page \pageref{gmtime}). Note that {\tt time2str} does
+{\it not} correct the specified calendar time for the local timezone,
+i.e. the calendar time 0 always corresponds to 00:00:00 on January 1,
+1970.
+
+For example, the model statements:
+
+\begin{verbatim}
+      param s, symbolic, := time2str(gmtime(), "%FT%TZ");
+      display s;
+\end{verbatim}
+
+\noindent may produce the following printout:
+
+\begin{verbatim}
+      s = '2008-12-04T00:23:45Z'
+\end{verbatim}
+
+\noindent which is a timestamp in the ISO format.
+
+The format string passed to the function {\tt time2str} consists of
+conversion specifiers and ordinary characters. Each conversion
+specifier begins with a percent ({\tt\%}) character followed by a
+letter.
+
+The following conversion specifiers may be used in the format string:
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%a}&The abbreviated (2-character) weekday name.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%A}&The full weekday name.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%b}&The abbreviated (3-character) month name.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%B}&The full month name.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%C}&The century of the year, that is the greatest integer not
+greater than the year divided by~100.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%d}&The day of the month as a decimal number (range 01 to 31).\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%D}&The date using the format \verb|%m/%d/%y|.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%e}&The day of the month like with \verb|%d|, but padded with
+blank rather than zero.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%F}&The date using the format \verb|%Y-%m-%d|.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%g}&The year corresponding to the ISO week number, but without the
+century (range 00 to~99). This has the same format and value as
+\verb|%y|, except that if the ISO week number (see \verb|%V|) belongs
+to the previous or next year, that year is used instead.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%G}&The year corresponding to the ISO week number. This has the
+same format and value as \verb|%Y|, except that if the ISO week number
+(see \verb|%V|) belongs to the previous or next year, that year is used
+instead.
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%h}&The same as \verb|%b|.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%H}&The hour as a decimal number, using a 24-hour clock (range 00
+to 23).\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%I}&The hour as a decimal number, using a 12-hour clock (range 01
+to 12).\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%j}&The day of the year as a decimal number (range 001 to 366).\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%k}&The hour as a decimal number, using a 24-hour clock like
+\verb|%H|, but padded with blank rather than zero.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%l}&The hour as a decimal number, using a 12-hour clock like
+\verb|%I|, but padded with blank rather than zero.
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%m}&The month as a decimal number (range 01 to 12).\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%M}&The minute as a decimal number (range 00 to 59).\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%p}&Either {\tt AM} or {\tt PM}, according to the given time value.
+Midnight is treated as {\tt AM} and noon as {\tt PM}.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%P}&Either {\tt am} or {\tt pm}, according to the given time value.
+Midnight is treated as {\tt am} and noon as {\tt pm}.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%R}&The hour and minute in decimal numbers using the format
+\verb|%H:%M|.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%S}&The second as a decimal number (range 00 to 59).\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%T}&The time of day in decimal numbers using the format
+\verb|%H:%M:%S|.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%u}&The day of the week as a decimal number (range 1 to 7), Monday
+being 1.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%U}&The week number of the current year as a decimal number (range
+00 to 53), starting with the first Sunday as the first day of the first
+week. Days preceding the first Sunday in the year are considered to be
+in week 00.
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%V}&The ISO week number as a decimal number (range 01 to 53). ISO
+weeks start with Monday and end with Sunday. Week 01 of a year is the
+first week which has the majority of its days in that year; this is
+equivalent to the week containing January 4. Week 01 of a year can
+contain days from the previous year. The week before week 01 of a year
+is the last week (52 or 53) of the previous year even if it contains
+days from the new year. In other word, if 1 January is Monday, Tuesday,
+Wednesday or Thursday, it is in week 01; if 1 January is Friday,
+Saturday or Sunday, it is in week 52 or 53 of the previous year.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%w}&The day of the week as a decimal number (range 0 to 6), Sunday
+being 0.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%W}&The week number of the current year as a decimal number (range
+00 to 53), starting with the first Monday as the first day of the first
+week. Days preceding the first Monday in the year are considered to be
+in week 00.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%y}&The year without a century as a decimal number (range 00 to
+99), that is the year modulo~100.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%Y}&The year as a decimal number, using the Gregorian calendar.\\
+\end{tabular}
+
+\begin{tabular}{@{}p{20pt}p{421.5pt}@{}}
+{\tt\%\%}&A literal \verb|%| character.\\
+\end{tabular}
+
+All other (ordinary) characters in the format string are simply copied
+to the resultant string.
+
+The first argument (calendar time) passed to the function {\tt time2str}
+should be in the range from $-62135596800$ to $+64092211199$ that
+corresponds to the period from 00:00:00 on January 1, 0001 to 23:59:59
+on December 31, 4000 of the Gregorian calendar.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Table drivers}
+\label{drivers}
+
+\noindent\hfil
+\begin{tabular}{c}
+by Andrew Makhorin \verb|<mao@gnu.org>|\\
+and Heinrich Schuchardt \verb|<heinrich.schuchardt@gmx.de>|\\
+\end{tabular}
+
+\bigskip\bigskip
+
+The {\it table driver} is a program module which provides transmitting
+data between MathProg model objects and data tables.
+
+Currently the GLPK package has four table drivers:
+
+\vspace*{-8pt}
+
+\begin{itemize}
+\item built-in CSV table driver;
+\item built-in xBASE table driver;
+\item ODBC table driver;
+\item MySQL table driver.
+\end{itemize}
+
+\vspace*{-8pt}
+
+\section{CSV table driver}
+
+The CSV table driver assumes that the data table is represented in the
+form of a plain text file in the CSV (comma-separated values) file
+format as described below.
+
+To choose the CSV table driver its name in the table statement should
+be specified as \verb|"CSV"|, and the only argument should specify the
+name of a plain text file containing the table. For example:
+
+\begin{verbatim}
+      table data IN "CSV" "data.csv": ... ;
+\end{verbatim}
+
+The filename suffix may be arbitrary, however, it is recommended to use
+the suffix `\verb|.csv|'.
+
+On reading input tables the CSV table driver provides an implicit field
+named \verb|RECNO|, which contains the current record number. This
+field can be specified in the input table statement as if there were
+the actual field named \verb|RECNO| in the CSV file. For example:
+
+\begin{verbatim}
+      table list IN "CSV" "list.csv": num <- [RECNO], ... ;
+\end{verbatim}
+
+\newpage
+
+\subsection*{CSV format\footnote{This material is based on the RFC
+document 4180.}}
+
+The CSV (comma-separated values) format is a plain text file format
+defined as follows.
+
+1. Each record is located on a separate line, delimited by a line
+break. For example:
+
+\begin{verbatim}
+      aaa,bbb,ccc\n
+      xxx,yyy,zzz\n
+\end{verbatim}
+
+\noindent
+where \verb|\n| means the control character \verb|LF| ({\tt 0x0A}).
+
+2. The last record in the file may or may not have an ending line
+break. For example:
+
+\begin{verbatim}
+      aaa,bbb,ccc\n
+      xxx,yyy,zzz
+\end{verbatim}
+
+3. There should be a header line appearing as the first line of the
+file in the same format as normal record lines. This header should
+contain names corresponding to the fields in the file. The number of
+field names in the header line should be the same as the number of
+fields in the records of the file. For example:
+
+\begin{verbatim}
+      name1,name2,name3\n
+      aaa,bbb,ccc\n
+      xxx,yyy,zzz\n
+\end{verbatim}
+
+4. Within the header and each record there may be one or more fields
+separated by commas. Each line should contain the same number of fields
+throughout the file. Spaces are considered as part of a field and
+therefore not ignored. The last field in the record should not be
+followed by a comma. For example:
+
+\begin{verbatim}
+      aaa,bbb,ccc\n
+\end{verbatim}
+
+5. Fields may or may not be enclosed in double quotes. For example:
+
+\begin{verbatim}
+      "aaa","bbb","ccc"\n
+      zzz,yyy,xxx\n
+\end{verbatim}
+
+6. If a field is enclosed in double quotes, each double quote which is
+part of the field should be coded twice. For example:
+
+\begin{verbatim}
+      "aaa","b""bb","ccc"\n
+\end{verbatim}
+
+\para{Example}
+
+\begin{verbatim}
+FROM,TO,DISTANCE,COST
+Seattle,New-York,2.5,0.12
+Seattle,Chicago,1.7,0.08
+Seattle,Topeka,1.8,0.09
+San-Diego,New-York,2.5,0.15
+San-Diego,Chicago,1.8,0.10
+San-Diego,Topeka,1.4,0.07
+\end{verbatim}
+
+\newpage
+
+\section{xBASE table driver}
+
+The xBASE table driver assumes that the data table is stored in the
+.dbf file format.
+
+To choose the xBASE table driver its name in the table statement should
+be specified as \verb|"xBASE"|, and the first argument should specify
+the name of a .dbf file containing the table. For the output table there
+should be the second argument defining the table format in the form
+\verb|"FF...F"|, where \verb|F| is either {\tt C({\it n})},
+which specifies a character field of length $n$, or
+{\tt N({\it n}{\rm [},{\it p}{\rm ]})}, which specifies a numeric field
+of length $n$ and precision $p$ (by default $p$ is 0).
+
+The following is a simple example which illustrates creating and
+reading a .dbf file:
+
+\begin{verbatim}
+table tab1{i in 1..10} OUT "xBASE" "foo.dbf"
+   "N(5)N(10,4)C(1)C(10)": 2*i+1 ~ B, Uniform(-20,+20) ~ A,
+   "?" ~ FOO, "[" & i & "]" ~ C;
+set S, dimen 4;
+table tab2 IN "xBASE" "foo.dbf": S <- [B, C, RECNO, A];
+display S;
+end;
+\end{verbatim}
+
+\section{ODBC table driver}
+
+The ODBC table driver allows connecting to SQL databases using an
+implementation of the ODBC interface based on the Call Level Interface
+(CLI).\footnote{The corresponding software standard is defined in
+ISO/IEC 9075-3:2003.}
+
+\para{Debian GNU/Linux.}
+Under Debian GNU/Linux the ODBC table driver uses the iODBC
+package,\footnote{See {\tt<http://www.iodbc.org/>}.} which should be
+installed before building the GLPK package. The installation can be
+effected with the following command:
+
+\begin{verbatim}
+      sudo apt-get install libiodbc2-dev
+\end{verbatim}
+
+Note that on configuring the GLPK package to enable using the iODBC
+library the option `\verb|--enable-odbc|' should be passed to the
+configure script.
+
+The individual databases should be entered for systemwide usage in
+\verb|/etc/odbc.ini| and\linebreak \verb|/etc/odbcinst.ini|. Database
+connections to be used by a single user are specified by files in the
+home directory (\verb|.odbc.ini| and \verb|.odbcinst.ini|).
+
+\para{Microsoft Windows.}
+Under Microsoft Windows the ODBC table driver uses the Microsoft ODBC
+library. To enable this feature the symbol:
+
+\begin{verbatim}
+      #define ODBC_DLNAME "odbc32.dll"
+\end{verbatim}
+
+\noindent
+should be defined in the GLPK configuration file `\verb|config.h|'.
+
+Data sources can be created via the Administrative Tools from the
+Control Panel.
+
+To choose the ODBC table driver its name in the table statement should
+be specified as \verb|'ODBC'| or \verb|'iODBC'|.
+
+\newpage
+
+The argument list is specified as follows.
+
+The first argument is the connection string passed to the ODBC library,
+for example:
+
+\verb|'DSN=glpk;UID=user;PWD=password'|, or
+
+\verb|'DRIVER=MySQL;DATABASE=glpkdb;UID=user;PWD=password'|.
+
+Different parts of the string are separated by semicolons. Each part
+consists of a pair {\it fieldname} and {\it value} separated by the
+equal sign. Allowable fieldnames depend on the ODBC library. Typically
+the following fieldnames are allowed:
+
+\verb|DATABASE | database;
+
+\verb|DRIVER   | ODBC driver;
+
+\verb|DSN      | name of a data source;
+
+\verb|FILEDSN  | name of a file data source;
+
+\verb|PWD      | user password;
+
+\verb|SERVER   | database;
+
+\verb|UID      | user name.
+
+The second argument and all following are considered to be SQL
+statements
+
+SQL statements may be spread over multiple arguments.  If the last
+character of an argument is a semicolon this indicates the end of
+a SQL statement.
+
+The arguments of a SQL statement are concatenated separated by space.
+The eventual trailing semicolon will be removed.
+
+All but the last SQL statement will be executed directly.
+
+For IN-table the last SQL statement can be a SELECT command starting
+with the capitalized letters \verb|'SELECT '|. If the string does not
+start with \verb|'SELECT '| it is considered to be a table name and a
+SELECT statement is automatically generated.
+
+For OUT-table the last SQL statement can contain one or multiple
+question marks. If it contains a question mark it is considered a
+template for the write routine. Otherwise the string is considered a
+table name and an INSERT template is automatically generated.
+
+The writing routine uses the template with the question marks and
+replaces the first question mark by the first output parameter, the
+second question mark by the second output parameter and so forth. Then
+the SQL command is issued.
+
+The following is an example of the output table statement:
+
+\begin{verbatim}
+table ta { l in LOCATIONS } OUT
+   'ODBC'
+   'DSN=glpkdb;UID=glpkuser;PWD=glpkpassword'
+   'DROP TABLE IF EXISTS result;'
+   'CREATE TABLE result ( ID INT, LOC VARCHAR(255), QUAN DOUBLE );'
+   'INSERT INTO result 'VALUES ( 4, ?, ? )' :
+   l ~ LOC, quantity[l] ~ QUAN;
+\end{verbatim}
+
+\newpage
+
+\noindent
+Alternatively it could be written as follows:
+
+\begin{verbatim}
+table ta { l in LOCATIONS } OUT
+   'ODBC'
+   'DSN=glpkdb;UID=glpkuser;PWD=glpkpassword'
+   'DROP TABLE IF EXISTS result;'
+   'CREATE TABLE result ( ID INT, LOC VARCHAR(255), QUAN DOUBLE );'
+   'result' :
+   l ~ LOC, quantity[l] ~ QUAN, 4 ~ ID;
+\end{verbatim}
+
+Using templates with `\verb|?|' supports not only INSERT, but also
+UPDATE, DELETE, etc. For example:
+
+\begin{verbatim}
+table ta { l in LOCATIONS } OUT
+   'ODBC'
+   'DSN=glpkdb;UID=glpkuser;PWD=glpkpassword'
+   'UPDATE result SET DATE = ' & date & ' WHERE ID = 4;'
+   'UPDATE result SET QUAN = ? WHERE LOC = ? AND ID = 4' :
+   quantity[l], l;
+\end{verbatim}
+
+\section{MySQL table driver}
+
+The MySQL table driver allows connecting to MySQL databases.
+
+\para{Debian GNU/Linux.}
+Under Debian GNU/Linux the MySQL table driver uses the MySQL
+package,\footnote{For download development files see
+{\tt<http://dev.mysql.com/downloads/mysql/>}.} which should be
+installed before building the GLPK package. The installation can be
+effected with the following command:
+
+\begin{verbatim}
+      sudo apt-get install libmysqlclient15-dev
+\end{verbatim}
+
+Note that on configuring the GLPK package to enable using the MySQL
+library the option `\verb|--enable-mysql|' should be passed to the
+configure script.
+
+\para{Microsoft Windows.}
+Under Microsoft Windows the MySQL table driver also uses the MySQL
+library. To enable this feature the symbol:
+
+\begin{verbatim}
+      #define MYSQL_DLNAME "libmysql.dll"
+\end{verbatim}
+
+\noindent
+should be defined in the GLPK configuration file `\verb|config.h|'.
+
+To choose the MySQL table driver its name in the table statement should
+be specified as \verb|'MySQL'|.
+
+The argument list is specified as follows.
+
+The first argument specifies how to connect the data base in the DSN
+style, for example:
+
+\verb|'Database=glpk;UID=glpk;PWD=gnu'|.
+
+Different parts of the string are separated by semicolons. Each part
+consists of a pair {\it fieldname} and {\it value} separated by the
+equal sign. The following fieldnames are allowed:
+
+\newpage
+
+\verb|Server   | server running the database (defaulting to localhost);
+
+\verb|Database | name of the database;
+
+\verb|UID      | user name;
+
+\verb|PWD      | user password;
+
+\verb|Port     | port used by the server (defaulting to 3306).
+
+The second argument and all following are considered to be SQL
+statements.
+
+SQL statements may be spread over multiple arguments.  If the last
+character of an argument is a semicolon this indicates the end of
+a SQL statement.
+
+The arguments of a SQL statement are concatenated separated by space.
+The eventual trailing semicolon will be removed.
+
+All but the last SQL statement will be executed directly.
+
+For IN-table the last SQL statement can be a SELECT command starting
+with the capitalized letters \verb|'SELECT '|. If the string does not
+start with \verb|'SELECT '| it is considered to be a table name and a
+SELECT statement is automatically generated.
+
+For OUT-table the last SQL statement can contain one or multiple
+question marks. If it contains a question mark it is considered a
+template for the write routine. Otherwise the string is considered a
+table name and an INSERT template is automatically generated.
+
+The writing routine uses the template with the question marks and
+replaces the first question mark by the first output parameter, the
+second question mark by the second output parameter and so forth. Then
+the SQL command is issued.
+
+The following is an example of the output table statement:
+
+\begin{verbatim}
+table ta { l in LOCATIONS } OUT
+   'MySQL'
+   'Database=glpkdb;UID=glpkuser;PWD=glpkpassword'
+   'DROP TABLE IF EXISTS result;'
+   'CREATE TABLE result ( ID INT, LOC VARCHAR(255), QUAN DOUBLE );'
+   'INSERT INTO result VALUES ( 4, ?, ? )' :
+   l ~ LOC, quantity[l] ~ QUAN;
+\end{verbatim}
+
+\noindent
+Alternatively it could be written as follows:
+
+\begin{verbatim}
+table ta { l in LOCATIONS } OUT
+   'MySQL'
+   'Database=glpkdb;UID=glpkuser;PWD=glpkpassword'
+   'DROP TABLE IF EXISTS result;'
+   'CREATE TABLE result ( ID INT, LOC VARCHAR(255), QUAN DOUBLE );'
+   'result' :
+   l ~ LOC, quantity[l] ~ QUAN, 4 ~ ID;
+\end{verbatim}
+
+\newpage
+
+Using templates with `\verb|?|' supports not only INSERT, but also
+UPDATE, DELETE, etc. For example:
+
+\begin{verbatim}
+table ta { l in LOCATIONS } OUT
+   'MySQL'
+   'Database=glpkdb;UID=glpkuser;PWD=glpkpassword'
+   'UPDATE result SET DATE = ' & date & ' WHERE ID = 4;'
+   'UPDATE result SET QUAN = ? WHERE LOC = ? AND ID = 4' :
+   quantity[l], l;
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Solving models with glpsol}
+
+The GLPK package\footnote{{\tt http://www.gnu.org/software/glpk/}}
+includes the program {\tt glpsol}, a stand-alone LP/MIP solver. This
+program can be launched from the command line or from the shell to
+solve models written in the GNU MathProg modeling language.
+
+To tell the solver that the input file contains a model description you
+need to specify the option \verb|--model| in the command line.
+For example:
+
+\begin{verbatim}
+      glpsol --model foo.mod
+\end{verbatim}
+
+Sometimes it is necessary to use the data section placed in a separate
+file, in which case you may use the following command:
+
+\begin{verbatim}
+      glpsol --model foo.mod --data foo.dat
+\end{verbatim}
+
+\noindent Note that if the model file also contains the data section,
+that section is ignored.
+
+It is also allowed to specify more than one file containing the data
+section, for example:
+
+\begin{verbatim}
+      glpsol --model foo.mod --data foo1.dat --data foo2.dat
+\end{verbatim}
+
+If the model description contains some display and/or printf
+statements, by default the output is sent to the terminal. If you need
+to redirect the output to a file, you may use the following command:
+
+\begin{verbatim}
+      glpsol --model foo.mod --display foo.out
+\end{verbatim}
+
+If you need to look at the problem, which has been generated by the
+model translator, you may use the option \verb|--wlp| as follows:
+
+\begin{verbatim}
+      glpsol --model foo.mod --wlp foo.lp
+\end{verbatim}
+
+\noindent In this case the problem data is written to file
+\verb|foo.lp| in CPLEX LP format suitable for visual analysis.
+
+Sometimes it is needed merely to check the model description not
+solving the generated problem instance. In this case you may specify
+the option \verb|--check|, for example:
+
+\begin{verbatim}
+      glpsol --check --model foo.mod --wlp foo.lp
+\end{verbatim}
+
+\newpage
+
+If you need to write a numeric solution obtained by the solver to
+a file, you may use the following command:
+
+\begin{verbatim}
+      glpsol --model foo.mod --output foo.sol
+\end{verbatim}
+
+\noindent in which case the solution is written to file \verb|foo.sol|
+in a plain text format suitable for visual analysis.
+
+The complete list of the \verb|glpsol| options can be found in the
+GLPK reference manual included in the GLPK distribution.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Example model description}
+
+\section{Model description written in MathProg}
+
+Below here is a complete example of the model description written in
+the GNU MathProg modeling language.
+
+\bigskip
+
+\begin{verbatim}
+# A TRANSPORTATION PROBLEM
+#
+# This problem finds a least cost shipping schedule that meets
+# requirements at markets and supplies at factories.
+#
+#  References:
+#              Dantzig G B, "Linear Programming and Extensions."
+#              Princeton University Press, Princeton, New Jersey, 1963,
+#              Chapter 3-3.
+
+set I;
+/* canning plants */
+
+set J;
+/* markets */
+
+param a{i in I};
+/* capacity of plant i in cases */
+
+param b{j in J};
+/* demand at market j in cases */
+
+param d{i in I, j in J};
+/* distance in thousands of miles */
+
+param f;
+/* freight in dollars per case per thousand miles */
+
+param c{i in I, j in J} := f * d[i,j] / 1000;
+/* transport cost in thousands of dollars per case */
+
+var x{i in I, j in J} >= 0;
+/* shipment quantities in cases */
+
+minimize cost: sum{i in I, j in J} c[i,j] * x[i,j];
+/* total transportation costs in thousands of dollars */
+
+s.t. supply{i in I}: sum{j in J} x[i,j] <= a[i];
+/* observe supply limit at plant i */
+
+s.t. demand{j in J}: sum{i in I} x[i,j] >= b[j];
+/* satisfy demand at market j */
+
+data;
+
+set I := Seattle San-Diego;
+
+set J := New-York Chicago Topeka;
+
+param a := Seattle     350
+           San-Diego   600;
+
+param b := New-York    325
+           Chicago     300
+           Topeka      275;
+
+param d :              New-York   Chicago   Topeka :=
+           Seattle     2.5        1.7       1.8
+           San-Diego   2.5        1.8       1.4  ;
+
+param f := 90;
+
+end;
+\end{verbatim}
+
+\newpage
+
+\section{Generated LP problem instance}
+
+Below here is the result of the translation of the example model
+produced by the solver \verb|glpsol| and written in CPLEX LP format
+with the option \verb|--wlp|.
+
+\medskip
+
+\begin{verbatim}
+\* Problem: transp *\
+
+Minimize
+ cost: + 0.225 x(Seattle,New~York) + 0.153 x(Seattle,Chicago)
+ + 0.162 x(Seattle,Topeka) + 0.225 x(San~Diego,New~York)
+ + 0.162 x(San~Diego,Chicago) + 0.126 x(San~Diego,Topeka)
+
+Subject To
+ supply(Seattle): + x(Seattle,New~York) + x(Seattle,Chicago)
+ + x(Seattle,Topeka) <= 350
+ supply(San~Diego): + x(San~Diego,New~York) + x(San~Diego,Chicago)
+ + x(San~Diego,Topeka) <= 600
+ demand(New~York): + x(Seattle,New~York) + x(San~Diego,New~York) >= 325
+ demand(Chicago): + x(Seattle,Chicago) + x(San~Diego,Chicago) >= 300
+ demand(Topeka): + x(Seattle,Topeka) + x(San~Diego,Topeka) >= 275
+
+End
+\end{verbatim}
+
+\section{Optimal LP solution}
+
+Below here is the optimal solution of the generated LP problem instance
+found by the solver \verb|glpsol| and written in plain text format
+with the option \verb|--output|.
+
+\medskip
+
+\begin{footnotesize}
+\begin{verbatim}
+Problem:    transp
+Rows:       6
+Columns:    6
+Non-zeros:  18
+Status:     OPTIMAL
+Objective:  cost = 153.675 (MINimum)
+
+   No.   Row name   St   Activity     Lower bound   Upper bound    Marginal
+------ ------------ -- ------------- ------------- ------------- -------------
+     1 cost         B        153.675
+     2 supply[Seattle]
+                    NU           350                         350         < eps
+     3 supply[San-Diego]
+                    B            550                         600
+     4 demand[New-York]
+                    NL           325           325                       0.225
+     5 demand[Chicago]
+                    NL           300           300                       0.153
+     6 demand[Topeka]
+                    NL           275           275                       0.126
+
+   No. Column name  St   Activity     Lower bound   Upper bound    Marginal
+------ ------------ -- ------------- ------------- ------------- -------------
+     1 x[Seattle,New-York]
+                    B             50             0
+     2 x[Seattle,Chicago]
+                    B            300             0
+     3 x[Seattle,Topeka]
+                    NL             0             0                       0.036
+     4 x[San-Diego,New-York]
+                    B            275             0
+     5 x[San-Diego,Chicago]
+                    NL             0             0                       0.009
+     6 x[San-Diego,Topeka]
+                    B            275             0
+
+End of output
+\end{verbatim}
+\end{footnotesize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+The authors would like to thank the following people, who kindly read,
+commented, and corrected the draft of this document:
+
+\noindent Juan Carlos Borras \verb|<borras@cs.helsinki.fi>|
+
+\noindent Harley Mackenzie \verb|<hjm@bigpond.com>|
+
+\noindent Robbie Morrison \verb|<robbie@actrix.co.nz>|
+
+\end{document}

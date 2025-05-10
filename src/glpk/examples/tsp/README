@@ -1,0 +1,37 @@
+This subdirectory contains an example application program, TSPSOL,
+which is a stand-alone solver intended to solve the Symmetric Traveling
+Salesman Problem (TSP) with the GLPK integer optimizer.
+
+Please note that this program is only an illustrative example that
+illustrates generating "lazy" constraints during the branch-and-bound
+search. It is *not* a state-of-the-art code, so only small-sized TSP
+instances (perhaps, having up to 150-200 nodes) can be solved with this
+program in a reasonable time. For more details see comments in the
+source code.
+
+To build TSPSOL executable you need to run 'build.sh' script. Note that
+you should have the GLPK library properly installed.
+
+To run the TSPSOL program use the following command:
+
+      tspsol tsp-file
+
+where tsp-file specifies an input text file containing TSP data in
+TSPLIB 95 format.
+
+Detailed description of the input format recognized by TSPSOL is given
+in the report: Gerhard Reinelt, "TSPLIB 95". This report as well as
+TSPLIB, a library of sample TSP instances, are freely available for
+research purposes; see:
+<http://www.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/>.
+
+This subdirectory also includes the following example TSP instances:
+
+dantzig42.tsp  42 cities (Dantzig) [from TSPLIB]
+gr120.tsp      120 cities in Germany (Groetschel) [from TSPLIB]
+moscow.tsp     68 cities in Moscow region (Makhorin)
+sample.tsp     small example from D.Phillips and A.Garcia-Diaz
+ulysses16.tsp  Odyssey of Ulysses (Groetschel/Padberg) [from TSPLIB]
+ulysses22.tsp  Odyssey of Ulysses (Groetschel/Padberg) [from TSPLIB]
+
+Please send comments to the <help-glpk@gnu.org> mailing list.

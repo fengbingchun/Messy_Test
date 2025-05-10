@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   width="64"
+   height="64">
+  <g
+     id="layer1">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       width="64"
+       height="64"
+       x="0"
+       y="0" />
+    <path
+       style="fill:none;stroke:#0055aa;stroke-width:4;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 8,40 0,16 48,0 0,-16"/>
+    <path
+       style="fill:none;stroke:#0055aa;stroke-width:4;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 32,8 0,36"/>
+    <path
+       style="fill:none;stroke:#0055aa;stroke-width:4;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 48,28 -16,16"/>
+    <path
+       style="fill:none;stroke:#0055aa;stroke-width:4;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 16,28 16,16"/>
+  </g>
+</svg>

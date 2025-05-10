@@ -1,0 +1,143 @@
+Solver:   GLPSOL 4.40 
+Computer: Intel Pentium 4, 3.0 GHz
+Platform: Cygwin 1.5.25
+Compiler: GCC 3.4.4 (options used: -O3)
+Test set: MIPLIB 3.0 <http://miplib.zib.de/miplib3/miplib.html>
+
+Problem  Optimal Solution Options Used        Nodes  Iters Time,s Mem,MB
+-------- ---------------- ---------------- -------- ------ ------ ------
+10teams  +9.240000000e+02 --pcost --gomory     6013 349276    207   12.7
+air03    +3.401600000e+05 --pcost                33    414     12   21.0
+air04    +5.613700000e+04 --pcost              1901 109800    396   32.4
+air05    +2.637400000e+04 --pcost              6445 201649    452   45.0
+arki001
+bell3a   +8.784303160e+05 --pcost --gomory     7965  42363     17    6.1
+bell5    +8.966406492e+06 --pcost --gomory     5605  18555      8    1.5
+blend2   +7.598985000e+00 --pcost              7185  24256      7    2.1
+cap6000  -2.451377000e+06 --pcost             19209  40906    569   15.8
+dano3mip 
+danoint
+dcmulti  +1.881820000e+05 --pcost               743   3366      2    1.1
+dsbmip   -3.051981750e+02 --pcost --mir         217  46088     24    4.5
+egout    +5.681007000e+02 --pcost                91    137    < 1    0.3
+enigma   +0.000000000e+00 --pcost             16419  55071      6    3.2
+fast0507
+fiber    +4.059351800e+05 --pcost --mir         407   3108      4    2.4
+fixnet6  +3.983000000e+03 --pcost              1031   3136      2    1.7
+flugpl   +1.201500000e+06 --pcost               397    231    < 1    0.1
+gen      +1.123133627e+05 --pcost               195   3991      1    1.7
+gesa2    +2.577985637e+07 --pcost --mir          59   2723      4    4.1
+gesa2_o  +2.577985637e+07 --pcost --mir          69   2588      5    3.7
+gesa3    +2.799104265e+07 --pcost --mir          93   2774      5    3.7
+gesa3_o  +2.799104265e+07 --pcost --mir         117   3271      6    3.6
+gt2      +2.116600000e+04 --pcost              5613  26115      2    1.2
+harp2
+khb05250 +1.069402260e+08 --pcost              2163  14498      5    2.8
+l152lav  +4.722000000e+03 --pcost              7419  95299     68   12.0
+lseu     +1.120000000e+03 --pcost             10821  31954      5    2.5
+marksh1
+marksh2
+mas74
+mas76
+misc03   +3.360000000e+03 --pcost               957   6742      2    1.1
+misc06   +1.285086074e+04 --pcost                57    941    < 1    2.7
+misc07   +2.810000000e+03 --pcost --mir       66075 579129    424   33.4
+mitre
+mkc
+mod008   +3.070000000e+02 --pcost              8185  24245      8    2.3
+mod010   +6.548000000e+03 --pcost               315   6283      7    5.3
+mod011
+modglob  +2.074050809e+07 --pcost --mir        5197  31985     20    2.8
+noswot
+nw04     +1.686200000e+04 (none)                361   5544    345  138.3
+p0033    +3.089000000e+03 --pcost               305    955    < 1    0.2
+p0201    +7.615000000e+03 --pcost               521   3660      1    0.9
+p0282    +2.584110000e+05 --pcost               623   1204      1    0.8
+p0548    +8.691000000e+03 --pcost              7617  23556      9    2.9
+p2756    +3.124000000e+03 --pcost --mir        3911  15157     57   10.9
+pk1
+pp08a    +7.350000000e+03 --pcost --mir         663   9196      4    1.3
+pp08acut +7.350000000e+03 --pcost --mir       17233 260160    154   21.1
+qiu      -1.328731369e+02 --pcost             80473 1918742  1174   69.2
+qnet1    +1.602969268e+04 --pcost --mir         183  20352     16    3.6
+qnet1_o  +1.602969268e+04 --pcost --mir          75   7645      9    3.3
+rentacar +3.035676098e+07 --pcost                43   1649      3   12.1
+rgn      +8.219999924e+01 --pcost              3325  18700      2    1.2
+rout
+set1ch
+seymour
+stein27  +1.800000000e+01 --pcost              3255  15327      2    1.0
+stein45  +3.000000000e+01 --pcost             52301 389140    139   19.2
+swath
+vpm1     +2.000000000e+01 --pcost --mir           9    836    < 1    0.9
+vpm2     +1.375000000e+01 --pcost --mir       11729 164856     91    9.2
+
+PROBLEM CHARACTERISTICS
+
+Problem    Rows   Cols (   Int    0/1)   Nonz    Best Solution
+-------- ------ ---------------------- ------ --------------------------
+10teams     230   2025 (  1800    all)  12150              924 (opt)
+air03       125  10757 (   all    all) 101785           340160 (opt)
+air04       824   8904 (   all    all)  81869            56138 (opt)
+air05       427   7195 (   all    all)  59316            26402 (not opt)
+arki001    1048   1388 (   538    415)  20439     7580813.0459 (not opt)
+bell3a      124    133 (    71     39)    441        878430.32 (opt)
+bell5        92    104 (    58     30)    340       8966406.49 (opt)
+blend2      274    353 (   264    231)   1409         7.598985 (opt)
+cap6000    2176   6000 (   all    all)  48249         -2451377 (opt)
+dano3mip   3202  13873 (   552    all)  79655         728.1111 (not opt)
+danoint     664    521 (    56    all)   3232            65.67 (opt)
+dcmulti     291    548 (    75    all)   1833      188182.0000 (opt)
+dsbmip     1855   1886 (   192    160)   9768         -305.198 (opt)
+egout        99    141 (    55    all)    392          568.101 (opt)
+enigma       22    100 (   all    all)    298              0.0 (opt)
+fast0507    507  63009 (   all    all) 409439              174 (opt)
+fiber       363   1298 (  1254    all)   2944     405935.18000 (opt)
+fixnet6     479    878 (   378    all)   2550             3983 (opt)
+flugpl       19     18 (    11   none)     64          1201500 (opt)
+gen         781    870 (   150    144)   3174           112313 (opt)
+gesa2      1392   1224 (   408    240)   5064     25779856.372 (opt)
+gesa2_o    1248   1224 (   720    384)   3672     25779856.372 (opt)
+gesa3      1368   1152 (   384    216)   4944     27991042.648 (opt)
+gesa3_o    1224   1152 (   672    336)   3624     27991042.648 (opt)
+gt2          29    188 (   all     24)    376        21166.000 (opt)
+harp2       112   2993 (   all    all)   5840     -73899798.00 (opt)
+khb05250    102   1350 (    24    all)   3973        106940226 (opt)
+l152lav      98   1989 (   all    all)  11911             4750 (not opt)
+lseu         29     89 (   all    all)    394             1120 (opt)
+marksh1       7     62 (    50    all)    324
+marksh2       8     74 (    60    all)    448
+mas74        13    151 (   150    all)   1705       11801.1857 (opt)
+mas76        12    151 (   150    all)   1639       40005.0541 (opt)
+misc03       97    160 (   159    all)   2054             3360 (opt)
+misc06      821   1808 (   112    all)   5860       12850.8607 (opt)
+misc07      213    260 (   259    all)   8620             2810 (not opt)
+mitre      2054  10724 (   all    all)  39704           115155 (opt)
+mkc        3412   5325 (  5323    all)  20621
+mod008        7    319 (   all    all)   1562              307 (opt)
+mod010      147   2655 (   all    all)  13858             6548 (opt)
+mod011     4482  10958 (    96    all)  37425        -54558535 (opt)
+modglob     292    422 (    98    all)   1390         20740508 (opt)
+noswot      183    128 (   100     75)    760              -43 (opt)
+nw04         36  87482 (   all    all) 636666            16862 (opt)
+p0033        17     33 (   all    all)    131             3089 (opt)
+p0201       134    201 (   all    all)   2124             7615 (opt)
+p0282       242    282 (   all    all)   2248           258411 (opt)
+p0548       177    548 (   all    all)   2127             8691 (opt)
+p2756       756   2756 (   all    all)  11103             3124 (opt)
+pk1          45     86 (    55    all)    915               11 (opt)
+pp08a       136    240 (    64    all)    480             7350 (opt)
+pp08acut    246    240 (    64    all)    839             7350 (opt)
+qiu        1193    840 (    48    all)   3432      -132.873137 (opt)
+qnet1       503   1541 (  1417   1288)   4622     16029.692681 (opt)
+qnet1_o     456   1541 (  1417   1288)   4214     16029.692681 (opt)
+rentacar   6804   9557 (    55    all)  42019         30356761 (opt)
+rgn          25    180 (   100    all)    540          82.1999 (opt)
+rout        291    556 (   315    300)   2431          1077.56 (opt)
+set1ch      493    712 (   240    all)   1884          54537.7 (opt)
+seymour    4944   1372 (   all    all)  33549          423 (not opt)
+stein27     119     27 (   all    all)    405               18 (opt)
+stein45     332     45 (   all    all)   1079               30 (opt)
+swath       885   6805 (  6724    all)  34966
+vpm1        235    378 (   168    all)    917               20 (opt)
+vpm2        234    378 (   168    all)    917            13.75 (opt)

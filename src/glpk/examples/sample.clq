@@ -1,0 +1,30 @@
+c sample.clq
+c
+c This is an example of the Maximum Weight Clique
+c Problem in DIMACS clique/coloring format.
+c
+p edge 8 16
+n 1 3
+n 2 4
+n 3 8
+n 5 5
+n 6 2
+n 8 3
+e 1 4
+e 1 5
+e 1 6
+e 1 8
+e 2 3
+e 2 6
+e 2 7
+e 2 8
+e 3 4
+e 3 6
+e 3 7
+e 4 5
+e 4 8
+e 5 7
+e 5 8
+e 6 7
+c
+c eof

@@ -1,0 +1,612 @@
+%* glpk-cli.tex *%
+
+%***********************************************************************
+%  This code is part of GLPK for C#/CLI.
+%
+%  Copyright (C) 2016 Heinrich Schuchardt,
+%  <xypron.glpk@gmx.de>
+%
+%  GLPK for C#/CLI is free software: you can redistribute it and/or 
+%  modify it under the terms of the GNU General Public License as
+%  published by the Free Software Foundation, either version 3 of the
+%  License, or (at your option) any later version.
+%
+%  GLPK for C#/CLI is distributed in the hope that it will be useful, but 
+%  WITHOUT ANY WARRANTY; without even the implied warranty of 
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+%  General Public License for more details.
+%
+%  You should have received a copy of the GNU General Public License
+%  along with GLPK for C#/CLI. If not, see
+%  <http://www.gnu.org/licenses/>.
+%***********************************************************************
+
+\documentclass[a4paper,11pt]{report}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{makeidx}
+%%generate index
+\makeindex
+
+\newcommand{\glpkCliVersion}{1.10.0}
+\newcommand{\glpkVersionMajor}{4}
+\newcommand{\glpkVersionMinor}{65}
+
+\newcommand{\code}{\texttt}
+
+\renewcommand\contentsname{\sf\bfseries Contents}
+\renewcommand\chaptername{\sf\bfseries Chapter}
+\renewcommand\appendixname{\sf\bfseries Appendix}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt} 
+
+\begin{document}
+% Use C# style for listings.
+% For escaping to latex inside listings use "~.".
+\lstset{
+  basicstyle=\ttfamily,
+  showstringspaces=true,
+  commentstyle=\color{blue},
+  language=csh,
+  escapeinside={~}{.}
+}
+
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{1in}
+
+\begin{huge}
+\sf\bfseries GNU Linear Programming Kit\linebreak
+for C\# and the Common Language Interface
+\end{huge}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf Reference Manual
+\end{LARGE}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf Version \glpkCliVersion
+\end{LARGE}
+
+\vspace{0.5in}
+\begin{Large}
+\sf \today
+\end{Large}
+\end{center}
+
+\newpage
+
+\vspace*{1in}
+
+\vfill
+
+\medskip \noindent
+Copyright \copyright{} 2015-{\the\year} Heinrich Schuchardt,
+xypron.glpk@gmx.de
+
+\medskip \noindent
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+\medskip \noindent
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided also that the
+entire resulting derived work is distributed under the terms of
+a permission notice identical to this one.
+
+\medskip \noindent
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions.
+
+\medskip \noindent
+Windows is a registered trademark of Microsoft Corporation. 
+
+\tableofcontents
+
+\chapter{Introduction}
+The GNU Linear Programming Kit (GLPK)\cite{GLPK} package supplies a solver for
+large scale linear programming (LP) and mixed integer programming (MIP). The
+GLPK project is hosted at
+\linebreak\href{http://www.gnu.org/software/glpk}{http://www.gnu.org/software/glpk}.
+
+It has two mailing lists:\index{support}
+\begin{itemize}
+\item\href{mailto:help-glpk@gnu.org}{help-glpk@gnu.org} and 
+\item\href{mailto:bug-glpk@gnu.org}{bug-glpk@gnu.org}.
+\end{itemize}
+To subscribe to one of these lists, please, send an empty mail with a Subject:
+header line of just "subscribe" to the list.
+
+GLPK provides a library written in C and a standalone solver.
+
+The source code provided at
+\href{ftp://gnu.ftp.org/gnu/glpk/}{ftp://gnu.ftp.org/gnu/glpk/} contains the
+documentation of the library in  file doc/glpk.pdf.
+
+Project GLPK for C\#/CLI delivers a Common Language Interface binding for GLPK.
+It is hosted at
+\linebreak\href{http://glpk-cli.sourceforge.net/}{http://glpk-cli.sourceforge.net/}.
+
+To report problems and suggestions concerning GLPK for C\#/CLI, please, send an
+email to the author at
+\href{mailto:xypron.glpk@gmx.de}{xypron.glpk@gmx.de}\index{support}.
+
+\chapter{Getting started}
+
+This chapter will run you through the installation of GLPK for C\#/CLI and the
+execution of a trivial example.
+
+\section{Installation}
+\subsection{Windows}
+
+The following description assumes:
+
+\begin{itemize}
+\item You are using a 64-bit version of Windows. Replace folder name w64 by w32
+if you are using a 32-bit version.
+\item The current version of GLPK is \glpkVersionMajor.\glpkVersionMinor.
+Please, adjust paths if necessary.
+\item Your path for program files is "C:\textbackslash Program Files". Please,
+adjust paths if necessary.
+\end{itemize}
+
+Download the current version of GLPK for Windows from
+\href{https://sourceforge.net/projects/winglpk/}{https://sourceforge.net/projects/winglpk/}.
+
+The filename for version \glpkVersionMajor.\glpkVersionMinor\ is
+winglpk-\glpkVersionMajor.\glpkVersionMinor.zip. Unzip the file. Copy folder
+glpk-\glpkVersionMajor.\glpkVersionMinor\ to "C:\textbackslash Program
+Files\textbackslash GLPK\textbackslash ".
+
+To check the installation run the following command:
+
+\lstset{language=bash,escapeinside={~}{.}}
+\begin{lstlisting}
+"C:\Program Files\GLPK\w64\glpsol.exe" --version
+\end{lstlisting}
+
+To use GLPK for C\#/CLI you need a .NET environment to be installed.
+
+\subsection{Linux}
+
+Download the current version of GLPK source with
+
+\begin{lstlisting}
+wget ftp://ftp.gnu.org/gnu/glpk/glpk-~\glpkVersionMajor..~\glpkVersionMinor..tar.gz
+\end{lstlisting}
+
+Unzip the archive with:
+
+\begin{lstlisting}
+tar -xzf glpk-~\glpkVersionMajor..~\glpkVersionMinor..tar.gz
+cd glpk-~\glpkVersionMajor..~\glpkVersionMinor.
+\end{lstlisting}
+
+Configure with
+
+\begin{lstlisting}
+./configure
+\end{lstlisting}
+
+Make and install with:
+
+\begin{lstlisting}
+make
+make check
+sudo make install
+sudo ldconfig
+\end{lstlisting}
+
+Check the installation with
+
+\begin{lstlisting}
+glpsol --version
+\end{lstlisting}
+
+For the next steps you will need the Mono C\# compiler to be installed.
+
+You can check the correct installation with the following commands:
+
+\begin{lstlisting}
+mcs --version
+\end{lstlisting}
+
+To build GLPK for C\#/CLI you will need package SWIG (Simplified Wrapper and
+Interface Generator, \href{http://www.swig.org/}{http://www.swig.org/}). You
+can check the installation with the following command:
+
+\begin{lstlisting}
+swig -version
+\end{lstlisting}
+
+Most Linux distribution contain a SWIG package. The installation command will
+depend on the distribution, e.g.
+
+\begin{itemize}
+\item Debian: sudo apt-get install swig
+\item Fedora: sudo yum install swig
+\item Gentoo: sudo emerge swig
+\end{itemize}
+
+Download GLPK for C\#/CLI from
+\href{https://sourceforge.net/projects/glpk-cli/files/}{https://sourceforge.net/projects/glpk-cli/}.
+
+Unzip the archive with:
+
+\begin{lstlisting}
+tar -xzf glpk-cli-~\glpkCliVersion..tar.gz
+cd glpk-cli-~\glpkCliVersion.
+\end{lstlisting}
+
+Configure with:
+\begin{lstlisting}
+./configure
+\end{lstlisting}
+
+If libglpk.so is in a special path you may specify this path using parameter
+LDFLAGS, e.g.
+
+\begin{lstlisting}
+./configure LDFLAGS=-L/opt/lib
+\end{lstlisting}
+
+Make and install with:
+
+\begin{lstlisting}
+make
+make check
+sudo make install
+sudo ldconfig
+\end{lstlisting}
+
+\section{Trivial example}
+
+In the example we will create a C\# class which will write the GLPK version to
+the console.
+
+With a text editor create a text file test.cs with the following content:
+
+\lstset{language=csh,escapeinside={~}{.}}
+\begin{lstlisting}
+using System;
+using org.gnu.glpk;
+
+class Program
+{
+  static void Main (string[] args)
+  {
+    Console.WriteLine ("GLPK " + GLPK.glp_version ());
+  }
+}
+\end{lstlisting}
+
+\subsection{Windows}
+
+Copy the GLPK for C\#/CLI assembly (libglpk-cli.dll) to the directory with file
+test.cs.
+
+For compiling you need the C\# compiler.
+The location of csc.exe depends on the version of the .NET framework used.
+Possible paths include:
+
+\begin{itemize}
+\item C:\textbackslash Windows\textbackslash Microsoft.NET\textbackslash Framework64\textbackslash v4.0.30319\textbackslash 
+\item C:\textbackslash Windows\textbackslash Microsoft.NET\textbackslash Framework64\textbackslash v3.5\textbackslash 
+\item C:\textbackslash Windows\textbackslash Microsoft.NET\textbackslash Framework64\textbackslash v2.0.50727\textbackslash 
+\end{itemize}
+
+Compile the application:
+
+\lstset{language=bash,escapeinside={~}{.}}
+\begin{lstlisting}
+csc.exe /r:libglpk-cli.dll test.cs
+\end{lstlisting}
+
+To compile a 32 bit application on 64 bit Windows use:
+
+\lstset{language=bash,escapeinside={~}{.}}
+\begin{lstlisting}
+csc.exe /platform:x86 /r:libglpk-cli.dll test.cs
+\end{lstlisting}
+
+For running the application both the GLPK library
+(glpk\_\glpkVersionMajor\_\glpkVersionMinor.dll) and the GLPK for C\#/CLI
+native library (libglpk\_cli\_native.dll) have to be in the search path.
+Set the environment variable PATH accordingly.
+
+\lstset{language=bash,escapeinside={~}{.}}
+\begin{lstlisting}
+SET PATH=%PATH%;C:\Program Files\glpk\glpk-~\glpkVersionMajor..~\glpkVersionMinor.\w64
+\end{lstlisting}
+
+Run the application
+
+\begin{lstlisting}
+test.exe
+\end{lstlisting}
+
+The output will be the GLPK version number, for example:
+GLPK \glpkVersionMajor.\glpkVersionMinor.
+
+\subsection{Linux}
+Compile the class
+
+\begin{lstlisting}
+mcs -r:libglpk-cli -lib:/usr/local/lib/glpk-cli/ test.cs
+\end{lstlisting}
+
+Run the application:
+
+\begin{lstlisting}
+export MONO_PATH=/usr/local/lib/glpk-cli
+export LD_LIBRARY_PATH=/usr/local/lib/glpk-cli
+./test.exe
+\end{lstlisting}
+
+The output will be the GLPK version number, for example:
+GLPK \glpkVersionMajor.\glpkVersionMinor.
+
+\chapter{Architecture}
+A GLPK for C\#/CLI application will consist of
+\begin{itemize}
+\item the GLPK library
+\item the GLPK for C\#/CLI library
+\item the GLPK for C\#/CLI assembly
+\item the application code.
+\end{itemize}
+
+\chapter{Classes}
+\index{classes}
+GLPK for C\#/CLI uses the Simplified Wrapper and Interface Generator
+(SWIG)\index{SWIG}\cite{SWIG} to create
+the Common Language Inteface binding for GLPK.
+\index{class path}
+Classes are created in namespace org.gnu.glpk.
+
+Class GlpkCallback is called by the MIP solver callback routine.
+
+Interface IGlpkCallbackListener can be implemented to register a listener for
+class GlpkCallback.
+
+Class GlpkTerminal is called by the MIP solver terminal output routine.
+
+Interface IGlpkTerminalListener can be implemented to register a listener for
+class GlpkTerminal.
+
+Class GlpkException is thrown if an error occurs.
+
+Class GLPK maps the functions and constants from glpk.h.
+
+The following classes map structures from glpk.h:
+\begin{itemize}
+\item glp\_arc
+\item glp\_attr
+\item glp\_bfcp
+\item glp\_cpxcp
+\item glp\_graph
+\item glp\_iocp
+\item glp\_iptcp
+\item glp\_long
+\item glp\_mpscp
+\item glp\_prob
+\item glp\_smcp
+\item glp\_tran
+\item glp\_tree
+\item glp\_vertex
+\end{itemize}
+
+The following classes are used to map pointers:
+\begin{itemize}
+\item SWIGTYPE\_p\_double
+\item SWIGTYPE\_p\_f\_p\_q\_const\_\_char\_v\_\_\_\_\_\_\_void
+\item SWIGTYPE\_p\_f\_p\_struct\_glp\_tree\_p\_void\_\_void
+\item SWIGTYPE\_p\_f\_p\_void\_\_void
+\item SWIGTYPE\_p\_f\_p\_void\_p\_q\_const\_\_char\_\_int
+\item SWIGTYPE\_p\_glp\_arc
+\item SWIGTYPE\_p\_glp\_graph
+\item SWIGTYPE\_p\_glp\_vertex
+\item SWIGTYPE\_p\_int
+\item SWIGTYPE\_p\_p\_char
+\item SWIGTYPE\_p\_p\_glp\_vertex
+\item SWIGTYPE\_p\_size\_t
+\item SWIGTYPE\_p\_va\_list
+\item SWIGTYPE\_p\_void
+\end{itemize}
+
+The following clases are used for network problems:
+\begin{itemize}
+\item glp\_cli\_arc\_data
+\item glp\_cli\_vertex\_data
+\end{itemize}
+
+\section{Exceptions}
+\index{exceptions}
+\index{GlpkException}
+When illegal parameters are passed to a function of the GLPK native library
+an exception GlpkException is thrown. Due to the architecture of GLPK all
+GLPK objects are invalid when such an exception has occured.
+
+\subsection{Implementation details}
+GLPK for C\#/CLI registers a function glp\_cli\_error\_hook() to glp\_error\_hook()
+before calling an GLPK API function. If an error occurs function glp\_free\_env
+is called and a long jump is used to return to the calling environment. Then
+function glp\_cli\_throw() is called which throws GlpkException.
+
+\section{Network problems}
+For network problems additional data like capacity and cost of arcs or the
+inflow of vertics has to be specified. The GLPK library does not provide
+data structures. In GLPK for C\#/CLI classes \_glp\_cli\_arc\_data and
+\_glp\_cli\_vertex\_data are provided.
+
+When creating a graph the size of the structures for these classes has to be
+specified. In some routines the offsets to individual fields in the structures are
+needed. The following constants have been defined:
+
+\begin{itemize}
+\item GLP\_CLI\_A\_CAP  - offset of field cap in arc data
+\item GLP\_CLI\_A\_COST - offset of field cost in arc data
+\item GLP\_CLI\_A\_LOW  - offset of field low in arc data
+\item GLP\_CLI\_A\_RC   - offset of field rc in arc data
+\item GLP\_CLI\_A\_X    - offset of field x in arc data
+\item GLP\_CLI\_A\_SIZE - size of arc data
+\item GLP\_CLI\_V\_CUT  - offset of field cut in vertex data
+\item GLP\_CLI\_V\_PI   - offset of field pi in vertex data
+\item GLP\_CLI\_V\_RHS  - offset of field rhs in vertex data
+\item GLP\_CLI\_V\_SET  - offset of field set in vertex data
+\item GLP\_CLI\_V\_SIZE - size of vertex data
+\end{itemize}
+
+For accessing vertices method GLPK.glp\_cli\_vertex\_get can be used.
+
+For accessing the data areas of arcs and vertices methods
+\begin{itemize}
+\item GLPK.glp\_cli\_arc\_get\_data,
+\item GLPK.glp\_cli\_vertex\_data\_get, and
+\item GLPK.glp\_cli\_vertex\_get\_data
+\end{itemize}
+can be used.
+
+\lstset{language=csh,escapeinside={~}{'}}
+\begin{lstlisting}
+glp_arc arc;
+glp_cli_arc_data adata;
+glp_cli_vertex_data vdata;
+
+glp_graph graph =
+        GLPK.glp_create_graph(
+        GLPKConstants.GLP_CLI_V_SIZE,
+        GLPK.GLP_CLI_A_SIZE);
+GLPK.glp_set_graph_name(graph,
+        MinimumCostFlow.class.getName());
+
+int ret = GLPK.glp_add_vertices(graph, 9);
+
+GLPK.glp_set_vertex_name(graph, 1, "v1");
+GLPK.glp_set_vertex_name(graph, 2, "v2");
+GLPK.glp_set_vertex_name(graph, 3, "v3");
+GLPK.glp_set_vertex_name(graph, 4, "v4");
+GLPK.glp_set_vertex_name(graph, 5, "v5");
+GLPK.glp_set_vertex_name(graph, 6, "v6");
+GLPK.glp_set_vertex_name(graph, 7, "v7");
+GLPK.glp_set_vertex_name(graph, 8, "v8");
+GLPK.glp_set_vertex_name(graph, 9, "v9");
+
+vdata = GLPK.glp_cli_vertex_data_get(graph, 1);
+vdata.setRhs(20);
+vdata = GLPK.glp_cli_vertex_data_get(graph, 9);
+vdata.setRhs(-20);
+
+arc = GLPK.glp_add_arc(graph, 1, 2);
+adata = GLPK.glp_cli_arc_get_data(arc);
+adata.setLow(0); adata.setCap(14); adata.setCost(0);
+
+...
+
+GLPK.glp_write_mincost(graph,
+        GLPKConstants.GLP_CLI_V_RHS,
+        GLPKConstants.GLP_CLI_A_LOW,
+        GLPKConstants.GLP_CLI_A_CAP,
+        GLPKConstants.GLP_CLI_A_COST,
+        "mincost.dimacs");
+GLPK.glp_delete_graph(graph);
+
+\end{lstlisting}
+
+\section{Callbacks}
+\index{callbacks}
+\index{GlpkCallback}
+\index{IGlpkCallbackListener}
+The MIP solver provides a callback functionality. This is used to call
+method callback of class GlpkCallback. A CLI program can listen to the
+callbacks by instantiating a class implementing interface
+IGlpkCallbackListener and registering the object with method addListener()
+of class GlpkCallback. The listener can be deregistered with method
+removeListener(). The listener can use method GLPK.glp\_ios\_reason() to find
+out why it is called. For details see the GLPK library documentation.
+
+\section{Output listener}
+\index{output listener}
+\index{GlpkTerminal}
+\index{IGlpkTerminalListener}
+GLPK provides a hook for terminal output. A CLI program can listen to the
+callbacks by instantiating a class implementing interface IGlpkTerminalListener
+and registering the object with method addListener of class GlpkTerminal.
+The listener can be dregistered with method removeListener().
+After a call to glp\_free\_env() the GlpkTerminal has to registered again
+by calling GLPK.glp\_term\_hook(null, null). glp\_free\_env() is called if
+an exception GlpkException occurs.
+
+\section{Aborting a GLPK library call}
+\index{abort}
+\index{GlpkException}
+\index{glp\_cli\_error}
+Method void GLPK.glp\_cli\_error(String message) can be used to abort any call
+to the GLPK library. An exception GlpkException will occur. As GLPK is not
+threadsafe the call must be placed in the same thread as the initial call that
+is to be aborted. The output method of a GlpkTerminalListener can be used
+for this purpose.
+
+\section{Debugging support}
+\index{message level}
+\index{debug}
+\index{glp\_cli\_set\_msg\_lvl}
+Method void GLPK.glp\_cli\_set\_msg\_lvl(int msg\_lvl) can be used to enable
+extra output signaling when a GLPK library function is entered or left using 
+value with GLPKConstants.GLP\_CLI\_MSG\_LVL\_ALL. The output is disabled by a
+call with value GLPKConstants.GLP\_CLI\_MSG\_LVL\_OFF.
+
+\section{Locales}
+\index{locales}
+\index{glp\_cli\_set\_numeric\_locale}
+Method void GLPK.glp\_cli\_set\_numeric\_locale(String locale) can be used to
+set the locale for numeric formatting. When importing model files the GLPK
+library expects to be using locale "C".
+
+\section{Threads}
+\index{threads}
+The GLPK library is not thread safe. Never two threads should be running that
+access the GLPK library at the same time. When a new thread accesses the
+library it should call GLPK.glp\_free\_env(). When using an GlpkTerminalListener
+it is necessary to register GlpkTerminal again by calling
+\linebreak GLPK.glp\_term\_hook(null, null).
+
+When writing a GUI application it is advisable to use a separate thread for
+the calls to GLPK. Otherwise the GUI cannot react to events during the call
+to the GLPK libary.
+
+\chapter{License}
+\index{license}
+GLPK for C\#/CLI is free software: you can redistribute it and/or
+modify it under the terms of the GNU General Public License\cite{GPL} as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+GLPK for C\#/CLI is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GLPK for C\#/CLI. If not, see
+\href{http://www.gnu.org/licenses/}{http://www.gnu.org/licenses/}.
+
+\bibliographystyle{plain}
+\bibliography{mybib}
+\newpage
+\printindex
+\end{document}

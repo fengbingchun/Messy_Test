@@ -1,6 +1,10 @@
 #ifndef FBC_MESSY_TEST_FUNSET_HPP_
 #define FBC_MESSY_TEST_FUNSET_HPP_
 
+
+// GLPK
+int test_glpk();
+
 // SQLite
 int test_sqlite();
 

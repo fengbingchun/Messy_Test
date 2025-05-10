@@ -19,6 +19,7 @@
 - C++ plugin's usage
 - jemalloc's usage [jemalloc/jemalloc](https://github.com/jemalloc/jemalloc)
 - ThreadPool's usage [EterfreeA/ThreadPool](https://github.com/EterfreeA/ThreadPool)
+- GLPK's usage [winglpk](https://sourceforge.net/projects/winglpk/)
 - test code in the technical book
 	- "Efficient C++ Performance Programming Techniques"
 	- "Effective C++ (third edition)"

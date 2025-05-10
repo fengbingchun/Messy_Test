@@ -1,0 +1,100 @@
+ -----
+ About
+ -----
+ Heinrich Schuchardt
+ <xypron.glpk@gmx.de>
+ -----
+ 2017-05-01
+ -----
+
+About
+
+ The GNU Linear Programming Kit (GLPK) package supplies a solver for
+ large scale linear programming (LP) and mixed integer programming (MIP). The
+ GLPK project is hosted at
+ {{{http://www.gnu.org/software/glpk}http://www.gnu.org/software/glpk}}.
+ 
+ It has two mailing lists:
+
+  * {{{mailto:help-glpk@gnu.org}help-glpk@gnu.org}} and 
+
+  * {{{mailto:bug-glpk@gnu.org}bug-glpk@gnu.org}}.
+
+ To subscribe to one of these lists, please, send an empty mail with a 
+ Subject: header line of just "subscribe" to the list.
+ 
+ GLPK provides a library written in C and a standalone solver.
+
+ The source code provided at
+ {{{ftp://gnu.ftp.org/gnu/glpk/}ftp://gnu.ftp.org/gnu/glpk/}} contains the
+ documentation of the library in file doc/glpk.pdf.
+
+ The Java platform provides the Java Native Interface (JNI) to integrate
+ non-Java language libraries into Java applications.
+
+ Project GLPK for Java delivers a Java Binding for GLPK. It is hosted at
+ {{{http://glpk-java.sourceforge.net/}http://glpk-java.sourceforge.net/}}.
+
+ To report problems and suggestions concerning GLPK for Java, please, send an
+ email to the author at {{{mailto:xypron.glpk@gmx.de}xypron.glpk@gmx.de}}.
+
+* Downloading
+
+ The source files of GLPK for Java can be downloaded from
+ {{{http://sourceforge.net/projects/glpk-java/files/}http://sourceforge.net/projects/glpk-java/}}
+
+ GLPK and GLPK for Java precompiled binaries for Windows are available at
+ {{{http://sourceforge.net/projects/winglpk/files/}http://sourceforge.net/projects/winglpk/}}
+
+ Debian and Ubuntu binaries are included in package libglpk-java. For
+ installation use the following command:
+
+---
+sudo apt-get install libglpk-java
+---
+
+* Dependencies
+
+ GLPK for Java ${project.artifactId} is designed for
+
+  * GLPK ${glpkVersionMajor}.${glpkVersionMinor} and
+
+  * OpenJDK 1.8 or higher
+
+ On Windows the GLPK version number is hard coded in the dll name.
+ On Linux building and using with other GLPK versions should succeed.
+
+* Maven
+
+ For using this library in your Maven project enter the following repository
+ and dependency in your pom.xml:
+
+---
+    <repositories>
+        <repository>
+            <id>XypronRelease</id>
+            <name>Xypron Release</name>
+            <url>https://www.xypron.de/repository</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${project.artifactId}</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+---
+
+ The artifact does not include the binary libraries, which have to be installed
+ separately.
+
+ When testing with Maven it may be necessary to indicate the installation path
+ of the GLPK for Java shared library (.so or .dll).
+
+---
+mvn clean install -DargLine='-Djava.library.path=/usr/local/lib/jni:/usr/lib/jni'
+---
+

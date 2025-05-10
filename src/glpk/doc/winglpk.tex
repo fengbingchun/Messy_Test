@@ -1,0 +1,201 @@
+%* winglpk.tex *%
+
+%***********************************************************************
+%  This code is part of GLPK for Windows.
+%
+%  Copyright (C) 2009 Heinrich Schuchardt, <xypron.glpk@gmx.de>
+%
+%  GLPK for Windows is free software: you can redistribute it and/or 
+%  modify it under the terms of the GNU General Public License as 
+%  published by the Free Software Foundation, either version 3 of 
+%  the License, or (at your option) any later version.
+%
+%  GLPK for Windows is distributed in the hope that it will be useful, 
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+%  General Public License for more details.
+%
+%  You should have received a copy of the GNU General Public License
+%  along with GLPK-Java. If not, see <http://www.gnu.org/licenses/>.
+%***********************************************************************
+
+\documentclass[a4paper,11pt]{report}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{makeidx}
+%%generate index
+\makeindex
+
+\newcommand{\glpkVersion}{4.65}
+
+\newcommand{\code}{\texttt}
+
+\renewcommand\contentsname{\sf\bfseries Contents}
+\renewcommand\chaptername{\sf\bfseries Chapter}
+\renewcommand\appendixname{\sf\bfseries Appendix}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt} 
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{1in}
+
+\begin{huge}
+\sf\bfseries GNU Linear Programming Kit\linebreak
+for Windows
+\end{huge}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf Reference Manual
+\end{LARGE}
+
+\vspace{0.5in}
+
+\begin{LARGE}
+\sf Version \glpkVersion
+\end{LARGE}
+
+\vspace{0.5in}
+\begin{Large}
+\sf \today
+\end{Large}
+\end{center}
+
+\newpage
+
+\vspace*{1in}
+
+\vfill
+
+\medskip \noindent
+Copyright \copyright{} 2009-{\the\year} Heinrich Schuchardt, xypron.glpk@gmx.de
+
+\medskip \noindent
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+\medskip \noindent
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided also that the
+entire resulting derived work is distributed under the terms of
+a permission notice identical to this one.
+
+\medskip \noindent
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions.
+
+\medskip \noindent
+Windows is a registered trademark of Microsoft Corporation. Java is a 
+trademark when it identifies a software product of Sun Microsystems, Inc.
+
+\tableofcontents
+
+\chapter{Introduction}
+The GNU Linear Programming Kit (GLPK)\cite{GLPK} package supplies a solver for
+large scale linear programming (LP) and mixed integer programming (MIP).
+The GLPK project is hosted at
+\linebreak\href{http://www.gnu.org/software/glpk}{http://www.gnu.org/software/glpk}.
+
+It has two mailing lists: 
+\begin{itemize}
+\item\href{mailto:help-glpk@gnu.org}{help-glpk@gnu.org} and 
+\item\href{mailto:bug-glpk@gnu.org}{bug-glpk@gnu.org}.
+\end{itemize}
+To subscribe to one of these lists, please, send an empty mail with a Subject:
+header line of just "subscribe" to the list.
+
+GLPK provides a library written in C and a standalone solver.
+
+The source code provided at
+\href{ftp://gnu.ftp.org/gnu/glpk/}{ftp://gnu.ftp.org/gnu/glpk/}
+contains the documentation of the library in file doc/glpk.pdf.
+
+Project GLPK for Windows delivers precompiled executables for Windows.
+It is hosted at
+\linebreak\href{http://winglpk.sourceforge.net/}{http://winglpk.sourceforge.net/}.
+
+\chapter{Installation}
+\index{installation}
+The GLPK for Windows package can be downloaded from
+\linebreak\href{http://winglpk.sourceforge.net/}{http://winglpk.sourceforge.net/}.
+
+It is distributed as a compressed archive. Please decompress it to your
+preferred installation path
+(e.g. c:\textbackslash program files\textbackslash glpk).
+
+The executables and dynamic link libraries for 32 bit Windows can be found in
+directory w32, those for 64 bit Windows can be found in directory w64.
+
+The libraries have to be in the search path for binaries when executing the
+standalone solver glpsol.exe. Therefore it is suggested to copy the DLLs to
+\%SystemRoot\%\textbackslash system32
+(e.g. c:\textbackslash windows\textbackslash system32).
+
+The documentation can be found in directory doc.
+If you want to use the GNU Math Programming Language (GMPL), please
+read gmpl.pdf.
+If you want to use the library in your own coding, please, refer to glpk.pdf.
+
+\chapter{Building}
+\index{building}
+As GLPK for Windows comes with precompiled binaries it is normally not necessary
+to build the software.
+
+The script used to build the package is provided as Build\_WinGLPK.bat with the
+distribution.
+
+The following software is needed
+\begin{itemize}
+\item Windows 10 64bit or later release
+\item Java SE Development Kit (JDK)\index{JDK} available at
+\href{http://java.sun.com/javase/downloads/index.jsp}{http://java.sun.com/javase/downloads/index.jsp}.
+\item Microsoft Visual Studio Community 2015 available at
+\linebreak\href{https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx}{https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx}
+\item Windows Software Development Kit (SDK) for Windows 7, and .NET Framework
+4.0 available at
+\href{http://www.microsoft.com/downloads/en/default.aspx}{http://www.microsoft.com/downloads/en/default.aspx}
+\item GnuWin32\index{GnuWin32} available at
+\href{http://gnuwin32.sourceforge.net/}{http://gnuwin32.sourceforge.net/}
+\item SWIG (Simplified Wrapper and Interface Generator)\cite{SWIG}
+\index{SWIG} available at
+\href{http://www.swig.org}{http://www.swig.org}
+\end{itemize}
+When building, please, create a new directory and copy only Build\_WinGLPK.bat
+to the directory. In the command shell execute the script.
+The distribution files are created in subdirectory release.
+\chapter{License}
+\index{license}
+GLPK for Windows is free software: you can redistribute it and/or 
+modify it under the terms of the GNU General Public License\cite{GPL} as
+published by the Free Software Foundation, either version 3 of the 
+License, or (at your option) any later version.
+
+GLPK for Windows is distributed in the hope that it will be useful, but 
+WITHOUT ANY WARRANTY; without even the implied warranty of  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GLPK for Windows. If not, see 
+\href{http://www.gnu.org/licenses/}{http://www.gnu.org/licenses/}.
+
+\bibliographystyle{plain}
+\bibliography{mybib}
+\newpage
+\printindex
+\end{document}

@@ -1,0 +1,65 @@
+/* 9dom.dat */
+
+/***********************************************************************
+*  Web Paint-by-Number Puzzle #8098 from <www.webpbn.com>.
+*  Copyright (C) 2010 by Josh Greifer. Used by permission.
+*
+*  Domino Logic III (Abstract pattern)
+*
+*  created by Josh Greifer
+*  Apr 5, 2010
+*
+*  Encoded in GNU MathProg by Andrew Makhorin <mao@gnu.org>.
+***********************************************************************/
+
+data;
+
+param m := 19;
+
+param n := 19;
+
+param row : 1  2  :=
+      1     3  .
+      2     1  .
+      3     3  1
+      4     1  .
+      5     3  1
+      6     1  .
+      7     3  1
+      8     1  .
+      9     3  1
+      10    1  .
+      11    3  1
+      12    1  .
+      13    3  1
+      14    1  .
+      15    3  1
+      16    1  .
+      17    3  1
+      18    1  .
+      19    1  .
+;
+
+param col : 1  2  :=
+      1     1  .
+      2     1  .
+      3     1  3
+      4     1  .
+      5     1  3
+      6     1  .
+      7     1  3
+      8     1  .
+      9     1  3
+      10    1  .
+      11    1  3
+      12    1  .
+      13    1  3
+      14    1  .
+      15    1  3
+      16    1  .
+      17    1  3
+      18    1  .
+      19    3  .
+;
+
+end;

@@ -1,0 +1,1392 @@
+%* glpk04.tex *%
+
+\chapter{Advanced API Routines}
+
+\section{Background}
+\label{basbgd}
+
+Using vector and matrix notations the LP problem (1.1)---(1.3) (see
+Section \ref{seclp}, page \pageref{seclp}) can be stated as follows:
+
+\noindent
+\hspace{.5in} minimize (or maximize)
+$$z=c^Tx_S+c_0\eqno(3.1)$$
+\hspace{.5in} subject to linear constraints
+$$x_R=Ax_S\eqno(3.2)$$
+\hspace{.5in} and bounds of variables
+$$
+\begin{array}{l@{\ }c@{\ }l@{\ }c@{\ }l}
+l_R&\leq&x_R&\leq&u_R\\
+l_S&\leq&x_S&\leq&u_S\\
+\end{array}\eqno(3.3)
+$$
+where:
+
+$x_R=(x_1,\dots,x_m)$ is the vector of auxiliary variables;
+
+$x_S=(x_{m+1},\dots,x_{m+n})$ is the vector of structural variables;
+
+$z$ is the objective function;
+
+$c=(c_1,\dots,c_n)$ is the vector of objective coefficients;
+
+$c_0$ is the constant term (``shift'') of the objective function;
+
+$A=(a_{11},\dots,a_{mn})$ is the constraint matrix;
+
+$l_R=(l_1,\dots,l_m)$ is the vector of lower bounds of auxiliary
+variables;
+
+$u_R=(u_1,\dots,u_m)$ is the vector of upper bounds of auxiliary
+variables;
+
+$l_S=(l_{m+1},\dots,l_{m+n})$ is the vector of lower bounds of
+structural variables;
+
+$u_S=(u_{m+1},\dots,u_{m+n})$ is the vector of upper bounds of
+structural variables.
+
+From the simplex method's standpoint there is no difference between
+auxiliary and structural variables. This allows combining all these
+variables into one vector that leads to the following problem
+statement:
+
+\newpage
+
+\noindent
+\hspace{.5in} minimize (or maximize)
+$$z=(0\ |\ c)^Tx+c_0\eqno(3.4)$$
+\hspace{.5in} subject to linear constraints
+$$(I\ |-\!A)x=0\eqno(3.5)$$
+\hspace{.5in} and bounds of variables
+$$l\leq x\leq u\eqno(3.6)$$
+where:
+
+$x=(x_R\ |\ x_S)$ is the $(m+n)$-vector of (all) variables;
+
+$(0\ |\ c)$ is the $(m+n)$-vector of objective
+coefficients;\footnote{Subvector 0 corresponds to objective
+coefficients at auxiliary variables.}
+
+$(I\ |-\!A)$ is the {\it augmented} constraint
+$m\times(m+n)$-matrix;\footnote{Note that due to auxiliary variables
+matrix $(I\ |-\!A)$ contains the unity submatrix and therefore has full
+rank. This means, in particular, that the system (3.5) has no linearly
+dependent constraints.}
+
+$l=(l_R\ |\ l_S)$ is the $(m+n)$-vector of lower bounds of (all)
+variables;
+
+$u=(u_R\ |\ u_S)$ is the $(m+n)$-vector of upper bounds of (all)
+variables.
+
+By definition an {\it LP basic solution} geometrically is a point in
+the space of all variables, which is the intersection of hyperplanes
+corresponding to active constraints\footnote{A constraint is called
+{\it active} if at a given point it is satisfied as equality, otherwise
+it is called {\it inactive}.}. The space of all variables has the
+dimension $m+n$, therefore, to define some basic solution we have to
+define $m+n$ active constraints. Note that $m$ constraints (3.5) being
+linearly independent equalities are always active, so remaining $n$
+active constraints can be chosen only from bound constraints (3.6).
+
+A variable is called {\it non-basic}, if its (lower or upper) bound is
+active, otherwise it is called {\it basic}. Since, as was said above,
+exactly $n$ bound constraints must be active, in any basic solution
+there are always $n$ non-basic variables and $m$ basic variables.
+(Note that a free variable also can be non-basic. Although such
+variable has no bounds, we can think it as the difference between two
+non-negative variables, which both are non-basic in this case.)
+
+Now consider how to determine numeric values of all variables for a
+given basic solution.
+
+Let $\Pi$ be an appropriate permutation matrix of the order $(m+n)$.
+Then we can write:
+$$\left(\begin{array}{@{}c@{}}x_B\\x_N\\\end{array}\right)=
+\Pi\left(\begin{array}{@{}c@{}}x_R\\x_S\\\end{array}\right)=\Pi x,
+\eqno(3.7)$$
+where $x_B$ is the vector of basic variables, $x_N$ is the vector of
+non-basic variables, $x=(x_R\ |\ x_S)$ is the vector of all variables
+in the original order. In this case the system of linear constraints
+(3.5) can be rewritten as follows:
+$$(I\ |-\!A)\Pi^T\Pi x=0\ \ \ \Rightarrow\ \ \ (B\ |\ N)
+\left(\begin{array}{@{}c@{}}x_B\\x_N\\\end{array}\right)=0,\eqno(3.8)$$
+where
+$$(B\ |\ N)=(I\ |-\!A)\Pi^T.\eqno(3.9)$$
+
+%\newpage
+
+Matrix $B$ is a square non-singular $m\times m$-matrix, which is
+composed from columns of the augmented constraint matrix corresponding
+to basic variables. It is called the {\it basis matrix} or simply the
+{\it basis}. Matrix $N$ is a rectangular $m\times n$-matrix, which is
+composed from columns of the augmented constraint matrix corresponding
+to non-basic variables.
+
+From (3.8) it follows that:
+$$Bx_B+Nx_N=0,\eqno(3.10)$$
+therefore,
+$$x_B=-B^{-1}Nx_N.\eqno(3.11)$$
+Thus, the formula (3.11) shows how to determine numeric values of basic
+variables $x_B$ assuming that non-basic variables $x_N$ are fixed on
+their active bounds.
+
+The $m\times n$-matrix
+$$\Xi=-B^{-1}N,\eqno(3.12)$$
+which appears in (3.11), is called the {\it simplex
+tableau}.\footnote{This definition corresponds to the GLPK
+implementation.} It shows how basic variables depend on non-basic
+variables:
+$$x_B=\Xi x_N.\eqno(3.13)$$
+
+The system (3.13) is equivalent to the system (3.5) in the sense that
+they both define the same set of points in the space of (primal)
+variables, which satisfy to these systems. If, moreover, values of all
+basic variables satisfy to their bound constraints (3.3), the
+corresponding basic solution is called {\it (primal) feasible},
+otherwise {\it (primal) infeasible}. It is understood that any (primal)
+feasible basic solution satisfy to all constraints (3.2) and (3.3).
+
+The LP theory says that if LP has optimal solution, it has (at least
+one) basic feasible solution, which corresponds to the optimum. And the
+most natural way to determine whether a given basic solution is optimal
+or not is to use the Karush---Kuhn---Tucker optimality conditions.
+
+\def\arraystretch{1.5}
+
+For the problem statement (3.4)---(3.6) the optimality conditions are
+the following:\footnote{These conditions can be appiled to any solution,
+not only to a basic solution.}
+$$(I\ |-\!A)x=0\eqno(3.14)$$
+$$(I\ |-\!A)^T\pi+\lambda_l+\lambda_u=\nabla z=(0\ |\ c)^T\eqno(3.15)$$
+$$l\leq x\leq u\eqno(3.16)$$
+$$\lambda_l\geq 0,\ \ \lambda_u\leq 0\ \ \mbox{(minimization)}
+\eqno(3.17)$$
+$$\lambda_l\leq 0,\ \ \lambda_u\geq 0\ \ \mbox{(maximization)}
+\eqno(3.18)$$
+$$(\lambda_l)_k(x_k-l_k)=0,\ \ (\lambda_u)_k(x_k-u_k)=0,\ \ k=1,2,\dots,
+m+n\eqno(3.19)$$
+where:
+
+$\pi=(\pi_1,\dots,\pi_m)$ is a $m$-vector of Lagrange
+multipliers for equality constraints (3.5);
+
+$\lambda_l=[(\lambda_l)_1,\dots,(\lambda_l)_n]$ is a $n$-vector of
+Lagrange multipliers for lower bound constraints (3.6);
+
+$\lambda_u=[(\lambda_u)_1,\dots,(\lambda_u)_n]$ is a $n$-vector of
+Lagrange multipliers for upper bound constraints (3.6).
+
+%\newpage
+
+Condition (3.14) is the {\it primal} (original) system of equality
+constraints (3.5).
+
+Condition (3.15) is the {\it dual} system of equality constraints.
+It requires the gradient of the objective function to be a linear
+combination of normals to the planes defined by constraints of the
+original problem.
+
+Condition (3.16) is the primal (original) system of bound constraints
+(3.6).
+
+Condition (3.17) (or (3.18) in case of maximization) is the dual system
+of bound constraints.
+
+Condition (3.19) is the {\it complementary slackness condition}. It
+requires, for each original (auxiliary or structural) variable $x_k$,
+that either its (lower or upper) bound must be active, or zero bound of
+the corresponding Lagrange multiplier ($(\lambda_l)_k$ or
+$(\lambda_u)_k$) must be active.
+
+In GLPK two multipliers $(\lambda_l)_k$ and $(\lambda_u)_k$ for each
+primal variable $x_k$, $k=1,\dots,m+n$, are combined into one
+multiplier:
+$$\lambda_k=(\lambda_l)_k+(\lambda_u)_k,\eqno(3.20)$$
+which is called a {\it dual variable} for $x_k$. This {\it cannot} lead
+to an ambiguity, because both lower and upper bounds of $x_k$ cannot be
+active at the same time,\footnote{If $x_k$ is a fixed variable, we can
+think it as double-bounded variable $l_k\leq x_k\leq u_k$, where
+$l_k=u_k.$} so at least one of $(\lambda_l)_k$ and $(\lambda_u)_k$ must
+be equal to zero, and because these multipliers have different signs,
+the combined multiplier, which is their sum, uniquely defines each of
+them.
+
+\def\arraystretch{1}
+
+Using dual variables $\lambda_k$ the dual system of bound constraints
+(3.17) and (3.18) can be written in the form of so called {\it ``rule of
+signs''} as follows:
+
+\medskip
+
+\begin{center}
+\begin{tabular}{|@{\,}c@{$\,$}|@{$\,$}c@{$\,$}|@{$\,$}c@{$\,$}|
+@{$\,$}c|c@{$\,$}|@{$\,$}c@{$\,$}|@{$\,$}c@{$\,$}|}
+\hline
+Original bound&\multicolumn{3}{c|}{Minimization}&\multicolumn{3}{c|}
+{Maximization}\\
+\cline{2-7}
+constraint&$(\lambda_l)_k$&$(\lambda_u)_k$&$(\lambda_l)_k+
+(\lambda_u)_k$&$(\lambda_l)_k$&$(\lambda_u)_k$&$(\lambda_l)_k+
+(\lambda_u)_k$\\
+\hline
+$-\infty<x_k<+\infty$&$=0$&$=0$&$\lambda_k=0$&$=0$&$=0$&$\lambda_k=0$\\
+$x_k\geq l_k$&$\geq 0$&$=0$&$\lambda_k\geq 0$&$\leq 0$&$=0$&$\lambda_k
+\leq0$\\
+$x_k\leq u_k$&$=0$&$\leq 0$&$\lambda_k\leq 0$&$=0$&$\geq 0$&$\lambda_k
+\geq0$\\
+$l_k\leq x_k\leq u_k$&$\geq 0$& $\leq 0$& $-\infty\!<\!\lambda_k\!<
+\!+\infty$
+&$\leq 0$& $\geq 0$& $-\infty\!<\!\lambda_k\!<\!+\infty$\\
+$x_k=l_k=u_k$&$\geq 0$& $\leq 0$& $-\infty\!<\!\lambda_k\!<\!+\infty$&
+$\leq 0$&
+$\geq 0$& $-\infty\!<\!\lambda_k\!<\!+\infty$\\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+
+May note that each primal variable $x_k$ has its dual counterpart
+$\lambda_k$ and vice versa. This allows applying the same partition for
+the vector of dual variables as (3.7):
+$$\left(\begin{array}{@{}c@{}}\lambda_B\\\lambda_N\\\end{array}\right)=
+\Pi\lambda,\eqno(3.21)$$
+where $\lambda_B$ is a vector of dual variables for basic variables
+$x_B$, $\lambda_N$ is a vector of dual variables for non-basic variables
+$x_N$.
+
+By definition, bounds of basic variables are inactive constraints, so in
+any basic solution $\lambda_B=0$. Corresponding values of dual variables
+$\lambda_N$ for non-basic variables $x_N$ can be determined in the
+following way. From the dual system (3.15) we have:
+$$(I\ |-\!A)^T\pi+\lambda=(0\ |\ c)^T,\eqno(3.22)$$
+so multiplying both sides of (3.22) by matrix $\Pi$ gives:
+$$\Pi(I\ |-\!A)^T\pi+\Pi\lambda=\Pi(0\ |\ c)^T.\eqno(3.23)$$
+From (3.9) it follows that
+$$\Pi(I\ |-\!A)^T=[(I\ |-\!A)\Pi^T]^T=(B\ |\ N)^T.\eqno(3.24)$$
+Further, we can apply the partition (3.7) also to the vector of
+objective coefficients (see (3.4)):
+$$\left(\begin{array}{@{}c@{}}c_B\\c_N\\\end{array}\right)=
+\Pi\left(\begin{array}{@{}c@{}}0\\c\\\end{array}\right),\eqno(3.25)$$
+where $c_B$ is a vector of objective coefficients at basic variables,
+$c_N$ is a vector of objective coefficients at non-basic variables.
+Now, substituting (3.24), (3.21), and (3.25) into (3.23), leads to:
+$$(B\ |\ N)^T\pi+(\lambda_B\ |\ \lambda_N)^T=(c_B\ |\ c_N)^T,
+\eqno(3.26)$$
+and transposing both sides of (3.26) gives the system:
+$$\left(\begin{array}{@{}c@{}}B^T\\N^T\\\end{array}\right)\pi+
+\left(\begin{array}{@{}c@{}}\lambda_B\\\lambda_N\\\end{array}\right)=
+\left(\begin{array}{@{}c@{}}c_B\\c_T\\\end{array}\right),\eqno(3.27)$$
+which can be written as follows:
+$$\left\{
+\begin{array}{@{\ }r@{\ }c@{\ }r@{\ }c@{\ }l@{\ }}
+B^T\pi&+&\lambda_B&=&c_B\\
+N^T\pi&+&\lambda_N&=&c_N\\
+\end{array}
+\right.\eqno(3.28)
+$$
+Lagrange multipliers $\pi=(\pi_i)$ correspond to equality constraints
+(3.5) and therefore can have any sign. This allows resolving the first
+subsystem of (3.28) as follows:\footnote{$B^{-T}$ means $(B^T)^{-1}=
+(B^{-1})^T$.}
+$$\pi=B^{-T}(c_B-\lambda_B)=-B^{-T}\lambda_B+B^{-T}c_B,\eqno(3.29)$$
+and substitution of $\pi$ from (3.29) into the second subsystem of
+(3.28) gives:
+$$\lambda_N=-N^T\pi+c_N=N^TB^{-T}\lambda_B+(c_N-N^TB^{-T}c_B).
+\eqno(3.30)$$
+The latter system can be written in the following final form:
+$$\lambda_N=-\Xi^T\lambda_B+d,\eqno(3.31)$$
+where $\Xi$ is the simplex tableau (see (3.12)), and
+$$d=c_N-N^TB^{-T}c_B=c_N+\Xi^Tc_B\eqno(3.32)$$
+is the vector of so called {\it reduced costs} of non-basic variables.
+
+Above it was said that in any basic solution $\lambda_B=0$, so
+$\lambda_N=d$ as it follows from (3.31).
+
+The system (3.31) is equivalent to the system (3.15) in the sense that
+they both define the same set of points in the space of dual variables
+$\lambda$, which satisfy to these systems. If, moreover, values of all
+dual variables $\lambda_N$ (i.e. reduced costs $d$) satisfy to their
+bound constraints (i.e. to the ``rule of signs''; see the table above),
+the corresponding basic solution is called {\it dual feasible},
+otherwise {\it dual infeasible}. It is understood that any dual feasible
+solution satisfy to all constraints (3.15) and (3.17) (or (3.18) in case
+of maximization).
+
+It can be easily shown that the complementary slackness condition
+(3.19) is always satisfied for {\it any} basic solution.\footnote{Until
+double-bounded variables appear.} Therefore, a basic
+solution\footnote{It is assumed that a complete basic solution has the
+form $(x,\lambda)$, i.e. it includes primal as well as dual variables.}
+is {\it optimal} if and only if it is primal and dual feasible, because
+in this case it satifies to all the optimality conditions
+(3.14)---(3.19).
+
+\def\arraystretch{1.5}
+
+The meaning of reduced costs $d=(d_j)$ of non-basic variables can be
+explained in the following way. From (3.4), (3.7), and (3.25) it follows
+that:
+$$z=c_B^Tx_B+c_N^Tx_N+c_0.\eqno(3.33)$$
+Substituting $x_B$ from (3.11) into (3.33) we can eliminate basic
+variables and express the objective only through non-basic variables:
+$$
+\begin{array}{r@{\ }c@{\ }l}
+z&=&c_B^T(-B^{-1}Nx_N)+c_N^Tx_N+c_0=\\
+&=&(c_N^T-c_B^TB^{-1}N)x_N+c_0=\\
+&=&(c_N-N^TB^{-T}c_B)^Tx_N+c_0=\\
+&=&d^Tx_N+c_0.
+\end{array}\eqno(3.34)
+$$
+From (3.34) it is seen that reduced cost $d_j$ shows how the objective
+function $z$ depends on non-basic variable $(x_N)_j$ in the neighborhood
+of the current basic solution, i.e. while the current basis remains
+unchanged.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{LP basis routines}
+\label{lpbasis}
+
+\subsection{glp\_bf\_exists --- check if the basis factorization
+exists}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_bf_exists(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+If the basis factorization for the current basis associated with the
+specified problem object exists and therefore is available for
+computations, the routine \verb|glp_bf_exists| returns non-zero.
+Otherwise the routine returns zero.
+
+\para{Comments}
+
+Let the problem object have $m$ rows and $n$ columns. In GLPK the
+{\it basis matrix} $B$ is a square non-singular matrix of the order $m$,
+whose columns correspond to basic (auxiliary and/or structural)
+variables. It is defined by the following main
+equality:\footnote{For more details see Subsection \ref{basbgd},
+page \pageref{basbgd}.}
+$$(B\ |\ N)=(I\ |-\!A)\Pi^T,$$
+where $I$ is the unity matrix of the order $m$, whose columns correspond
+to auxiliary variables; $A$ is the original constraint
+$m\times n$-matrix, whose columns correspond to structural variables;
+$(I\ |-\!A)$ is the augmented constraint $m\times(m+n)$-matrix, whose
+columns correspond to all (auxiliary and structural) variables
+following in the original order; $\Pi$ is a permutation matrix of the
+order $m+n$; and $N$ is a rectangular $m\times n$-matrix, whose columns
+correspond to non-basic (auxiliary and/or structural) variables.
+
+For various reasons it may be necessary to solve linear systems with
+matrix $B$. To provide this possibility the GLPK implementation
+maintains an invertable form of $B$ (that is, some representation of
+$B^{-1}$) called the {\it basis factorization}, which is an internal
+component of the problem object. Typically, the basis factorization is
+computed by the simplex solver, which keeps it in the problem object
+to be available for other computations.
+
+Should note that any changes in the problem object, which affects the
+basis matrix (e.g. changing the status of a row or column, changing
+a basic column of the constraint matrix, removing an active constraint,
+etc.), invalidates the basis factorization. So before calling any API
+routine, which uses the basis factorization, the application program
+must make sure (using the routine \verb|glp_bf_exists|) that the
+factorization exists and therefore available for computations.
+
+%\newpage
+
+\subsection{glp\_factorize --- compute the basis factorization}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_factorize(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_factorize| computes the basis factorization for
+the current basis associated with the specified problem
+object.\footnote{The current basis is defined by the current statuses
+of rows (auxiliary variables) and columns (structural variables).}
+
+The basis factorization is computed from ``scratch'' even if it exists,
+so the application program may use the routine \verb|glp_bf_exists|,
+and, if the basis factorization already exists, not to call the routine
+\verb|glp_factorize| to prevent an extra work.
+
+The routine \verb|glp_factorize| {\it does not} compute components of
+the basic solution (i.e. primal and dual values).
+
+\returns
+
+\begin{retlist}
+0 & The basis factorization has been successfully computed.\\
+\verb|GLP_EBADB| & The basis matrix is invalid, because the number of
+basic (auxiliary and structural) variables is not the same as the number
+of rows in the problem object.\\
+
+\verb|GLP_ESING| & The basis matrix is singular within the working
+precision.\\
+
+\verb|GLP_ECOND| & The basis matrix is ill-conditioned, i.e. its
+condition number is too large.\\
+\end{retlist}
+
+\subsection{glp\_bf\_updated --- check if the basis factorization has
+been updated}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_bf_updated(glp_prob *P);
+\end{verbatim}
+
+\returns
+
+If the basis factorization has been just computed from ``scratch'', the
+routine \verb|glp_bf_updated| returns zero. Otherwise, if the
+factorization has been updated at least once, the routine returns
+non-zero.
+
+\para{Comments}
+
+{\it Updating} the basis factorization means recomputing it to reflect
+changes in the basis matrix. For example, on every iteration of the
+simplex method some column of the current basis matrix is replaced by
+a new column that gives a new basis matrix corresponding to the
+adjacent basis. In this case computing the basis factorization for the
+adjacent basis from ``scratch'' (as the routine \verb|glp_factorize|
+does) would be too time-consuming.
+
+On the other hand, since the basis factorization update is a numeric
+computational procedure, applying it many times may lead to
+accumulating round-off errors. Therefore the basis is periodically
+refactorized (reinverted) from ``scratch'' (with the routine
+\verb|glp_factorize|) that allows improving its numerical properties.
+
+The routine \verb|glp_bf_updated| allows determining if the basis
+factorization has been updated at least once since it was computed from
+``scratch''.
+
+\subsection{glp\_get\_bfcp --- retrieve basis factorization control
+parameters}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_get_bfcp(glp_prob *P, glp_bfcp *parm);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_get_bfcp| retrieves control parameters, which are
+used on computing and updating the basis factorization associated with
+the specified problem object.
+
+Current values of the control parameters are stored in
+a \verb|glp_bfcp| structure, which the parameter \verb|parm| points to.
+For a detailed description of the structure \verb|glp_bfcp| see
+comments to the routine \verb|glp_set_bfcp| in the next subsection.
+
+\para{Comments}
+
+The purpose of the routine \verb|glp_get_bfcp| is two-fold. First, it
+allows the application program obtaining current values of control
+parameters used by internal GLPK routines, which compute and update the
+basis factorization.
+
+The second purpose of this routine is to provide proper values for all
+fields of the structure \verb|glp_bfcp| in the case when the
+application program needs to change some control parameters.
+
+\subsection{glp\_set\_bfcp --- change basis factorization control
+parameters}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_set_bfcp(glp_prob *P, const glp_bfcp *parm);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_set_bfcp| changes control parameters, which are
+used by internal GLPK routines on computing and updating the basis
+factorization associated with the specified problem object.
+
+New values of the control parameters should be passed in a structure
+\verb|glp_bfcp|, which the parameter \verb|parm| points to. For a
+detailed description of the structure \verb|glp_bfcp| see paragraph
+``Control parameters'' below.
+
+The parameter \verb|parm| can be specified as \verb|NULL|, in which
+case all control parameters are reset to their default values.
+
+\para{Comments}
+
+Before changing some control parameters with the routine
+\verb|glp_set_bfcp| the application program should retrieve current
+values of all control parameters with the routine \verb|glp_get_bfcp|.
+This is needed for backward compatibility, because in the future there
+may appear new members in the structure \verb|glp_bfcp|.
+
+Note that new values of control parameters come into effect on a next
+computation of the basis factorization, not immediately.
+
+\para{Example}
+
+\begin{footnotesize}
+\begin{verbatim}
+glp_prob *lp;
+glp_bfcp parm;
+. . .
+/* retrieve current values of control parameters */
+glp_get_bfcp(lp, &parm);
+/* change the threshold pivoting tolerance */
+parm.piv_tol = 0.05;
+/* set new values of control parameters */
+glp_set_bfcp(lp, &parm);
+. . .
+\end{verbatim}
+\end{footnotesize}
+
+\newpage
+
+\para{Control parameters}
+
+This paragraph describes all basis factorization control parameters
+currently used in the package. Symbolic names of control parameters are
+names of corresponding members in the structure \verb|glp_bfcp|.
+
+\medskip
+
+{\tt int type} (default: {\tt GLP\_BF\_LUF + GLP\_BF\_FT})
+
+Basis factorization type:
+
+\verb~GLP_BF_LUF + GLP_BF_FT~ --- $LUF$, Forrest--Tomlin update;
+
+\verb~GLP_BF_LUF + GLP_BF_BG~ --- $LUF$, Schur complement,
+Bartels--Golub update;
+
+\verb~GLP_BF_LUF + GLP_BF_GR~ --- $LUF$, Schur complement,
+Givens rotation update;
+
+\verb~GLP_BF_BTF + GLP_BF_BG~ --- $BTF$, Schur complement,
+Bartels--Golub update;
+
+\verb~GLP_BF_BTF + GLP_BF_GR~ --- $BTF$, Schur complement,
+Givens rotation update.
+
+In case of \verb|GLP_BF_FT| the update is applied to matrix $U$, while
+in cases of \verb|GLP_BF_BG| and \verb|GLP_BF_GR| the update is applied
+to the Schur complement.
+
+%\medskip
+%
+%{\tt int lu\_size} (default: {\tt 0})
+%
+%The initial size of the Sparse Vector Area, in non-zeros, used on
+%computing $LU$-factorization of the basis matrix for the first time.
+%If this parameter is set to 0, the initial SVA size is determined
+%automatically.
+
+\medskip
+
+{\tt double piv\_tol} (default: {\tt 0.10})
+
+Threshold pivoting (Markowitz) tolerance, 0 $<$ \verb|piv_tol| $<$ 1,
+used on computing $LU$-factoriza\-tion of the basis matrix. Element
+$u_{ij}$ of the active submatrix of factor $U$ fits to be pivot if it
+satisfies to the stability criterion
+$|u_{ij}| >= {\tt piv\_tol}\cdot\max|u_{i*}|$, i.e. if it is not very
+small in the magnitude among other elements in the same row. Decreasing
+this parameter may lead to better sparsity at the expense of numerical
+accuracy, and vice versa.
+
+\medskip
+
+{\tt int piv\_lim} (default: {\tt 4})
+
+This parameter is used on computing $LU$-factorization of the basis
+matrix and specifies how many pivot candidates needs to be considered
+on choosing a pivot element, \verb|piv_lim| $\geq$ 1. If \verb|piv_lim|
+candidates have been considered, the pivoting routine prematurely
+terminates the search with the best candidate found.
+
+\medskip
+
+{\tt int suhl} (default: {\tt GLP\_ON})
+
+This parameter is used on computing $LU$-factorization of the basis
+matrix. Being set to {\tt GLP\_ON} it enables applying the following
+heuristic proposed by Uwe Suhl: if a column of the active submatrix has
+no eligible pivot candidates, it is no more considered until it becomes
+a column singleton. In many cases this allows reducing the time needed
+for pivot searching. To disable this heuristic the parameter
+\verb|suhl| should be set to {\tt GLP\_OFF}.
+
+\medskip
+
+{\tt double eps\_tol} (default: {\tt 1e-15})
+
+Epsilon tolerance, \verb|eps_tol| $\geq$ 0, used on computing
+$LU$-factorization of the basis matrix. If an element of the active
+submatrix of factor $U$ is less than \verb|eps_tol| in the magnitude,
+it is replaced by exact zero.
+
+%\medskip
+%
+%{\tt double max\_gro} (default: {\tt 1e+10})
+%
+%Maximal growth of elements of factor $U$, \verb|max_gro| $\geq$ 1,
+%allowable on computing $LU$-factorization of the basis matrix. If on
+%some elimination step the ratio $u_{big}/b_{max}$ (where $u_{big}$ is
+%the largest magnitude of elements of factor $U$ appeared in its active
+%submatrix during all the factorization process, $b_{max}$ is the
+%largest magnitude of elements of the basis matrix to be factorized),
+%the basis matrix is considered as ill-conditioned.
+
+\medskip
+
+{\tt int nfs\_max} (default: {\tt 100})
+
+Maximal number of additional row-like factors (entries of the eta
+file), \verb|nfs_max| $\geq$ 1, which can be added to
+$LU$-factorization of the basis matrix on updating it with the
+Forrest--Tomlin technique. This parameter is used only once, before
+$LU$-factorization is computed for the first time, to allocate working
+arrays. As a rule, each update adds one new factor (however, some
+updates may need no addition), so this parameter limits the number of
+updates between refactorizations.
+
+\medskip
+
+{\tt double upd\_tol} (default: {\tt 1e-6})
+
+Update tolerance, 0 $<$ \verb|upd_tol| $<$ 1, used on updating
+$LU$-factorization of the basis matrix with the Forrest--Tomlin
+technique. If after updating the magnitude of some diagonal element
+$u_{kk}$ of factor $U$ becomes less than
+${\tt upd\_tol}\cdot\max(|u_{k*}|, |u_{*k}|)$, the factorization is
+considered as inaccurate.
+
+\medskip
+
+{\tt int nrs\_max} (default: {\tt 100})
+
+Maximal number of additional rows and columns, \verb|nrs_max| $\geq$ 1,
+which can be added to $LU$-factorization of the basis matrix on
+updating it with the Schur complement technique. This parameter is used
+only once, before $LU$-factorization is computed for the first time, to
+allocate working arrays. As a rule, each update adds one new row and
+column (however, some updates may need no addition), so this parameter
+limits the number of updates between refactorizations.
+
+%\medskip
+%
+%{\tt int rs\_size} (default: {\tt 0})
+%
+%The initial size of the Sparse Vector Area, in non-zeros, used to
+%store non-zero elements of additional rows and columns introduced on
+%updating $LU$-factorization of the basis matrix with the Schur
+%complement technique. If this parameter is set to 0, the initial SVA
+%size is determined automatically.
+
+\subsection{glp\_get\_bhead --- retrieve the basis header information}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_bhead(glp_prob *P, int k);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_get_bhead| returns the basis header information
+for the current basis associated with the specified problem object.
+
+\returns
+
+If basic variable $(x_B)_k$, $1\leq k\leq m$, is $i$-th auxiliary
+variable ($1\leq i\leq m$), the routine returns $i$. Otherwise, if
+$(x_B)_k$ is $j$-th structural variable ($1\leq j\leq n$), the routine
+returns $m+j$. Here $m$ is the number of rows and $n$ is the number of
+columns in the problem object.
+
+\para{Comments}
+
+Sometimes the application program may need to know which original
+(auxiliary and structural) variable correspond to a given basic
+variable, or, that is the same, which column of the augmented
+constraint matrix $(I\ |-\!A)$ correspond to a given column of the
+basis matrix $B$.
+
+\def\arraystretch{1}
+
+The correspondence is defined as follows:\footnote{For more details see
+Subsection \ref{basbgd}, page \pageref{basbgd}.}
+$$\left(\begin{array}{@{}c@{}}x_B\\x_N\\\end{array}\right)=
+\Pi\left(\begin{array}{@{}c@{}}x_R\\x_S\\\end{array}\right)
+\ \ \Leftrightarrow
+\ \ \left(\begin{array}{@{}c@{}}x_R\\x_S\\\end{array}\right)=
+\Pi^T\left(\begin{array}{@{}c@{}}x_B\\x_N\\\end{array}\right),$$
+where $x_B$ is the vector of basic variables, $x_N$ is the vector of
+non-basic variables, $x_R$ is the vector of auxiliary variables
+following in their original order,\footnote{The original order of
+auxiliary and structural variables is defined by the ordinal numbers
+of corresponding rows and columns in the problem object.} $x_S$ is the
+vector of structural variables following in their original order, $\Pi$
+is a permutation matrix (which is a component of the basis
+factorization).
+
+Thus, if $(x_B)_k=(x_R)_i$ is $i$-th auxiliary variable, the routine
+returns $i$, and if $(x_B)_k=(x_S)_j$ is $j$-th structural variable,
+the routine returns $m+j$, where $m$ is the number of rows in the
+problem object.
+
+\subsection{glp\_get\_row\_bind --- retrieve row index in the basis
+header}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_row_bind(glp_prob *P, int i);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_row_bind| returns the index $k$ of basic
+variable $(x_B)_k$, $1\leq k\leq m$, which is $i$-th auxiliary variable
+(that is, the auxiliary variable corresponding to $i$-th row),
+$1\leq i\leq m$, in the current basis associated with the specified
+problem object, where $m$ is the number of rows. However, if $i$-th
+auxiliary variable is non-basic, the routine returns zero.
+
+\para{Comments}
+
+The routine \verb|glp_get_row_bind| is an inversion of the routine
+\verb|glp_get_bhead|; that is, if \linebreak
+\verb|glp_get_bhead|$(P,k)$ returns $i$,
+\verb|glp_get_row_bind|$(P,i)$ returns $k$, and vice versa.
+
+\subsection{glp\_get\_col\_bind --- retrieve column index in the basis
+header}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_get_col_bind(glp_prob *P, int j);
+\end{verbatim}
+
+\returns
+
+The routine \verb|glp_get_col_bind| returns the index $k$ of basic
+variable $(x_B)_k$, $1\leq k\leq m$, which is $j$-th structural
+variable (that is, the structural variable corresponding to $j$-th
+column), $1\leq j\leq n$, in the current basis associated with the
+specified problem object, where $m$ is the number of rows, $n$ is the
+number of columns. However, if $j$-th structural variable is non-basic,
+the routine returns zero.
+
+\para{Comments}
+
+The routine \verb|glp_get_col_bind| is an inversion of the routine
+\verb|glp_get_bhead|; that is, if \linebreak
+\verb|glp_get_bhead|$(P,k)$ returns $m+j$,
+\verb|glp_get_col_bind|$(P,j)$ returns $k$, and vice versa.
+
+\subsection{glp\_ftran --- perform forward transformation}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_ftran(glp_prob *P, double x[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_ftran| performs forward transformation (FTRAN),
+i.e. it solves the system $Bx=b$, where $B$ is the basis matrix
+associated with the specified problem object, $x$ is the vector of
+unknowns to be computed, $b$ is the vector of right-hand sides.
+
+On entry to the routine elements of the vector $b$ should be stored in
+locations \verb|x[1]|, \dots, \verb|x[m]|, where $m$ is the number of
+rows. On exit the routine stores elements of the vector $x$ in the same
+locations.
+
+\subsection{glp\_btran --- perform backward transformation}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_btran(glp_prob *P, double x[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_btran| performs backward transformation (BTRAN),
+i.e. it solves the system $B^Tx=b$, where $B^T$ is a matrix transposed
+to the basis matrix $B$ associated with the specified problem object,
+$x$ is the vector of unknowns to be computed, $b$ is the vector of
+right-hand sides.
+
+On entry to the routine elements of the vector $b$ should be stored in
+locations \verb|x[1]|, \dots, \verb|x[m]|, where $m$ is the number of
+rows. On exit the routine stores elements of the vector $x$ in the same
+locations.
+
+\subsection{glp\_warm\_up --- ``warm up'' LP basis}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_warm_up(glp_prob *P);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_warm_up| ``warms up'' the LP basis for the
+specified problem object using current statuses assigned to rows and
+columns (that is, to auxiliary and structural variables).
+
+This operation includes computing factorization of the basis matrix
+(if it does not exist), computing primal and dual components of basic
+solution, and determining the solution status.
+
+\returns
+
+\begin{retlist}
+0 & The operation has been successfully performed.\\
+
+\verb|GLP_EBADB| & The basis matrix is invalid, because the number of
+basic (auxiliary and structural) variables is not the same as the
+number of rows in the problem object.\\
+
+\verb|GLP_ESING| & The basis matrix is singular within the working
+precision.\\
+
+\verb|GLP_ECOND| & The basis matrix is ill-conditioned, i.e. its
+condition number is too large.\\
+\end{retlist}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Simplex tableau routines}
+
+\subsection{glp\_eval\_tab\_row --- compute row of the tableau}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_eval_tab_row(glp_prob *P, int k, int ind[], double val[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_eval_tab_row| computes a row of the current
+simplex tableau (see Subsection 3.1.1, formula (3.12)), which (row)
+corresponds to some basic variable specified by the parameter $k$ as
+follows: if $1\leq k\leq m$, the basic variable is $k$-th auxiliary
+variable, and if $m+1\leq k\leq m+n$, the basic variable is $(k-m)$-th
+structural variable, where $m$ is the number of rows and $n$ is the
+number of columns in the specified problem object. The basis
+factorization must exist.
+
+The computed row shows how the specified basic variable depends on
+non-basic variables:
+$$x_k=(x_B)_i=\xi_{i1}(x_N)_1+\xi_{i2}(x_N)_2+\dots+\xi_{in}(x_N)_n,$$
+where $\xi_{i1}$, $\xi_{i2}$, \dots, $\xi_{in}$ are elements of the
+simplex table row, $(x_N)_1$, $(x_N)_2$, \dots, $(x_N)_n$ are non-basic
+(auxiliary and structural) variables.
+
+The routine stores column indices and corresponding numeric values of
+non-zero elements of the computed row in unordered sparse format in
+locations \verb|ind[1]|, \dots, \verb|ind[len]| and \verb|val[1]|,
+\dots, \verb|val[len]|, respectively, where $0\leq{\tt len}\leq n$ is
+the number of non-zero elements in the row returned on exit.
+
+Element indices stored in the array \verb|ind| have the same sense as
+index $k$, i.e. indices 1 to $m$ denote auxiliary variables while
+indices $m+1$ to $m+n$ denote structural variables (all these variables
+are obviously non-basic by definition).
+
+\returns
+
+The routine \verb|glp_eval_tab_row| returns \verb|len|, which is the
+number of non-zero elements in the simplex table row stored in the
+arrays \verb|ind| and \verb|val|.
+
+\para{Comments}
+
+A row of the simplex table is computed as follows. At first, the
+routine checks that the specified variable $x_k$ is basic and uses the
+permutation matrix $\Pi$ (3.7) to determine index $i$ of basic variable
+$(x_B)_i$, which corresponds to $x_k$.
+
+The row to be computed is $i$-th row of the matrix $\Xi$ (3.12),
+therefore:
+$$\xi_i=e_i^T\Xi=-e_i^TB^{-1}N=-(B^{-T}e_i)^TN,$$
+where $e_i$ is $i$-th unity vector. So the routine performs BTRAN to
+obtain $i$-th row of the inverse $B^{-1}$:
+$$\varrho_i=B^{-T}e_i,$$
+and then computes elements of the simplex table row as inner products:
+$$\xi_{ij}=-\varrho_i^TN_j,\ \ j=1,2,\dots,n,$$
+where $N_j$ is $j$-th column of matrix $N$ (3.9), which (column)
+corresponds to non-basic variable $(x_N)_j$. The permutation matrix
+$\Pi$ is used again to convert indices $j$ of non-basic columns to
+original ordinal numbers of auxiliary and structural variables.
+
+\subsection{glp\_eval\_tab\_col --- compute column of the tableau}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_eval_tab_col(glp_prob *P, int k, int ind[], double val[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_eval_tab_col| computes a column of the current
+simplex tableau (see Subsection 3.1.1, formula (3.12)), which (column)
+corresponds to some non-basic variable specified by the parameter $k$:
+if $1\leq k\leq m$, the non-basic variable is $k$-th auxiliary
+variable, and if $m+1\leq k\leq m+n$, the non-basic variable is
+$(k-m)$-th structural variable, where $m$ is the number of rows and $n$
+is the number of columns in the specified problem object. The basis
+factorization must exist.
+
+The computed column shows how basic variables depends on the specified
+non-basic variable $x_k=(x_N)_j$:
+$$
+\begin{array}{r@{\ }c@{\ }l@{\ }l}
+(x_B)_1&=&\dots+\xi_{1j}(x_N)_j&+\dots\\
+(x_B)_2&=&\dots+\xi_{2j}(x_N)_j&+\dots\\
+.\ \ .&.&.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\\
+(x_B)_m&=&\dots+\xi_{mj}(x_N)_j&+\dots\\
+\end{array}
+$$
+where $\xi_{1j}$, $\xi_{2j}$, \dots, $\xi_{mj}$ are elements of the
+simplex table column, $(x_B)_1$, $(x_B)_2$, \dots, $(x_B)_m$ are basic
+(auxiliary and structural) variables.
+
+The routine stores row indices and corresponding numeric values of
+non-zero elements of the computed column in unordered sparse format in
+locations \verb|ind[1]|, \dots, \verb|ind[len]| and \verb|val[1]|,
+\dots, \verb|val[len]|, respectively, where $0\leq{\tt len}\leq m$ is
+the number of non-zero elements in the column returned on exit.
+
+Element indices stored in the array \verb|ind| have the same sense as
+index $k$, i.e. indices 1 to $m$ denote auxiliary variables while
+indices $m+1$ to $m+n$ denote structural variables (all these variables
+are obviously basic by definition).
+
+\returns
+
+The routine \verb|glp_eval_tab_col| returns \verb|len|, which is the
+number of non-zero elements in the simplex table column stored in the
+arrays \verb|ind| and \verb|val|.
+
+\para{Comments}
+
+A column of the simplex table is computed as follows. At first, the
+routine checks that the specified variable $x_k$ is non-basic and uses
+the permutation matrix $\Pi$ (3.7) to determine index $j$ of non-basic
+variable $(x_N)_j$, which corresponds to $x_k$.
+
+The column to be computed is $j$-th column of the matrix $\Xi$ (3.12),
+therefore:
+$$\Xi_j=\Xi e_j=-B^{-1}Ne_j=-B^{-1}N_j,$$
+where $e_j$ is $j$-th unity vector, $N_j$ is $j$-th column of matrix
+$N$ (3.9). So the routine performs FTRAN to transform $N_j$ to the
+simplex table column $\Xi_j=(\xi_{ij})$ and uses the permutation matrix
+$\Pi$ to convert row indices $i$ to original ordinal numbers of
+auxiliary and structural variables.
+
+\newpage
+
+\subsection{glp\_transform\_row --- transform explicitly specified row}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_transform_row(glp_prob *P, int len, int ind[], double val[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_transform_row| performs the same operation as the
+routine \verb|glp_eval_tab_row| with exception that the row to be
+transformed is specified explicitly as a sparse vector.
+
+The explicitly specified row may be thought as a linear form:
+$$x=a_1x_{m+1}+a_2x_{m+2}+\dots+a_nx_{m+n},$$
+where $x$ is an auxiliary variable for this row, $a_j$ are coefficients
+of the linear form, $x_{m+j}$ are structural variables.
+
+On entry column indices and numerical values of non-zero coefficients
+$a_j$ of the specified row should be placed in locations \verb|ind[1]|,
+\dots, \verb|ind[len]| and \verb|val[1]|, \dots, \verb|val[len]|, where
+\verb|len| is number of non-zero coefficients.
+
+This routine uses the system of equality constraints and the current
+basis in order to express the auxiliary variable $x$ through the current
+non-basic variables (as if the transformed row were added to the problem
+object and the auxiliary variable $x$ were basic), i.e. the resultant
+row has the form:
+$$x=\xi_1(x_N)_1+\xi_2(x_N)_2+\dots+\xi_n(x_N)_n,$$
+where $\xi_j$ are influence coefficients, $(x_N)_j$ are non-basic
+(auxiliary and structural) variables, $n$ is the number of columns in
+the problem object.
+
+On exit the routine stores indices and numerical values of non-zero
+coefficients $\xi_j$ of the resultant row in locations \verb|ind[1]|,
+\dots, \verb|ind[len']| and \verb|val[1]|, \dots, \verb|val[len']|,
+where $0\leq{\tt len'}\leq n$ is the number of non-zero coefficients in
+the resultant row returned by the routine. Note that indices of
+non-basic variables stored in the array \verb|ind| correspond to
+original ordinal numbers of variables: indices 1 to $m$ mean auxiliary
+variables and indices $m+1$ to $m+n$ mean structural ones.
+
+\returns
+
+The routine \verb|glp_transform_row| returns \verb|len'|, the number of
+non-zero coefficients in the resultant row stored in the arrays
+\verb|ind| and \verb|val|.
+
+\newpage
+
+\subsection{glp\_transform\_col --- transform explicitly specified
+column}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_transform_col(glp_prob *P, int len, int ind[], double val[]);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_transform_col| performs the same operation as the
+routine \verb|glp_eval_tab_col| with exception that the column to be
+transformed is specified explicitly as a sparse vector.
+
+The explicitly specified column may be thought as it were added to
+the original system of equality constraints:
+$$
+\begin{array}{l@{\ }c@{\ }r@{\ }c@{\ }r@{\ }c@{\ }r}
+x_1&=&a_{11}x_{m+1}&+\dots+&a_{1n}x_{m+n}&+&a_1x \\
+x_2&=&a_{21}x_{m+1}&+\dots+&a_{2n}x_{m+n}&+&a_2x \\
+\multicolumn{7}{c}
+{.\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .\ \ .}\\
+x_m&=&a_{m1}x_{m+1}&+\dots+&a_{mn}x_{m+n}&+&a_mx \\
+\end{array}
+$$
+where $x_i$ are auxiliary variables, $x_{m+j}$ are structural variables
+(presented in the problem object), $x$ is a structural variable for the
+explicitly specified column, $a_i$ are constraint coefficients at $x$.
+
+On entry row indices and numerical values of non-zero coefficients
+$a_i$ of the specified column should be placed in locations
+\verb|ind[1]|, \dots, \verb|ind[len]| and \verb|val[1]|, \dots,
+\verb|val[len]|, where \verb|len| is number of non-zero coefficients.
+
+This routine uses the system of equality constraints and the current
+basis in order to express the current basic variables through the
+structural variable $x$ (as if the transformed column were added to the
+problem object and the variable $x$ were non-basic):
+$$
+\begin{array}{l@{\ }c@{\ }r}
+(x_B)_1&=\dots+&\xi_{1}x\\
+(x_B)_2&=\dots+&\xi_{2}x\\
+\multicolumn{3}{c}{.\ \ .\ \ .\ \ .\ \ .\ \ .}\\
+(x_B)_m&=\dots+&\xi_{m}x\\
+\end{array}
+$$
+where $\xi_i$ are influence coefficients, $x_B$ are basic (auxiliary
+and structural) variables, $m$ is the number of rows in the problem
+object.
+
+On exit the routine stores indices and numerical values of non-zero
+coefficients $\xi_i$ of the resultant column in locations \verb|ind[1]|,
+\dots, \verb|ind[len']| and \verb|val[1]|, \dots, \verb|val[len']|,
+where $0\leq{\tt len'}\leq m$ is the number of non-zero coefficients in
+the resultant column returned by the routine. Note that indices of basic
+variables stored in the array \verb|ind| correspond to original ordinal
+numbers of variables, i.e. indices 1 to $m$ mean auxiliary variables,
+indices $m+1$ to $m+n$ mean structural ones.
+
+\returns
+
+The routine \verb|glp_transform_col| returns \verb|len'|, the number of
+non-zero coefficients in the resultant column stored in the arrays
+\verb|ind| and \verb|val|.
+
+\newpage
+
+\subsection{glp\_prim\_rtest --- perform primal ratio test}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_prim_rtest(glp_prob *P, int len, const int ind[], const double val[],
+                      int dir, double eps);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_prim_rtest| performs the primal ratio test using
+an explicitly specified column of the simplex table.
+
+The current basic solution associated with the LP problem object must
+be primal feasible.
+
+The explicitly specified column of the simplex table shows how the
+basic variables $x_B$ depend on some non-basic variable $x$ (which is
+not necessarily presented in the problem object):
+$$
+\begin{array}{l@{\ }c@{\ }r}
+(x_B)_1&=\dots+&\xi_{1}x\\
+(x_B)_2&=\dots+&\xi_{2}x\\
+\multicolumn{3}{c}{.\ \ .\ \ .\ \ .\ \ .\ \ .}\\
+(x_B)_m&=\dots+&\xi_{m}x\\
+\end{array}
+$$
+
+The column is specifed on entry to the routine in sparse format.
+Ordinal numbers of basic variables $(x_B)_i$ should be placed in
+locations \verb|ind[1]|, \dots, \verb|ind[len]|, where ordinal number
+1 to $m$ denote auxiliary variables, and ordinal numbers $m+1$ to $m+n$
+denote structural variables. The corresponding non-zero coefficients
+$\xi_i$ should be placed in locations
+\verb|val[1]|, \dots, \verb|val[len]|. The arrays \verb|ind| and
+\verb|val| are not changed by the routine.
+
+The parameter \verb|dir| specifies direction in which the variable $x$
+changes on entering the basis: $+1$ means increasing, $-1$ means
+decreasing.
+
+The parameter \verb|eps| is an absolute tolerance (small positive
+number, say, $10^{-9}$) used by the routine to skip $\xi_i$'s whose
+magnitude is less than \verb|eps|.
+
+The routine determines which basic variable (among those specified in
+\verb|ind[1]|, \dots, \verb|ind[len]|) reaches its (lower or upper)
+bound first before any other basic variables do, and which, therefore,
+should leave the basis in order to keep primal feasibility.
+
+\returns
+
+The routine \verb|glp_prim_rtest| returns the index, \verb|piv|, in the
+arrays \verb|ind| and \verb|val| corresponding to the pivot element
+chosen, $1\leq$ \verb|piv| $\leq$ \verb|len|. If the adjacent basic
+solution is primal unbounded, and therefore the choice cannot be made,
+the routine returns zero.
+
+\para{Comments}
+
+If the non-basic variable $x$ is presented in the LP problem object,
+the input column can be computed with the routine
+\verb|glp_eval_tab_col|; otherwise, it can be computed with the routine
+\verb|glp_transform_col|.
+
+\newpage
+
+\subsection{glp\_dual\_rtest --- perform dual ratio test}
+
+\synopsis
+
+\begin{verbatim}
+   int glp_dual_rtest(glp_prob *P, int len, const int ind[], const double val[],
+                      int dir, double eps);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_dual_rtest| performs the dual ratio test using
+an explicitly specified row of the simplex table.
+
+The current basic solution associated with the LP problem object must
+be dual feasible.
+
+The explicitly specified row of the simplex table is a linear form
+that shows how some basic variable $x$ (which is not necessarily
+presented in the problem object) depends on non-basic variables $x_N$:
+$$x=\xi_1(x_N)_1+\xi_2(x_N)_2+\dots+\xi_n(x_N)_n.$$
+
+The row is specified on entry to the routine in sparse format. Ordinal
+numbers of non-basic variables $(x_N)_j$ should be placed in locations
+\verb|ind[1]|, \dots, \verb|ind[len]|, where ordinal numbers 1 to $m$
+denote auxiliary variables, and ordinal numbers $m+1$ to $m+n$ denote
+structural variables. The corresponding non-zero coefficients $\xi_j$
+should be placed in locations \verb|val[1]|, \dots, \verb|val[len]|.
+The arrays \verb|ind| and \verb|val| are not changed by the routine.
+
+The parameter \verb|dir| specifies direction in which the variable $x$
+changes on leaving the basis: $+1$ means that $x$ goes on its lower
+bound, so its reduced cost (dual variable) is increasing (minimization)
+or decreasing (maximization); $-1$ means that $x$ goes on its upper
+bound, so its reduced cost is decreasing (minimization) or increasing
+(maximization).
+
+The parameter \verb|eps| is an absolute tolerance (small positive
+number, say, $10^{-9}$) used by the routine to skip $\xi_j$'s whose
+magnitude is less than \verb|eps|.
+
+The routine determines which non-basic variable (among those specified
+in \verb|ind[1]|, \dots,\linebreak \verb|ind[len]|) should enter the
+basis in order to keep dual feasibility, because its reduced cost
+reaches the (zero) bound first before this occurs for any other
+non-basic variables.
+
+\returns
+
+The routine \verb|glp_dual_rtest| returns the index, \verb|piv|, in the
+arrays \verb|ind| and \verb|val| corresponding to the pivot element
+chosen, $1\leq$ \verb|piv| $\leq$ \verb|len|. If the adjacent basic
+solution is dual unbounded, and therefore the choice cannot be made,
+the routine returns zero.
+
+\para{Comments}
+
+If the basic variable $x$ is presented in the LP problem object, the
+input row can be computed\linebreak with the routine
+\verb|glp_eval_tab_row|; otherwise, it can be computed with the routine
+\linebreak \verb|glp_transform_row|.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{Post-optimal analysis routines}
+
+\subsection{glp\_analyze\_bound --- analyze active bound of non-basic
+variable}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_analyze_bound(glp_prob *P, int k, double *limit1, int *var1,
+                          double *limit2, int *var2);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_analyze_bound| analyzes the effect of varying the
+active bound of specified non-basic variable.
+
+The non-basic variable is specified by the parameter $k$, where
+$1\leq k\leq m$ means auxiliary variable of corresponding row, and
+$m+1\leq k\leq m+n$ means structural variable (column).
+
+Note that the current basic solution must be optimal, and the basis
+factorization must exist.
+
+Results of the analysis have the following meaning.
+
+\verb|value1| is the minimal value of the active bound, at which the
+basis still remains primal feasible and thus optimal. \verb|-DBL_MAX|
+means that the active bound has no lower limit.
+
+\verb|var1| is the ordinal number of an auxiliary (1 to $m$) or
+structural ($m+1$ to $m+n$) basic variable, which reaches its bound
+first and thereby limits further decreasing the active bound being
+analyzed. if \verb|value1| = \verb|-DBL_MAX|, \verb|var1| is set to 0.
+
+\verb|value2| is the maximal value of the active bound, at which the
+basis still remains primal feasible and thus optimal. \verb|+DBL_MAX|
+means that the active bound has no upper limit.
+
+\verb|var2| is the ordinal number of an auxiliary (1 to $m$) or
+structural ($m+1$ to $m+n$) basic variable, which reaches its bound
+first and thereby limits further increasing the active bound being
+analyzed. if \verb|value2| = \verb|+DBL_MAX|, \verb|var2| is set to 0.
+
+The parameters \verb|value1|, \verb|var1|, \verb|value2|, \verb|var2|
+can be specified as \verb|NULL|, in which case corresponding information
+is not stored.
+
+\subsection{glp\_analyze\_coef --- analyze objective coefficient at
+basic variable}
+
+\synopsis
+
+\begin{verbatim}
+   void glp_analyze_coef(glp_prob *P, int k,
+                         double *coef1, int *var1, double *value1,
+                         double *coef2, int *var2, double *value2);
+\end{verbatim}
+
+\description
+
+The routine \verb|glp_analyze_coef| analyzes the effect of varying the
+objective coefficient at specified basic variable.
+
+The basic variable is specified by the parameter $k$, where
+$1\leq k\leq m$ means auxiliary variable of corresponding row, and
+$m+1\leq k\leq m+n$ means structural variable (column).
+
+Note that the current basic solution must be optimal, and the basis
+factorization must exist.
+
+Results of the analysis have the following meaning.
+
+\verb|coef1| is the minimal value of the objective coefficient, at
+which the basis still remains dual feasible and thus optimal.
+\verb|-DBL_MAX| means that the objective coefficient has no lower
+limit.
+
+\verb|var1| is the ordinal number of an auxiliary (1 to $m$) or
+structural ($m+1$ to $m+n$) non-basic variable, whose reduced cost
+reaches its zero bound first and thereby limits further decreasing the
+objective coefficient being analyzed.
+If \verb|coef1| = \verb|-DBL_MAX|, \verb|var1| is set to 0.
+
+\verb|value1| is value of the basic variable being analyzed in an
+adjacent basis, which is defined as follows. Let the objective
+coefficient reach its minimal value (\verb|coef1|) and continue
+decreasing. Then the reduced cost of the limiting non-basic variable
+(\verb|var1|) becomes dual infeasible and the current basis becomes
+non-optimal that forces the limiting non-basic variable to enter the
+basis replacing there some basic variable that leaves the basis to keep
+primal feasibility. Should note that on determining the adjacent basis
+current bounds of the basic variable being analyzed are ignored as if
+it were free (unbounded) variable, so it cannot leave the basis. It may
+happen that no dual feasible adjacent basis exists, in which case
+\verb|value1| is set to \verb|-DBL_MAX| or \verb|+DBL_MAX|.
+
+\verb|coef2| is the maximal value of the objective coefficient, at
+which the basis still remains dual feasible and thus optimal.
+\verb|+DBL_MAX| means that the objective coefficient has no upper
+limit.
+
+\verb|var2| is the ordinal number of an auxiliary (1 to $m$) or
+structural ($m+1$ to $m+n$) non-basic variable, whose reduced cost
+reaches its zero bound first and thereby limits further increasing the
+objective coefficient being analyzed.
+If \verb|coef2| = \verb|+DBL_MAX|, \verb|var2| is set to 0.
+
+\verb|value2| is value of the basic variable being analyzed in an
+adjacent basis, which is defined exactly in the same way as
+\verb|value1| above with exception that now the objective coefficient
+is increasing.
+
+The parameters \verb|coef1|, \verb|var1|, \verb|value1|, \verb|coef2|,
+\verb|var2|, \verb|value2| can be specified as \verb|NULL|, in which
+case corresponding information is not stored.
+
+%* eof *%

@@ -1,0 +1,30 @@
+/* config.h.in (GLPK configuration template file) */
+
+#undef HAVE_SYS_TIME_H
+/* defined if the <sys/time.h> header can be used */
+
+#undef HAVE_GETTIMEOFDAY
+/* defined if the gettimeofday function can be used */
+
+#undef HAVE_GMP
+/* defined if the GNU MP bignum library is available */
+/* requires <gmp.h> and -lgmp */
+
+#undef HAVE_LTDL
+/* defined if the GNU Libtool shared library support is enabled */
+/* requires <ltdl.h> and -lltdl */
+
+#undef HAVE_DLFCN
+/* defined if the POSIX shared library support is enabled */
+/* requires <dlfcn.h> */
+
+#undef ODBC_DLNAME
+/* ODBC shared library name if this feature is enabled */
+
+#undef MYSQL_DLNAME
+/* MySQL shared library name if this feature is enabled */
+
+#undef TLS
+/* thread local storage-class specifier for re-entrancy (if any) */
+
+/* eof */

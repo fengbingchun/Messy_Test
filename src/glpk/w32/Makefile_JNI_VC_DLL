@@ -1,0 +1,18 @@
+# Build GLPK JNI DLL with Microsoft Visual Studio Express 2010
+GLPKVERS=4_65
+CFLAGS = /I. /I../swig /I$(GLPK_HOME)\src /nologo /W3 /O2 /Zi
+
+OBJSET = \
+..\swig\src\c\glpk_wrap.obj
+
+.c.obj:
+	cl.exe $(CFLAGS) /Fo$*.obj /c $*.c
+
+all: glpk_$(GLPKVERS)_java.dll
+
+glpk_$(GLPKVERS)_java.dll: $(OBJSET)
+        cl.exe $(CFLAGS) /LD /Feglpk_$(GLPKVERS)_java.dll \
+          ..\swig\src\c\glpk_wrap.obj glpk_java_dll.res glpk_$(GLPKVERS).lib
+
+check:
+	check_jni.bat

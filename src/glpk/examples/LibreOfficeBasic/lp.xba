@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="lp" script:language="StarBasic">REM  *****  BASIC  *****
+
+&apos;  lp.bas (solve linear program)
+&apos;
+&apos;  This code is part of GLPK (GNU Linear Programming Kit).
+&apos;
+&apos;  Author: Heinrich Schuchsardt &lt;xypron.glpk@gmx.de&gt;
+&apos;
+&apos;  Copyright (C) 2017 Andrew Makhorin, Department for Applied
+&apos;  Informatics, Moscow Aviation Institute, Moscow, Russia. All rights
+&apos;  reserved. E-mail: &lt;mao@gnu.org&gt;.
+&apos;
+&apos;  GLPK is free software: you can redistribute it and/or modify it
+&apos;  under the terms of the GNU General Public License as published by
+&apos;  the Free Software Foundation, either version 3 of the License, or
+&apos;  (at your option) any later version.
+&apos;
+&apos;  GLPK is distributed in the hope that it will be useful, but WITHOUT
+&apos;  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+&apos;  or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+&apos;  License for more details.
+&apos;
+&apos;  You should have received a copy of the GNU General Public License
+&apos;  along with GLPK. If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ 
+
+Option Explicit
+
+Public Const GLP_CV = 1              &apos; continuous variable
+Public Const GLP_DB = 4              &apos; double-bounded variable
+Public Const GLP_MIN = 1             &apos; minimization
+Public Const GLP_UP = 3              &apos; variable with upper bound
+
+Public Type glp_smcp
+  &apos; simplex method control parameters
+  msg_lev As Long                    &apos; message level:
+  meth As Long                       &apos; simplex method option:
+  pricing As Long                    &apos; pricing technique:
+  r_test As Long                     &apos; ratio test technique:
+  tol_bnd As Double                  &apos; spx.tol_bnd
+  tol_dj As Double                   &apos; spx.tol_dj
+  tol_piv As Double                  &apos; spx.tol_piv
+  obj_ll As Double                   &apos; spx.obj_ll
+  obj_ul As Double                   &apos; spx.obj_ul
+  it_lim As Long                     &apos; spx.it_lim
+  tm_lim As Long                     &apos; spx.tm_lim (milliseconds)
+  out_frq As Long                    &apos; spx.out_frq
+  out_dly As Long                    &apos; spx.out_dly (milliseconds)
+  presolve As Long                   &apos; enable/disable using LP presolver
+  align_1 As Long                    &apos; only used for alignment
+  foo_bar(35) As Double              &apos; (reserved)
+End Type
+
+Declare Function glp_create_prob Lib &quot;glpk_4_65_stdcall&quot; () As Long
+Declare Sub glp_set_prob_name Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal name As String)
+Declare Function glp_add_cols Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal count As Long) As Long
+Declare Sub glp_set_col_name Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal col As Long, ByVal name As String)
+Declare Sub glp_set_col_bnds Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal row As Long, ByVal typ As Long, ByVal lb As Double, ByVal ub As Double)
+Declare Sub glp_set_col_kind Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal j As Long, ByVal kind As Long)
+Declare Function glp_add_rows Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal count As Long) As Long
+Declare Sub glp_set_row_name Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal row As Long, ByVal name As String)
+Declare Sub glp_set_mat_row Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal i As Long, ByVal length As Long, ByRef ind As tind, ByRef val As tval)
+Declare Sub glp_set_row_bnds Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal row As Long, ByVal typ As Long, ByVal lb As Double, ByVal ub As Double)
+Declare Sub glp_set_obj_name Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal name As String)
+Declare Sub glp_set_obj_dir Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal dir As Long)
+Declare Sub glp_set_obj_coef Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal col As Long, ByVal val As Double)
+Declare Function glp_init_smcp Lib &quot;glpk_4_65_stdcall&quot; (ByRef smcp As glp_smcp) As Long
+Declare Function glp_simplex Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByRef smcp As glp_smcp) As Long
+Declare Sub glp_delete_prob Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long)
+Declare Function glp_version Lib &quot;glpk_4_65_stdcall&quot; () As String
+Declare Function glp_get_prob_name Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long) As String
+Declare Function glp_get_obj_name Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long) As String
+Declare Function glp_get_obj_val Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long) As Double
+Declare Function glp_get_num_cols Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long) As Long
+Declare Function glp_get_col_name Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal j As Long) As String
+Declare Function glp_get_col_prim Lib &quot;glpk_4_65_stdcall&quot; (ByVal lp As Long, ByVal j As Long) As Double
+
+
+Public Type tind
+  ind(2) As Long
+End Type
+
+Public Type tval
+  val(2) As Double
+End Type
+
+
+&apos;  Minimize z = -.5 * x1 + .5 * x2 - x3 + 1
+&apos;
+&apos;  subject to
+&apos;  0.0 &lt;= x1 - .5 * x2 &lt;= 0.2
+&apos;  -x2 + x3 &lt;= 0.4
+&apos;  where,
+&apos;  0.0 &lt;= x1 &lt;= 0.5
+&apos;  0.0 &lt;= x2 &lt;= 0.5
+&apos;  0.0 &lt;= x3 &lt;= 0.5
+Sub lp()
+  Dim lp As Long
+  Dim smcp As glp_smcp
+  Dim ret As Long
+  Dim name() As Byte
+  Dim ind As tind
+  Dim val As tval
+  
+  &apos; Create problem
+  lp = glp_create_prob()
+  glp_set_prob_name lp, &quot;Linear Problem&quot;
+  
+  &apos; Create columns
+  glp_add_cols lp, 3
+  glp_set_col_name lp, 1, &quot;x1&quot;
+  glp_set_col_kind lp, 1, GLP_CV
+  glp_set_col_bnds lp, 1, GLP_DB, 0#, 0.5
+  glp_set_col_name lp, 2, &quot;x2&quot;
+  glp_set_col_kind lp, 2, GLP_CV
+  glp_set_col_bnds lp, 2, GLP_DB, 0#, 0.5
+  glp_set_col_name lp, 3, &quot;x3&quot;
+  glp_set_col_kind lp, 3, GLP_CV
+  glp_set_col_bnds lp, 3, GLP_DB, 0#, 0.5
+  
+  &apos; Create rows
+  glp_add_rows lp, 2
+  
+  glp_set_row_name lp, 1, &quot;c1&quot;
+  glp_set_row_bnds lp, 1, GLP_DB, 0, 0.2
+
+  ind.ind(1) = 1
+  ind.ind(2) = 2
+  val.val(1) = 1#
+  val.val(2) = -0.5
+  glp_set_mat_row lp, 1, 2, ind, val
+
+  glp_set_row_name lp, 2, &quot;c2&quot;
+  glp_set_row_bnds lp, 2, GLP_UP, 0, 0.4
+  
+  ind.ind(1) = 2
+  ind.ind(2) = 3
+  val.val(1) = -1
+  val.val(2) = 1
+  glp_set_mat_row lp, 2, 2, ind(0), val(0)
+  
+  &apos; Define objective
+  glp_set_obj_name lp, &quot;obj&quot;
+  glp_set_obj_dir lp, GLP_MIN
+  glp_set_obj_coef lp, 0, 1#
+  glp_set_obj_coef lp, 1, -0.5
+  glp_set_obj_coef lp, 2, 0.5
+  glp_set_obj_coef lp, 3, -1
+
+  &apos; Write model to file
+  &apos; name = str2bytes(&quot;c:\temp\lp.lp&quot;)
+  &apos; ret = glp_write_lp(lp, 0, name(0))
+
+  &apos; Solve model
+  ret = glp_init_smcp(smcp)
+  ret = glp_simplex(lp, smcp)
+  
+  &apos;Retrieve solution
+  If ret = 0 Then
+    write_lp_solution (lp)
+  End If
+
+  &apos; Free memory
+  glp_delete_prob lp
+End Sub
+
+Private Sub write_lp_solution(lp As Long)
+  Dim i, n As Long
+  Dim name As String
+  Dim val As Double
+  dim txt as String
+        
+  name = glp_version()
+  txt = txt &amp; &quot;GLPK &quot; &amp; name &amp; Chr$(13) &amp; Chr$(10)
+  
+  name = glp_get_prob_name(lp)
+  txt = txt &amp; &quot;Solution of &quot; &amp; name &amp; Chr$(13) &amp; Chr$(10)
+          
+  name = glp_get_obj_name(lp)
+  val = glp_get_obj_val(lp)
+  txt = txt &amp; name &amp; &quot; = &quot; &amp; val &amp; Chr$(13) &amp; Chr$(10)
+          
+  n = glp_get_num_cols(lp)
+  For i = 1 To n
+     name = glp_get_col_name(lp, i)
+     val = glp_get_col_prim(lp, i)
+     txt = txt &amp; name &amp; &quot; = &quot; &amp; val &amp; Chr$(13) &amp; Chr$(10)
+   Next i
+  MsgBox txt 
+End Sub
+
+
+</script:module>

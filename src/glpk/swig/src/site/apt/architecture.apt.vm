@@ -1,0 +1,152 @@
+ -----
+ Architecture
+ -----
+ Heinrich Schuchardt
+ <xypron.glpk@gmx.de>
+ -----
+ 2017-01-21
+ -----
+
+Architecture
+
+ A GLPK for Java application will consist of the following
+
+  * the GLPK library
+
+  * the GLPK for Java JNI library
+
+  * the GLPK for Java class library
+
+  * the application code.
+
+ as shown in the chart:
+
+[images/application_layers.png] Application Layers
+ 
+* GLPK library
+
+ GLPK (GNU Linear Programming Kit) is a solver for solving linear programming
+ and mixed integer programming problems. It is maintained by Andrew Makhorin.
+ The homepage of GLPK is
+ {{{http://www.gnu.org/software/glpk/}http://www.gnu.org/software/glpk/}}.
+ The source distribution of GLPK contains the documentation for all provided
+ functions and constants in file doc/glpk.pdf.
+
+** Source
+
+ The source code to compile the GLPK library is provided at
+ {{{ftp://gnu.ftp.org/gnu/glpk/}ftp://gnu.ftp.org/gnu/glpk/}}.
+
+** Linux
+
+ The GLPK library can be compiled from source code. Follow the instructions in 
+ file INSTALL provided in  the source distribution. Precompiled packages are
+ available in many Linux distributions.
+ 
+ The usual installation path for the library is /usr/local/lib/libglpk.so.
+
+** Windows
+
+ The GLPK library can be compiled from source code. The build and make files
+ are in directory w32 for 32 bit Windows and in w64 for 64 bit Windows. The
+ name of the created library is glpk_${glpkVersionMajor}_${glpkVersionMinor}.dll for revision ${glpkVersionMajor}.${glpkVersionMinor}.
+
+ A precompiled version of GLPK is provided at
+ {{{http://sourceforge.net/projects/winglpk/files/}http://sourceforge.net/projects/winglpk/}}.
+
+ The library has to be in the search path for binaries. Either copy the library
+ to a directory that is already in the path (e.g. C:\windows\system32) or
+ update the path in the system settings of Windows.
+ 
+
+* GLPK for Java JNI library
+
+** Source
+ 
+ The source code to compile the GLPK for Java JNI library is provided at
+ {{{http://sourceforge.net/projects/glpk-java/files/}http://sourceforge.net/projects/glpk-java/}}.
+
+** Linux
+
+ The GLPK for Java JNI library can be compiled from source code. Follow the
+ instructions in file INSTALL provided in the source distribution.
+
+ The usual installation path for the library is /usr/local/lib/libglpk-java.so.
+
+** Windows
+
+ The GLPK for Java JNI library can be compiled from source code. The build and
+ make files are in directory w32 for 32 bit Windows and in w64 for 64 bit
+ Windows. The name of the created library is glpk_${glpkVersionMajor}_${glpkVersionMinor}_java.dll for revision
+ ${glpkVersionMajor}.${glpkVersionMinor}.
+
+ A precompiled version of GLPK for Java is provided at
+ {{{http://sourceforge.net/projects/winglpk/files/}http://sourceforge.net/projects/winglpk/}}.
+
+ The JNI library has to be in the search path for binaries. Either copy the
+ library  to a directory that is already in the path (e.g. C:\windows\system32)
+ or update the path in the system settings of Windows.
+
+* GLPK for Java class library
+
+ The source code to compile the GLPK for Java class library is provided at
+ {{{http://sourceforge.net/projects/glpk-java/files/}http://sourceforge.net/projects/glpk-java/}}.
+
+** Linux
+
+ The GLPK for Java class library can be compiled from source code. Follow the
+ instructions in file INSTALL provided in the source distribution.
+
+ The usual installation path for the library is
+ /usr/local/share/java/glpk-java.jar.
+
+ For Debian and Ubuntu the following packages are needed for compilation:
+
+ * libtool
+
+ * swig
+ 
+ * openjdk-6-jdk (or a higher version)
+
+** Windows
+
+ The GLPK for Java class library can be compiled from source code. The build
+ and make files are in directory w32 for 32 bit Windows and in w64 for 64 bit
+ Windows. The name of the created library is glpk-java.jar.
+
+ A precompiled version of GLPK including GLPK-Java is provided at
+ {{{http://sourceforge.net/projects/winglpk/files/}http://sourceforge.net/projects/winglpk/}}.
+
+** Classpath
+
+ The JNI library has to be in the classpath. The classpath can be either specified
+ by an enverionment variable CLASSPATH or upon invocation of the application,
+ e.g.
+
+---
+java -classpath ./glpk-java.jar;. MyApplication
+---
+
+ In Windows environment variables can be set interactively with the command
+ SET, e.g.
+
+---
+set CLASSPATH=.\glpk-java.jar;.
+---
+ 
+ or in the system settings: open the control panel, select the entry "System",
+ press the "Advanced System Settings" link, press the button "Environment
+ Variables".
+ 
+ In Linux environment variables can be set interactively with the export
+ statement, e.g.
+ 
+ in the system settings of Windows or via an
+ export statement, e.g.
+
+---
+export CLASSPATH=./glpk-java.jar;.
+---
+
+ or the same statement can be used in a shell file like ~/.bashrc.
+ 

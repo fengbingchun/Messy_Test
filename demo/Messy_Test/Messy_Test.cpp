@@ -3,7 +3,7 @@
 
 int main()
 {
-	if (auto ret = test_sqlite(); ret == 0)
+	if (auto ret = test_glpk(); ret == 0)
 		std::cout << "========== test success ==========\n";
 	else
 		std::cerr << "########## test fail ##########\n";

@@ -1,0 +1,245 @@
+Achim Gaedke <achim.gaedke@gmail.com> for bug report.
+
+Alexandre Oliva <oliva@lsd.ic.unicamp.br> for bug report.
+
+Andre Girard <andre@inrs-emt.uquebec.ca> for bug report.
+
+Andrew Hamilton-Wright <andrewhw@ieee.org> for bug report.
+
+Andrew Hood <ajhood@fl.net.au> for bug report.
+
+Anne-Laurence Putz <anne-laurence.putz@eurodecision.com> for bug
+report.
+
+Anton Voropaev <anton.n.voropaev@gmail.com> for bug and typo report.
+
+Axel Simon <Axel.Simon@ens.fr> for bug report.
+
+Balaco Baco <balacobaco@imap.cc> for bug report.
+
+Bernhard Schmidt <schmidt@math.uni-augsburg.de> for bug report.
+
+Boris Wirtz <Boris.Wirtz@uni-oldenburg.de> for bug report.
+
+Brady Hunsaker <hunsaker@engr.pitt.edu> for contribution of a routine
+for bounds sensitivity analysis.
+
+Brady Hunsaker <hunsaker@engr.pitt.edu> for some suggestions concerning
+MIP routines.
+
+Brian Gladman <brg@gladman.plus.com> for suggestion.
+
+Cameron Kellough <Cameron.Kellough@sri.com> for bug report.
+
+Carlo Baldassi <carlobaldassi@gmail.com> for bug report.
+
+Cedric[FR] <fox2113@wanadoo.fr> for bug report.
+
+Charles Brixko <charles.brixko@voo.be> for bug report.
+
+Chris Matrakidis <cmatraki@gmail.com> for contribution of a patch that
+implements the tan function in MathProg.
+
+Chris Matrakidis <cmatraki@gmail.com> for numerous useful suggestions,
+contributions, and patches.
+
+Chris Rosebrugh <cpr@pobox.com> for contribution of a new version of
+GLPK JNI (Java Native Interface).
+
+Christophe Caron <caron@diamant.jouy.inra.fr> for bug report.
+
+David Monniaux <david.monniaux@imag.fr> for some suggestions.
+
+David Monniaux <David.Monniaux@univ-grenoble-alpes.fr> for bug report.
+
+David T. Price <dtprice@speakeasy.net> for bug report.
+
+Dennis Schridde <devurandom@gmx.net> for bug report.
+
+Enric Rodriguez <erodri@lsi.upc.edu> for bug report.
+
+Flavio Keidi Miyazawa <fkm@ic.unicamp.br> for bug report.
+
+Gabriel Hackebeil <gabehack@gmail.com> for bug report.
+
+Giles Thompson <gwpt1@cus.cam.ac.uk> for bug report.
+
+Giorgio Sartor <0gioker0@gmail.com> for contribution of routines that
+implement the proximity search heuristic for MIP.
+
+Graham Rockwell <bionomicron@gmail.com> for bug report.
+
+Hans Schwengeler <Hans.Schwengeler@unibas.ch> for bug report.
+
+Harley Mackenzie <hjm@bigpond.com> for contribution of GLPK FAQ.
+
+Dr. Harley Mackenzie <hjm@hardsoftware.com> for two example MathProg
+models (curve fitting problem).
+
+Heinrich Schuchardt <heinrich.schuchardt@gmx.de> for contribution of
+makefiles and testing the package under 64-bit Windows.
+
+Heinrich Schuchardt <heinrich.schuchardt@gmx.de> for contribution of
+two MathProg table drivers for iODBC and MySQL.
+
+Heinrich Schuchardt <heinrich.schuchardt@gmx.de> for some patches for
+the MathProg translator.
+
+Heinrich Schuchardt <xypron.glpk@gmx.de> for testing the package on
+32- and 64-bit MS Windows platforms.
+
+Ivan Luzzi <iluzzi@libero.it> for comments concerning CPLEX LP format.
+
+Ivo van Baren <i.van.baren@freeler.nl> for contribution of GLPK DELI
+(Delphi Interface).
+
+Jan Engelhardt <jengelh@inai.de> for some suggestions.
+
+Jeffrey Kantor <Kantor.1@nd.edu> for reporting typos in the MathProg
+language reference.
+
+Jeroen Demeyer <jdemeyer@cage.ugent.be> for suggestion.
+
+Jeroen Demeyer <jdemeyer@cage.ugent.be> for bug report.
+
+Jiri Spitz <jiri.spitz@telecom.cz> for bug report.
+
+Joao Flavio de Freitas Almeida <joao.flavio@dep.ufmg.br> for
+translation of the document "Modeling Language GNU MathProg" to
+Brazilian Portuguese (pt-BR).
+
+Joey Rios <joeylrios@hotmail.com> for some suggestions.
+
+Jonathan Senning <Jonathan.Senning@gordon.edu> for bug report.
+
+Karel Zimmermann <kzimm@diamant.jouy.inra.fr> for bug report.
+
+Kelly Westbrooks <kellywestbrooks@yahoo.com> for suggestions.
+
+Kendall Demaree <kendal.demaree@verizon.net> for bug report.
+
+Kjell Eikland <kjell.eikland@broadpark.no> for bug report.
+
+Larry D'Agostino <Larry.D'Agostino@gmacrescap.com> for example model in
+MathProg.
+
+Luiz Bettoni <bettoni@cpgei.ct.utfpr.edu.br> for some suggestions.
+
+Marco Atzeri <marco.atzeri@gmail.com> for bug report.
+
+Marco Atzeri <marco_atzeri@yahoo.it> for bug report.
+
+Mark Meketon <Marc.Meketon@oliverwyman.com> for bug report.
+
+Markus Pilz <pilz@cs.uni-bonn.de> for bug report.
+
+Martin Jacob <mj@bahntechnik.de> for bug report.
+
+Mike Appleby <mike@app.leby.org> for example model in MathProg.
+
+Minh Ha Duong <haduong@centre-cired.fr> for fixing doc typos.
+
+Morten Welinder <terra@diku.dk> for bug report.
+
+Morten Welinder <terra@gnu.org> for bug report.
+
+Nelson H. F. Beebe <beebe@math.utah.edu> for bug report.
+
+Nicolo Giorgetti <giorgetti@dii.unisi.it> for contribution of GLPKMEX,
+a Matlab MEX interface.
+
+Niels Klitgord <niels@bu.edu> for bug report.
+
+Nigel Galloway <Nigel_Galloway@operamail.com> for an example MathProg
+model.
+
+Nigel Galloway <Nigel_Galloway@operamail.com> for an example program
+in C#.
+
+Nigel Galloway <nigel_galloway@operamail.com> for bug report.
+
+Nigel Galloway <nigel_galloway@operamail.com> for example models in
+MathProg.
+
+Noli Sicad <nsicad@gmail.com> for testing glpk under Mac OS.
+
+Noli Sicad <nsicad@gmail.com> for example model in MathProg.
+
+Olivier <odwl@skynet.be> for bug report.
+
+Oscar Gustafsson <oscarg@isy.liu.se> for contribution of a routine to
+write data in OPB (pseudo boolean) format.
+
+Pablo Yapura <ypf@agro.unlp.edu.ar> for translation of the document
+"Modeling Language GNU MathProg" to Spanish.
+
+Pedro P. Wong <d00604@taipower.com.tw> for bug report.
+
+Peter T. Breuer <ptb@inv.it.uc3m.es> for bug report.
+
+Peter A. Huegler <phuegler@bsco.com> for bug report.
+
+Peter Ingerfeld <peter.ingerfeld@mops-optimizer.com> for bug report.
+
+Peter Lee <plee@kinggee.com.au> for example LP model and bug report.
+
+Peter Naszvadi <vuk@cs.elte.hu> for example models in MathProg.
+
+Pietro Scionti <pietro.scionti@archinet.it> for report typos found in
+the reference manual.
+
+Rafael Laboissiere <rafael@debian.org> for useful advices concerning
+shared library support under GNU/Linux.
+
+Raniere Gaia Costa da Silva for bug report.
+
+Remy Roy <remyroyster@gmail.com> for bug report.
+
+Rob Schroeder <Rob.Schroeder@graphicpkg.com> for bug report.
+
+Robbie Morrison <robbie@actrix.co.nz> for correcting the glpk manual.
+
+Robert Wood <rgwood01@cox.net> for example model in MathProg.
+
+Roberto Bagnara <bagnara@cs.unipr.it> (Department of Mathematics,
+University of Parma, Italy) for bug report.
+
+Sami Farin <sfarin@ratol.fi> for bug report.
+
+Sebastian Nowozin <nowozin@gmail.com> for example models in MathProg.
+
+Sebastien Briais <sbriais@free.fr> for bug report.
+
+Sebastien de Menten <sdementen@hotmail.com> for bug report.
+
+Sebastien Villemot <sebastien@debian.org> for bug report.
+
+Stefan Vigerske <stefan@math.hu-berlin.de> for bug report.
+
+Stefan Vigerske <stefan@vigerske.de> for bug report.
+
+Sylvain Fournier for bug report.
+
+Thomas Kahle <tom111@gmx.de> for some suggestions.
+
+Uday Venkatadri <Uday.Venkatadri@dal.ca> for bug report.
+
+Vijay Patil <vijay.patil@gmail.com> for testing the package under
+Windows XP.
+
+Vlahos Kiriakos <Kiriakos.Vlahos@gs.com> for bug report.
+
+Xypron <xypron.glpk@gmx.de> for bug fixing and some improvments in the
+FPUMP module.
+
+Xypron <xypron.glpk@gmx.de> for bug patch.
+
+Xypron <xypron.glpk@gmx.de> for contribution and testing batch scripts
+to build Glpk with MS Visual Studio 2010.
+
+Xypron <xypron.glpk@gmx.de> for improving the SQL table driver.
+
+Xypron <xypron.glpk@gmx.de> for testing GLPK on 64-bit platforms and
+for maintaining Windows versions of the package.
+
+Yuri Victorovich <yuri@gjt.org> for contribution of GLPK Java binding.
