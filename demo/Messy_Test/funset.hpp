@@ -4,6 +4,7 @@
 
 // GLPK
 int test_glpk();
+int test_glpk_mod();
 
 // SQLite
 int test_sqlite();

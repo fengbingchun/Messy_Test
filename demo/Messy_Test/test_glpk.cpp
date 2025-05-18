@@ -6,25 +6,84 @@
 #include <string>
 #include "glpk.h"
 
+namespace {
+
+constexpr int total_foods{ 9 };
+const std::vector<std::string> foods{ "food1", "food2", "food3", "food4", "food5", "food6", "food7", "food8", "food9" };
+const std::vector<float> unit_prices{ 0.886, 0.863, 0.855, 0.917, 0.237, 0.856, 0.833, 0.904, 0.876 };
+const std::vector<std::array<float, 2>> bounds{ {1.0, 55.0}, {1.0, 55.0}, {1.0, 55.0}, {1.0, 55.0}, {7.0, 9.0}, {1.0, 55.0}, {1.0, 55.0}, {1.0, 55.0}, {1.0, 55.0} };
+
+constexpr int num_nutrients{ 4 };
+const std::vector<std::string> nutrients{ "nutrient1", "nutrient2", "nutrient3", "nutrient4" };
+const std::vector<std::array<float, 4>> nutrient_values{ {0.21, 65.10, 0.72, 88.5}, {0.08, 64.58, 0.63, 76.9}, {0.22, 64.81, 0.53, 86.1}, {0.58, 65.84, 1.09, 57.8}, {0.033, 46.07, 14.15, 0},
+															{0.059, 65.25, 0.39, 87.2}, {0.14, 64.25, 0.57, 93.7}, {0.033, 63.06, 1.36, 79.0}, {0.076, 65.20, 0.59, 99.0} };
+const std::vector<std::array<float, 2>> nutrient_limit{ {0., 49.}, {6200., 6230.}, {9.9, 782.}, {6500., 7000.} };
+
+constexpr float total_quantity{ 99. };
+const std::string mandatory_food{ "food5" };
+constexpr int num_select_foods{ 5 };
+
+} // namespace
+
+/////////////////////////////////////////////////////////////////
+// Blog: https://blog.csdn.net/fengbingchun/article/details/148039483
+
+int test_glpk_mod()
+{
+	auto tran = glp_mpl_alloc_wksp();
+
+	const char* model_file{ "../../../testdata/diet.mod" };
+	if (auto ret = glp_mpl_read_model(tran, model_file, 0); ret != 0) {
+		std::cerr << "Error: failed to read model: " << model_file << ", error code: " << ret << std::endl;
+		return ret;
+	}
+
+	if (auto ret = glp_mpl_generate(tran, nullptr); ret != 0) {
+		std::cerr << "Error: failed to generate model:  " << model_file << ", error code: " << ret << std::endl;
+		return ret;
+	}
+
+	auto lp = glp_create_prob();
+	glp_mpl_build_prob(tran, lp);
+
+	glp_iocp parm;
+	glp_init_iocp(&parm);
+	parm.presolve = GLP_ON;
+	parm.msg_lev = GLP_MSG_ERR;
+	auto ret = glp_intopt(lp, &parm);
+	if (ret != 0) {
+		std::cerr << "Error: failed to solve: error code: " << ret << std::endl;
+		glp_delete_prob(lp);
+		glp_mpl_free_wksp(tran);
+		return ret;
+	}
+
+	ret = ret = glp_mip_status(lp);
+	if (ret != GLP_OPT) {
+		std::cerr << "Error: there is no optimal solution, status: " << ret << std::endl;
+		glp_delete_prob(lp);
+		glp_mpl_free_wksp(tran);
+		return ret;
+	}
+
+	glp_mpl_postsolve(tran, lp, GLP_MIP); // GLP_SOL: LP, glp_simplex; GLP_MIP: MIP, glp_intopt; execute the printf statement in the mod file
+
+	std::cout << "minimum cost: " << glp_mip_obj_val(lp) << std::endl; // LP: glp_get_obj_val; MIP: glp_mip_obj_val
+	for (auto j = 0; j < foods.size(); ++j) {
+		if (auto ret = glp_mip_col_val(lp, j+1); ret > 0.5)
+			std::cout << foods[j] << ": quantity: " << ret << ", limit: [" << bounds[j][0] << "," << bounds[j][1] << "]" << std::endl;
+	}
+
+	glp_delete_prob(lp);
+	glp_mpl_free_wksp(tran);
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////
 // Blog: https://blog.csdn.net/fengbingchun/article/details/147855898
 
 int test_glpk()
 {
-	constexpr int total_foods{ 9 };
-	const std::vector<std::string> foods{ "food1", "food2", "food3", "food4", "food5", "food6", "food7", "food8", "food9" };
-	const std::vector<float> unit_prices{ 0.886, 0.863, 0.855, 0.917, 0.237, 0.856, 0.833, 0.904, 0.876 };
-	const std::vector<std::array<float, 2>> bounds{ {1.0, 55.0}, {1.0, 55.0}, {1.0, 55.0}, {1.0, 55.0}, {7.0, 9.0}, {1.0, 55.0}, {1.0, 55.0}, {1.0, 55.0}, {1.0, 55.0} };
-
-	constexpr int num_nutrients{ 4 };
-	const std::vector<std::string> nutrients{ "nutrient1", "nutrient2", "nutrient3", "nutrient4" };
-	const std::vector<std::array<float, 4>> nutrient_values{ {0.21, 65.10, 0.72, 88.5}, {0.08, 64.58, 0.63, 76.9}, {0.22, 64.81, 0.53, 86.1}, {0.58, 65.84, 1.09, 57.8}, {0.033, 46.07, 14.15, 0},
-																{0.059, 65.25, 0.39, 87.2}, {0.14, 64.25, 0.57, 93.7}, {0.033, 63.06, 1.36, 79.0}, {0.076, 65.20, 0.59, 99.0} };
-	const std::vector<std::array<float, 2>> nutrient_limit{ {0., 49.}, {6200., 6230.}, {9.9, 782.}, {6500., 7000.} };
-
-	constexpr float total_quantity{ 99. };
-	const std::string mandatory_food{ "food5" };
-	constexpr int num_select_foods{ 5 };
-
 	if (foods.size() != total_foods) {
 		std::cerr << "Error: number of foods mismatch" << std::endl;
 		return -1;
