@@ -61,7 +61,7 @@
       <AssemblerListingLocation>.\../../../obj/dbg/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;../../../src/rapidjson/include;../../../src/tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;../../../src/ThreadPool/src;D:\ProgramFiles\PostgreSQL\16\include;../../../src/libpqxx/windows_build/debug/include;../../../src/sqlite/src;..\..\..\src\glpk\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;../../../src/rapidjson/include;../../../src/tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;../../../src/ThreadPool/src;D:\ProgramFiles\PostgreSQL\16\include;../../../src/libpqxx/windows_build/debug/include;../../../src/sqlite/src;..\..\..\src\glpk\src;../../../src/json/single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -88,7 +88,7 @@
       <AssemblerListingLocation>.\../../../obj/rel/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;../../../src/rapidjson/include;../../../src/tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;../../../src/ThreadPool/src;D:\ProgramFiles\PostgreSQL\16\include;../../../src/libpqxx/windows_build/release/include;../../../src/sqlite/src;..\..\..\src\glpk\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;../../../src/rapidjson/include;../../../src/tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;../../../src/ThreadPool/src;D:\ProgramFiles\PostgreSQL\16\include;../../../src/libpqxx/windows_build/release/include;../../../src/sqlite/src;..\..\..\src\glpk\src;../../../src/json/single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\..\demo\Messy_Test\test_jemalloc.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_libpqxx.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_libuuid.cpp" />
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_nlohmann_json.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_rapidjson.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_sqlite.cpp" />
     <ClCompile Include="..\..\..\demo\Messy_Test\test_sqlserver_odbc.cpp" />
