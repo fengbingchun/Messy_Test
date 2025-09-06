@@ -21,6 +21,7 @@
 - ThreadPool's usage [EterfreeA/ThreadPool](https://github.com/EterfreeA/ThreadPool)
 - GLPK's usage [winglpk](https://sourceforge.net/projects/winglpk/)
 - nlohmann/json's usage [nlohmann/json](https://github.com/nlohmann/json)
+- OpenXLSX's usage[troldal/OpenXLSX](https://github.com/troldal/OpenXLSX)
 - test code in the technical book
 	- "Efficient C++ Performance Programming Techniques"
 	- "Effective C++ (third edition)"

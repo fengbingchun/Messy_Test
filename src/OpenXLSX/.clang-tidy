@@ -1,0 +1,28 @@
+---
+Checks: >-
+  *,
+  -llvmlibc-*,
+  -llvm-header-guard,
+  -fuchsia-*,
+  -modernize-use-trailing-return-type,
+  -modernize-use-nodiscard,
+  -modernize-avoid-c-arrays,
+  -modernize-pass-by-value,
+  -readability-braces-around-statements,
+  -readability-implicit-bool-conversion,
+  -readability-else-after-return,
+  -readability-convert-member-functions-to-static,
+  -cppcoreguidelines-avoid-c-arrays,
+  -hicpp-avoid-c-arrays,
+  -hicpp-braces-around-statements,
+  -google-readability-braces-around-statements,
+  -google-build-using-namespace,
+  -bugprone-infinite-loop,
+  -abseil-string-find-startswith,
+  -abseil-string-find-str-contains,
+  -altera-unroll-loops,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay
+
+WarningsAsErrors: '*'
+HeaderFilterRegex: ''
+FormatStyle:     none

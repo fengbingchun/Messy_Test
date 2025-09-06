@@ -78,3 +78,8 @@
 	commit: 55f9368
 	date: 2025.04.11
 	url: https://github.com/nlohmann/json
+18. OpenXLSX:
+	version: master
+	commit: 5723411
+	date: 2025.07.14
+	url: https://github.com/troldal/OpenXLSX

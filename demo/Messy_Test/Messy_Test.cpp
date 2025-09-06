@@ -3,7 +3,7 @@
 
 int main()
 {
-	if (auto ret = test_nlohmann_json(); ret == 0)
+	if (auto ret = test_openxlsx_create(); ret == 0)
 		std::cout << "========== test success ==========\n";
 	else
 		std::cerr << "########## test fail ##########\n";

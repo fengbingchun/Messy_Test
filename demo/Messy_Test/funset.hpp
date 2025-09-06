@@ -1,6 +1,10 @@
 #ifndef FBC_MESSY_TEST_FUNSET_HPP_
 #define FBC_MESSY_TEST_FUNSET_HPP_
 
+//  OpenXLSX
+int test_openxlsx_parse();
+int test_openxlsx_create();
+
 // nlohmann/json
 int test_nlohmann_json();
 

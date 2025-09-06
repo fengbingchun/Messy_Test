@@ -1,0 +1,113 @@
+# ignore everything
+/*
+
+# include generic files
+!/.clang-format
+!/.clang-tidy
+!/.gitignore
+!/LICENSE.md
+!/NOTICE
+!/README.md
+
+# include root directory files
+!/CMakeLists.txt
+!/Makefile.GNU
+!/vcpkg.json
+
+# include Benchmarks folder
+!/Benchmarks
+# exclude everything *in* Benchmarks folder
+/Benchmarks/*
+# re-include specifically what is desired from Benchmarks folder
+!/Benchmarks/*.cpp
+!/Benchmarks/*.txt
+!/Benchmarks/2024-07-29-benchmarks_before_XMLNode_wrappers
+!/Benchmarks/2024-07-29-benchmarks_with_XMLNode_wrappers_and_namespace_and_stripping
+!/Benchmarks/2024-07-29-benchmarks_with_XMLNode_wrappers_and_namespace_char_support
+!/Benchmarks/2024-07-29-benchmarks_with_XMLNode_wrappers_and_namespaced_name_disabled
+!/Benchmarks/2024-07-29-benchmarks_with_XMLNode_wrappers_and_namespace_support
+!/Benchmarks/2024-08-11-benchmarks_post-XLCellIterator-Rework
+!/Benchmarks/2024-08-14-benchmarks_post-default-row-column-style-support
+!/Benchmarks/2024-09-02-benchmarks
+!/Benchmarks/2024-12-19-benchmarks
+!/Benchmarks/2024-12-30-benchmarks-post-XLSharedStrings-by-ref
+!/Benchmarks/2025-01-09-benchmarks-post-conditionalFormatsAndSheetProtection
+!/Benchmarks/2025-01-10-benchmarks-post-XLCellValue-bugfix
+!/Benchmarks/2025-01-31-benchmarks-post-XLComments-implementation
+!/Benchmarks/2025-02-02-benchmarks-post-XLRowIterator-Rework
+
+# include Documentation folder
+!/Documentation
+# exclude everything *in* Documentation folder
+/Documentation/*
+# re-include specifically what is desired from Documentation folder
+!/Documentation/*.txt
+!/Documentation/*.css
+!/Documentation/*.in
+!/Documentation/*.xml
+
+# include Examples folder
+!/Examples
+# exclude everything *in* Examples folder
+/Examples/*
+# re-include specifically what is desired from Examples folder
+!/Examples/cmake
+!/Examples/cmake/*
+!/Examples/CMakeLists.txt
+!/Examples/*.cpp
+!/Examples/external
+!/Examples/external/*
+
+# include gnu-make-crutch folder
+!/gnu-make-crutch
+# exclude everything *in* gnu-make-crutch folder
+/gnu-make-crutch/*
+# re-include specifically what is desired from gnu-make-crutch folder
+!/gnu-make-crutch/OpenXLSX-Exports.hpp
+
+# include Notes folder
+!/Notes
+# exclude everything *in* Notes folder
+/Notes/*
+# re-include specifically what is desired from Notes folder
+!/Notes/styles-missing-support.xml
+!/Notes/todo-list.txt
+!/Notes/confirmed-TBCs.txt
+!/Notes/TBDs.txt
+
+# include OpenXLSX folder
+!/OpenXLSX
+# exclude everything *in* OpenXLSX folder
+/OpenXLSX/*
+# re-include specifically what is desired from OpenXLSX folder
+!/OpenXLSX/CMakeLists.txt
+!/OpenXLSX/external
+!/OpenXLSX/external/*
+!/OpenXLSX/headers
+!/OpenXLSX/headers/*
+!/OpenXLSX/OpenXLSXConfig.cmake
+!/OpenXLSX/OpenXLSX.hpp
+!/OpenXLSX/sources
+!/OpenXLSX/sources/*
+
+# include Scripts folder
+!/Scripts
+# exclude everything *in* Scripts folder
+/Scripts/*
+# re-include specifically what is desired from Scripts folder
+!/Scripts/cmake-cleanup.sh
+!/Scripts/demos-cleanup.sh
+!/Scripts/guarded-xml-format.sh
+!/Scripts/make-gnu.sh
+!/Scripts/xml-format-all.sh
+!/Scripts/xml-format.sh
+
+# include Tests folder
+!/Tests
+# exclude everything *in* Tests folder
+/Tests/*
+# re-include specifically what is desired from Tests folder
+!/Tests/catch
+!/Tests/catch/*.hpp
+!/Tests/CMakeLists.txt
+!/Tests/*.cpp
