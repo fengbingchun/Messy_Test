@@ -38,7 +38,7 @@
 **The version of each open source library see:** [version.txt](src/version.txt)
 
 **The project support platform:**
-- Windows 10 64-bit: It can be directly build with VS2022 in windows 10 64-bit.
+- Windows 10 64-bit: It can be directly build with VS2026 in windows 10 64-bit.
 - Linux(ubuntu 22.04, g++ 13.1.0):
 	- CppBaseTest supports cmake build(file position: prj/linux_cmake_CppBaseTest/)
 	- DesignPatternsTest supports cmake build(file position: prj/linux_cmake_DesignPatternsTest/)
