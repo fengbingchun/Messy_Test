@@ -71,5 +71,8 @@
     <ClCompile Include="..\..\..\demo\Messy_Test\test_OpenXLSX.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\demo\Messy_Test\test_mysql.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

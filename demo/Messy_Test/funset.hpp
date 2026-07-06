@@ -1,6 +1,9 @@
 #ifndef FBC_MESSY_TEST_FUNSET_HPP_
 #define FBC_MESSY_TEST_FUNSET_HPP_
 
+// MySQL
+int test_client_mysql();
+
 //  OpenXLSX
 int test_openxlsx_parse();
 int test_openxlsx_create();
