@@ -38,8 +38,8 @@ public:
 	// logical operators: ! && ||
 
 	//increment and decrement operators: ++ --
-	Point& operator ++ (); // prefix: ++
-	Point& operator ++ (int); // postfix: ++
+	Point& operator ++ (); // prefix: ++, 前置自增运算符
+	Point operator ++ (int); // postfix: ++, 后置自增运算符
 
 public:
 	int x, y; //< the point coordinates

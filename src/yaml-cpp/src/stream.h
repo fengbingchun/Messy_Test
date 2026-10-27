@@ -7,21 +7,27 @@
 #pragma once
 #endif
 
-#include "yaml-cpp/noncopyable.h"
 #include "yaml-cpp/mark.h"
 #include <cstddef>
 #include <deque>
 #include <ios>
-#include <iostream>
+#include <istream>
 #include <set>
 #include <string>
 
 namespace YAML {
-class Stream : private noncopyable {
+
+class StreamCharSource;
+
+class Stream {
  public:
   friend class StreamCharSource;
 
   Stream(std::istream& input);
+  Stream(const Stream&) = delete;
+  Stream(Stream&&) = delete;
+  Stream& operator=(const Stream&) = delete;
+  Stream& operator=(Stream&&) = delete;
   ~Stream();
 
   operator bool() const;
@@ -47,6 +53,7 @@ class Stream : private noncopyable {
   Mark m_mark;
 
   CharacterSet m_charSet;
+  char m_lineEndingSymbol{}; // 0 means it is not determined yet, must be '\n' or '\r'
   mutable std::deque<char> m_readahead;
   unsigned char* const m_pPrefetched;
   mutable size_t m_nPrefetchedAvailable;
@@ -71,6 +78,6 @@ inline bool Stream::ReadAheadTo(size_t i) const {
     return true;
   return _ReadAheadTo(i);
 }
-}
+}  // namespace YAML
 
 #endif  // STREAM_H_62B23520_7C8E_11DE_8A39_0800200C9A66

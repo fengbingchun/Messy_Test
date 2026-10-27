@@ -55,14 +55,14 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_CRT_SECURE_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_CRT_SECURE_NO_WARNINGS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderOutputFile>.\../../../obj/dbg/x64_vc12/Messy_Test\Messy_Test.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../../../obj/dbg/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
       <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;../../../src/rapidjson/include;../../../src/tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;../../../src/ThreadPool/src;D:\ProgramFiles\PostgreSQL\16\include;../../../src/libpqxx/windows_build/debug/include;../../../src/sqlite/src;..\..\..\src\glpk\src;../../../src/json/single_include;../../../src/OpenXLSX/install/include;../../../src/MySQL/Connector C++ 8.0/include;../../../src/MySQL/MySQL Server 8.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,14 +82,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_CRT_SECURE_NO_WARNINGS;YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderOutputFile>.\../../../obj/rel/x64_vc12/Messy_Test\Messy_Test.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../../../obj/rel/x64_vc12/Messy_Test\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/Messy_Test\</ProgramDataBaseFileName>
       <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;../../../src/rapidjson/include;../../../src/tinyxml2;..\..\..\src\jemalloc\include_msvc;..\..\..\src\jemalloc\include\msvc_compat;../../../src/ThreadPool/src;D:\ProgramFiles\PostgreSQL\16\include;../../../src/libpqxx/windows_build/release/include;../../../src/sqlite/src;..\..\..\src\glpk\src;../../../src/json/single_include;../../../src/OpenXLSX/install/include;../../../src/MySQL/MySQL Server 8.0/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

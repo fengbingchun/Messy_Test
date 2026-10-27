@@ -143,6 +143,9 @@
     <ClCompile Include="..\..\..\src\yaml-cpp\src\convert.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\depthguard.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\yaml-cpp\src\directives.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -165,6 +168,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\yaml-cpp\src\exp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\fptostring.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\yaml-cpp\src\memory.cpp">

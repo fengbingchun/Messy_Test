@@ -55,13 +55,14 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile>.\../../../obj/dbg/x64_vc12/libyaml-cpp\libyaml-cpp.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../../../obj/dbg/x64_vc12/libyaml-cpp\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/dbg/x64_vc12/libyaml-cpp\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/dbg/x64_vc12/libyaml-cpp\</ProgramDataBaseFileName>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,13 +82,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../../src/yaml-cpp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile>.\../../../obj/rel/x64_vc12/libyaml-cpp\libyaml-cpp.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\../../../obj/rel/x64_vc12/libyaml-cpp\</AssemblerListingLocation>
       <ObjectFileName>.\../../../obj/rel/x64_vc12/libyaml-cpp\</ObjectFileName>
       <ProgramDataBaseFileName>.\../../../obj/rel/x64_vc12/libyaml-cpp\</ProgramDataBaseFileName>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,6 +148,7 @@
     <ClCompile Include="..\..\..\src\yaml-cpp\src\contrib\graphbuilder.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\contrib\graphbuilderadapter.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\convert.cpp" />
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\depthguard.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\directives.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\emit.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\emitfromevents.cpp" />
@@ -154,6 +157,7 @@
     <ClCompile Include="..\..\..\src\yaml-cpp\src\emitterutils.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\exceptions.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\exp.cpp" />
+    <ClCompile Include="..\..\..\src\yaml-cpp\src\fptostring.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\memory.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\node.cpp" />
     <ClCompile Include="..\..\..\src\yaml-cpp\src\nodebuilder.cpp" />

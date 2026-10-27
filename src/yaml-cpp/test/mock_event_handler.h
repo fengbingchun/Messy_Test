@@ -1,7 +1,10 @@
 #include "yaml-cpp/emitterstyle.h"
 #include "yaml-cpp/eventhandler.h"
+#include "yaml-cpp/mark.h"
 
 #include "gmock/gmock.h"
+
+#include <string>
 
 namespace YAML {
 
@@ -22,5 +25,6 @@ class MockEventHandler : public EventHandler {
   MOCK_METHOD4(OnMapStart, void(const Mark&, const std::string&, anchor_t,
                                 EmitterStyle::value));
   MOCK_METHOD0(OnMapEnd, void());
+  MOCK_METHOD2(OnAnchor, void(const Mark&, const std::string&));
 };
-}
+}  // namespace YAML

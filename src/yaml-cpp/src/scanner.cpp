@@ -9,12 +9,18 @@
 namespace YAML {
 Scanner::Scanner(std::istream& in)
     : INPUT(in),
+      m_tokens{},
       m_startedStream(false),
       m_endedStream(false),
       m_simpleKeyAllowed(false),
-      m_canBeJSONFlow(false) {}
+      m_scalarValueAllowed(false),
+      m_canBeJSONFlow(false),
+      m_simpleKeys{},
+      m_indents{},
+      m_indentRefs{},
+      m_flows{} {}
 
-Scanner::~Scanner() {}
+Scanner::~Scanner() = default;
 
 bool Scanner::empty() {
   EnsureTokensInQueue();
@@ -46,7 +52,7 @@ Token& Scanner::peek() {
 Mark Scanner::mark() const { return INPUT.mark(); }
 
 void Scanner::EnsureTokensInQueue() {
-  while (1) {
+  while (true) {
     if (!m_tokens.empty()) {
       Token& token = m_tokens.front();
 
@@ -83,7 +89,7 @@ void Scanner::ScanNextToken() {
     return StartStream();
   }
 
-  // get rid of whitespace, etc. (in between tokens it should be irrelevent)
+  // get rid of whitespace, etc. (in between tokens it should be irrelevant)
   ScanToNextToken();
 
   // maybe need to end some blocks
@@ -122,6 +128,17 @@ void Scanner::ScanNextToken() {
   }
 
   if (INPUT.peek() == Keys::FlowEntry) {
+    // values starting with `,` are not allowed.
+    // eg: reject `,foo`
+    if (INPUT.column() == 0) {
+      throw ParserException(INPUT.mark(), ErrorMsg::UNEXPECTED_FLOW);
+    }
+    // if we already parsed a quoted scalar value and we are not in a flow,
+    // then `,` is not a valid character.
+    // eg: reject `"foo",`
+    if (!m_scalarValueAllowed) {
+      throw ParserException(INPUT.mark(), ErrorMsg::UNEXPECTED_SCALAR);
+    }
     return ScanFlowEntry();
   }
 
@@ -154,6 +171,13 @@ void Scanner::ScanNextToken() {
     return ScanBlockScalar();
   }
 
+  // if we already parsed a quoted scalar value in this line,
+  // another scalar value is an error.
+  // eg: reject `"foo" "bar"`
+  if (!m_scalarValueAllowed) {
+    throw ParserException(INPUT.mark(), ErrorMsg::UNEXPECTED_SCALAR);
+  }
+
   if (INPUT.peek() == '\'' || INPUT.peek() == '\"') {
     return ScanQuotedScalar();
   }
@@ -169,7 +193,7 @@ void Scanner::ScanNextToken() {
 }
 
 void Scanner::ScanToNextToken() {
-  while (1) {
+  while (true) {
     // first eat whitespace
     while (INPUT && IsWhitespaceToBeEaten(INPUT.peek())) {
       if (InBlockContext() && Exp::Tab().Matches(INPUT)) {
@@ -197,6 +221,9 @@ void Scanner::ScanToNextToken() {
 
     // oh yeah, and let's get rid of that simple key
     InvalidateSimpleKey();
+
+    // new line - we accept a scalar value now
+    m_scalarValueAllowed = true;
 
     // new line - we may be able to accept a simple key now
     if (InBlockContext()) {
@@ -240,6 +267,7 @@ const RegEx& Scanner::GetValueRegex() const {
 void Scanner::StartStream() {
   m_startedStream = true;
   m_simpleKeyAllowed = true;
+  m_scalarValueAllowed = true;
   std::unique_ptr<IndentMarker> pIndent(
       new IndentMarker(-1, IndentMarker::NONE));
   m_indentRefs.push_back(std::move(pIndent));
@@ -256,6 +284,7 @@ void Scanner::EndStream() {
   PopAllSimpleKeys();
 
   m_simpleKeyAllowed = false;
+  m_scalarValueAllowed = false;
   m_endedStream = true;
 }
 
@@ -282,7 +311,7 @@ Scanner::IndentMarker* Scanner::PushIndentTo(int column,
                                              IndentMarker::INDENT_TYPE type) {
   // are we in flow?
   if (InFlowContext()) {
-    return 0;
+    return nullptr;
   }
 
   std::unique_ptr<IndentMarker> pIndent(new IndentMarker(column, type));
@@ -291,12 +320,12 @@ Scanner::IndentMarker* Scanner::PushIndentTo(int column,
 
   // is this actually an indentation?
   if (indent.column < lastIndent.column) {
-    return 0;
+    return nullptr;
   }
   if (indent.column == lastIndent.column &&
       !(indent.type == IndentMarker::SEQ &&
         lastIndent.type == IndentMarker::MAP)) {
-    return 0;
+    return nullptr;
   }
 
   // push a start token

@@ -47,10 +47,6 @@ int test_numeric_limits_1()
 		<< std::numeric_limits<float>::denorm_min()<< std::endl;
 	std::cout << "The difference between 1 and the smallest value greater than 1 for float: "
 		<< std::numeric_limits<float>::epsilon()<< std::endl;
-	std::cout << "Whether float objects allow denormalized values: "
-		<< std::numeric_limits<float>::has_denorm << std::endl;
-	std::cout << "Whether float objects can detect denormalized loss: "
-		<< std::numeric_limits<float>::has_denorm_loss << std::endl;
 	std::cout << "Whether float objects have quiet_NaN: "
 		<< std::numeric_limits<float>::has_quiet_NaN << std::endl;
 	std::cout << "Whether float objects have a signaling_NaN: "

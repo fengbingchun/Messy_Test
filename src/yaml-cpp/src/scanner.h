@@ -9,9 +9,7 @@
 
 #include <cstddef>
 #include <ios>
-#include <map>
 #include <queue>
-#include <set>
 #include <stack>
 #include <string>
 
@@ -49,7 +47,7 @@ class Scanner {
     enum INDENT_TYPE { MAP, SEQ, NONE };
     enum STATUS { VALID, INVALID, UNKNOWN };
     IndentMarker(int column_, INDENT_TYPE type_)
-        : column(column_), type(type_), status(VALID), pStartToken(0) {}
+        : column(column_), type(type_), status(VALID), pStartToken(nullptr) {}
 
     int column;
     INDENT_TYPE type;
@@ -179,6 +177,7 @@ class Scanner {
   // state info
   bool m_startedStream, m_endedStream;
   bool m_simpleKeyAllowed;
+  bool m_scalarValueAllowed;
   bool m_canBeJSONFlow;
   std::stack<SimpleKey> m_simpleKeys;
   std::stack<IndentMarker *> m_indents;

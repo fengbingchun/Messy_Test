@@ -11,12 +11,12 @@ namespace YAML {
 class Binary;
 struct _Null;
 
-Emitter::Emitter() : m_pState(new EmitterState) {}
+Emitter::Emitter() : m_pState(new EmitterState), m_stream{} {}
 
 Emitter::Emitter(std::ostream& stream)
     : m_pState(new EmitterState), m_stream(stream) {}
 
-Emitter::~Emitter() {}
+Emitter::~Emitter() = default;
 
 const char* Emitter::c_str() const { return m_stream.str(); }
 
@@ -47,6 +47,10 @@ bool Emitter::SetBoolFormat(EMITTER_MANIP value) {
   if (m_pState->SetBoolLengthFormat(value, FmtScope::Global))
     ok = true;
   return ok;
+}
+
+bool Emitter::SetNullFormat(EMITTER_MANIP value) {
+  return m_pState->SetNullFormat(value, FmtScope::Global);
 }
 
 bool Emitter::SetIntBase(EMITTER_MANIP value) {
@@ -84,6 +88,10 @@ bool Emitter::SetFloatPrecision(std::size_t n) {
 
 bool Emitter::SetDoublePrecision(std::size_t n) {
   return m_pState->SetDoublePrecision(n, FmtScope::Global);
+}
+
+void Emitter::RestoreGlobalModifiedSettings() {
+  m_pState->RestoreGlobalModifiedSettings();
 }
 
 // SetLocalValue
@@ -197,6 +205,7 @@ void Emitter::EmitBeginSeq() {
 void Emitter::EmitEndSeq() {
   if (!good())
     return;
+  FlowType::value originalType = m_pState->CurGroupFlowType();
 
   if (m_pState->CurGroupChildCount() == 0)
     m_pState->ForceFlow();
@@ -204,9 +213,14 @@ void Emitter::EmitEndSeq() {
   if (m_pState->CurGroupFlowType() == FlowType::Flow) {
     if (m_stream.comment())
       m_stream << "\n";
-    m_stream << IndentTo(m_pState->CurIndent());
-    if (m_pState->CurGroupChildCount() == 0)
+    if (originalType == FlowType::Block || m_pState->HasBegunNode())
+      m_stream << IndentTo(m_pState->CurIndent());
+    if (originalType == FlowType::Block) {
       m_stream << "[";
+    } else {
+      if (m_pState->CurGroupChildCount() == 0 && !m_pState->HasBegunNode())
+        m_stream << "[";
+    }
     m_stream << "]";
   }
 
@@ -227,6 +241,7 @@ void Emitter::EmitBeginMap() {
 void Emitter::EmitEndMap() {
   if (!good())
     return;
+  FlowType::value originalType = m_pState->CurGroupFlowType();
 
   if (m_pState->CurGroupChildCount() == 0)
     m_pState->ForceFlow();
@@ -235,8 +250,12 @@ void Emitter::EmitEndMap() {
     if (m_stream.comment())
       m_stream << "\n";
     m_stream << IndentTo(m_pState->CurIndent());
-    if (m_pState->CurGroupChildCount() == 0)
+    if (originalType == FlowType::Block) {
       m_stream << "{";
+    } else {
+      if (m_pState->CurGroupChildCount() == 0 && !m_pState->HasBegunNode())
+        m_stream << "{";
+    }
     m_stream << "}";
   }
 
@@ -285,10 +304,8 @@ void Emitter::PrepareTopNode(EmitterNodeType::value child) {
   if (child == EmitterNodeType::NoType)
     return;
 
-  if (m_pState->CurGroupChildCount() > 0 && m_stream.col() > 0) {
-    if (child != EmitterNodeType::NoType)
-      EmitBeginDoc();
-  }
+  if (m_pState->CurGroupChildCount() > 0 && m_stream.col() > 0)
+    EmitBeginDoc();
 
   switch (child) {
     case EmitterNodeType::NoType:
@@ -488,6 +505,9 @@ void Emitter::FlowMapPrepareSimpleKeyValue(EmitterNodeType::value child) {
     if (m_stream.comment())
       m_stream << "\n";
     m_stream << IndentTo(lastIndent);
+    if (m_pState->HasAlias()) {
+      m_stream << " ";
+    }
     m_stream << ":";
   }
 
@@ -514,7 +534,8 @@ void Emitter::BlockMapPrepareNode(EmitterNodeType::value child) {
     if (m_pState->GetMapKeyFormat() == LongKey)
       m_pState->SetLongKey();
     if (child == EmitterNodeType::BlockSeq ||
-        child == EmitterNodeType::BlockMap)
+        child == EmitterNodeType::BlockMap ||
+        child == EmitterNodeType::Property)
       m_pState->SetLongKey();
 
     if (m_pState->CurGroupLongKey())
@@ -558,6 +579,8 @@ void Emitter::BlockMapPrepareLongKey(EmitterNodeType::value child) {
       break;
     case EmitterNodeType::BlockSeq:
     case EmitterNodeType::BlockMap:
+      if (m_pState->HasBegunContent())
+        m_stream << "\n";
       break;
   }
 }
@@ -581,8 +604,12 @@ void Emitter::BlockMapPrepareLongKeyValue(EmitterNodeType::value child) {
     case EmitterNodeType::Scalar:
     case EmitterNodeType::FlowSeq:
     case EmitterNodeType::FlowMap:
+      SpaceOrIndentTo(true, curIndent + 1);
+      break;
     case EmitterNodeType::BlockSeq:
     case EmitterNodeType::BlockMap:
+      if (m_pState->HasBegunContent())
+        m_stream << "\n";
       SpaceOrIndentTo(true, curIndent + 1);
       break;
   }
@@ -621,6 +648,9 @@ void Emitter::BlockMapPrepareSimpleKeyValue(EmitterNodeType::value child) {
   const std::size_t nextIndent = curIndent + m_pState->CurGroupIndent();
 
   if (!m_pState->HasBegunNode()) {
+    if (m_pState->HasAlias()) {
+      m_stream << " ";
+    }
     m_stream << ":";
   }
 
@@ -674,32 +704,45 @@ void Emitter::StartedScalar() { m_pState->StartedScalar(); }
 // *******************************************************************************************
 // overloads of Write
 
-Emitter& Emitter::Write(const std::string& str) {
+StringEscaping::value GetStringEscapingStyle(const EMITTER_MANIP emitterManip) {
+  switch (emitterManip) {
+    case EscapeNonAscii:
+      return StringEscaping::NonAscii;
+    case EscapeAsJson:
+      return StringEscaping::JSON;
+    default:
+      return StringEscaping::None;
+      break;
+  }
+}
+
+Emitter& Emitter::Write(const char* str, std::size_t size) {
   if (!good())
     return *this;
 
-  const bool escapeNonAscii = m_pState->GetOutputCharset() == EscapeNonAscii;
-  const StringFormat::value strFormat =
-      Utils::ComputeStringFormat(str, m_pState->GetStringFormat(),
-                                 m_pState->CurGroupFlowType(), escapeNonAscii);
+  StringEscaping::value stringEscaping = GetStringEscapingStyle(m_pState->GetOutputCharset());
 
-  if (strFormat == StringFormat::Literal)
+  const StringFormat::value strFormat =
+      Utils::ComputeStringFormat(str, size, m_pState->GetStringFormat(),
+                                 m_pState->CurGroupFlowType(), stringEscaping == StringEscaping::NonAscii);
+
+  if (strFormat == StringFormat::Literal || size > 1024)
     m_pState->SetMapKeyFormat(YAML::LongKey, FmtScope::Local);
 
   PrepareNode(EmitterNodeType::Scalar);
 
   switch (strFormat) {
     case StringFormat::Plain:
-      m_stream << str;
+      m_stream.write(str, size);
       break;
     case StringFormat::SingleQuoted:
-      Utils::WriteSingleQuotedString(m_stream, str);
+      Utils::WriteSingleQuotedString(m_stream, str, size);
       break;
     case StringFormat::DoubleQuoted:
-      Utils::WriteDoubleQuotedString(m_stream, str, escapeNonAscii);
+      Utils::WriteDoubleQuotedString(m_stream, str, size, stringEscaping);
       break;
     case StringFormat::Literal:
-      Utils::WriteLiteralString(m_stream, str,
+      Utils::WriteLiteralString(m_stream, str, size,
                                 m_pState->CurIndent() + m_pState->GetIndent());
       break;
   }
@@ -707,6 +750,10 @@ Emitter& Emitter::Write(const std::string& str) {
   StartedScalar();
 
   return *this;
+}
+
+Emitter& Emitter::Write(const std::string& str) {
+  return Write(str.data(), str.size());
 }
 
 std::size_t Emitter::GetFloatPrecision() const {
@@ -766,6 +813,21 @@ const char* Emitter::ComputeFullBoolName(bool b) const {
                          // these answers
 }
 
+const char* Emitter::ComputeNullName() const {
+  switch (m_pState->GetNullFormat()) {
+    case LowerNull:
+      return "null";
+    case UpperNull:
+      return "NULL";
+    case CamelNull:
+      return "Null";
+    case TildeNull:
+      // fallthrough
+    default:
+      return "~";
+  }
+}
+
 Emitter& Emitter::Write(bool b) {
   if (!good())
     return *this;
@@ -787,8 +849,10 @@ Emitter& Emitter::Write(char ch) {
   if (!good())
     return *this;
 
+
+
   PrepareNode(EmitterNodeType::Scalar);
-  Utils::WriteChar(m_stream, ch);
+  Utils::WriteChar(m_stream, ch, GetStringEscapingStyle(m_pState->GetOutputCharset()));
   StartedScalar();
 
   return *this;
@@ -805,12 +869,14 @@ Emitter& Emitter::Write(const _Alias& alias) {
 
   PrepareNode(EmitterNodeType::Scalar);
 
-  if (!Utils::WriteAlias(m_stream, alias.content)) {
+  if (!Utils::WriteAlias(m_stream, alias.content.data(), alias.content.size())) {
     m_pState->SetError(ErrorMsg::INVALID_ALIAS);
     return *this;
   }
 
   StartedScalar();
+
+  m_pState->SetAlias();
 
   return *this;
 }
@@ -826,7 +892,7 @@ Emitter& Emitter::Write(const _Anchor& anchor) {
 
   PrepareNode(EmitterNodeType::Property);
 
-  if (!Utils::WriteAnchor(m_stream, anchor.content)) {
+  if (!Utils::WriteAnchor(m_stream, anchor.content.data(), anchor.content.size())) {
     m_pState->SetError(ErrorMsg::INVALID_ANCHOR);
     return *this;
   }
@@ -875,7 +941,7 @@ Emitter& Emitter::Write(const _Comment& comment) {
 
   if (m_stream.col() > 0)
     m_stream << Indentation(m_pState->GetPreCommentIndent());
-  Utils::WriteComment(m_stream, comment.content,
+  Utils::WriteComment(m_stream, comment.content.data(), comment.content.size(),
                       m_pState->GetPostCommentIndent());
 
   m_pState->SetNonContent();
@@ -889,7 +955,7 @@ Emitter& Emitter::Write(const _Null& /*null*/) {
 
   PrepareNode(EmitterNodeType::Scalar);
 
-  m_stream << "~";
+  m_stream << ComputeNullName();
 
   StartedScalar();
 
@@ -908,4 +974,4 @@ Emitter& Emitter::Write(const Binary& binary) {
 
   return *this;
 }
-}
+}  // namespace YAML

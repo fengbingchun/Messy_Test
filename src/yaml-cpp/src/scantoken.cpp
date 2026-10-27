@@ -37,7 +37,7 @@ void Scanner::ScanDirective() {
     token.value += INPUT.get();
 
   // read parameters
-  while (1) {
+  while (true) {
     // first get rid of whitespace
     while (Exp::Blank().Matches(INPUT))
       INPUT.eat(1);
@@ -171,7 +171,7 @@ void Scanner::ScanBlockEntry() {
 
 // Key
 void Scanner::ScanKey() {
-  // handle keys diffently in the block context (and manage indents)
+  // handle keys differently in the block context (and manage indents)
   if (InBlockContext()) {
     if (!m_simpleKeyAllowed)
       throw ParserException(INPUT.mark(), ErrorMsg::MAP_KEY);
@@ -199,7 +199,7 @@ void Scanner::ScanValue() {
     // seems fine)
     m_simpleKeyAllowed = false;
   } else {
-    // handle values diffently in the block context (and manage indents)
+    // handle values differently in the block context (and manage indents)
     if (InBlockContext()) {
       if (!m_simpleKeyAllowed)
         throw ParserException(INPUT.mark(), ErrorMsg::MAP_VALUE);
@@ -210,6 +210,9 @@ void Scanner::ScanValue() {
     // can only put a simple key here if we're in block context
     m_simpleKeyAllowed = InBlockContext();
   }
+
+  // we are parsing a `key: value` pair; scalars are always allowed
+  m_scalarValueAllowed = true;
 
   // eat
   Mark mark = INPUT.mark();
@@ -338,7 +341,7 @@ void Scanner::ScanQuotedScalar() {
 
   // setup the scanning parameters
   ScanScalarParams params;
-  RegEx end = (single ? RegEx(quote) && !Exp::EscSingleQuote() : RegEx(quote));
+  RegEx end = (single ? RegEx(quote) & !Exp::EscSingleQuote() : RegEx(quote));
   params.end = &end;
   params.eatEnd = true;
   params.escape = (single ? '\'' : '\\');
@@ -360,6 +363,10 @@ void Scanner::ScanQuotedScalar() {
   // and scan
   scalar = ScanScalar(INPUT, params);
   m_simpleKeyAllowed = false;
+  // we just scanned a quoted scalar;
+  // we can only have another scalar in this line
+  // if we are in a flow, eg: `[ "foo", "bar" ]` is ok, but `"foo", "bar"` isn't.
+  m_scalarValueAllowed = InFlowContext();
   m_canBeJSONFlow = true;
 
   Token token(Token::NON_PLAIN_SCALAR, mark);
@@ -434,4 +441,4 @@ void Scanner::ScanBlockScalar() {
   token.value = scalar;
   m_tokens.push(token);
 }
-}
+}  // namespace YAML

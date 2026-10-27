@@ -14,9 +14,9 @@
 	date: 2018.05.22
 	url: https://github.com/DaveGamble/cJSON/releases
 4. yaml-cpp:
-	version: 0.6.2
-	commint: 562aefc
-	date: 2018.03.06
+	version: 0.9.0
+	commint: 56e3bb5
+	date: 2026.02.05
 	url: https://github.com/jbeder/yaml-cpp/releases
 5. json11:
 	commit: 2df9473

@@ -79,16 +79,16 @@ std::istream& operator >> (std::istream& in, Point& pt_) // input
 
 Point& Point::operator ++ ()
 {
-	++this->x;
-	++this->y;
+	++x;
+	++y;
 
 	return *this;
 }
 
-Point& Point::operator ++ (int)
+Point Point::operator ++ (int)
 {
-	Point tmp(*this);
-	operator++();
+	Point tmp = *this;
+	++(*this);
 
 	return tmp;
 }
