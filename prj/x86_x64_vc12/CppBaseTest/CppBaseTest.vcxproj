@@ -144,6 +144,7 @@
     <ClCompile Include="..\..\..\demo\CppBaseTest\c_head.c" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\data_type_convert.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\decltype.cpp" />
+    <ClCompile Include="..\..\..\demo\CppBaseTest\deducing_this.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\default.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\delete.cpp" />
     <ClCompile Include="..\..\..\demo\CppBaseTest\deque.cpp" />
